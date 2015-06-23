@@ -1,0 +1,116 @@
+.bg-white {
+    background-color: #fff !important;
+}
+
+.animation {
+    position: relative;
+}
+
+.ajax-waiting {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-left: -47px;
+    z-index: 1000;
+    padding: 5px;
+    -webkit-box-shadow: 0 0 5px 2px #ddd;
+    -moz-box-shadow: 0 0 5px 2px #ddd;
+    box-shadow: 0 0 5px 2px #ddd;
+    background-color: #fff;
+    border-radius: 7px !important;
+}
+
+.portlet.box .portlet-title{
+    color: #000 !important;
+}
+
+.auto-fill {
+    max-height: 300px;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.auto-fill .auto-fill-ul {
+    list-style-type: none;
+    padding: 0px 0;
+    margin: 0;
+}
+
+.auto-fill .auto-fill-ul > li {
+    cursor: pointer;
+    /*background-color: #fafafa;*/
+    padding: 5px;
+}
+
+.auto-fill .auto-fill-ul > li:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+textarea {
+    text-align: justify;
+}
+
+.auto-fill-highlight {
+    background-color: #F1FC93 !important;
+}
+
+.excel-export {
+    cursor: pointer;
+}
+
+.general-view p{
+    text-align: justify;
+    font-size: 14px;
+}
+
+.tr-td-center td, .tr-td-center th {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.cke_textarea_inline {
+    padding: 10px;
+    height: 100px;
+    overflow: auto;
+    border: 1px solid gray;
+    -webkit-appearance: textfield;
+
+    font-size: 14px;
+    font-weight: normal;
+    color: #333333;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+/*Image loader*/
+
+.loader-wrapper {
+    width: 100%;
+    z-index: 100000;
+    height: 100%;
+    background-color: rgba(255,255,255,0.5);
+    position: fixed;
+    padding: 15px;
+    top: 0;
+    left: 0;
+}
+.image-wrapper {
+    position: relative;
+    left: 50%;
+    margin-left: -100px;
+    font-size: 18px;
+    margin-top: -100px;
+    top: 50%;
+}
