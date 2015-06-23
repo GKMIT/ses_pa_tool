@@ -427,7 +427,7 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                 <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" placeholder="The auditors have not made any qualification in their Report."><b>Qualifications:</b></textarea>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
                                                 <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="Company's Comments"><b>Company's Comments:</b></textarea>
@@ -438,7 +438,7 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                 <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
                                                 <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="SES Opinion"><b>SES Opinion:</b></textarea>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="form-body">
@@ -971,6 +971,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                             </select>
                                                         </th>
                                                         <th>
+                                                            Shift
+                                                        </th>
+                                                        <th>
                                                             Comments
                                                         </th>
                                                         <th>
@@ -991,6 +994,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                             <input class='form-control rpt-previous-year' name="rpt_previous_year[]"/>
                                                         </th>
                                                         <th>
+                                                            <input class='form-control rpt-shift' name="shift_rpt[]"/>
+                                                        </th>
+                                                        <th>
                                                             <textarea class='form-control rpt-comments' name="rpt_comments[]"></textarea>
                                                         </th>
                                                         <th>
@@ -1007,6 +1013,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                         </th>
                                                         <th>
                                                             <input class='form-control rpt-previous-year' name="rpt_previous_year[]"/>
+                                                        </th>
+                                                        <th>
+                                                            <input class='form-control rpt-shift' name="shift_rpt[]"/>
                                                         </th>
                                                         <th>
                                                             <textarea class='form-control rpt-comments' name="rpt_comments[]"></textarea>
@@ -1027,6 +1036,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                             <input class='form-control rpt-previous-year' name="rpt_previous_year[]"/>
                                                         </th>
                                                         <th>
+                                                            <input class='form-control rpt-shift' name="shift_rpt[]"/>
+                                                        </th>
+                                                        <th>
                                                             <textarea class='form-control rpt-comments' name="rpt_comments[]"></textarea>
                                                         </th>
                                                         <th>
@@ -1045,6 +1057,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                             <input class='form-control rpt-previous-year' name="rpt_previous_year[]"/>
                                                         </th>
                                                         <th>
+                                                            <input class='form-control rpt-shift' name="shift_rpt[]"/>
+                                                        </th>
+                                                        <th>
                                                             <textarea class='form-control rpt-comments' name="rpt_comments[]"></textarea>
                                                         </th>
                                                         <th>
@@ -1061,6 +1076,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                         </th>
                                                         <th>
                                                             <input class='form-control rpt-previous-year' name="rpt_previous_year[]"/>
+                                                        </th>
+                                                        <th>
+                                                            <input class='form-control rpt-shift' name="shift_rpt[]"/>
                                                         </th>
                                                         <th>
                                                             <textarea class='form-control rpt-comments' name="rpt_comments[]"></textarea>
@@ -1529,8 +1547,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                     <div class="col-md-2">
                                         <select name="triggers[]" class='form-control triggers recommendations-fire-adoption-of-accounts' id="has_the_company_disclosed_the_related_party_transactions">
                                             <option value="">Select</option>
-                                            <option value="yes" data-recommendation-table-id="99">Yes</option>
-                                            <option value="no" >No</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no" data-recommendation-table-id="99" >No</option>
                                             <option value="na">Not Applicable</option>
                                         </select>
                                     </div>

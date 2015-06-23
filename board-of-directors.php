@@ -478,7 +478,7 @@ if(isset($_SESSION['report_id'])) {
                                                     <td class="text-center"><input name="tenure[]" class="form-control" value="<?php echo $director['current_tenure']; ?>"/></td>
                                                     <td class="text-center"><input name="directorship[]" class="form-control" value="<?php echo $director['no_directorship_public']; ?>(<?php echo $director['no_total_directorship']; ?>)"/></td>
                                                     <td class="text-center"><input name="comm_membership[]" class="form-control" value="<?php echo $director['committee_memberships']; ?>(<?php echo $director['committee_chairmanships']; ?>)"/></td>
-                                                    <td class="text-center"><input name="pay[]" class="form-control" value="<?php echo $director['variable_pay'] + $director['fixed_pay']; ?>"/></td>
+                                                    <td class="text-center"><input name="pay[]" class="form-control" value="<?php echo (($director['variable_pay'] + $director['fixed_pay'])*100); ?>"/></td>
                                                 </tr>
                                             <?php
                                             }

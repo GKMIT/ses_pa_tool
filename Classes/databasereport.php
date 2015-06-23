@@ -495,12 +495,12 @@ class DatabaseReports {
         }
         $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
         $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-        $stmt = $dbobject->prepare(" select * from `audit_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+        $stmt = $dbobject->prepare(" select max(held) from `audit_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $committee_meetings_held =$row['held'];
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $committee_meetings_held =$row[0];
         $stmt = $dbobject->prepare(" select * from `audit_committee_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`audit_committee_attendance`.`dir_din_no` where `audit_committee_attendance`.`company_id`=:company_id and `audit_committee_attendance`.`att_year`=:financial_year");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
@@ -556,12 +556,12 @@ class DatabaseReports {
         }
         $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
         $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-        $stmt = $dbobject->prepare(" select * from `investors_grievance_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+        $stmt = $dbobject->prepare(" select max(held) from `investors_grievance_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $committee_meetings_held =$row['held'];
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $committee_meetings_held =$row[0];
         $stmt = $dbobject->prepare(" select * from `investors_grievance_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`investors_grievance_attendance`.`dir_din_no` where `investors_grievance_attendance`.`company_id`=:company_id and `investors_grievance_attendance`.`att_year`=:financial_year");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
@@ -626,12 +626,12 @@ class DatabaseReports {
             }
             $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
             $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-            $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+            $stmt = $dbobject->prepare("select max(held) from `nomination_remuneration_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
             $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $committee_meetings_held =$row['held'];
+            $row = $stmt->fetch(PDO::FETCH_NUM);
+            $committee_meetings_held =$row[0];
             $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`nomination_committee_attendance`.`dir_din_no` where `nomination_committee_attendance`.`company_id`=:company_id and `nomination_committee_attendance`.`att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
@@ -692,12 +692,12 @@ class DatabaseReports {
             }
             $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
             $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-            $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+            $stmt = $dbobject->prepare(" select max(held) from `nomination_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
             $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $committee_meetings_held =$row['held'];
+            $row = $stmt->fetch(PDO::FETCH_NUM);
+            $committee_meetings_held =$row[0];
             $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`nomination_committee_attendance`.`dir_din_no` where `nomination_committee_attendance`.`company_id`=:company_id and `nomination_committee_attendance`.`att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
@@ -765,12 +765,12 @@ class DatabaseReports {
             }
             $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
             $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-            $stmt = $dbobject->prepare(" select * from `remuneration_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+            $stmt = $dbobject->prepare(" select max(held) from `remuneration_committee_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
             $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $committee_meetings_held =$row['held'];
+            $row = $stmt->fetch(PDO::FETCH_NUM);
+            $committee_meetings_held =$row[0];
             $stmt = $dbobject->prepare(" select * from `remuneration_committee_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`remuneration_committee_attendance`.`dir_din_no` where `remuneration_committee_attendance`.`company_id`=:company_id and `remuneration_committee_attendance`.`att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
@@ -839,12 +839,12 @@ class DatabaseReports {
         }
         $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
         $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-        $stmt = $dbobject->prepare(" select * from `csr_committee_meetings_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+        $stmt = $dbobject->prepare(" select max(held) from `csr_committee_meetings_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $committee_meetings_held =$row['held'];
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $committee_meetings_held =$row[0];
         $stmt = $dbobject->prepare(" select * from `csr_committee_meetings_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`csr_committee_meetings_attendance`.`dir_din_no` where `csr_committee_meetings_attendance`.`company_id`=:company_id and `csr_committee_meetings_attendance`.`att_year`=:financial_year");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
@@ -911,12 +911,12 @@ class DatabaseReports {
         }
         $total_company_id_per = round($total_company_id/$total_committee_member*100,2);
         $total_ses_id_per = round($total_ses_id/$total_committee_member*100,2);
-        $stmt = $dbobject->prepare(" select * from `risk_management_committee_meetings_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
+        $stmt = $dbobject->prepare(" select max(held) from `risk_management_committee_meetings_attendance` where `company_id`=:company_id and `att_year`=:financial_year LIMIT 1");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $committee_meetings_held =$row['held'];
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $committee_meetings_held =$row[0];
         $stmt = $dbobject->prepare(" select * from `risk_management_committee_meetings_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`risk_management_committee_meetings_attendance`.`dir_din_no` where `risk_management_committee_meetings_attendance`.`company_id`=:company_id and `risk_management_committee_meetings_attendance`.`att_year`=:financial_year");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
@@ -965,18 +965,21 @@ class DatabaseReports {
         $ses_id_classification = 0;
         $tenure_greater_10 = 0;
         $fourth_row_response = 'no';
-        $fourth_row_score = 10;
+        $fourth_row_score = 0;
         $ninth_row_response = 0;
         $company_id_classification=0;
-        $total_board_directors = $stmt->rowCount();
+        $total_board_directors = 0;
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if($row['ses_classification']=="ID") {
+            if($row['additional_classification']!="C (Resign)" && $row['additional_classification']!="M (Resign)") {
+                $total_board_directors++;
+            }
+            if($row['ses_classification']=="ID" && $row['additional_classification']!="C (Resign)" && $row['additional_classification']!="M (Resign)") {
                 $ses_id_classification++;
             }
-            if($row['company_classification']=="ID") {
+            if($row['company_classification']=="ID" && $row['additional_classification']!="C (Resign)" && $row['additional_classification']!="M (Resign)") {
                 $company_id_classification++;
             }
-            if($row['company_classification']=="ID" && $row['current_tenure']>10) {
+            if($row['company_classification']=="ID" && $row['additional_classification']!="C (Resign)" && $row['additional_classification']!="M (Resign)" && $row['current_tenure']>10) {
                 $tenure_greater_10++;
             }
             if($row['additional_classification']=='C') {
@@ -1745,25 +1748,25 @@ class DatabaseReports {
         $na=0;
         $total_dirs = $stmt->rowCount();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if($row['company_classification']=='ID') {
+            if($row['company_classification']=='ID' && $row['company_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $company_id_no++;
             }
-            elseif($row['company_classification']!='ID') {
+            elseif($row['company_classification']!='ID' && $row['company_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $company_non_id_no++;
             }
-            if($row['ses_classification']=='ID') {
+            if($row['ses_classification']=='ID' && $row['ses_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $ses_id_no++;
             }
-            elseif($row['ses_classification']!='ID') {
+            elseif($row['ses_classification']!='ID' && $row['ses_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $ses_non_id_no++;
             }
-            if($row['retiring_non_retiring']=='Retiring') {
+            if($row['retiring_non_retiring']=='Retiring' && $row['company_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $retiring++;
             }
-            elseif($row['retiring_non_retiring']=='Non Retiring') {
+            elseif($row['retiring_non_retiring']=='Non Retiring' && $row['company_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $non_retiring++;
             }
-            elseif($row['retiring_non_retiring']=='NA') {
+            elseif($row['retiring_non_retiring']=='NA' && $row['company_classification'] !="M (Resign)" && $row['company_classification'] !="C (Resign)") {
                 $na++;
             }
         }
@@ -4243,6 +4246,17 @@ class DatabaseReports {
         }
         $dbobject=null;
         return $disclosures;
+    }
+    //new changes
+    function getTotalPayFromRemuneration() {
+        $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+        $stmt=$dbobject->prepare("SELECT * FROM `pa_report_remuneration_analysis` WHERE `pa_reports_id`='$_SESSION[report_id]'");
+        $stmt->execute();
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+            $past_value[]=$row;
+        }
+        $dbobject=null;
+        return $past_value;
     }
 }
 ?>

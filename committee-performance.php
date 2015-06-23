@@ -394,23 +394,23 @@ if(isset($_POST['committee_performance'])) {
                                         <tbody>
                                         <tr class="commitee-performance">
                                             <td class="text-center">Audit </td>
-                                            <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $audit_committee_info['total_members']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $audit_committee_info['audit_committee_chairman_company_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $audit_committee_info['audit_committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $audit_committee_info['audit_company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $audit_committee_info['audit_ses_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $audit_committee_info['audit_committee_meetings_held']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $audit_committee_info['total_directors']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $audit_committee_info['total_members']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $audit_committee_info['audit_committee_chairman_company_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $audit_committee_info['audit_committee_chairman_ses_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $audit_committee_info['audit_company_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $audit_committee_info['audit_ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $audit_committee_info['audit_committee_meetings_held']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $audit_committee_info['total_directors']; ?>"/></td>
                                         </tr>
                                         <tr class="commitee-performance">
                                             <td class="text-center">Investor's Grievance  </td>
-                                            <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $investor_committee_info['total_members']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $investor_committee_info['committee_chairman_company_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $investor_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $investor_committee_info['company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $investor_committee_info['ses_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $investor_committee_info['committee_meetings_held']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $investor_committee_info['total_directors']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $investor_committee_info['total_members']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $investor_committee_info['committee_chairman_company_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $investor_committee_info['committee_chairman_ses_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $investor_committee_info['company_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $investor_committee_info['ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $investor_committee_info['committee_meetings_held']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $investor_committee_info['total_directors']; ?>"/></td>
                                         </tr>
                                         <?php
                                         if($generic_array['rem_nom_same']=='yes') {
@@ -418,13 +418,13 @@ if(isset($_POST['committee_performance'])) {
                                         ?>
                                             <tr class="commitee-performance">
                                                 <td class="text-center">Nomination &amp; Remuneration</td>
-                                                <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $nomination_remuneration_committee['total_members']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $nomination_remuneration_committee['committee_chairman_company_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $nomination_remuneration_committee['committee_chairman_ses_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $nomination_remuneration_committee['company_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $nomination_remuneration_committee['ses_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $nomination_remuneration_committee['committee_meetings_held']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $nomination_remuneration_committee['total_directors']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $nomination_remuneration_committee['total_members']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $nomination_remuneration_committee['committee_chairman_company_class']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $nomination_remuneration_committee['committee_chairman_ses_class']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $nomination_remuneration_committee['company_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $nomination_remuneration_committee['ses_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $nomination_remuneration_committee['committee_meetings_held']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $nomination_remuneration_committee['total_directors']; ?>"/></td>
                                             </tr>
                                         <?php
                                         }
@@ -434,23 +434,23 @@ if(isset($_POST['committee_performance'])) {
                                         ?>
                                             <tr class="commitee-performance">
                                                 <td class="text-center">Remuneration</td>
-                                                <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $remuneration_committee_info['total_members']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $remuneration_committee_info['committee_chairman_company_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $remuneration_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $remuneration_committee_info['company_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $remuneration_committee_info['ses_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $remuneration_committee_info['committee_meetings_held']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $remuneration_committee_info['total_directors']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $remuneration_committee_info['total_members']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $remuneration_committee_info['committee_chairman_company_class']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $remuneration_committee_info['committee_chairman_ses_class']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $remuneration_committee_info['company_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $remuneration_committee_info['ses_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $remuneration_committee_info['committee_meetings_held']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $remuneration_committee_info['total_directors']; ?>"/></td>
                                             </tr>
                                             <tr class="commitee-performance">
                                                 <td class="text-center">Nomination</td>
-                                                <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $nomination_committee_info['total_members']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $nomination_committee_info['committee_chairman_company_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $nomination_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $nomination_committee_info['company_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $nomination_committee_info['ses_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $nomination_committee_info['committee_meetings_held']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $nomination_committee_info['total_directors']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $nomination_committee_info['total_members']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $nomination_committee_info['committee_chairman_company_class']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $nomination_committee_info['committee_chairman_ses_class']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $nomination_committee_info['company_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $nomination_committee_info['ses_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $nomination_committee_info['committee_meetings_held']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $nomination_committee_info['total_directors']; ?>"/></td>
                                             </tr>
                                         <?php
                                         }
@@ -459,23 +459,23 @@ if(isset($_POST['committee_performance'])) {
                                         ?>
                                         <tr class="commitee-performance">
                                             <td class="text-center">CSR  </td>
-                                            <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $csr_committee_info['total_members']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $csr_committee_info['committee_chairman_company_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $csr_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $csr_committee_info['company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $csr_committee_info['ses_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $csr_committee_info['committee_meetings_held']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $csr_committee_info['total_directors']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $csr_committee_info['total_members']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $csr_committee_info['committee_chairman_company_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $csr_committee_info['committee_chairman_ses_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $csr_committee_info['company_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $csr_committee_info['ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $csr_committee_info['committee_meetings_held']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $csr_committee_info['total_directors']; ?>"/></td>
                                         </tr>
                                         <tr class="commitee-performance">
                                             <td class="text-center">Risk Committee </td>
-                                            <td class="text-center"><input class="form-control" name="total[]" readonly value="<?php echo $risk_committee_info['total_members']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]" readonly value="<?php echo $risk_committee_info['committee_chairman_company_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]" readonly value="<?php echo $risk_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]" readonly value="<?php echo $risk_committee_info['company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]" readonly value="<?php echo $risk_committee_info['ses_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="no_meetings[]" readonly value="<?php echo $risk_committee_info['committee_meetings_held']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]" readonly value="<?php echo $risk_committee_info['total_directors']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $risk_committee_info['total_members']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $risk_committee_info['committee_chairman_company_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $risk_committee_info['committee_chairman_ses_class']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $risk_committee_info['company_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $risk_committee_info['ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $risk_committee_info['committee_meetings_held']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $risk_committee_info['total_directors']; ?>"/></td>
                                         </tr>
                                         </tbody>
                                     </table>

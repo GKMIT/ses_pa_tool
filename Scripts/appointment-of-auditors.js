@@ -43,12 +43,10 @@ CustomJS.prototype = {
                 if(self.is(':checked')) {
                     var id_hidden_block = self.attr("hidden-id");
                     $("#"+id_hidden_block).removeClass('hidden');
-                    console.log("function called");
                 }
                 else {
                     var id_hidden_block = self.attr("hidden-id");
                     $("#"+id_hidden_block).addClass('hidden');
-                    console.log("function called in else part");
                 }
             });
         });
@@ -239,17 +237,19 @@ CustomJS.prototype = {
                     table_id:220
                 },
                 success: function(data) {
-                    var tanure_value1=parseInt($('#tanure_value1').val());
-                    var tanure_value2=parseInt($('#tanure_value2').val());
-                    var tanure_value3=parseInt($('#tanure_value3').val());
-                    if((tanure_value1||tanure_value2||tanure_value3)>10) {
-                        $("#calculate_tenure_analysis_text").removeClass('hidden');
-                        $("#calculate_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
-                    }
-                    else {
-                        $("#calculate_tenure_analysis_text textarea").html("");
-                        $("#calculate_tenure_analysis_text").addClass('hidden');
-                    }
+                    setTimeout(function(){
+                        var tanure_value1=parseInt($('#tanure_value1').val());
+                        var tanure_value2=parseInt($('#tanure_value2').val());
+                        var tanure_value3=parseInt($('#tanure_value3').val());
+                        if((tanure_value1||tanure_value2||tanure_value3)>10) {
+                            $("#calculate_tenure_analysis_text").removeClass('hidden');
+                            $("#calculate_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
+                        }
+                        else {
+                            $("#calculate_tenure_analysis_text textarea").html("");
+                            $("#calculate_tenure_analysis_text").addClass('hidden');
+                        }
+                    },2000);
                 }
             });
         }
@@ -268,36 +268,93 @@ CustomJS.prototype = {
                     table_id:221
                 },
                 success: function(data) {
-                    $(".tenure_audit_partner_value").each(function(i,d){
-                        var self = $(this);
-                        var self_val = parseInt(self.val());
-                        if(self_val>3) {
-                            $(".calculate_tenure_audit_partner_value_analysis_text").removeClass('hidden');
-                            $(".calculate_audit_partner_textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
+                    setTimeout(function(){
+                        $(".tenure_audit_partner_value").each(function(i,d){
+                            var self = $(this);
+                            var self_val = parseInt(self.val());
+                            if(self_val>3) {
 
-                        }
-                        else {
-                            $(".calculate_tenure_audit_partner_value_analysis_text").addClass('hidden');
-                            $(".calculate_audit_partner_textarea").html("");
-                        }
-                    });
+                                $(".calculate_tenure_audit_partner_value_analysis_text").removeClass('hidden');
+                                $(".calculate_audit_partner_textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
+
+                            }
+                            else {
+                                $(".calculate_tenure_audit_partner_value_analysis_text").addClass('hidden');
+                                $(".calculate_audit_partner_textarea").html("");
+                            }
+                        });
+                    },2000);
+
                 }
             });
         }
-        $('.tenure_audit_partner_value').keyup(function(){
+        $(".tenure_audit_partner_value").keyup(function(){
+            calculate_tanure_audit_partner();
+            calculate_tanure_and_audit_partner();
+        });
+        $(".term-value").keyup(function(){
             calculate_tanure_audit_partner();
             calculate_tanure_and_audit_partner();
         });
         calculate_tanure_audit_partner();
+        calculate_tanure_and_audit_partner();
         function calculate_tanure_and_audit_partner(){
-            var tanure_value1=parseInt($('#tanure_value1').val());
-            var tanure_value2=parseInt($('#tanure_value2').val());
-            var tanure_value3=parseInt($('#tanure_value3').val());
-            var audit_partner_value1=parseInt($('#audit_partner_value1').val());
-            var audit_partner_value2=parseInt($('#audit_partner_value2').val());
-            var audit_partner_value3=parseInt($('#audit_partner_value3').val());
+            if(($('#tanure_value1').val()!="")){
+                var tanure_value1=parseInt($('#tanure_value1').val());
+            }
+            else {
+                tanure_value1=0;
+            }
+            if(($('#tanure_value2').val()!="")){
+                var tanure_value2=parseInt($('#tanure_value2').val());
+            }
+            else {
+                tanure_value2=0;
+            }
+            if(($('#tanure_value3').val()!="")){
+                var tanure_value3=parseInt($('#tanure_value3').val());
+            }
+            else {
+                tanure_value3=0;
+            }
+            if(($('#audit_partner_value1').val()!="")){
+                var audit_partner_value1=parseInt($('#audit_partner_value1').val());
+            }
+            else {
+                audit_partner_value1=0;
+            }
+            if(($('#audit_partner_value2').val()!="")){
+                var audit_partner_value2=parseInt($('#audit_partner_value2').val());
+            }
+            else {
+                audit_partner_value2=0;
+            }
+            if(($('#audit_partner_value3').val()!="")){
+                var audit_partner_value3=parseInt($('#audit_partner_value3').val());
+            }
+            else {
+                audit_partner_value3=0;
+            }
+            if(($('#term_of_appoint1').val()!="")){
+                var term_of_appoint1=parseInt($('#term_of_appoint1').val());
+            }
+            else {
+                term_of_appoint1=0;
+            }
+            if(($('#term_of_appoint2').val()!="")){
+                var term_of_appoint2=parseInt($('#term_of_appoint2').val());
+            }
+            else {
+                term_of_appoint2=0;
+            }
+            if(($('#term_of_appoint3').val()!="")){
+                var term_of_appoint3=parseInt($('#term_of_appoint3').val());
+            }
+            else {
+                term_of_appoint3=0;
+            }
             var total_tanure=parseInt(tanure_value1+tanure_value2+tanure_value3);
-            //var total_audit_partner=parseInt(audit_partner_value1+audit_partner_value2+audit_partner_value3);
+            var total_audit=parseInt(audit_partner_value1+audit_partner_value2+audit_partner_value3);
             if(((tanure_value1||tanure_value2||tanure_value3)>=10) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)==3)) {
 
                 $.ajax({
@@ -309,14 +366,15 @@ CustomJS.prototype = {
                         table_id:222
                     },
                     success: function (data) {
+                        setTimeout(function(){
+                            $('.calculate_tenure_and_term_value_analysis_text').removeClass('hidden');
+                            $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html(data.analysis_text);
 
-                        $('.calculate_tenure_and_term_value_analysis_text').removeClass('hidden');
-                        $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html(data.analysis_text);
-
+                        },2000);
                     }
                 });
             }
-            else if((total_tanure<5) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)<5)) {
+            else if((total_tanure<5) && ((term_of_appoint1||term_of_appoint2||term_of_appoint3)<5)) {
                 $.ajax({
                     url: "jquery-data.php",
                     type: "GET",
@@ -326,13 +384,15 @@ CustomJS.prototype = {
                         table_id:223
                     },
                     success: function (data) {
+                        setTimeout(function(){
 
-                        $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html(data.analysis_text);
-                        $('.calculate_tenure_and_term_value_analysis_text').removeClass('hidden');
+                            $('.calculate_tenure_and_term_value_analysis_text').removeClass('hidden');
+                            $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html(data.analysis_text);
+                        },2000);
                     }
                 });
             }
-            else if((((tanure_value1||tanure_value2||tanure_value3)>5)||((tanure_value1||tanure_value2||tanure_value3)<10)) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)>10)) {
+            else if((((tanure_value1||tanure_value2||tanure_value3)>5)||((tanure_value1||tanure_value2||tanure_value3)<10)) && ((term_of_appoint1||term_of_appoint2||term_of_appoint3)>10)) {
 
                 $.ajax({
                     url: "jquery-data.php",
@@ -343,9 +403,11 @@ CustomJS.prototype = {
                         table_id:224
                     },
                     success: function (data) {
+                        setTimeout(function(){
 
-                        $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html(data.analysis_text);
-                        $('.calculate_tenure_and_term_value_analysis_text').removeClass('hidden');
+                            $('.calculate_tenure_and_term_value_analysis_text').removeClass('hidden');
+                            $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html(data.analysis_text);
+                        },2000);
                     }
                 });
             }
@@ -354,7 +416,7 @@ CustomJS.prototype = {
                 $('.calculate_tenure_and_term_value_analysis_text').addClass('hidden');
             }
         }
-        calculate_tanure_and_audit_partner();
+
         $("#auditors_same_firm_option_new").change(function () {
             var self = $(this);
             if(self.val()=='yes') {

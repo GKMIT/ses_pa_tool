@@ -595,21 +595,21 @@ if(isset($_POST['remuneration_analysis'])) {
                                         </tr>
                                         <tr>
                                             <td class="text-center">Remuneration (<i class="fa fa-rupee"></i>&nbsp; Crore) (A)</td>
-                                            <td class="text-center remuneration1"><input name="remuneration_peer_comparison[]" class="form-control" value="<?php echo $executive_remuneration_peer_comparision['company_director_rem']; ?>" /></td>
-                                            <td class="text-center remuneration2"><input name="remuneration_peer_comparison[]" class="form-control" value="<?php echo $executive_remuneration_peer_comparision['peer_1_director_rem']; ?>" /></td>
-                                            <td class="text-center remuneration3"><input name="remuneration_peer_comparison[]" class="form-control" value="<?php echo $executive_remuneration_peer_comparision['peer_2_director_rem']; ?>" /></td>
+                                            <td class="text-center remuneration1"><input name="remuneration_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['company_director_rem']; ?>" /></td>
+                                            <td class="text-center remuneration2"><input name="remuneration_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_1_director_rem']; ?>" /></td>
+                                            <td class="text-center remuneration3"><input name="remuneration_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_2_director_rem']; ?>" /></td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">Net Profits (<i class="fa fa-rupee"></i>&nbsp; Crore) (B)</td>
-                                            <td class="text-center net-profit1"><input name="net_profit_peer_comparison[]" class="form-control" value="<?php echo $executive_remuneration_peer_comparision['company_net_profit']; ?>" /></td>
-                                            <td class="text-center net-profit2"><input name="net_profit_peer_comparison[]" class="form-control" value="<?php echo $executive_remuneration_peer_comparision['peer_1_net_profit']; ?>" /></td>
-                                            <td class="text-center net-profit3"><input name="net_profit_peer_comparison[]" class="form-control" value="<?php echo $executive_remuneration_peer_comparision['peer_2_net_profit']; ?>" /></td>
+                                            <td class="text-center net-profit1"><input name="net_profit_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['company_net_profit']; ?>" /></td>
+                                            <td class="text-center net-profit2"><input name="net_profit_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_1_net_profit']; ?>" /></td>
+                                            <td class="text-center net-profit3"><input name="net_profit_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_2_net_profit']; ?>" /></td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">Rem. Percentage (A/B * 100)</td>
-                                            <td class="text-center percentage1"><input name="rem_per_peer_comparison[]" class="form-control" value="<?php echo number_format ($executive_remuneration_peer_comparision['company_rem_per'],2); ?>" /></td>
-                                            <td class="text-center percentage2"><input name="rem_per_peer_comparison[]" class="form-control" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_1_rem_per'],2); ?>" /></td>
-                                            <td class="text-center percentage3"><input name="rem_per_peer_comparison[]" class="form-control" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_2_rem_per'],2); ?>" /></td>
+                                            <td class="text-center percentage1"><input name="rem_per_peer_comparison[]" class="form-control percentage1" value="<?php echo number_format ($executive_remuneration_peer_comparision['company_rem_per'],2); ?>" /></td>
+                                            <td class="text-center percentage2"><input name="rem_per_peer_comparison[]" class="form-control percentage2" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_1_rem_per'],2); ?>" /></td>
+                                            <td class="text-center percentage3"><input name="rem_per_peer_comparison[]" class="form-control percentage3" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_2_rem_per'],2); ?>" /></td>
                                         </tr>
                                         </tbody>
                                     </table>

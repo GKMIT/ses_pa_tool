@@ -930,7 +930,7 @@ $table1=$db->getTable1Data();
                                             <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                             <label class='col-md-3' id='term_appointment_label_1'>Term of appointment of Audit firm/Auditors</label>
                                             <div class='col-md-3'>
-                                                <input type='text' name="used_in_text[]" class='form-control term-value other-text' id='term_of_appoint'>
+                                                <input type='text' name="used_in_text[]" class='form-control term-value other-text' id='term_of_appoint1'>
                                             </div>
                                         </div>
                                         <div class='form-group hidden' id="term_appointment_container_2">
@@ -938,7 +938,7 @@ $table1=$db->getTable1Data();
                                             <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                             <label class='col-md-3' id='term_appointment_label_2'>Term of appointment of Audit firm/Auditors</label>
                                             <div class='col-md-3'>
-                                                <input type='text' name="used_in_text[]" class='form-control term-value other-text' id='term_of_appoint'>
+                                                <input type='text' name="used_in_text[]" class='form-control term-value other-text' id='term_of_appoint2'>
                                             </div>
                                         </div>
                                         <div class='form-group hidden' id="term_appointment_container_3">
@@ -946,7 +946,7 @@ $table1=$db->getTable1Data();
                                             <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                             <label class='col-md-3' id='term_appointment_label_3'>Term of appointment of Audit firm/Auditors</label>
                                             <div class='col-md-3'>
-                                                <input type='text' name="used_in_text[]" class='form-control term-value other-text' id='term_of_appoint'>
+                                                <input type='text' name="used_in_text[]" class='form-control term-value other-text' id='term_of_appoint3'>
                                             </div>
                                         </div>
                                     </div>
@@ -969,7 +969,7 @@ $table1=$db->getTable1Data();
                                             <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                             <label class="col-md-3 control-label">Tenure of audit partner</label>
                                             <div class="col-md-2" data-textarea-id="calculate_tenure_audit_partner_value_analysis_text">
-                                                <input type="text" name="used_in_text[]" class="tenure_audit_partner_value form-control other-text" id='audit_partner_value1' value=" " >
+                                                <input type="text" name="used_in_text[]" class="tenure_audit_partner_value form-control other-text" id='audit_partner_value1' >
                                             </div>
                                         </div>
                                         <div class="form-group hidden" data-textarea-id="calculate_tenure_audit_partner_value_analysis_text" id="name_auditor_container_2">
@@ -983,7 +983,7 @@ $table1=$db->getTable1Data();
                                             <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                             <label class="col-md-3 control-label">Tenure of audit partner</label>
                                             <div class="col-md-2">
-                                                <input type="text" name="used_in_text[]" class="tenure_audit_partner_value form-control other-text" id='audit_partner_value2' value=" " >
+                                                <input type="text" name="used_in_text[]" class="tenure_audit_partner_value form-control other-text" id='audit_partner_value2' >
                                             </div>
                                         </div>
                                         <div class="form-group hidden" data-textarea-id="calculate_tenure_audit_partner_value_analysis_text" id="name_auditor_container_3">
@@ -997,7 +997,7 @@ $table1=$db->getTable1Data();
                                             <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                             <label class="col-md-3 control-label">Tenure of audit partner</label>
                                             <div class="col-md-2">
-                                                <input type="text" name="used_in_text[]" class="tenure_audit_partner_value form-control other-text" id='audit_partner_value3' value=" " >
+                                                <input type="text" name="used_in_text[]" class="tenure_audit_partner_value form-control other-text" id='audit_partner_value3' >
                                             </div>
                                         </div>
                                     </div>

@@ -469,7 +469,11 @@ if(isset($_POST['directors_remuneration'])) {
                                             </tr>
                                             </thead>
                                             <tbody id="remuneration_table_body" class="dilution-row-desciption_past">
-
+                                            <?php
+                                            $db=new DatabaseReports();
+                                            $past_value=$db->getTotalPayFromRemuneration();
+                                            print_r($past_value);
+                                            ?>
                                             <tr class="tr-td-center dilution-description-row diluton-row">
                                                 <td colspan="2">
                                                 <select name="executive[]" class="form-control din_numbers">

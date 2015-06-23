@@ -136,14 +136,14 @@ CustomJS.prototype = {
         });
         $("#has_the_company_disclosed_the_related_party_transactions").change(function () {
             var self = $(this);
-            if(self.val()=="yes") {
+            if(self.val()=="no") {
                 $.ajax({
                     url: "jquery-data.php",
                     type: "GET",
                     dataType: "JSON",
                     data: {
                         standard_analysis_text: true,
-                        table_id:165
+                        table_id:341
                     },
                     success: function (data) {
                         $("#has_the_company_disclosed_the_related_party_transactions_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
@@ -449,6 +449,80 @@ CustomJS.prototype = {
                     $(this).closest('.table-description').find('.shift').val(0);
             });
         }
+        function contingent_liabilities_year1(){
+            $("#networth15").keyup(function(){
+                var a = $("#total15").val();
+                var b = $("#networth15").val();
+                var value = (a/b) * 100;
+                if(value > 0){
+                    $("#contingent15").val(value.toFixed(2));
+                }
+                else
+                    $("#contingent15").val('0');
+            });
+            $("#total15").keyup(function(){
+                var a = $("#total15").val();
+                var b = $("#networth15").val();
+                var value = (a/b) * 100;
+                if(value > 0){
+                    $("#contingent15").val(value.toFixed(2));
+                }
+                else
+                    $("#contingent15").val('0');
+            });
+        }
+        contingent_liabilities_year1();
+        function contingent_liabilities_year2(){
+            $("#networth14").keyup(function(){
+                var a = $("#total14").val();
+                var b = $("#networth14").val();
+                var value = (a/b) * 100;
+                if(value > 0){
+                    $("#contingent14").val(value.toFixed(2));
+                }
+                else
+                    $("#contingent14").val('0');
+            });
+            $("#total14").keyup(function(){
+                var a = $("#total14").val();
+                var b = $("#networth14").val();
+                var value = (a/b) * 100;
+                if(value > 0){
+                    $("#contingent14").val(value.toFixed(2));
+                }
+                else
+                    $("#contingent14").val('0');
+            });
+        }
+        contingent_liabilities_year2();
+        function shift_rpt() {
+            $('.rpt-shift').each(function(){
+                var a=$(this).closest('.rpt').find('.rpt-current-year').val();
+                var b=$(this).closest('.rpt').find('.rpt-previous-year').val();
+                var shift=(((a-b)/b)*100).toFixed(2);
+                if((b == 0 || b == '') && a != '')
+                {
+                    //alert("entered");
+                    $(this).closest('.rpt').find('.rpt-shift').val(0);
+                }
+                if(shift>0)
+                    $(this).closest('.rpt').find('.rpt-shift').val(shift);
+                else if(shift<0)
+                    $(this).closest('.rpt').find('.rpt-shift').val(shift);
+                else
+                    $(this).closest('.rpt').find('.rpt-shift').val(0);
+            });
+        }
+        shift_rpt();
+        function current_year_rpt(){
+            $(".rpt-current-year").keyup(function(){
+                shift_rpt();
+            });
+            $(".rpt-previous-year").keyup(function(){
+                shift_rpt();
+            });
+        }
+        current_year_rpt();
         //shift();
 
     },

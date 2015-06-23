@@ -106,7 +106,7 @@ elseif(isset($_GET['get_question_one'])) {
 elseif(isset($_GET['get_material_failure'])) {
 	$m_b=$_GET['mb'];
 	$m_d=$_GET['md'];
-	echo "<div class='col-md-12'><textarea class='form-control' style='height:110px;'>$m_b"."&#10$m_d</textarea></div>";	
+	echo "<div class='col-md-12'><textarea class='form-control' style='height:110px;'>$m_b"."&#10$m_d</textarea></div>";
 }
 elseif(isset($_GET['get_time_commit'])) {
 	$db = new SqlConnect();
@@ -443,7 +443,7 @@ elseif(isset($_GET['get_fulltime_recommendation'])) {
 		{
 			$analysis['value']=str_replace('[his/her]', 'her', $analysis['value']);
 		}
-		$case7.="$analysis[value]";	
+		$case7.="$analysis[value]";
 	}
 	$db->fetch_query("select * from `ses_standard_text_recommendation_detail` where `id`=11");
 	$analysis = $db->get_row();
@@ -484,7 +484,7 @@ elseif(isset($_GET['get_fulltime_recommendation'])) {
 	if($mav=="Yes")
 	{
 		$analysis['value']=str_replace('[Brief description of Failure]',$mad, $analysis['value']);
-		$case10.="$analysis[value]";	
+		$case10.="$analysis[value]";
 	}
 	$db->fetch_query("select * from `ses_standard_text_recommendation_detail` where `id`=7");
 	$analysis = $db->get_row();
@@ -503,7 +503,7 @@ elseif(isset($_GET['get_fulltime_recommendation'])) {
 		{
 			$analysis['value']=str_replace('[his/her]', 'her', $analysis['value']);
 		}
-		$case11.="$analysis[value]";	
+		$case11.="$analysis[value]";
 	}
 	$db->fetch_query("select * from `ses_standard_text_recommendation_detail` where `id`=22");
 	$analysis = $db->get_row();
@@ -824,9 +824,9 @@ elseif(isset($_GET['get_auditor_recommendation'])) {
 	}
 	$cnt=$_GET['cnt'];
 	$v = $_GET['value'];
-	
+
 	if($cnt < 2)
-	{	
+	{
 		if($v > 10)
 		{
 			$db->fetch_query("select * from `appointment_auditor_recommendation` where `id`=2");
@@ -841,9 +841,9 @@ elseif(isset($_GET['get_auditor_recommendation'])) {
 		{
 			$db->fetch_query("select * from `appointment_auditor_recommendation` where `id`=3");
 			$analysis = $db->get_row();
-			$case2.= $analysis['description'];	
+			$case2.= $analysis['description'];
 		}
-		else 
+		else
 			$case2='';
 	}
 	$f_val = $_GET['financial_value'];
@@ -851,14 +851,14 @@ elseif(isset($_GET['get_auditor_recommendation'])) {
 	{
 		$db->fetch_query("select * from `appointment_auditor_recommendation` where `id`=4");
 		$analysis = $db->get_row();
-		$case3.= $analysis['description'];	
+		$case3.= $analysis['description'];
 	}
 	$b_val = $_GET['business_value'];
 	if($b_val == "Yes")
 	{
 		$db->fetch_query("select * from `appointment_auditor_recommendation` where `id`=5");
 		$analysis = $db->get_row();
-		$case4.= $analysis['description'];	
+		$case4.= $analysis['description'];
 	}
 	$t1 = $_GET['term1'];
 	$t2 = $_GET['term2'];
@@ -891,7 +891,7 @@ elseif(isset($_GET['get_auditor_recommendation'])) {
 	{
 		$db->fetch_query("select * from `appointment_auditor_recommendation` where `id`=8");
 		$analysis = $db->get_row();
-		$case7.= $analysis['description'];	
+		$case7.= $analysis['description'];
 	}
 	$check = $_GET['check'];
 	if($check == "Yes")
@@ -899,7 +899,7 @@ elseif(isset($_GET['get_auditor_recommendation'])) {
 		$db->fetch_query("select * from `appointment_auditor_recommendation` where `id`=9");
 		$analysis = $db->get_row();
 		$case8.= $analysis['description'];
-	} 
+	}
 	$check50 = $_GET['check50'];
 	if($check50 == "Yes")
 	{
@@ -1234,6 +1234,7 @@ elseif(isset($_GET['get_director_attendance_values'])) {
 			</div>
 			<input type='hidden' name='risk_management_committee_member' />";
 	}
+
 	echo json_encode(array('attendance_values'=>$director_attendance_values,'blocks'=>$str));
 }
 elseif(isset($_GET['get_company_list_filtered'])) {
@@ -1273,17 +1274,17 @@ elseif(isset($_GET['get_company_details_editable'])) {
 		  <tr><th>Contact</th><td><input class='form-control' name='contact' value='$company_details[contact]'/></td></tr>
 		  <tr><th>Registered Office Address</th><td><input class='form-control' name='address' value='$company_details[address]'/></td></tr>
 		  <tr><th>Fiscal Year End</th><td>";
-		  $str.="<select class='form-control' name='fiscal_year_end'>
+	$str.="<select class='form-control' name='fiscal_year_end'>
 				<option value=''>Select</option>";
-				$months = array('3'=>'March','6'=>'June','9'=>'September','12'=>'December');
-				foreach($months as $key=>$month) {
-					if($key==$company_details['fiscal_year_end'])
-						$str.= "<option selected value='$key'>$month</option>";
-					else
-						$str.= "<option value='$key'>$month</option>";
-				}
-				$str.="</select></td></tr>";
-		  $str.="<tr>
+	$months = array('3'=>'March','6'=>'June','9'=>'September','12'=>'December');
+	foreach($months as $key=>$month) {
+		if($key==$company_details['fiscal_year_end'])
+			$str.= "<option selected value='$key'>$month</option>";
+		else
+			$str.= "<option value='$key'>$month</option>";
+	}
+	$str.="</select></td></tr>";
+	$str.="<tr>
 			  		<th>Peer 1 Company</th>
 			  		<td>
 			  			<input type='hidden' name='peer_1_company_id' id='peer_1_company_id' value='".$company_peer_details['peer1_company_details']['id']."'/>
@@ -1295,7 +1296,7 @@ elseif(isset($_GET['get_company_details_editable'])) {
 						</div>
 			  		</td>
 			  	 </tr>";
-	      $str.="<tr>
+	$str.="<tr>
 					<th>Peer 2 Company</th>
 					<td>
 						<input type='hidden' name='peer_2_company_id' id='peer_2_company_id' value='".$company_peer_details['peer2_company_details']['id']."'/>
@@ -1307,7 +1308,7 @@ elseif(isset($_GET['get_company_details_editable'])) {
 						</div>
 					</td>
 				 </tr>";
-	      echo json_encode(array('details'=>$str));
+	echo json_encode(array('details'=>$str));
 }
 elseif(isset($_GET['get_director_list_filtered'])) {
 	$db = new Database();
@@ -1371,7 +1372,6 @@ elseif(isset($_POST['user_login'])) {
 	echo json_encode($response);
 }
 elseif(isset($_GET['remuneration_analysis_3_years'])) {
-	session_start();
 	$start_year = $_GET['first_year'];
 	$din_nos = $_GET['din_nos'];
 	$db = new Database();
@@ -1422,18 +1422,18 @@ elseif(isset($_GET['load_dashboard'])) {
 									<td class='text-center'>$report[name]</td>
 									<td class='text-center'>$report[report_year]</td>
 									<td class='text-center''>";
-										if(isset($_SESSION['report_id'])) {
-											if($_SESSION['report_id']==$report['report_id']) {
-												$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report disabled' data-report-id=''$report[report_id]'>Running Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-											}
-											else {
-												$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report' data-report-id='$report[report_id]'>Continue with Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-											}
-										}
-										else {
-											$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report' data-report-id='$report[report_id]'>Continue with Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-										}
-										$incomplete_report_str.="<button type='button' data-report-id='$report[report_id]' class='btn btn-success mark-completed'>Mark Completed</button>
+		if(isset($_SESSION['report_id'])) {
+			if($_SESSION['report_id']==$report['report_id']) {
+				$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report disabled' data-report-id=''$report[report_id]'>Running Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			else {
+				$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report' data-report-id='$report[report_id]'>Continue with Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+		}
+		else {
+			$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report' data-report-id='$report[report_id]'>Continue with Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+		}
+		$incomplete_report_str.="<button type='button' data-report-id='$report[report_id]' class='btn btn-success mark-completed'>Mark Completed</button>
 									</td>
 								</tr>";
 	}
@@ -1697,15 +1697,15 @@ elseif(isset($_GET['GetExistingDataofIssuesOfShares'])) {
 	$dilution_to_shareholding=$db->getIssuesOfSharesDilutionToShareholding();
 	$dilution_to_shareholding_securities=$db->getIssuesOfSharesDilutionToShareholdingSecurities();
 	echo json_encode(array(
-			'other_text'=>$other_text,
-			'analysis'=>$analysis,
-			'recommendation'=>$recommendation,
-			'triggers'=>$triggers,
-			'checkbox'=>$checkbox,
-			'past_equity'=>$past_equity,
-			'dilution_to_shareholding'=>$dilution_to_shareholding,
-			'dilution_to_shareholding_securities'=>$dilution_to_shareholding_securities
-		));
+		'other_text'=>$other_text,
+		'analysis'=>$analysis,
+		'recommendation'=>$recommendation,
+		'triggers'=>$triggers,
+		'checkbox'=>$checkbox,
+		'past_equity'=>$past_equity,
+		'dilution_to_shareholding'=>$dilution_to_shareholding,
+		'dilution_to_shareholding_securities'=>$dilution_to_shareholding_securities
+	));
 }
 //Alteration in MOA-AOA
 elseif(isset($_GET['GetExistingDataofAlterationInMOA'])) {
