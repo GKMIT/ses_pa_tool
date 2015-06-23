@@ -1,5 +1,6 @@
 <?php
 session_start();
+// app
 include_once("assets/config/config.php");
 include_once("Classes/databasereport.php");
 if(isset($_POST['directors_remuneration'])) {
