@@ -118,6 +118,11 @@ $response=$db->addFillInvestment($info);
 							</a>
 							<ul class="sub-menu">
 								<li>
+									<a href="<?php echo $_config['base_url']."InputSheet/admin/initialize.php"; ?>">
+										<span class="title">Initialize</span>
+									</a>
+								</li>
+								<li>
 									<a href="<?php echo $_config['base_url']."InputSheet/admin/director-info.php"; ?>">
 										Add Director's Info
 									</a>
