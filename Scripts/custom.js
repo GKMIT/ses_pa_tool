@@ -1808,7 +1808,16 @@ CustomJS.prototype = {
                 $(".auto-fill").addClass('hidden');
             });
         }
+
+        if($("#att_year").val()!="") {
+            fillDirectorList();
+        }
+
         $("#att_year").change(function() {
+            fillDirectorList();
+        });
+
+        function fillDirectorList () {
             $.ajax({
                 url:"../../jquery-data.php",
                 type:"GET",
@@ -1822,7 +1831,8 @@ CustomJS.prototype = {
                     $("#dir_din_no").html(data.directors);
                 }
             });
-        });
+        }
+
         $("#dir_din_no").change(function() {
             $.ajax({
                 url:"../../jquery-data.php",
@@ -1941,6 +1951,14 @@ CustomJS.prototype = {
             });
         });
         $("#att_year").change(function() {
+            fillDirectorList();
+        });
+
+        if($("#att_year").val()!="") {
+            fillDirectorList();
+        }
+
+        function fillDirectorList () {
             $.ajax({
                 url:"../../jquery-data.php",
                 type:"GET",
@@ -1965,7 +1983,7 @@ CustomJS.prototype = {
                     }
                 }
             });
-        });
+        }
     },
     initializeDirectorRemunerationJs: function(messages,flag) {
         if(flag) {
@@ -2449,7 +2467,16 @@ CustomJS.prototype = {
                 }
             });
         });
+
+        if($("#financial_year").val()!="") {
+            fillDirectorList();
+        }
+
         $("#financial_year").change(function() {
+            fillDirectorList();
+        });
+
+        function fillDirectorList () {
             $.ajax({
                 url:"../../jquery-data.php",
                 type:"GET",
@@ -2493,7 +2520,7 @@ CustomJS.prototype = {
                     }
                 }
             });
-        });
+        }
     },
     initializeAuditorsInfoJs: function(messages,flag) {
         if(flag) {
@@ -2672,6 +2699,13 @@ CustomJS.prototype = {
             });
         }
         $("#financial_year").change(function() {
+            fillList();
+        });
+
+        if($("#financial_year").val()!="") {
+            fillList();
+        }
+        function fillList () {
             $.ajax({
                 url:"../../jquery-data.php",
                 type:"GET",
@@ -2708,7 +2742,7 @@ CustomJS.prototype = {
                     }
                 }
             });
-        });
+        }
     }
 }
 var object = new CustomJS();

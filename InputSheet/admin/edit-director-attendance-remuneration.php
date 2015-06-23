@@ -436,10 +436,10 @@ if(isset($_POST['btn_edit_director_attendance_and_pay_details'])) {
                                     <h4 class="form-section">Details</h4>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Company Name</label>
-                                        <input type="hidden" name="company_id" id="companies_id"/>
+                                        <input value="<?php echo $_SESSION['input_sheet_company_id']; ?>" type="hidden" name="company_id" id="companies_id"/>
                                         <div class="col-md-4">
                                             <div style="position: relative;">
-                                                <input type="text" placeholder="Enter company name" autocomplete="off" id="com_bse_code" class="form-control"/>
+                                                <input value="<?php echo $_SESSION['input_sheet_company_name']; ?>" type="text" placeholder="Enter company name" autocomplete="off" id="com_bse_code" class="form-control"/>
                                                 <div class="auto-fill hidden">
 
                                                 </div>
@@ -452,8 +452,21 @@ if(isset($_POST['btn_edit_director_attendance_and_pay_details'])) {
                                             <select name="att_year" id="att_year" class="form-control">
                                                 <option value="">select year</option>
                                                 <?php
-                                                for($i=2009;$i<=2030;$i++) {
-                                                    echo "<option value='$i'>$i</option>";
+                                                if(isset($_SESSION['input_sheet_financial_year'])) {
+                                                    for ($i = 2011; $i <= 2020; $i++) {
+                                                        if($i==$_SESSION['input_sheet_financial_year']) {
+                                                            echo "<option selected value='$i'>$i</option>";
+                                                        }
+                                                        else {
+                                                            echo "<option value='$i'>$i</option>";
+                                                        }
+                                                    }
+                                                }
+                                                else {
+                                                    echo "aksj";
+                                                    for ($i = 2011; $i <= 2020; $i++) {
+                                                        echo "<option value='$i'>$i</option>";
+                                                    }
                                                 }
                                                 ?>
                                             </select>
