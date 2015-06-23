@@ -2308,15 +2308,20 @@ class Database {
 			$array_dins[] = $array_din_nos[$i]['din_no'];
 		}
 
+		$company_id = $_SESSION['company_id'];
+
 		// Din calculated
 		$single_director = array();
 
 		foreach($array_dins as $din) {
+
 			$single_director['din']=$din;
 			$first_year = $start_year;
-			$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:financial_year");
+			$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:financial_year and `company_id`=:company_id");
 			$stmt->bindParam(':dir_din_no',$din);
 			$stmt->bindParam(':financial_year',$first_year);
+			$stmt->bindParam(':company_id',$company_id);
+
 			$stmt->execute();
 			if($stmt->rowCount()>0) {
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -2329,9 +2334,10 @@ class Database {
 			}
 
 			$second_year = $start_year-1;
-			$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:financial_year");
+			$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:financial_year and `company_id`=:company_id");
 			$stmt->bindParam(':dir_din_no',$din);
 			$stmt->bindParam(':financial_year',$second_year);
+			$stmt->bindParam(':company_id',$company_id);
 			$stmt->execute();
 			if($stmt->rowCount()>0) {
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -2344,9 +2350,10 @@ class Database {
 			}
 
 			$third_year = $start_year-2;
-			$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:financial_year");
+			$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:financial_year and `company_id`=:company_id");
 			$stmt->bindParam(':dir_din_no',$din);
 			$stmt->bindParam(':financial_year',$third_year);
+			$stmt->bindParam(':company_id',$company_id);
 			$stmt->execute();
 			if($stmt->rowCount()>0) {
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);

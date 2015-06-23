@@ -1372,6 +1372,7 @@ elseif(isset($_POST['user_login'])) {
 	echo json_encode($response);
 }
 elseif(isset($_GET['remuneration_analysis_3_years'])) {
+	session_start();
 	$start_year = $_GET['first_year'];
 	$din_nos = $_GET['din_nos'];
 	$db = new Database();
