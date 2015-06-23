@@ -92,6 +92,7 @@ CustomJS.prototype = {
                     console.log(data);
                 },
                 success: function(data) {
+                    console.log(data);
                     var indexed_tsr = 0;
                     for(var i= 4,j=0;i>=0;i--,j++) {
                         if(j!=0) {

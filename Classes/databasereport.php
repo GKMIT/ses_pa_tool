@@ -1039,7 +1039,7 @@ class DatabaseReports {
     }
     function getLast5YearsDividendData($company_id,$start_year) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
-        $years = range($start_year-5,$start_year);
+        $years = range($start_year-4,$start_year);
         $total_dividend = 0;
         $market_price_at_year_start = 1;
         $indexed_tsr = array();
