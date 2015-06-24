@@ -1273,6 +1273,14 @@ class DatabaseReports {
     function saveDisclosuresInfo($info) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $pa_report_id = $_SESSION['report_id'];
+        $edit_mode=$info['edit_mode'];
+        if($edit_mode=="Edit Mode") {
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_disclosures` WHERE `pa_reports_id`='$pa_report_id'");
+            $stmt->execute();
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_analysis_text` WHERE `pa_reports_id`='$pa_report_id' and `resolution_name`=:resolution_name");
+            $stmt->bindParam(":resolution_name",$info['main_section']);
+            $stmt->execute();
+        }
         $total_disclosure=count($info['question']);
         $j=1;
         for($i=0;$i<$total_disclosure;$i++) {

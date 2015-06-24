@@ -256,6 +256,7 @@ CustomJS.prototype = {
         $('.tanure_value').keyup(function(){
             calculate_tanure();
             calculate_tanure_and_audit_partner();
+            group_firm_audit_tanure();
         });
         calculate_tanure();
         function calculate_tanure_audit_partner() {
@@ -285,6 +286,60 @@ CustomJS.prototype = {
                 }
             });
         }
+        function group_firm_audit_tanure() {
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    standard_analysis_text:true,
+                    table_id:342
+                },
+                success: function(data) {
+                    setTimeout(function(){
+                        if($('#tanure_value1').val() !=""){
+                            var tanure_value1=parseInt($('#tanure_value1').val());
+                        }
+                        else {
+                            tanure_value1=0;
+                        }
+                        if(($('#tanure_value2').val()!="")){
+                            var tanure_value2=parseInt($('#tanure_value2').val());
+                        }
+                        else {
+                            tanure_value2=0;
+                        }
+                        if(($('#tanure_value3').val()!="")){
+                            var tanure_value3=parseInt($('#tanure_value3').val());
+                        }
+                        else {
+                            tanure_value3=0;
+                        }
+                        if(($('#group_firm_audit_tenure').val()!="")){
+                            var group_firm_audit_tenure_value=parseInt($('#group_firm_audit_tenure').val());
+                        }
+                        else {
+                            group_firm_audit_tenure_value=0;
+                        }
+                        var group_tanure=tanure_value1+tanure_value2+tanure_value3+group_firm_audit_tenure_value;
+                        console.log(group_tanure);
+                        if((group_tanure)>10) {
+                            $("#group_firm_audit_tenure_analysis_text").removeClass('hidden');
+                            $("#group_firm_audit_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
+                        }
+                        else {
+                            $("#group_firm_audit_tenure_analysis_text").addClass('hidden');
+                            $("#group_firm_audit_tenure_analysis_text textarea").html("");
+                        }
+                    },2000);
+
+                }
+            });
+        }
+        group_firm_audit_tanure();
+        $('#group_firm_audit_tenure').keyup(function(){
+            group_firm_audit_tanure();
+        });
         $(".tenure_audit_partner_value").keyup(function(){
             calculate_tanure_audit_partner();
             calculate_tanure_and_audit_partner();
@@ -424,6 +479,8 @@ CustomJS.prototype = {
             else {
                 $("#previous_auditors_details_container1").addClass('hidden');
                 $("#auditors_same_firm_tenure1").addClass('hidden');
+                $("#group_firm_audit_tenure_analysis_text").addClass('hidden');
+                $("#group_firm_audit_tenure_analysis_text").val("");
             }
         });
 
@@ -658,22 +715,31 @@ CustomJS.prototype = {
             var audit_partner_value1=$('#audit_partner_value1').val();
             var audit_partner_value2=$('#audit_partner_value2').val();
             var audit_partner_value3=$('#audit_partner_value3').val();
+            var term_of_appoint1=($('#term_of_appoint1').val());
+            var term_of_appoint2=($('#term_of_appoint2').val());
+            var term_of_appoint3=($('#term_of_appoint3').val());
+            var group_firm_audit_tenure_value=parseInt($('#group_firm_audit_tenure').val());
+
             var total_tanure=tanure_value1+tanure_value2+tanure_value3;
-            var total_tanure=audit_partner_value1+audit_partner_value2+audit_partner_value3;
-            if(((tanure_value1||tanure_value2||tanure_value3)>=10) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)==3)) {
+            var group_tanure=total_tanure+group_firm_audit_tenure_value;
+            var total_audit_tanure=audit_partner_value1+audit_partner_value2+audit_partner_value3;
+            if(((tanure_value1||tanure_value2||tanure_value3)>=10) && ((term_of_appoint1||term_of_appoint2||term_of_appoint3)==3)) {
                 array_recommendations_fire.push({"table_id":176});
             }
-            if((total_tanure<5) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)<5)) {
+            if(((total_tanure)<5) && ((total_tanure)>0) &&  ((term_of_appoint1||term_of_appoint2||term_of_appoint3)<5) &&  ((term_of_appoint1||term_of_appoint2||term_of_appoint3)>0))  {
                 array_recommendations_fire.push({"table_id":177});
             }
-            if((((tanure_value1||tanure_value2||tanure_value3)>5)||((tanure_value1||tanure_value2||tanure_value3)<10)) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)>10)){
+            if((((tanure_value1||tanure_value2||tanure_value3)>5)||((tanure_value1||tanure_value2||tanure_value3)<10)) && ((term_of_appoint1||term_of_appoint2||term_of_appoint3)>10)){
                 array_recommendations_fire.push({"table_id":178});
             }
             if((tanure_value1||tanure_value2||tanure_value3)>10) {
+                array_recommendations_fire.push({"table_id":180});
+            }
+            if((audit_partner_value1||audit_partner_value2||audit_partner_value3)>3) {
                 array_recommendations_fire.push({"table_id":179});
             }
-            if((tanure_value1||tanure_value2||tanure_value3)>10) {
-                array_recommendations_fire.push({"table_id":180});
+            if((group_tanure)>10) {
+                array_recommendations_fire.push({"table_id":286});
             }
             $(".recommendations-fire-appointment-of-auditors").each(function(i,data){
                 var self = $(this);
@@ -710,7 +776,7 @@ CustomJS.prototype = {
             var total_auditors_rem = $("#total_auditor_rem_year_"+data_col_id).val();
             var $percentage_non_audit = $("#percentage_non_audit_fee_year_"+data_col_id);
             if(non_audit_fee!="" &&  non_audit_fee!="0" &&  total_auditors_rem!="" && total_auditors_rem!="0") {
-                var percentage = (non_audit_fee/total_auditors_rem * 100).toFixed();
+                var percentage = (non_audit_fee/total_auditors_rem * 100).toFixed(2);
                 $percentage_non_audit.val(percentage);
             }
             else {

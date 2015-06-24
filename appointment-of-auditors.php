@@ -1043,7 +1043,13 @@ $table1=$db->getTable1Data();
                                         <label class="col-md-10">Tenure of the previous Auditor</label>
                                         <div class="col-md-2">
                                             <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                            <input type="text" class="form-control analysis-text" name="analysis_text[]" />
+                                            <input type="text" class="form-control analysis-text" id="group_firm_audit_tenure" name="analysis_text[]" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group hidden" id="group_firm_audit_tenure_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text " ></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -1074,12 +1080,10 @@ $table1=$db->getTable1Data();
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="financial_interests_in_or_association_with_the_company_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group hidden" id="financial_interests_in_or_association_with_the_company_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -1116,220 +1120,190 @@ $table1=$db->getTable1Data();
                                             <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label class="col-md-10">Have material unaudited financial statements been used in consolidated without adequate justification for the same?</label>
-                                            <div class="col-md-2">
-                                                <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="have_material_unaudited_financial">
-                                                    <option value="">Select</option>
-                                                    <option value="yes" data-recommendation-table-id="170">Yes</option>
-                                                    <option value="no" >No</option>
-                                                    <option value="na">Not Applicable</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Have material unaudited financial statements been used in consolidated without adequate justification for the same?</label>
+                                        <div class="col-md-2">
+                                            <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="have_material_unaudited_financial">
+                                                <option value="">Select</option>
+                                                <option value="yes" data-recommendation-table-id="170">Yes</option>
+                                                <option value="no" >No</option>
+                                                <option value="na">Not Applicable</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="have_material_unaudited_financial_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group hidden" id="have_material_unaudited_financial_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label class="col-md-10">Were the Auditors/ representative of the Auditors present in the last AGM?</label>
-                                            <div class="col-md-2">
-                                                <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="were_the_auditors">
-                                                    <option value="">Select</option>
-                                                    <option value="yes" >Yes</option>
-                                                    <option value="no" data-recommendation-table-id="171">No</option>
-                                                    <option value="na">Not Applicable</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Were the Auditors/ representative of the Auditors present in the last AGM?</label>
+                                        <div class="col-md-2">
+                                            <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="were_the_auditors">
+                                                <option value="">Select</option>
+                                                <option value="yes" >Yes</option>
+                                                <option value="no" data-recommendation-table-id="171">No</option>
+                                                <option value="na">Not Applicable</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="were_the_auditors_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group hidden" id="were_the_auditors_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label class="col-md-10">Is the Audit Committee compliant as per the Companies Act, 2013 and Listing Agreement?</label>
-                                            <div class="col-md-2">
-                                                <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="is_the_audit_committee_compliant">
-                                                    <option value="">Select</option>
-                                                    <option value="yes" >Yes</option>
-                                                    <option value="no" data-recommendation-table-id="172">No</option>
-                                                    <option value="na">Not Applicable</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Is the Audit Committee compliant as per the Companies Act, 2013 and Listing Agreement?</label>
+                                        <div class="col-md-2">
+                                            <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="is_the_audit_committee_compliant">
+                                                <option value="">Select</option>
+                                                <option value="yes" >Yes</option>
+                                                <option value="no" data-recommendation-table-id="172">No</option>
+                                                <option value="na">Not Applicable</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="is_the_audit_committee_compliant_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group hidden" id="is_the_audit_committee_compliant_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <h4 class="form-section">TABLE 1</h4>
+                                    <h4 class="form-section">TABLE 1</h4>
 
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <td>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <td>
 
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[0]['financial_year']; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[1]['financial_year']; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[2]['financial_year']; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[3]['financial_year']; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[4]['financial_year']; ?>">
-                                                    </td>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="table1">
-                                                    <td class="col-md-3">Audit Fee (In <i class="fa fa-rupee"></i> Cr)</td>
-                                                    <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[0]['audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[1]['audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[2]['audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[3]['audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[4]['audit_fee']; ?>"></td>
-                                                </tr>
-                                                <tr class="table1">
-                                                    <td>Audit Related Fee (In <i class="fa fa-rupee"></i> Cr)</td>
-                                                    <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[0]['audit_related_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[1]['audit_related_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[2]['audit_related_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[3]['audit_related_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[4]['audit_related_fee']; ?>"></td>
-                                                </tr>
-                                                <tr class="table1">
-                                                    <td>Non Audit Fee</td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_1" data-col-id="1" name="non_audit_fee[]" value="<?php echo $table1[0]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_2" data-col-id="2" name="non_audit_fee[]" value="<?php echo $table1[1]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_3" data-col-id="3" name="non_audit_fee[]" value="<?php echo $table1[2]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_4" data-col-id="4" name="non_audit_fee[]" value="<?php echo $table1[3]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_5" data-col-id="5" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
-                                                </tr>
-                                                <tr class="table1">
-                                                    <td>Total Auditors Remuneration (In <i class="fa fa-rupee"></i> Cr)</td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_1" data-col-id="1" name="total_auditors_remuneration[]" value="<?php echo $table1[0]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_2" data-col-id="2" name="total_auditors_remuneration[]" value="<?php echo $table1[1]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_3" data-col-id="3" name="total_auditors_remuneration[]" value="<?php echo $table1[2]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_4" data-col-id="4" name="total_auditors_remuneration[]" value="<?php echo $table1[3]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_5" data-col-id="5" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
-                                                </tr>
-                                                <tr class="table1">
-                                                    <td>Percentage of non-Audit fee</td>
-                                                    <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_1" data-col-id="1" name="percentage_non_audit_fee[]"></td>
-                                                    <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_2" data-col-id="2" name="percentage_non_audit_fee[]"></td>
-                                                    <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_3" data-col-id="3" name="percentage_non_audit_fee[]"></td>
-                                                    <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_4" data-col-id="4" name="percentage_non_audit_fee[]"></td>
-                                                    <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_5" data-col-id="5" name="percentage_non_audit_fee[]"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[0]['financial_year']; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[1]['financial_year']; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[2]['financial_year']; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[3]['financial_year']; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="financial_year[]" value="<?php echo $table1[4]['financial_year']; ?>">
+                                                </td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="table1">
+                                                <td class="col-md-3">Audit Fee (In <i class="fa fa-rupee"></i> Cr)</td>
+                                                <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[0]['audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[1]['audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[2]['audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[3]['audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_fee' name="audit_fee[]" value="<?php echo $table1[4]['audit_fee']; ?>"></td>
+                                            </tr>
+                                            <tr class="table1">
+                                                <td>Audit Related Fee (In <i class="fa fa-rupee"></i> Cr)</td>
+                                                <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[0]['audit_related_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[1]['audit_related_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[2]['audit_related_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[3]['audit_related_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control audit_related_fee' name="audit_related_fee[]" value="<?php echo $table1[4]['audit_related_fee']; ?>"></td>
+                                            </tr>
+                                            <tr class="table1">
+                                                <td>Non Audit Fee</td>
+                                                <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_1" data-col-id="1" name="non_audit_fee[]" value="<?php echo $table1[0]['non_audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_2" data-col-id="2" name="non_audit_fee[]" value="<?php echo $table1[1]['non_audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_3" data-col-id="3" name="non_audit_fee[]" value="<?php echo $table1[2]['non_audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_4" data-col-id="4" name="non_audit_fee[]" value="<?php echo $table1[3]['non_audit_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_5" data-col-id="5" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
+                                            </tr>
+                                            <tr class="table1">
+                                                <td>Total Auditors Remuneration (In <i class="fa fa-rupee"></i> Cr)</td>
+                                                <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_1" data-col-id="1" name="total_auditors_remuneration[]" value="<?php echo $table1[0]['total_auditors_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_2" data-col-id="2" name="total_auditors_remuneration[]" value="<?php echo $table1[1]['total_auditors_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_3" data-col-id="3" name="total_auditors_remuneration[]" value="<?php echo $table1[2]['total_auditors_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_4" data-col-id="4" name="total_auditors_remuneration[]" value="<?php echo $table1[3]['total_auditors_fee']; ?>"></td>
+                                                <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_5" data-col-id="5" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
+                                            </tr>
+                                            <tr class="table1">
+                                                <td>Percentage of non-Audit fee</td>
+                                                <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_1" data-col-id="1" name="percentage_non_audit_fee[]"></td>
+                                                <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_2" data-col-id="2" name="percentage_non_audit_fee[]"></td>
+                                                <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_3" data-col-id="3" name="percentage_non_audit_fee[]"></td>
+                                                <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_4" data-col-id="4" name="percentage_non_audit_fee[]"></td>
+                                                <td><input type='text' class='form-control percentage_non_audit_fee' id="percentage_non_audit_fee_year_5" data-col-id="5" name="percentage_non_audit_fee[]"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Has the Company made adequate disclosures about audit/ non-audit fee?</label>
+                                        <div class="col-md-2">
+                                            <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="has_the_company_made_adequate">
+                                                <option value="">Select</option>
+                                                <option value="yes" >Yes</option>
+                                                <option value="no" data-recommendation-table-id="173">No</option>
+                                                <option value="na">Not Applicable</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label class="col-md-10">Has the Company made adequate disclosures about audit/ non-audit fee?</label>
-                                            <div class="col-md-2">
-                                                <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="has_the_company_made_adequate">
-                                                    <option value="">Select</option>
-                                                    <option value="yes" >Yes</option>
-                                                    <option value="no" data-recommendation-table-id="173">No</option>
-                                                    <option value="na">Not Applicable</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group hidden" id="has_the_company_made_adequate_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="has_the_company_made_adequate_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Was Non-audit fee > 75% of the total auditor's remuneration last year? (Not applicable in case one-time fee)</label>
+                                        <div class="col-md-2">
+                                            <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="was_non_audit_fee">
+                                                <option value="">Select</option>
+                                                <option value="yes" data-recommendation-table-id="174">Yes</option>
+                                                <option value="no" >No</option>
+                                                <option value="na">Not Applicable</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label class="col-md-10">Was Non-audit fee > 75% of the total auditor's remuneration last year? (Not applicable in case one-time fee)</label>
-                                            <div class="col-md-2">
-                                                <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="was_non_audit_fee">
-                                                    <option value="">Select</option>
-                                                    <option value="yes" data-recommendation-table-id="174">Yes</option>
-                                                    <option value="no" >No</option>
-                                                    <option value="na">Not Applicable</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group hidden" id="was_non_audit_fee_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="was_non_audit_fee_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Was Non-audit fee > 50% of the total auditor's remuneration in two/three of last three years?</label>
+                                        <div class="col-md-2">
+                                            <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="was_non_audit_fee_50">
+                                                <option value="">Select</option>
+                                                <option value="yes" data-recommendation-table-id="175">Yes</option>
+                                                <option value="no" >No</option>
+                                                <option value="na">Not Applicable</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label class="col-md-10">Was Non-audit fee > 50% of the total auditor's remuneration in two/three of last three years?</label>
-                                            <div class="col-md-2">
-                                                <select name="triggers[]" class='form-control triggers recommendations-fire-appointment-of-auditors' id="was_non_audit_fee_50">
-                                                    <option value="">Select</option>
-                                                    <option value="yes" data-recommendation-table-id="175">Yes</option>
-                                                    <option value="no" >No</option>
-                                                    <option value="na">Not Applicable</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-group hidden" id="was_non_audit_fee_50_analysis_text">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group hidden" id="was_non_audit_fee_50_analysis_text">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" ></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn" id="btn_recommendation_text_appointment_of_auditors">Get Recommendation Text</button>
                                         </div>
                                     </div>
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <button type="button" class="btn" id="btn_recommendation_text_appointment_of_auditors">Get Recommendation Text</button>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="recommendation_section[]" value="Appointment of Auditors" />
-                                                <textarea rows="6" name="recommendation_text[]" class="form-control recommendation-text" id="recommendation_text_appointment_of_auditors"></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="recommendation_section[]" value="Appointment of Auditors" />
+                                            <textarea rows="6" name="recommendation_text[]" class="form-control recommendation-text" id="recommendation_text_appointment_of_auditors"></textarea>
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
                                         <button type="submit" name="appointment_of_auditors" class="btn green">Save &amp; Continue</button>
@@ -1473,6 +1447,58 @@ $table1=$db->getTable1Data();
 
             });
         </script>
+        <div id="auditor_table_modal" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Group's Company</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Deloitte Touche Tohmatsu</th>
+                                    <th>PWC</th>
+                                    <th>Ernst & Young</th>
+                                    <th>KPMG</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1. Deloitte Haskins & Sells<br/>
+                                        2. P C Hansotia<br/>
+                                        3. C C Chokshi & Co<br/>
+                                        4. SB Billimoria<br/>
+                                        5. M. Pal & Co.<br/>
+                                        6. Fraser & Ross<br/>
+                                        7. Touche Ross & Co<br/>
+                                        8. A.F. Ferguson
+                                    </td>
+                                    <td>1. Price Waterhouse<br/>
+                                        2. Price Waterhouse & Co.<br/>
+                                        3. Lovelock & Lewes<br/>
+                                        4. RSM & Co<br/>
+                                        5. Dalal & Shah
+                                    </td>
+                                    <td>1. SR Batliboi & Co<br/>
+                                        2. SR Batliboi & Associates<br/>
+                                        3. SV Ghatalia & Associates<br/>
+                                        4. P D Desai & Co<br/>
+                                        5. SRBC & Co LLP
+                                    </td>
+                                    <td>1. BSR & Co<br/>
+                                        2. Grant Thornton
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 <!-- END BODY -->
 </html>

@@ -1939,9 +1939,13 @@ elseif(isset($_GET['CheckDataExistingDisclosure'])) {
 elseif(isset($_GET['GetExistingDataofDisclosures'])) {
 	session_start();
 	$db=new DatabaseReports();
+    $main_section=$_GET['MainSection'];
+    $resolution_section=$_GET['ResolutionName'];
+    $analysis=$db->getAnalysisData($resolution_section,$main_section);
 	$disclosures=$db->getDisclosures();
 	echo json_encode(array(
-			'disclosures'=>$disclosures
+			'disclosures'=>$disclosures,
+			'analysis'=>$analysis
 		)
 	);
 }

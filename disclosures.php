@@ -387,7 +387,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Content of Corporate Social Responsibility Policy in prescribed format (if applicable)</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -398,7 +398,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Statement on performance evaluation of Board, Committees and Directors</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -409,7 +409,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Extract of the Annual Return as per Form No. MGT 9</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -420,7 +420,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Related Party Transactions as per Form No. AOC.2</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -431,7 +431,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Company's policy on appointment of directors and criteria for determining qualifications, positive attributes, director’s independence </label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -442,7 +442,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Ratio of the remuneration of executive director to the median employees remuneration</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -453,7 +453,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Policy on remuneration of Directors, KMP and other employees</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -464,7 +464,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Secretarial Audit Report </label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -475,7 +475,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Statement on declaration by Independent Directors </label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -486,7 +486,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Directors’ Responsibility Statement</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -497,7 +497,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Particulars of loans, guarantees or investments</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -508,7 +508,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Details of establishment of Vigil Mechanism</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -519,7 +519,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Statement indicating development and implementation of a risk management policy</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -530,7 +530,7 @@ if(isset($_POST['disclosures'])) {
                                     <div class="form-group">
                                         <label class="col-md-10">Comments on qualifications made by Statutory Auditors/ CS</label>
                                         <div class="col-md-2">
-                                            <select class='form-control trigger' name="question[]">
+                                            <select class='form-control triggers' name="question[]">
                                                 <option value="">Select</option>
                                                 <option value="disclosed" >Disclosed</option>
                                                 <option value="not disclosed">Not Disclosed</option>
@@ -579,6 +579,7 @@ if(isset($_POST['disclosures'])) {
         <script src="assets/scripts/custom/sweet-alert.min.js"></script>
         <script type="text/javascript" src="Scripts/custom.js"></script>
         <script type="text/javascript" src="Scripts/disclosures.js"></script>
+        <script src="assets/scripts/ckeditor.js" type="text/javascript"></script>
         <script type="text/javascript">
             jQuery(document).ready(function () {
                 App.init();
