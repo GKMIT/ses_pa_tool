@@ -631,15 +631,22 @@
 											<textarea name="analysis_text[]" class="form-control" rows="4"></textarea>
 										</div>
 									</div>
+                                    <p><strong>General Analysis</strong></p>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="analysis_section[]" value="Donations to Charitable Trusts" />
+                                            <textarea rows="4" name="analysis_text[]" class="form-control" placeholder="Add Recommendation"></textarea>
+                                        </div>
+                                    </div>
+                                    <p><strong>Recommendation</strong></p>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="hidden" name="recommendation_section[]" value="Donations to Charitable Trusts" />
+                                            <textarea rows="6" name="recommendation_text[]" class="form-control" id="recommendation_text" placeholder="Add Recommendation"></textarea>
+                                        </div>
+                                    </div>
 								</div>
-								<div class="form-body">
-									<div class="form-group">
-										<div class="col-md-12">
-											<input type="hidden" name="recommendation_section[]" value="Donations to Charitable Trusts" />
-											<textarea rows="6" name="recommendation_text[]" class="form-control" id="recommendation_text" placeholder="Add Recommendation"></textarea>
-										</div>
-									</div>
-								</div>
+
 								<div class="form-actions fluid">
 									<div class="col-md-12">
 										<button type="submit" name="donations" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>

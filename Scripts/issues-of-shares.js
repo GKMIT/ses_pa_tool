@@ -453,7 +453,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_preferential_issue").parent().find(".cke_textarea_inline").html(data.recommendation_text);
+                $("#recommendation_text_preferential_issue").parent().find(".cke_textarea_inline").html("");
             }
 
         });

@@ -179,7 +179,7 @@ CustomJS.prototype = {
         });
         $("#does_the_scheme_explicitly_restrict").change(function () {
             var self = $(this);
-            if(self.val()=='no') {
+            if(self.val()=='yes') {
                 $.ajax({
                     url: "jquery-data.php",
                     type: "GET",

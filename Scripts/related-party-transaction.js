@@ -39,20 +39,10 @@ CustomJS.prototype = {
                 $('#does_the_company_have_an_audit_committee_sub_part').addClass('hidden');
                 $('#is_the_audit_committee_compliant_as_per_all_relevant_provisions_analysis_text').addClass('hidden');
                 $('#is_the_audit_committee_compliant_as_per_all_relevant_provisions_analysis_text textarea').html(" ");
+                $('#is_the_audit_committee_compliant_as_per_all_relevant_provisions').val("");
             }
         });
         $('#are_the_audited_financial_statement').change(function () {
-            var self = $(this);
-            if (self.val() == 'yes') {
-                $('#is_the_net_worth_of_the_related_party_less_sub_part').removeClass('hidden');
-            }
-            else {
-                $('#is_the_net_worth_of_the_related_party_less_sub_part').addClass('hidden');
-                $('#is_the_consideration_received_given_upfront_or_not_analysis_text').addClass('hidden');
-                $('#is_the_consideration_received_given_upfront_or_not_analysis_text textarea').html(" ");
-            }
-        });
-        $('#is_the_net_worth_of_the_related_party_less').change(function () {
             var self = $(this);
             if (self.val() == 'yes') {
                 $('#are_the_audited_financial_statement_sub_part').removeClass('hidden');
@@ -61,6 +51,19 @@ CustomJS.prototype = {
                 $('#are_the_audited_financial_statement_sub_part').addClass('hidden');
                 $('#have_the_auditors_of_the_entity_raised_analysis_text').addClass('hidden');
                 $('#have_the_auditors_of_the_entity_raised_analysis_text textarea').html(" ");
+                $('#have_the_auditors_of_the_entity_raised').val("");
+            }
+        });
+        $('#is_the_net_worth_of_the_related_party_less').change(function () {
+            var self = $(this);
+            if (self.val() == 'yes') {
+                $('#is_the_net_worth_of_the_related_party_less_sub_part').removeClass('hidden');
+            }
+            else {
+                $('#is_the_net_worth_of_the_related_party_less_sub_part').addClass('hidden');
+                $('#is_the_consideration_received_given_upfront_or_not_analysis_text').addClass('hidden');
+                $('#is_the_consideration_received_given_upfront_or_not_analysis_text textarea').html(" ");
+                $('#is_the_consideration_received_given_upfront_or_not').val("");
             }
         });
         $("#does_the_company_have_an_audit_committee").change(function () {

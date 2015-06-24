@@ -1020,7 +1020,7 @@ $table1=$db->getTable1Data();
                                     <div class="form-group">
                                         <label class="col-md-10">Are the proposed auditors and the previous auditors from the same group firm?</label>
                                         <div class="col-md-2">
-                                            <select class='form-control triggers' name="triggers[]" id="auditors_same_firm_option_new triggers">
+                                            <select class='form-control triggers' name="triggers[]" id="auditors_same_firm_option_new">
                                                 <option value="">Select</option>
                                                 <option value="yes">Yes</option>
                                                 <option value="no">No</option>
@@ -1225,18 +1225,18 @@ $table1=$db->getTable1Data();
                                                 </tr>
                                                 <tr class="table1">
                                                     <td>Non Audit Fee</td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_1" data-col-id="1" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_2" data-col-id="2" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_3" data-col-id="3" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_4" data-col-id="4" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_1" data-col-id="1" name="non_audit_fee[]" value="<?php echo $table1[0]['non_audit_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_2" data-col-id="2" name="non_audit_fee[]" value="<?php echo $table1[1]['non_audit_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_3" data-col-id="3" name="non_audit_fee[]" value="<?php echo $table1[2]['non_audit_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_4" data-col-id="4" name="non_audit_fee[]" value="<?php echo $table1[3]['non_audit_fee']; ?>"></td>
                                                     <td><input type='text' class='form-control non_audit_fee' id="non_audit_fee_year_5" data-col-id="5" name="non_audit_fee[]" value="<?php echo $table1[4]['non_audit_fee']; ?>"></td>
                                                 </tr>
                                                 <tr class="table1">
                                                     <td>Total Auditors Remuneration (In <i class="fa fa-rupee"></i> Cr)</td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_1" data-col-id="1" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_2" data-col-id="2" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_3" data-col-id="3" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
-                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_4" data-col-id="4" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_1" data-col-id="1" name="total_auditors_remuneration[]" value="<?php echo $table1[0]['total_auditors_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_2" data-col-id="2" name="total_auditors_remuneration[]" value="<?php echo $table1[1]['total_auditors_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_3" data-col-id="3" name="total_auditors_remuneration[]" value="<?php echo $table1[2]['total_auditors_fee']; ?>"></td>
+                                                    <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_4" data-col-id="4" name="total_auditors_remuneration[]" value="<?php echo $table1[3]['total_auditors_fee']; ?>"></td>
                                                     <td><input type='text' class='form-control total_auditors_remuneration' id="total_auditor_rem_year_5" data-col-id="5" name="total_auditors_remuneration[]" value="<?php echo $table1[4]['total_auditors_fee']; ?>"></td>
                                                 </tr>
                                                 <tr class="table1">

@@ -269,20 +269,17 @@ CustomJS.prototype = {
                 },
                 success: function(data) {
                     setTimeout(function(){
-                        $(".tenure_audit_partner_value").each(function(i,d){
-                            var self = $(this);
-                            var self_val = parseInt(self.val());
-                            if(self_val>3) {
-
-                                $(".calculate_tenure_audit_partner_value_analysis_text").removeClass('hidden');
-                                $(".calculate_audit_partner_textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
-
-                            }
-                            else {
-                                $(".calculate_tenure_audit_partner_value_analysis_text").addClass('hidden');
-                                $(".calculate_audit_partner_textarea").html("");
-                            }
-                        });
+                        var audit_partner_value1=parseInt($('#audit_partner_value1').val());
+                        var audit_partner_value2=parseInt($('#audit_partner_value2').val());
+                        var audit_partner_value3=parseInt($('#audit_partner_value3').val());
+                        if(((audit_partner_value1||audit_partner_value2||audit_partner_value3))>3) {
+                            $(".calculate_tenure_audit_partner_value_analysis_text").removeClass('hidden');
+                            $(".calculate_tenure_audit_partner_value_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
+                        }
+                        else {
+                            $(".calculate_tenure_audit_partner_value_analysis_text").addClass('hidden');
+                            $(".calculate_tenure_audit_partner_value_analysis_text textarea").html("");
+                        }
                     },2000);
 
                 }
@@ -355,7 +352,7 @@ CustomJS.prototype = {
             }
             var total_tanure=parseInt(tanure_value1+tanure_value2+tanure_value3);
             var total_audit=parseInt(audit_partner_value1+audit_partner_value2+audit_partner_value3);
-            if(((tanure_value1||tanure_value2||tanure_value3)>=10) && ((audit_partner_value1||audit_partner_value2||audit_partner_value3)==3)) {
+            if(((tanure_value1||tanure_value2||tanure_value3)>=10) && ((term_of_appoint1||term_of_appoint2||term_of_appoint3)==3)) {
 
                 $.ajax({
                     url: "jquery-data.php",
@@ -374,7 +371,7 @@ CustomJS.prototype = {
                     }
                 });
             }
-            else if((total_tanure<5) && ((term_of_appoint1||term_of_appoint2||term_of_appoint3)<5)) {
+            else if(((tanure_value1||tanure_value2||tanure_value3)<5) && ((tanure_value1||tanure_value2||tanure_value3)>0) &&  ((term_of_appoint1||term_of_appoint2||term_of_appoint3)<5) &&  ((term_of_appoint1||term_of_appoint2||term_of_appoint3)>0)) {
                 $.ajax({
                     url: "jquery-data.php",
                     type: "GET",
@@ -412,7 +409,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $('.calculate_tenure_and_term_value_value').html("");
+                $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html("");
                 $('.calculate_tenure_and_term_value_analysis_text').addClass('hidden');
             }
         }
@@ -442,15 +439,16 @@ CustomJS.prototype = {
                         table_id: 225
                     },
                     success: function (data) {
-
-                        $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
                         $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text").removeClass('hidden');
+                        $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
+
                     }
                 });
             }
             else {
-                $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text textarea").html("");
                 $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text").addClass('hidden');
+                $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text textarea").html("");
+
             }
         });
         $("#financial_interests_in_or_association_with_the_company").change(function () {

@@ -1273,44 +1273,26 @@ class DatabaseReports {
     function saveDisclosuresInfo($info) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $pa_report_id = $_SESSION['report_id'];
-        $array_disclosures = array(
-            "Corporate Social Responsibility Committee Composition",
-            "Risk Management Policy",
-            "Corporate Social Responsibility Policy",
-            "Performance evaluation of Board, Committees and Directors",
-            "Corporate Social Responsibility Activities",
-            "Related Party Transactions",
-            "Corporate Social Responsibility Spending",
-            "Ratio of the remuneration of each director to the median employees remuneration",
-            "Extract of the Annual Return",
-            "Secretarial Audit Report",
-            "Company's policy of appointment and remuneration of directors, KMP and employees",
-            "Statement to the effect that independent director possesses appropriate balance of skills, experience and knowledge",
-            "Criteria for determining qualifications, positive attributes, director's independence",
-            "Receipt of commission by a director from the holding company or subsidiary company",
-            "Declaration by Independent Directors",
-            "Establishment of Vigil Mechanism",
-            "Particulars of loans, guarantees or investments",
-            "Voting rights not exercised directly by employees for shares to the ESOP scheme"
-        );
-        $i=1;
-        foreach($array_disclosures as $disclosures) {
+        $total_disclosure=count($info['question']);
+        $j=1;
+        for($i=0;$i<$total_disclosure;$i++) {
             $stmt = $dbobject->prepare("insert into `pa_report_disclosures` (`pa_reports_id`, `question_no`, `status`) VALUES (:pa_reports_id, :question_no, :status)");
-            $question_no = $i++;
             $stmt->bindParam(":pa_reports_id",$pa_report_id);
-            $stmt->bindParam(":question_no",$question_no);
-            if(in_array($disclosures,$info['question'])) {
-                $status =  "yes" ;
+            $stmt->bindParam(":question_no",$j);
+            $stmt->bindParam(":status",$info['question'][$i]);
+            if($stmt->execute()) {
+                echo "done";
+
             }
             else {
-                $status = "no";
+                echo "not";
             }
-            $stmt->bindParam(":status",$status);
-            $stmt->execute();
+            $j++;
         }
-        $response['status']=200;
+        $this->saveAnalysis($info);
+        //$response['status']=200;
         $dbobject=null;
-        return $response;
+        //return $response;
     }
     function getCompanyEDDirectors($company_id,$financial_year) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);

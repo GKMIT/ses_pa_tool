@@ -174,7 +174,7 @@ CustomJS.prototype = {
         });
         $("#is_this_resolution_an_enabling_resolution").change(function () {
             var self = $(this);
-            if(self.val()=='no') {
+            if(self.val()=='yes') {
                 $.ajax({
                     url: "jquery-data.php",
                     type: "GET",
@@ -395,7 +395,7 @@ CustomJS.prototype = {
         });
         $("#has_the_company_disclosed_the_details_of_the_buyer").change(function () {
             var self = $(this);
-            if(self.val()=='yes') {
+            if(self.val()=='no') {
                 $.ajax({
                     url: "jquery-data.php",
                     type: "GET",

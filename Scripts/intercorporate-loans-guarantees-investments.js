@@ -40,11 +40,13 @@ CustomJS.prototype = {
         $('#has_the_company_defaulted_on_any').change(function(){
             var self=$(this);
             if(self.val()=='yes') {
+                console.log("entering");
                 $('#has_the_company_defaulted_on_any_sub_part').removeClass('hidden');
             }
             else {
                 $('#has_the_company_defaulted_on_any_sub_part').addClass('hidden');
                 $('#is_the_loan_being_made_to_a_material_analysis_text').addClass('hidden');
+                $('#is_the_loan_being_made_to_a_material').addClass('hidden');
                 $('#is_the_loan_being_made_to_a_material').val("");
 
             }
@@ -57,7 +59,8 @@ CustomJS.prototype = {
             else {
                 $('#has_the_company_undergone_a_debt_sub_part').addClass('hidden');
                 $('#is_the_loan_being_made_to_a_material_operating_analysis_text').addClass('hidden');
-                $('#is_the_loan_being_made_to_a_material_operating').val(" ");
+                $('#is_the_loan_being_made_to_a_material_operating').addClass('hidden');
+                $('#is_the_loan_being_made_to_a_material_operating').val("");
             }
         });
         $('#is_the_company_a_sick_company').change(function(){
@@ -68,7 +71,8 @@ CustomJS.prototype = {
             else {
                 $('#is_the_company_a_sick_company_sub_part').addClass('hidden');
                 $('#is_the_loan_being_made_analysis_text').addClass('hidden');
-                $('#is_the_loan_being_made').val(" ");
+                $('#is_the_loan_being_made').addClass('hidden');
+                $('#is_the_loan_being_made').val("");
             }
         });
         $('#has_the_company_disclosed_whether').change(function(){
@@ -79,6 +83,7 @@ CustomJS.prototype = {
             else {
                 $('#has_the_company_disclosed_whether_sub_part').addClass('hidden');
                 $('#are_the_other_shareholders_of_the_recipients_analysis_text').addClass('hidden');
+                $('#are_the_other_shareholders_of_the_recipients').addClass('hidden');
                 $('#are_the_other_shareholders_of_the_recipients').val(" ");
             }
         });
@@ -90,6 +95,8 @@ CustomJS.prototype = {
             else {
                 $('#has_the_company_disclosed_the_rate_sub_part').addClass('hidden');
                 $('#is_the_rate_of_interest_charged_less_than_analysis_text').addClass('hidden');
+                $('#is_the_rate_of_interest_charged_less_than').addClass('hidden');
+                $('#is_the_rate_of_interest_charged_less_than').val("");
             }
         });
         $('#has_the_company_made_disclosures_required').change(function(){
@@ -99,7 +106,9 @@ CustomJS.prototype = {
             }
             else {
                 $('#has_the_company_made_disclosures_required_sub_part').addClass('hidden');
-                $('#has_the_company_made_disclosures_required_sub_part').addClass('hidden');
+                $('#is_the_information_related_to_particulars_of_loans').addClass('hidden');
+                $('#is_the_information_related_to_particulars_of_loans').val('');
+                $('#is_the_information_related_to_particulars_of_loans_analysis_text').addClass('hidden');
             }
         });
         $('#has_the_company_made_intercorporate').change(function(){
@@ -110,6 +119,8 @@ CustomJS.prototype = {
             else {
                 $('#has_the_company_made_intercorporate_sub_part').addClass('hidden');
                 $('#is_the_information_related_to_particulars_of_loans_analysis_text').addClass('hidden');
+                $('#is_the_information_related_to_particulars_of_loans').addClass('hidden');
+                $('#is_the_information_related_to_particulars_of_loans').val('');
             }
         });
 

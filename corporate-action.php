@@ -1310,8 +1310,8 @@ if(isset($_POST['corporate_action'])) {
                                         <div class="col-md-2">
                                             <select class='form-control recommendations-fire triggers' name="triggers[]" id="is_this_resolution_an_enabling_resolution">
                                                 <option value="">Select</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no" data-recommendation-table-id="20">No</option>
+                                                <option value="yes" data-recommendation-table-id="20">Yes</option>
+                                                <option value="no" >No</option>
                                                 <option value=na>Not Applicable</option>
                                             </select>
                                         </div>
@@ -1626,8 +1626,8 @@ if(isset($_POST['corporate_action'])) {
                                         <div class="col-md-2">
                                             <select class='form-control recommendations-fire-sales triggers' name="triggers[]" id="has_the_company_disclosed_the_details_of_the_buyer">
                                                 <option value="">Select</option>
-                                                <option value="yes" data-recommendation-table-id="30">Yes</option>
-                                                <option value="no" >No</option>
+                                                <option value="yes" >Yes</option>
+                                                <option value="no" data-recommendation-table-id="30">No</option>
                                                 <option value=na>Not Applicable</option>
                                             </select>
                                         </div>

@@ -665,8 +665,8 @@ if(isset($_POST['employee_stock'])) {
                                         <div class="col-md-2">
                                             <select class='form-control recommendations-fire-approval-of-esop-scheme triggers' name="triggers[]" id="does_the_scheme_explicitly_restrict">
                                                 <option value="">Select</option>
-                                                <option value="yes" >Yes</option>
-                                                <option value="no" data-recommendation-table-id="79" class="trigger">No</option>
+                                                <option value="yes" data-recommendation-table-id="79">Yes</option>
+                                                <option value="no"  class="trigger">No</option>
                                                 <option value=na>Not Applicable</option>
                                             </select>
                                         </div>

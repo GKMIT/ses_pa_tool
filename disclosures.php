@@ -7,9 +7,9 @@ if(isset($_POST['disclosures'])) {
     $db = new DatabaseReports();
     $info = $_POST;
     $response = $db->saveDisclosuresInfo($info);
-    if($response['status']==200) {
-        $flag = true;
-    }
+//    if($response['status']==200) {
+//        $flag = true;
+//    }
 }
 ?>
 <!DOCTYPE html>
@@ -364,61 +364,184 @@ if(isset($_POST['disclosures'])) {
                         <div class="portlet-body form">
                             <form class="form-horizontal" role="form" method="post" action="disclosures.php">
                                 <input type="hidden" id="edit_mode" name="edit_mode" value="">
+                                <input type="hidden" id="main_section" name="main_section" value="Disclosure Required in Director's Report">
+                                <div class="panel-group accordion general-view" id="accordion3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse_3">
+                                                    General View
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse_3" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <p>
+                                                    The Companies Act, 2013 requires the listed companies to make certain disclosures in Board’s Report. The table below shows the status of compliance of such some important requirements, by the Company.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-body">
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Corporate Social Responsibility Committee Composition"/> Corporate Social Responsibility Committee Composition
+                                        <label class="col-md-10">Content of Corporate Social Responsibility Policy in prescribed format (if applicable)</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Risk Management Policy"/> Risk Management Policy
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Statement on performance evaluation of Board, Committees and Directors</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Corporate Social Responsibility Policy"/> Corporate Social Responsibility Policy
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Extract of the Annual Return as per Form No. MGT 9</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Performance evaluation of Board, Committees and Directors" /> Performance evaluation of Board, Committees and Directors
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Related Party Transactions as per Form No. AOC.2</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Corporate Social Responsibility Activities"/> Corporate Social Responsibility Activities
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Company's policy on appointment of directors and criteria for determining qualifications, positive attributes, director’s independence </label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Related Party Transactions"/> Related Party Transactions
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Ratio of the remuneration of executive director to the median employees remuneration</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Corporate Social Responsibility Spending"/> Corporate Social Responsibility Spending
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Policy on remuneration of Directors, KMP and other employees</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Ratio of the remuneration of each director to the median employees remuneration"/> Ratio of the remuneration of each director to the median employees remuneration
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Secretarial Audit Report </label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Extract of the Annual Return"/> Extract of the Annual Return
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Statement on declaration by Independent Directors </label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger checkbox" value="Secretarial Audit Report"/> Secretarial Audit Report
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Directors’ Responsibility Statement</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Company's policy of appointment and remuneration of directors, KMP and employees"/> Company's policy of appointment and remuneration of directors, KMP and employees
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Particulars of loans, guarantees or investments</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Statement to the effect that independent director possesses appropriate balance of skills, experience and knowledge"/> Statement to the effect that independent director possesses appropriate balance of skills, experience and knowledge
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Details of establishment of Vigil Mechanism</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Criteria for determining qualifications, positive attributes, director's independence"/> Criteria for determining qualifications, positive attributes, director's independence
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Statement indicating development and implementation of a risk management policy</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Receipt of commission by a director from the holding company or subsidiary company"/> Receipt of commission by a director from the holding company or subsidiary company
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-10">Comments on qualifications made by Statutory Auditors/ CS</label>
+                                        <div class="col-md-2">
+                                            <select class='form-control trigger' name="question[]">
+                                                <option value="">Select</option>
+                                                <option value="disclosed" >Disclosed</option>
+                                                <option value="not disclosed">Not Disclosed</option>
+                                                <option value=na>Not Applicable</option>
+                                            </select>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
                                         <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Declaration by Independent Directors"/> Declaration by Independent Directors
-                                        </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Establishment of Vigil Mechanism"/> Establishment of Vigil Mechanism
-                                        </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Particulars of loans, guarantees or investments"/> Particulars of loans, guarantees or investments
-                                        </div>
-                                        <div class="col-md-12">
-                                            <input type="checkbox" name="question[]" class="check-trigger" value="Voting rights not exercised directly by employees for shares to the ESOP scheme"/> Voting rights not exercised directly by employees for shares to the ESOP scheme
+                                            <input type="hidden" name="analysis_section[]" value="Disclosure Required in Director's Report">
+                                            <textarea class="form-control analysis-text" rows="4" name="analysis_text[]" placeholder="Enter Comments"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -460,18 +583,6 @@ if(isset($_POST['disclosures'])) {
             jQuery(document).ready(function () {
                 App.init();
                 object.pageload();
-                <?php if($flag) {
-                ?>
-                swal({
-                        title: "Disclosures saved successfully"
-                    },
-                    function() {
-                        //window.location = "adoption-of-accounts.php";
-                    }
-                );
-                <?php
-                }
-                ?>
             });
         </script>
 </body>
