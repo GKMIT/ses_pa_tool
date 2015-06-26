@@ -108,7 +108,9 @@ if($company_details['exists']) {
                     $info['esops'] = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getValue()=="" ? "" : $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getValue();
                     $info['other_pecuniary_relationship'] = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getValue()=="" ? "" : $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getValue();
                     $info['retiring_non_retiring'] = "Non Retiring";
+                    $info['ratio_to_mre'] = "";
                     $info['financial_year'] = intval($financial_year);
+                    $info['comments'] = "";
                     $db->registerDirectorInfo($info);
                 }
                 echo "</tr>";

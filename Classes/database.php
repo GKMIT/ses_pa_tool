@@ -2368,6 +2368,14 @@ class Database {
 				$single_director['third_year_variable_pay']="NA";
 			}
 
+			$stmt=$dbobject->prepare("select `ratio_to_mre` from `director_info` where `dir_din_no`=:dir_din_no and `financial_year`=:financial_year and `company_id`=:company_id");
+			$stmt->bindParam(':dir_din_no',$din);
+			$stmt->bindParam(':financial_year',$first_year);
+			$stmt->bindParam(':company_id',$company_id);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$single_director['ratio_to_mre'] = $row['ratio_to_mre'];
+
 			$directors_rem_details[] = $single_director;
 		}
 
@@ -2389,6 +2397,62 @@ class Database {
 			$response[] = $row;
 		}
 		$dbobject = null;
+		return $response;
+	}
+	function remunerationAnalysis($dir_no,$company_id,$financial_year) {
+
+		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
+		$stmt = $dbobject->prepare("select * from `director_info` where `dir_din_no`=:dir_no and `financial_year`=:financial_year and `company_id`=:company_id");
+		$stmt->bindParam(":company_id", $company_id);
+		$stmt->bindParam(":financial_year", $financial_year);
+		$stmt->bindParam(":dir_no", $dir_no);
+		$stmt->execute();
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($row['company_classification']=="EDP") {
+			$response['company_promoter'] = "yes";
+		}
+		else {
+			$response['company_promoter'] = "no";
+		}
+		$stmt = $dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_no and `rem_year`=:financial_year and `company_id`=:company_id");
+		$stmt->bindParam(":company_id", $company_id);
+		$stmt->bindParam(":financial_year", $financial_year);
+		$stmt->bindParam(":dir_no", $dir_no);
+		$stmt->execute();
+		if($stmt->rowCount()>0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$response['remuneration'] = $row['variable_pay']+$row['fixed_pay'];
+		}
+		else {
+			$response['remuneration'] = 0;
+		}
+
+		$stmt = $dbobject->prepare("select `net_profit` from `company_auditors_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+		$stmt->bindParam(":company_id", $company_id);
+		$stmt->bindParam(":financial_year", $financial_year);
+		$stmt->execute();
+		if($stmt->rowCount()>0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$response['company_net_profit'] = $row['net_profit'];
+		}
+		else {
+			$response['company_net_profit'] = 0;
+		}
+
+		if($response['company_net_profit'] != 0) {
+			$response['company_rem_per'] = ($response['remuneration']/$response['company_net_profit']) * 100;
+		}
+		return $response;
+	}
+	function peerExecutiveRemuneration($report_id,$company_name) {
+		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
+		$stmt = $dbobject->prepare("select * from `pa_report_executive_remuneration_peer_comparison` where `pa_reports_id`=:report_id and `company_name`=:company_name");
+		$stmt->bindParam(":company_name", $company_name);
+		$stmt->bindParam(":report_id", $report_id);
+		$stmt->execute();
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$response = $row;
+		$dbobject=null;
 		return $response;
 	}
 }

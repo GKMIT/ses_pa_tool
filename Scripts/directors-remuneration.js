@@ -939,6 +939,9 @@ CustomJS.prototype = {
                     type:"GET",
                     dataType: "JSON",
                     data:{TotalCommission:1,Year:final_commission},
+                    error: function(data) {
+                        console.log(data);
+                    },
                     success:function(data) {
                         console.log(data);
                         $(".description-row .total_commission_value").each(function(i,d) {
@@ -993,6 +996,7 @@ CustomJS.prototype = {
                             $("#remuneration_table_body tr").eq(i).find("td").eq(1).find("input").val(data[i].first_year_fixed_pay);
                             if(data[i].first_year_fixed_pay!="NA" && data[i].first_year_variable_pay!="NA") {
                                 total_pay = parseFloat(data[i].first_year_fixed_pay)+parseFloat(data[i].first_year_variable_pay);
+                                total_pay = total_pay.toFixed(2);
                             }
                             else {
                                 total_pay = "NA";
@@ -1001,6 +1005,7 @@ CustomJS.prototype = {
                             $("#remuneration_table_body tr").eq(i).find("td").eq(3).find("input").val(data[i].second_year_fixed_pay);
                             if(data[i].second_year_fixed_pay!="NA" && data[i].second_year_variable_pay!="NA") {
                                 total_pay = parseFloat(data[i].second_year_fixed_pay)+parseFloat(data[i].second_year_variable_pay);
+                                total_pay = total_pay.toFixed(2);
                             }
                             else {
                                 total_pay = "NA";
@@ -1009,6 +1014,7 @@ CustomJS.prototype = {
                             $("#remuneration_table_body tr").eq(i).find("td").eq(5).find("input").val(data[i].third_year_fixed_pay);
                             if(data[i].third_year_fixed_pay!="NA" && data[i].third_year_variable_pay!="NA") {
                                 total_pay = parseFloat(data[i].third_year_fixed_pay)+parseFloat(data[i].third_year_variable_pay);
+                                total_pay = total_pay.toFixed(2);
                             }
                             else {
                                 total_pay = "NA";
@@ -1077,11 +1083,12 @@ CustomJS.prototype = {
             data:{DirectorsInfo:1},
             success:function(data){
                 var total_director=data.length;
+                $('.director1').append("<option value=''>Select Director</option>");
                 for(var i=0;i<total_director;i++) {
                     $('.din_numbers').append("<option value='"+data[i].dir_din_no+"'>"+data[i].dir_name+"</option>");
+                    $('.director1').append("<option value='"+data[i].dir_din_no+"'>"+data[i].dir_name+"</option>");
                 }
             }
-
         });
         $.ajax({
             url:'jquery-data.php',
@@ -1089,32 +1096,31 @@ CustomJS.prototype = {
             dataType:'JSON',
             data:{DirectorsPeerInfo:1},
             success:function(data){
-                $('.director1').val(data.peer_1_director);
-                $('.director2').val(data.peer_2_director);
-                $('.company1').val(data.peer_1_company_name);
-                $('.company2').val(data.peer_2_company_name);
-                $('.promotor1').val(data.peer_1_promoter);
-                $('.promotor2').val(data.peer_2_promoter);
-                $('.remuneration1').val(data.peer_1_director_rem);
-                $('.remuneration2').val(data.peer_2_director_rem);
-                $('.netprofit1').val(data.peer_1_net_profit);
-                $('.netprofit2').val(data.peer_2_net_profit);
+                $(".company2").append("<option value=''>Select Peer</option>");
+                $(".company2").append("<option value='"+data.peer_1_company_name+"'>"+data.peer_1_company_name+"</option>");
+                $(".company2").append("<option value='"+data.peer_2_company_name+"'>"+data.peer_2_company_name+"</option>");
+                $('.company1').val(data.company_name);
             }
-
         });
-        console.log("Helll");
+
         $.ajax({
             url:'jquery-data.php',
             type:'GET',
             dataType:'JSON',
             data:{DirectorsCommission:1},
+            beforeSend: function() {
+                console.log("ass");
+            },
+            error: function(data) {
+                console.log(data);
+            },
             success:function(data){
-               console.log(data);
-                $('.nedp-avg').val(data.nedp.toFixed(2));
-                $('.ID-avg').val(data.ID.toFixed(2));
-                $('.NED-avg').val(data.NED.toFixed(2));
+                console.log(data);
+                console.log("askks");
+                $('.nedp-avg').val(data.avg_nedp.toFixed(2));
+                $('.ID-avg').val(data.avg_id.toFixed(2));
+                $('.NED-avg').val(data.avg_ned.toFixed(2));
             }
-
         });
 
         $("#indexed_tsr_year_start_year").change(function () {
@@ -1124,13 +1130,10 @@ CustomJS.prototype = {
                 dataType: "JSON",
                 data:{
                     dividend_data_5_years:true,
-                    first_year:$("#indexed_tsr_year_start_year").val()
-                },
-                error: function(data) {
-                    console.log(data);
+                    first_year:$("#indexed_tsr_year_start_year").val(),
+                    highest_paid_ed : $(".din_numbers").find("option").eq(1).val()
                 },
                 success: function(data) {
-                    console.log(data);
                     var indexed_tsr = 0;
                     for(var i= 5,j=0;i>=0;i--,j++) {
 
@@ -1146,6 +1149,49 @@ CustomJS.prototype = {
                 }
             });
         });
+
+        $(".director1").change(function() {
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                beforeSend: function() {
+
+                },
+                data:{
+                    executive_remuneration: true,
+                    dir_din_no : $(".director1").val()
+                },
+                success: function(data) {
+                    $(".promotor1").val(data.company_promoter);
+                    $(".remuneration1").val(data.remuneration);
+                    $(".netprofit1").val(data.company_net_profit);
+                    $(".ratio1").val(data.company_rem_per.toFixed(2));
+                }
+            });
+        });
+
+        $(".company2").change(function() {
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                beforeSend: function() {
+                },
+                data:{
+                    peer_executive_remuneration: true,
+                    company_name : $(".company2").val()
+                },
+                success: function(data) {
+                    $(".director2").val(data.director_name);
+                    $(".promotor2").val(data.promoter_group);
+                    $(".remuneration2").val(data.remuneration);
+                    $(".netprofit2").val(data.net_profits);
+                    $(".ratio2").val(data.rem_percentage.toFixed(2));
+                }
+            });
+        });
+
     },
     pageload:function(){
         $(document).ready(function() {
@@ -1159,10 +1205,8 @@ CustomJS.prototype = {
                     $.loader_add();
                 },
                 success:function(data){
-                    console.log(data);
                     var resolution_name="director_remuneration";
                     if(data.status=="Existing") {
-                        console.log("Helloo");
                         $('#edit_mode').val("Edit Mode");
                         $.ajax({
                             url:'jquery-data.php',

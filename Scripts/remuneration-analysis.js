@@ -74,6 +74,7 @@ CustomJS.prototype = {
                                 total_pay = "NA";
                             }
                             $("#remuneration_table_body tr").eq(i).find("td").eq(7).find("input").val(total_pay);
+                            $("#remuneration_table_body tr").eq(i).find("td").eq(8).find("input").val(data[i].ratio_to_mre);
                         }
                     }
                 });
@@ -86,7 +87,8 @@ CustomJS.prototype = {
                 dataType: "JSON",
                 data:{
                     dividend_data_5_years:true,
-                    first_year:$("#indexed_tsr_year_start_year").val()
+                    first_year:$("#indexed_tsr_year_start_year").val(),
+                    highest_paid_ed : $(".din_numbers").eq(0).val()
                 },
                 error: function(data) {
                     console.log(data);
@@ -94,7 +96,7 @@ CustomJS.prototype = {
                 success: function(data) {
                     console.log(data);
                     var indexed_tsr = 0;
-                    for(var i= 4,j=0;i>=0;i--,j++) {
+                    for(var i= 5,j=0;i>=1;i--,j++) {
                         if(j!=0) {
                             $("#indexed_tsr_tbody tr").eq(j).find("td").eq(0).find("input").val(data.dividend_data[i].year);
                         }
@@ -102,7 +104,6 @@ CustomJS.prototype = {
                         $("#indexed_tsr_tbody tr").eq(j).find("td").eq(2).find("input").val(data.dividend_data[i].market_price_end);
                         $("#indexed_tsr_tbody tr").eq(j).find("td").eq(3).find("input").val(data.dividend_data[i].dividend);
                         $("#indexed_tsr_tbody tr").eq(j).find("td").eq(4).find("input").val(data.dividend_data[i].total_dividend);
-
 
                         $("#remuneration_growth tr").eq(j).find("td").eq(0).find("input").val(data.remuneration_growth[i].year);
                         $("#remuneration_growth tr").eq(j).find("td").eq(1).find("input").val(data.remuneration_growth[i].total_pay);
@@ -114,6 +115,19 @@ CustomJS.prototype = {
                     }
                 }
             });
+        });
+
+
+        function calculatePercentage(data_col_id) {
+            var rem_percent = $("#rem_percent_"+data_col_id).val();
+            var net_profit = $("#net_profit_"+data_col_id).val();
+            if(rem_percent!="" && net_profit!="") {
+                $("#percentage_"+data_col_id).val((rem_percent/net_profit*100).toFixed(2));
+            }
+        }
+
+        $(".rem_percent,.net_profit").keyup(function() {
+            calculatePercentage($(this).attr('data-col-id'));
         });
     },
     pageload:function(){

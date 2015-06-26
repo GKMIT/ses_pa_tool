@@ -1476,6 +1476,21 @@ elseif(isset($_POST['remember_selection'])) {
 	$_SESSION['input_sheet_company_id'] = $_POST['company_id'];
 	echo json_encode(array('status'=>200));
 }
+elseif(isset($_GET['executive_remuneration'])) {
+	session_start();
+	$company_id = $_SESSION['company_id'];
+	$db = new Database();
+	$response = $db->remunerationAnalysis($_GET['dir_din_no'],$company_id,$_SESSION['report_year']);
+	echo json_encode($response);
+}
+elseif(isset($_GET['peer_executive_remuneration'])) {
+	session_start();
+	$report_id = $_SESSION['report_id'];
+	$db = new Database();
+	$response = $db->peerExecutiveRemuneration($report_id,$_GET['company_name']);
+	echo json_encode($response);
+}
+
 
 // Pradeep's section
 // Adoption of accounts

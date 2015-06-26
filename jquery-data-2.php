@@ -31,7 +31,8 @@ elseif(isset($_GET['dividend_data_5_years'])) {
     session_start();
     $company_id = $_SESSION['company_id'];
     $start_year = $_GET['first_year'];
-    $response = $db->getLast5YearsDividendData($company_id,$start_year);
+    $highest_paid_ed = $_GET['highest_paid_ed'];
+    $response = $db->getLast5YearsDividendData($company_id,$start_year,$highest_paid_ed);
     echo json_encode($response);
 }
 ?>

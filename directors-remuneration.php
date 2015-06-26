@@ -361,6 +361,7 @@ if(isset($_POST['directors_remuneration'])) {
                     <div class="portlet box">
                         <div class="portlet-body form">
                             <form class="form-horizontal" role="form" method="post" action="directors-remuneration.php">
+                                <input type="hidden" id="company_id" value="<?php echo $_SESSION['company_id']; ?>" />
                                 <input type="hidden" id="edit_mode" name="edit_mode" value="">
                                 <input type="hidden" id="main_section" name="main_section" value="Directors' Remuneration">
                                 <div class="panel-group accordion general-view" id="accordion2">
@@ -436,9 +437,10 @@ if(isset($_POST['directors_remuneration'])) {
                                             <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder=""></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body table-responsive">
-                                        <p><strong>Past Remuneration of the Director</strong></p>
-                                        <table class="table table-bordered table-hover table-stripped">
+                                    <div class="form-group table-responsive">
+                                        <div class="col-md-12">
+                                            <p><strong>Past Remuneration of the Director</strong></p>
+                                            <table class="table table-bordered table-hover table-stripped">
                                             <thead>
                                             <tr>
                                                 <th class="text-center" colspan="2" style="width: 30%; vertical-align: middle;">In&nbsp;<i class="fa fa-rupee"></i>&nbsp;Crores</th>
@@ -470,50 +472,45 @@ if(isset($_POST['directors_remuneration'])) {
                                             </tr>
                                             </thead>
                                             <tbody id="remuneration_table_body" class="dilution-row-desciption_past">
-                                            <?php
-                                            $db=new DatabaseReports();
-                                            $past_value=$db->getTotalPayFromRemuneration();
-                                            print_r($past_value);
-                                            ?>
-                                            <tr class="tr-td-center dilution-description-row diluton-row">
-                                                <td colspan="2">
-                                                <select name="executive[]" class="form-control din_numbers">
-                                                    <option class="" value="">Select Director</option>
-                                                </select>
-                                                </td>
-                                                <td><input class="form-control" name="fixed_pay_first_year[]"/></td>
-                                                <td><input class="form-control" name="total_pay_first_year[]"/></td>
-                                                <td><input class="form-control" name="fixed_pay_second_year[]"/></td>
-                                                <td><input class="form-control" name="total_pay_second_year[]"/></td>
-                                                <td><input class="form-control" name="fixed_pay_third_year[]"/></td>
-                                                <td><input class="form-control" name="total_pay_third_year[]"/></td>
-                                                <td class="text-center"><button class="btn btn-danger disabled btn-delete-dilution-row" type="button"><i class="fa fa-times"></i></button></td>
-                                            </tr>
-
+                                                <tr class="tr-td-center dilution-description-row diluton-row">
+                                                    <td colspan="2">
+                                                    <select name="executive[]" class="form-control din_numbers">
+                                                        <option class="" value="">Select Director</option>
+                                                    </select>
+                                                    </td>
+                                                    <td><input class="form-control" name="fixed_pay_first_year[]"/></td>
+                                                    <td><input class="form-control" name="total_pay_first_year[]"/></td>
+                                                    <td><input class="form-control" name="fixed_pay_second_year[]"/></td>
+                                                    <td><input class="form-control" name="total_pay_second_year[]"/></td>
+                                                    <td><input class="form-control" name="fixed_pay_third_year[]"/></td>
+                                                    <td><input class="form-control" name="total_pay_third_year[]"/></td>
+                                                    <td class="text-center"><button class="btn btn-danger disabled btn-delete-dilution-row" type="button"><i class="fa fa-times"></i></button></td>
+                                                </tr>
                                             </tbody>
                                         </table>
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <div class="col-sm-2">
-                                                    <label></label>
-                                                    <button class="btn btn-primary" id="btn_add_dilution_row_past" type="button"><i class="fa fa-plus"></i> Add Rows</button>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-primary" id="btn_add_dilution_row_past" type="button"><i class="fa fa-plus"></i> Add Rows</button>
                                         </div>
                                     </div>
-                                    <div class="form-body table-responsive col-md-6">
-                                        <p><strong>Executive Remuneration - Peer Comparsion</strong></p>
-                                        <table class="table table-bordered table-hover table-stripped">
+                                    <p><strong>Executive Remuneration - Peer Comparsion</strong></p>
+                                    <div class="form-group">
+                                        <div class="col-md-12 table-responsive">
+                                            <table class="table table-bordered table-hover table-stripped">
                                             <tbody id="remuneration_table_body1">
                                             <tr class="tr-td-center">
                                                 <td class="text-center">Director</td>
-                                                <td><input name="peer1[]" class="form-control director1"></td>
+                                                <td>
+                                                    <select name="peer1[]" class="form-control director1"></select>
+                                                </td>
                                                 <td><input name="peer2[]" class="form-control director2"></td>
                                             </tr>
                                             <tr class="tr-td-center">
                                                 <td class="text-center">Company</td>
                                                 <td><input name="peer1[]" class="form-control company1"></td>
-                                                <td><input name="peer2[]" class="form-control company2"></td>
+                                                <td>
+                                                    <select name="peer2[]" class="form-control company2"></select>
+                                                </td>
                                             </tr>
                                             <tr class="tr-td-center">
                                                 <td class="text-center">Promotor</td>
@@ -537,6 +534,7 @@ if(isset($_POST['directors_remuneration'])) {
                                             </tr>
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
@@ -605,7 +603,7 @@ if(isset($_POST['directors_remuneration'])) {
                                             </table>
                                         </div>
                                     </div>
-                                    <p class="col-md-12"><strong> Remuneration Policy</strong></p>
+                                    <p><strong>Remuneration Policy</strong></p>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="hidden" name="used_in[]" value="Remuneration Policy" />
@@ -613,9 +611,10 @@ if(isset($_POST['directors_remuneration'])) {
                                             <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder=""></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-body table-responsive col-md-12">
-                                        <p><strong> Remuneration Package</strong></p>
-                                        <table class="table table-bordered table-hover table-stripped">
+                                    <p><strong> Remuneration Package</strong></p>
+                                    <div class="form-group">
+                                        <div class="col-md-12 table-responsive">
+                                            <table class="table table-bordered table-hover table-stripped">
                                             <thead>
                                             <tr>
                                                 <td> Component </td>
@@ -705,6 +704,7 @@ if(isset($_POST['directors_remuneration'])) {
                                             </tr>
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
@@ -1108,36 +1108,30 @@ if(isset($_POST['directors_remuneration'])) {
                                             </textarea>
                                         </div>
                                     </div>
-                                    <h4 class="form-section">DISTRIBUTION OF COMMISSION </h4>
+                                    <h4 class="form-section">DISTRIBUTION OF COMMISSION</h4>
                                     <p><strong>Average Commission (<i class="fa fa-rupee"></i> Lakhs)</strong></p>
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            <label class="col-md-3">Promoter NED</label>
-                                            <div class="col-md-9">
-                                                <input type="hidden" name="used_in[]" value="Promoter NED" />
-                                                <input type="hidden" name="resolution_section[]" value="Non-Excecutive Directors' Commission" />
-                                                <input name="used_in_text[]" class="form-control other-text nedp-avg" />
-                                            </div>
+                                        <label class="col-md-3">Promoter NED</label>
+                                        <div class="col-md-9">
+                                            <input type="hidden" name="used_in[]" value="Promoter NED" />
+                                            <input type="hidden" name="resolution_section[]" value="Non-Excecutive Directors' Commission" />
+                                            <input name="used_in_text[]" class="form-control other-text nedp-avg" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            <label class="col-md-3">Independent Directors</label>
-                                            <div class="col-md-9">
-                                                <input type="hidden" name="used_in[]" value="Independent Directors" />
-                                                <input type="hidden" name="resolution_section[]" value="Non-Excecutive Directors' Commission" />
-                                                <input name="used_in_text[]" class="form-control other-text ID-avg" />
-                                            </div>
+                                        <label class="col-md-3">Independent Directors</label>
+                                        <div class="col-md-9">
+                                            <input type="hidden" name="used_in[]" value="Independent Directors" />
+                                            <input type="hidden" name="resolution_section[]" value="Non-Excecutive Directors' Commission" />
+                                            <input name="used_in_text[]" class="form-control other-text ID-avg" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            <label class="col-md-3">Other NEDs</label>
-                                            <div class="col-md-9">
-                                                <input type="hidden" name="used_in[]" value="Other NEDs" />
-                                                <input type="hidden" name="resolution_section[]" value="Non-Excecutive Directors' Commission" />
-                                                <input name="used_in_text[]" class="form-control other-text NED-avg" />
-                                            </div>
+                                        <label class="col-md-3">Other NEDs</label>
+                                        <div class="col-md-9">
+                                            <input type="hidden" name="used_in[]" value="Other NEDs" />
+                                            <input type="hidden" name="resolution_section[]" value="Non-Excecutive Directors' Commission" />
+                                            <input name="used_in_text[]" class="form-control other-text NED-avg" />
                                         </div>
                                     </div>
                                     <p><strong>Total Commission (<i class="fa fa-rupee"></i> Lakhs)</strong></p>

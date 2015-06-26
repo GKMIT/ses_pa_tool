@@ -381,6 +381,7 @@ if(isset($_POST['remuneration_analysis'])) {
                                             </th>
                                             <th class="text-center" colspan="2"><input id="rem_second_year" name="remuneration_year_2" readonly class="form-control"></th>
                                             <th class="text-center" colspan="2"><input id="rem_third_year" name="remuneration_year_3" readonly class="form-control"></th>
+                                            <th rowspan="2" class="text-center" colspan="2">Ratio</th>
                                         </tr>
                                         <tr>
                                             <th class="text-center">Fixed Pay</th>
@@ -417,6 +418,7 @@ if(isset($_POST['remuneration_analysis'])) {
                                                 <td><input class="form-control" name="total_pay_second_year[]"/></td>
                                                 <td><input class="form-control" name="fixed_pay_third_year[]"/></td>
                                                 <td><input class="form-control" name="total_pay_third_year[]"/></td>
+                                                <td><input class="form-control" name="ratio_to_mre[]"/></td>
                                             </tr>
                                             <?php
                                             }
@@ -527,24 +529,37 @@ if(isset($_POST['remuneration_analysis'])) {
                                     <p>Note: Indexed TSR (Total Shareholders Return) represents the value of ` 100 invested in the Company at beginning of a 5-year period starting 1 April 2009. One period return is calculated as (Final Price – Initial Price + Dividend) / Initial Price.</p>
                                     <?php
                                     $directors = $db->getCompanyDirectorsWithPay($company_id,$financial_year);
+                                    $edp_no = 0;
                                     $edp_sum = 0;
+                                    $ed_no = 0;
                                     $ed_sum = 0;
+                                    $nedp_no = 0;
                                     $nedp_sum = 0;
+                                    $ned_id_no = 0;
                                     $ned_id_sum = 0;
                                     foreach($directors as $director) {
-                                        if($director['company_classification']=="EDP") {
+                                        if($director['company_classification']=="EDP" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $edp_sum += $director['fixed_pay']+$director['variable_pay'];
+                                            $edp_no ++;
                                         }
-                                        else if($director['company_classification']=="ED") {
+                                        if($director['company_classification']=="ED" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $ed_sum += $director['fixed_pay']+$director['variable_pay'];
+                                            $ed_no ++;
                                         }
-                                        else if($director['company_classification']=="NEDP") {
+                                        if($director['company_classification']=="NEDP" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $nedp_sum += $director['fixed_pay']+$director['variable_pay'];
+                                            $nedp_no ++;
                                         }
-                                        elseif($director['company_classification']=="NED" || $director['company_classification']=="ID") {
+                                        if(($director['company_classification']=="NED" || $director['company_classification']=="ID") && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $ned_id_sum += $director['fixed_pay']+$director['variable_pay'];
+                                            $ned_id_no ++;
                                         }
                                     }
+                                    $edp_no_string = $edp_no!=0 ? number_format($edp_sum/$edp_no,2) : "NA";
+                                    $ed_no_string = $ed_no!=0 ? number_format($ed_sum/$ed_no,2) : "NA";
+                                    $nedp_no_string = $nedp_no!=0 ? number_format($nedp_sum/$nedp_no,2) : "NA";
+                                    $ned_id_no_string = $ned_id_no!=0 ? number_format($ned_id_sum/$ned_id_no,2) : "NA";
+
                                     ?>
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -557,13 +572,13 @@ if(isset($_POST['remuneration_analysis'])) {
                                         <tbody>
                                         <tr>
                                             <td class="text-center">Executive</td>
-                                            <td class="text-center"><input value="<?php echo number_format($edp_sum/100,2); ?>" class="form-control ex_promoter" name="ex_promoter"/></td>
-                                            <td class="text-center"><input value="<?php echo number_format($ed_sum/100,2); ?>" class="form-control ex_non_promoter" name="ex_non_promoter"/></td>
+                                            <td class="text-center"><input value="<?php echo $edp_no_string; ?>" class="form-control ex_promoter" name="ex_promoter"/></td>
+                                            <td class="text-center"><input value="<?php echo $ed_no_string; ?>" class="form-control ex_non_promoter" name="ex_non_promoter"/></td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">Non-Executive</td>
-                                            <td class="text-center"><input value="<?php echo number_format($nedp_sum/100,2); ?>" class="form-control non_ex_promoter" name="non_ex_promoter"/></td>
-                                            <td class="text-center"><input value="<?php echo number_format($ned_id_sum/100,2); ?>" class="form-control non_ex_non_promoter" name="non_ex_non_promoter"/></td>
+                                            <td class="text-center"><input value="<?php echo $nedp_no_string; ?>" class="form-control non_ex_promoter" name="non_ex_promoter"/></td>
+                                            <td class="text-center"><input value="<?php echo $ned_id_no_string; ?>" class="form-control non_ex_non_promoter" name="non_ex_non_promoter"/></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -595,21 +610,21 @@ if(isset($_POST['remuneration_analysis'])) {
                                         </tr>
                                         <tr>
                                             <td class="text-center">Remuneration (<i class="fa fa-rupee"></i>&nbsp; Crore) (A)</td>
-                                            <td class="text-center remuneration1"><input name="remuneration_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['company_director_rem']; ?>" /></td>
-                                            <td class="text-center remuneration2"><input name="remuneration_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_1_director_rem']; ?>" /></td>
-                                            <td class="text-center remuneration3"><input name="remuneration_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_2_director_rem']; ?>" /></td>
+                                            <td class="text-center remuneration1"><input name="remuneration_peer_comparison[]" id="rem_percent_1" data-col-id="1" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['company_director_rem']; ?>" /></td>
+                                            <td class="text-center remuneration2"><input name="remuneration_peer_comparison[]" id="rem_percent_2" data-col-id="2" class="form-control rem_percent" value="<?php echo $executive_remuneration_peer_comparision['peer_1_director_rem']; ?>" /></td>
+                                            <td class="text-center remuneration3"><input name="remuneration_peer_comparison[]" id="rem_percent_3" data-col-id="3" class="form-control rem_percent" value="<?php echo $executive_remuneration_peer_comparision['peer_2_director_rem']; ?>" /></td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">Net Profits (<i class="fa fa-rupee"></i>&nbsp; Crore) (B)</td>
-                                            <td class="text-center net-profit1"><input name="net_profit_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['company_net_profit']; ?>" /></td>
-                                            <td class="text-center net-profit2"><input name="net_profit_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_1_net_profit']; ?>" /></td>
-                                            <td class="text-center net-profit3"><input name="net_profit_peer_comparison[]" class="form-control rem_percent " value="<?php echo $executive_remuneration_peer_comparision['peer_2_net_profit']; ?>" /></td>
+                                            <td class="text-center net-profit1"><input name="net_profit_peer_comparison[]" id="net_profit_1" data-col-id="1" class="form-control net_profit" value="<?php echo $executive_remuneration_peer_comparision['company_net_profit']; ?>" /></td>
+                                            <td class="text-center net-profit2"><input name="net_profit_peer_comparison[]" id="net_profit_2" data-col-id="2" class="form-control net_profit" value="<?php echo $executive_remuneration_peer_comparision['peer_1_net_profit']; ?>" /></td>
+                                            <td class="text-center net-profit3"><input name="net_profit_peer_comparison[]" id="net_profit_3" data-col-id="3" class="form-control net_profit" value="<?php echo $executive_remuneration_peer_comparision['peer_2_net_profit']; ?>" /></td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">Rem. Percentage (A/B * 100)</td>
-                                            <td class="text-center percentage1"><input name="rem_per_peer_comparison[]" class="form-control percentage1" value="<?php echo number_format ($executive_remuneration_peer_comparision['company_rem_per'],2); ?>" /></td>
-                                            <td class="text-center percentage2"><input name="rem_per_peer_comparison[]" class="form-control percentage2" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_1_rem_per'],2); ?>" /></td>
-                                            <td class="text-center percentage3"><input name="rem_per_peer_comparison[]" class="form-control percentage3" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_2_rem_per'],2); ?>" /></td>
+                                            <td class="text-center percentage1"><input name="rem_per_peer_comparison[]" id="percentage_1" data-col-id="1" class="form-control percentage" value="<?php echo number_format ($executive_remuneration_peer_comparision['company_rem_per'],2); ?>" /></td>
+                                            <td class="text-center percentage2"><input name="rem_per_peer_comparison[]" id="percentage_2" data-col-id="1" class="form-control percentage" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_1_rem_per'],2); ?>" /></td>
+                                            <td class="text-center percentage3"><input name="rem_per_peer_comparison[]" id="percentage_3" data-col-id="1" class="form-control percentage" value="<?php echo number_format($executive_remuneration_peer_comparision['peer_2_rem_per'],2); ?>" /></td>
                                         </tr>
                                         </tbody>
                                     </table>
