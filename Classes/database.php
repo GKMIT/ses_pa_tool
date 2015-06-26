@@ -1303,12 +1303,15 @@ class Database {
 			$stmt->bindParam(':company_auditors_info_id',$company_auditors_info_id);
 			if($stmt->execute()) {
 				for($i=0;$i<$info['no_of_auditors'];$i++) {
-					$stmt=$dbobject->prepare("insert into `company_auditors_details` (`company_auditor_info_id`, `auditor_name`, `parent_company`, `auditor_tenure`, `partner_name`,`partner_tenure`) VALUES (:company_auditor_info_id,:auditor_name,:parent_company,:auditor_tenure,:partner_name,:partner_tenure)");
+					$stmt=$dbobject->prepare("insert into `company_auditors_details` (`company_auditor_info_id`, `auditor_name`,`auditor_reg_no`, `parent_company`, `auditor_tenure`, `partner_name`,`partner_membership_no`,`partner_tenure`)
+																			  VALUES (:company_auditor_info_id,:auditor_name,:auditor_reg_no,:parent_company,:auditor_tenure,:partner_name,:partner_membership_no,:partner_tenure)");
 					$stmt->bindParam(':company_auditor_info_id',$company_auditors_info_id);
 					$stmt->bindParam(':auditor_name',$info['auditor_name'][$i]);
+					$stmt->bindParam(':auditor_reg_no',$info['auditor_reg_no'][$i]);
 					$stmt->bindParam(':parent_company',$info['auditor_parent_company'][$i]);
 					$stmt->bindParam(':auditor_tenure',$info['auditor_tenure'][$i]);
 					$stmt->bindParam(':partner_name',$info['auditor_partner_name'][$i]);
+					$stmt->bindParam(':partner_membership_no',$info['auditor_partner_membership_no'][$i]);
 					$stmt->bindParam(':partner_tenure',$info['auditor_partner_tenure'][$i]);
 					$stmt->execute();
 				}
@@ -2058,10 +2061,10 @@ class Database {
 		$string_headers.="</tr></thead>";
 		$string_rows = "<tbody>";
 		$array_cols = array(
-			"Market Price at year start (In <i class='fa fa-rupee'></i> Crore)",
-			"Market Price at year end (In <i class='fa fa-rupee'></i> Crore)",
-			"Dividend (In <i class='fa fa-rupee'></i> Crore)",
-			"EPS (In <i class='fa fa-rupee'></i> Crore)"
+			"Dividend",
+			"Market Price at year start",
+			"Market Price at year end",
+			"EPS"
 		);
 		$array_column_names = array('dividend','market_price_start','market_price_end','eps');
 		for($counter=0;$counter<4;$counter++) {
