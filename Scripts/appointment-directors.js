@@ -5,6 +5,7 @@ function CustomJS() {
 CustomJS.prototype = {
     initialization: function() {
 
+        context = self;
         $("textarea[name='used_in_text[]']").each(function(){
             $(this).addClass('other-text');
         });
@@ -20,6 +21,7 @@ CustomJS.prototype = {
         $("textarea[name='analysis_text[]']").each(function(){
             $(this).addClass('analysis-text');
         });
+
         $("textarea[name='recommendation_text[]']").each(function(){
             $(this).addClass('recommendation-text');
         });
@@ -672,35 +674,35 @@ CustomJS.prototype = {
                 },
                 success: function (data) {
                     console.log(data);
-                    $(".id-functional-area").html(data.functional_area);
-                    $(".id-education").html(data.education);
-                    $(".id-past-ex").html(data.past_ex);
-                    $(".id-committee-positions").html(data.committee_positions);
-                    $(".id-total-association").html(data.total_association);
-                    $(".id-shareholding").html(data.shareholding);
-                    $(".id-remuneration").html(data.remuneration);
-                    $(".id-total-directorship").html(data.total_directorship);
-                    $(".id-committee-memberships").html(data.committee_memberships);
-                    $(".id-committee-chairmanship").html(data.committee_chairmanships);
-                    $(".id-last-3-agms").html(data.last_3_agms);
-                    $(".id-board-meeting-last-year").html(data.board_meeting_last_year+"%");
-                    $(".id-board-meeting-last-years-avg").html(data.board_meeting_last_years_avg+"%");
-                    $(".id-audit-meeting-last-year").html(data.audit_meeting_last_year+"%");
+                    $(".id-functional-area").val(data.functional_area);
+                    $(".id-education").val(data.education);
+                    $(".id-past-ex").val(data.past_ex);
+                    $(".id-committee-positions").val(data.committee_positions);
+                    $(".id-total-association").val(data.total_association);
+                    $(".id-shareholding").val(data.shareholding);
+                    $(".id-remuneration").val(data.remuneration);
+                    $(".id-total-directorship").val(data.total_directorship);
+                    $(".id-committee-memberships").val(data.committee_memberships);
+                    $(".id-committee-chairmanship").val(data.committee_chairmanships);
+                    $(".id-last-3-agms").val(data.last_3_agms);
+                    $(".id-board-meeting-last-year").val(data.board_meeting_last_year+"%");
+                    $(".id-board-meeting-last-years-avg").val(data.board_meeting_last_years_avg+"%");
+                    $(".id-audit-meeting-last-year").val(data.audit_meeting_last_year+"%");
                     if(data.are_committees_seperate=='yes') {
                         $(".id-nomination-row").removeClass('hidden');
                         $(".id-remuneration-row").removeClass('hidden');
                         $(".id-nomination-remuneration-row").addClass('hidden');
-                        $(".id-nomination-meeting-last-year").html(data.nomination_meeting_last_year+"%");
-                        $(".id-remuneration-meeting-last-year").html(data.remuneration_meeting_last_year+"%");
+                        $(".id-nomination-meeting-last-year").val(data.nomination_meeting_last_year+"%");
+                        $(".id-remuneration-meeting-last-year").val(data.remuneration_meeting_last_year+"%");
                     }
                     else {
                         $(".id-nomination-row").addClass('hidden');
                         $(".id-remuneration-row").addClass('hidden');
                         $(".id-nomination-remuneration-row").removeClass('hidden');
-                        $(".id-nomination-remuneration-meeting-last-year").html(data.nomination_remuneration_meeting_last_year+"%");
+                        $(".id-nomination-remuneration-meeting-last-year").val(data.nomination_remuneration_meeting_last_year+"%");
                     }
-                    $(".id-csr-meeting-last-year").html(data.csr_meeting_last_year+"%");
-                    $(".id-stack-meeting-last-year").html(data.stack_meeting_last_year+"%");
+                    $(".id-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
+                    $(".id-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
 
                     //var analysis_values = data.analysis_values;
                     //$(".ned-analysis-values").each(function(i,d) {
@@ -764,34 +766,34 @@ CustomJS.prototype = {
                 success: function (data) {
                     console.log(data);
                     $("#past_rem_dir_name").val($director.find('option:selected').text());
-                    $(".ed-functional-area").html(data.functional_area);
-                    $(".ed-education").html(data.education);
-                    $(".ed-past-ex").html(data.past_ex);
-                    $(".ed-committee-positions").html(data.committee_positions);
-                    $(".ed-retiring-non-retiring").html(data.retiring_non_retiring);
-                    $(".ed-part-promoter-group").html(data.part_promoter_group);
-                    $(".ed-total-directorship").html(data.total_directorship);
-                    $(".ed-committee-memberships").html(data.committee_memberships);
-                    $(".ed-committee-chairmanship").html(data.committee_chairmanships);
-                    $(".ed-last-3-agms").html(data.last_3_agms);
-                    $(".ed-board-meeting-last-year").html(data.board_meeting_last_year+"%");
-                    $(".ed-board-meeting-last-years-avg").html(data.board_meeting_last_years_avg+"%");
-                    $(".ed-audit-meeting-last-year").html(data.audit_meeting_last_year+"%");
+                    $(".ed-functional-area").val(data.functional_area);
+                    $(".ed-education").val(data.education);
+                    $(".ed-past-ex").val(data.past_ex);
+                    $(".ed-committee-positions").val(data.committee_positions);
+                    $(".ed-retiring-non-retiring").val(data.retiring_non_retiring);
+                    $(".ed-part-promoter-group").val(data.part_promoter_group);
+                    $(".ed-total-directorship").val(data.total_directorship);
+                    $(".ed-committee-memberships").val(data.committee_memberships);
+                    $(".ed-committee-chairmanship").val(data.committee_chairmanships);
+                    $(".ed-last-3-agms").val(data.last_3_agms);
+                    $(".ed-board-meeting-last-year").val(data.board_meeting_last_year+"%");
+                    $(".ed-board-meeting-last-years-avg").val(data.board_meeting_last_years_avg+"%");
+                    $(".ed-audit-meeting-last-year").val(data.audit_meeting_last_year+"%");
                     if(data.are_committees_seperate=='yes') {
                         $(".ed-nomination-row").removeClass('hidden');
                         $(".ed-remuneration-row").removeClass('hidden');
                         $(".ed-nomination-remuneration-row").addClass('hidden');
-                        $(".ed-nomination-meeting-last-year").html(data.nomination_meeting_last_year+"%");
-                        $(".ed-remuneration-meeting-last-year").html(data.remuneration_meeting_last_year+"%");
+                        $(".ed-nomination-meeting-last-year").val(data.nomination_meeting_last_year+"%");
+                        $(".ed-remuneration-meeting-last-year").val(data.remuneration_meeting_last_year+"%");
                     }
                     else {
                         $(".ed-nomination-row").addClass('hidden');
                         $(".ed-remuneration-row").addClass('hidden');
                         $(".ed-nomination-remuneration-row").removeClass('hidden');
-                        $(".ed-nomination-remuneration-meeting-last-year").html(data.nomination_remuneration_meeting_last_year+"%");
+                        $(".ed-nomination-remuneration-meeting-last-year").val(data.nomination_remuneration_meeting_last_year+"%");
                     }
-                    $(".ed-csr-meeting-last-year").html(data.csr_meeting_last_year+"%");
-                    $(".ed-stack-meeting-last-year").html(data.stack_meeting_last_year+"%");
+                    $(".ed-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
+                    $(".ed-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
                     //var analysis_values = data.analysis_values;
                     //$(".ned-analysis-values").each(function(i,d) {
                     //    $(this).html("["+analysis_values[i]+"]");
@@ -834,16 +836,9 @@ CustomJS.prototype = {
                                     var other_text = data.other_text;
 
                                     $(".other-text").each(function(i,d) {
-
                                         var text_area = $(this);
                                         if(text_area.hasClass('inline-editor')) {
                                             text_area.parent().find(".cke_textarea_inline").html(other_text[i]['text']);
-                                        }
-                                        else if(text_area.is("input")) {
-                                            text_area.val(other_text[i]['text']);
-                                        }
-                                        else if(text_area.is("select")) {
-                                            text_area.val(other_text[i]['text']);
                                         }
                                         else {
                                             text_area.val(other_text[i]['text']);
@@ -939,14 +934,8 @@ CustomJS.prototype = {
                             if(text_area.hasClass('inline-editor')) {
                                 text_area.parent().find(".cke_textarea_inline").html("");
                             }
-                            else if(text_area.is("input")) {
-                                text_area.val("");
-                            }
-                            else if(text_area.is("select")) {
-                                text_area.val("Select");
-                            }
                             else {
-                                text_area.html("");
+                                text_area.val("");
                             }
                         });
                         $("textarea[name='analysis_text[]']").each(function(i,d) {

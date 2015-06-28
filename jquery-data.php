@@ -1856,6 +1856,7 @@ elseif(isset($_GET['GetExistingDataofSchemeOfArrangement'])) {
 			'share_holding'=>$share_holding)
 	);
 }
+
 // appointment directors
 elseif(isset($_GET['CheckDataExistingAD'])) {
 	session_start();
@@ -1892,6 +1893,7 @@ elseif(isset($_GET['GetExistingDataofAppointmentOfDirectors'])) {
 			'remuneration_package'=>$remuneration_package)
 	);
 }
+
 // fill investment
 elseif(isset($_GET['GetExistingDataofFillInvestment'])) {
 	session_start();

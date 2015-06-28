@@ -3185,6 +3185,121 @@ class DatabaseReports {
             $stmt->execute();
         }
     }
+
+    function saveAppointmentOfDirectorsNED($info) {
+
+        $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+        $report_id = $_SESSION['report_id'];
+        $edit_mode=$info['edit_mode'];
+        if($edit_mode=="Edit Mode") {
+
+            $resolution_name = "Appointment of Directors";
+            $resolution_section = "Appointment/Reappointment of Non-Executive Directors";
+
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_analysis_text` WHERE `pa_reports_id`=:report_id AND `director_no`=:director_no and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id", $report_id);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->execute();
+
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `director_no`=:director_no and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id", $report_id);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->execute();
+
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_recommendations_text` WHERE `pa_reports_id`=:report_id AND `director_no`=:director_no and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id", $report_id);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->execute();
+
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_triggers` WHERE `pa_reports_id`=:report_id AND `director_no`=:director_no and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id", $report_id);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->execute();
+        }
+        else {
+
+            $report_id = $_SESSION['report_id'];
+            $stmt = $dbobject->prepare("select * from `pa_report_appointed_directors` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id", $report_id);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $stmt = $dbobject->prepare("update `pa_report_appointed_directors` set `no_of_ned`=`no_of_ned`+:arned  where `pa_reports_id`=:report_id");
+                $stmt->bindParam(":report_id", $report_id);
+                $stmt->bindParam(":arned", $arned);
+                $stmt->execute();
+            }
+            else {
+                $arned=1;
+                $stmt = $dbobject->prepare("insert into `pa_report_appointed_directors` (`pa_reports_id`,`no_of_ned`) values (:report_id,:arned)");
+                $stmt->bindParam(":report_id", $report_id);
+                $stmt->bindParam(":arned", $arned);
+                $stmt->execute();
+            }
+        }
+
+        $resolution_section = "Appointment/Reappointment of Non-Executive Directors";
+
+        $total_used_in = count($info['used_in_text']);
+        for ($i = 0; $i < $total_used_in; $i++) {
+            if($info['used_in_text'][$i]=="") {
+                $info['used_in_text'][$i]="&nbsp;";
+            }
+            $stmt = $dbobject->prepare("INSERT INTO `pa_report_appointment_directors_other_text` (`pa_reports_id`,`director_no`,`resolution_name`,`section_name`,`used_in`,`text`) VALUES(:report_id,:director_no,:resolution_name,:section_name,:used_in,:text)");
+            $stmt->bindParam(":report_id", $_SESSION['report_id']);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":resolution_name", $info['main_section']);
+            $stmt->bindParam(":section_name", $info['resolution_section'][$i]);
+            $stmt->bindParam(":used_in", $info['used_in'][$i]);
+            $stmt->bindParam(":text", $info['used_in_text'][$i]);
+            $stmt->execute();
+        }
+
+        $total_analysis_text = count($info['analysis_section']);
+        for ($i = 0; $i < $total_analysis_text; $i++) {
+            if($info['analysis_text'][$i]=="") {
+                $info['analysis_text'][$i] = "&nbsp;";
+            }
+            $stmt = $dbobject->prepare("INSERT INTO `pa_report_appointment_directors_analysis_text` (`pa_reports_id`,`director_no`,`resolution_name`,`resolution_section`,`analysis_text`) VALUES (:report_id,:director_no,:main_section,:resolution_section,:analysis_text)");
+            $stmt->bindParam(":report_id", $_SESSION['report_id']);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":main_section", $info['main_section']);
+            $stmt->bindParam(":resolution_section", $info['analysis_section'][$i]);
+            $stmt->bindParam(":analysis_text", $info['analysis_text'][$i]);
+            $stmt->execute();
+        }
+
+        $total_recommendation = count($info['recommendation_section']);
+        for ($i = 0; $i < $total_recommendation; $i++) {
+            if($info['recommendation_text'][$i]=="") {
+                $info['recommendation_text'][$i] = "&nbsp;";
+            }
+            $stmt = $dbobject->prepare("INSERT INTO `pa_report_appointment_directors_recommendations_text`(`pa_reports_id`,`director_no`,`resolution_name`,`resolution_section`,`recommendation_text`) VALUES (:report_id,:director_no,:main_section,:resolution_section,:recommendation_text)");
+            $stmt->bindParam(":report_id", $_SESSION['report_id']);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":main_section", $info['main_section']);
+            $stmt->bindParam(":resolution_section", $info['recommendation_section'][$i]);
+            $stmt->bindParam(":recommendation_text", $info['recommendation_text'][$i]);
+            $stmt->execute();
+        }
+
+        $total_triggers = count($info['triggers']);
+        for ($i = 0; $i < $total_triggers; $i++) {
+            $stmt = $dbobject->prepare("INSERT INTO `pa_report_appointment_directors_triggers` (`pa_reports_id`,`director_no`,`resolution_section`,`triggers`) VALUES (:report_id,:director_no,:resolution_section,:triggers)");
+            $stmt->bindParam(":report_id", $_SESSION['report_id']);
+            $stmt->bindParam(":director_no", $info['slot_no']);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->bindParam(":triggers", $info['triggers'][$i]);
+            $stmt->execute();
+        }
+
+    }
     // Appointment of auditors
     function getAppointmentOfAuditorsTable1() {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
@@ -4700,7 +4815,6 @@ class DatabaseReports {
         $dbobject=null;
         return $triggers;
     }
-
     function getAppointmentOfDirectorPastRemuneration($resolution_section,$main_section,$slot_no) {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
         $stmt=$dbobject->prepare("SELECT * FROM `pa_report_appointment_directors_past_remuneration` WHERE `pa_reports_id`='$_SESSION[report_id]' AND `director_no`=:slot_no");
@@ -4749,7 +4863,7 @@ class DatabaseReports {
         $dbobject=null;
         return $remuneration_package;
     }
-
+    
     // disclousres
     function checkExistingOfDataDisclosures() {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
