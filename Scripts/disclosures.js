@@ -19,19 +19,12 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofDisclosures:1},
                             success:function(data){
+                                console.log(data);
                                 var disclosures = data.disclosures;
-                                $(".checkbox").each(function(i,d) {
-                                    var $checkboxobj=$(this);
-                                    if(disclosures[i]['status']=="yes")
-                                    {
-                                        $checkboxobj.attr('checked',true);
-                                        $checkboxobj.parent().addClass('checked');
-                                    }
-                                    else {
-                                        $checkboxobj.attr('checked',false);
-                                        $checkboxobj.parent().removeClass('checked');
-                                    }
+                                $(".trigger").each(function(i,d) {
+                                    $(this).val(disclosures[i]['status']);
                                 });
+                                $(".analysis-text").val(data.analysis[0].analysis_text);
                             }
                         });
                     }

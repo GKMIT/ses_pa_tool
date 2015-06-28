@@ -628,7 +628,8 @@ CustomJS.prototype = {
                                         if(rpt[i]['rpt_current_year']!="") {
                                             row.find("th").eq(1).find('input').val(rpt[i]['rpt_current_year']);
                                             row.find("th").eq(2).find('input').val(rpt[i]['rpt_previous_year']);
-                                            row.find("th").eq(3).find('textarea').val(rpt[i]['rpt_comments']);
+                                            row.find("th").eq(3).find('input').val(rpt[i]['shift']);
+                                            row.find("th").eq(4).find('textarea').val(rpt[i]['rpt_comments']);
                                         }
                                         else {
                                             row.find("th").eq(4).find('button').click();

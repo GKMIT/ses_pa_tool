@@ -1955,8 +1955,11 @@ elseif(isset($_GET['GetExistingDataofDisclosures'])) {
 	session_start();
 	$db=new DatabaseReports();
 	$disclosures=$db->getDisclosures();
+	$analysis=$db->getDisclousuresAnalysisText();
+
 	echo json_encode(array(
-			'disclosures'=>$disclosures
+			'disclosures'=>$disclosures,
+			'analysis'=>$analysis
 		)
 	);
 }

@@ -404,19 +404,19 @@ if(isset($_POST['adoption_of_accounts'])) {
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
-                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="Write the qualifications in bullet format. Don't just copy paste the qualification in the report. Understand the qualification and write the same in business lanugage instead of legal language."><b>Qualifications:</b></textarea>
+                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="Write the qualifications in bullet format. Don't just copy paste the qualification in the report. Understand the qualification and write the same in business lanugage instead of legal language."></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
-                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="Company's Comments"><b>Company's Comments:</b></textarea>
+                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="Company's Comments"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
-                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="SES Opinion"><b>SES Opinion:</b></textarea>
+                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="SES Opinion"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -424,21 +424,9 @@ if(isset($_POST['adoption_of_accounts'])) {
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
-                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" placeholder="The auditors have not made any qualification in their Report."><b>Qualifications:</b></textarea>
+                                                <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" placeholder="The auditors have not made any qualification in their Report."></textarea>
                                             </div>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
-                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="Company's Comments"><b>Company's Comments:</b></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="analysis_section[]" value="Adoption of Accounts" />
-                                                <textarea rows="4" class="form-control analysis-text" name="analysis_text[]" placeholder="SES Opinion"><b>SES Opinion:</b></textarea>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="form-body">

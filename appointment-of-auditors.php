@@ -715,9 +715,9 @@ $table1=$db->getTable1Data();
                                                 <div class='col-md-3'>
                                                     <select class='form-control recommendations-fire-appointment-of-auditors triggers' name="triggers[]" id="disclosed_in_notice_and_annual_report">
                                                         <option>Select</option>
-                                                        <option value="in notice">Yes (in notice)</option>
-                                                        <option value="in annual report">Yes (in annual report)</option>
-                                                        <option value="in notice and annual report">Yes (in notice and annual report)</option>
+                                                        <option value="Disclosed in Notice">Yes (in notice)</option>
+                                                        <option value="Disclosed in Annual Report">Yes (in annual report)</option>
+                                                        <option value="Disclosed in both Notice and Annual Report">Yes (in notice and annual report)</option>
                                                         <option value="no" data-recommendation-table-id="162">No</option>
                                                     </select>
                                                 </div>
@@ -733,9 +733,9 @@ $table1=$db->getTable1Data();
                                                 <div class='col-md-3'>
                                                     <select class='form-control recommendations-fire-appointment-of-auditors triggers' name="triggers[]" id="disclosed_in_notice_and_annual_report1">
                                                         <option>Select</option>
-                                                        <option value="in notice">Yes (in notice)</option>
-                                                        <option value="in annual report">Yes (in annual report)</option>
-                                                        <option value="in notice and annual report">Yes (in notice and annual report)</option>
+                                                        <option value="Disclosed in Notice">Yes (in notice)</option>
+                                                        <option value="Disclosed in Annual Report">Yes (in annual report)</option>
+                                                        <option value="Disclosed in both Notice and Annual Report">Yes (in notice and annual report)</option>
                                                         <option value="no" data-recommendation-table-id="163">No</option>
                                                     </select>
                                                 </div>
@@ -751,9 +751,9 @@ $table1=$db->getTable1Data();
                                                 <div class='col-md-3'>
                                                     <select class='form-control recommendations-fire-appointment-of-auditors triggers' name="triggers[]" id="disclosed_in_notice_and_annual_report2">
                                                         <option>Select</option>
-                                                        <option value="in notice">Yes (in notice)</option>
-                                                        <option value="in annual report">Yes (in annual report)</option>
-                                                        <option value="in notice and annual report">Yes (in notice and annual report)</option>
+                                                        <option value="Disclosed in Notice">Yes (in notice)</option>
+                                                        <option value="Disclosed in Annual Report">Yes (in annual report)</option>
+                                                        <option value="Disclosed in both Notice and Annual Report">Yes (in notice and annual report)</option>
                                                         <option value="no" data-recommendation-table-id="164">No</option>
                                                     </select>
                                                 </div>

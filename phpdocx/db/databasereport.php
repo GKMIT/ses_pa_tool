@@ -25,6 +25,7 @@ class ReportBurning {
         return $generic_details;
     }
     function companyBackgroundDate($report_id) {
+
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $stmt = $dbobject->prepare(" select * from `pa_report_market_data` where `pa_reports_id`=:report_id");
         $stmt->bindParam(":report_id",$report_id);
@@ -71,6 +72,26 @@ class ReportBurning {
             $major_promoters[]=array("major_promoter_name"=>"&nbsp;","share_holding"=>"&nbsp;");
         }
         $generic_details['major_promoters']=$major_promoters;
+
+        $stmt = $dbobject->prepare(" select `companies`.`peer1`,`companies`.`peer2`, `companies`.`name`, `companies`.`bse_code` from `companies` INNER JOIN `pa_reports` ON `pa_reports`.`company_id`=`companies`.`id` where `pa_reports`.`report_id`=:report_id");
+        $stmt->bindParam(":report_id",$report_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $generic_details['peer_1_company_id'] = $row['peer1'];
+        $generic_details['peer_2_company_id'] = $row['peer2'];
+
+        $stmt = $dbobject->prepare(" select * from `companies` where `id`=:peer_1_company_id");
+        $stmt->bindParam(':peer_1_company_id',$generic_details['peer_1_company_id']);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['peer_1_company_name'] = $row['name'];
+
+        $stmt = $dbobject->prepare(" select * from `companies` where `id`=:peer_2_company_id");
+        $stmt->bindParam(':peer_2_company_id',$generic_details['peer_2_company_id']);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['peer_2_company_name'] = $row['name'];
 
         $dbobject = null;
         return $generic_details;
@@ -119,8 +140,18 @@ class ReportBurning {
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $standard_text=$row['standard_text'];
-        $generic_details['standard_text'] = $standard_text;
+        $generic_details['standard_text'] = $row;
+
+        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+        $stmt->bindParam(":report_id",$report_id);
+        $resolution_name = "Committee Performance";
+        $resolution_section = "Committee Performance";
+        $stmt->bindParam(":resolution_name",$resolution_name);
+        $stmt->bindParam(":resolution_section",$resolution_section);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['analysis_text'] = $row;
+
         $dbobject = null;
         return $generic_details;
     }
@@ -141,10 +172,24 @@ class ReportBurning {
             $temp[]=$row;
         }
         $generic_details['executive_remuneration']=$temp;
+
+        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+        $stmt->bindParam(":report_id",$report_id);
+        $resolution_name = "Remuneration Analysis";
+        $resolution_section = "Remuneration Analysis";
+        $stmt->bindParam(":resolution_name",$resolution_name);
+        $stmt->bindParam(":resolution_section",$resolution_section);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['analysis_text_1'] = $row;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['analysis_text_2'] = $row;
+
         $dbobjec=null;
         return $generic_details;
     }
     function disclosures($report_id) {
+
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $stmt = $dbobject->prepare(" select * from `pa_report_disclosures` where `pa_reports_id`=:report_id");
         $stmt->bindParam(":report_id",$report_id);
@@ -153,6 +198,17 @@ class ReportBurning {
             $temp[]=$row;
         }
         $generic_details['disclosures']=$temp;
+
+        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+        $stmt->bindParam(":report_id",$report_id);
+        $resolution_name = "Disclosure Required in Director's Report";
+        $resolution_section = "Disclosure Required in Director's Report";
+        $stmt->bindParam(":resolution_name",$resolution_name);
+        $stmt->bindParam(":resolution_section",$resolution_section);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['analysis_text'] = $row;
+
         $dbobjec=null;
         return $generic_details;
     }
@@ -289,114 +345,122 @@ class ReportBurning {
         return $company_and_meeting_details;
     }
     function adoptionOfAccount($report_id) {
+
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+
         $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_other_text` where `pa_reports_id`=:report_id");
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
         $other_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $other_text[]=$row;
+        if($stmt->rowCount()>0) {
+            $generic_array['adoption_of_account_exists'] = true;
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $other_text[]=$row;
+            }
+            $generic_array['other_text'] = $other_text;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_section = "Adoption of Accounts";
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_array['recommendation_text'] = $row;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_triggers` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_section = "Adoption of Accounts";
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $triggers = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $triggers[]= $row;
+            }
+            $generic_array['triggers'] = $triggers;
+
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_section = "Adoption of Accounts";
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $analysis_text = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[]= $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_unaudited_statements` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $unaudited_statements_table = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $unaudited_statements_table[]= $row;
+            }
+            $generic_array['unaudited_statements_table'] = $unaudited_statements_table;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_financial_indicators` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $financial_indicators = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $financial_indicators[]= $row;
+            }
+            $generic_array['financial_indicators'] = $financial_indicators;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_contingent_liabilities` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $contingent_liabilities = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $contingent_liabilities[]= $row;
+            }
+            $generic_array['contingent_liabilities'] = $contingent_liabilities;
+
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_rpt` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $adoption_of_accounts_rpt = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $adoption_of_accounts_rpt[]= $row;
+            }
+            $generic_array['adoption_of_accounts_rpt'] = $adoption_of_accounts_rpt;
+
+
+            $stmt = $dbobject->prepare(" select `fiscal_year_end` from `companies` INNER JOIN `pa_reports` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`report_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+            $fiscal_month = "Mar";
+            switch($row['fiscal_year_end']) {
+                case 3:
+                    $fiscal_month="Mar";
+                    break;
+                case 6:
+                    $fiscal_month="Jun";
+                    break;
+                case 9:
+                    $fiscal_month="Sept";
+                    break;
+                case 12:
+                    $fiscal_month="Dec";
+                    break;
+            }
+            $generic_array['fiscal_month'] = $fiscal_month;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_standalone_consolidated_Acc` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $standalone_consolidated_Acc = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $standalone_consolidated_Acc[]= $row;
+            }
+            $generic_array['standalone_consolidated_acc'] = $standalone_consolidated_Acc;
         }
-        $generic_array['other_text'] = $other_text;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_section = "Adoption of Accounts";
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $row=$stmt->fetch(PDO::FETCH_ASSOC);
-        $generic_array['recommendation_text'] = $row;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_triggers` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_section = "Adoption of Accounts";
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $triggers = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $triggers[]= $row;
+        else {
+            $generic_array['adoption_of_account_exists'] = false;
         }
-        $generic_array['triggers'] = $triggers;
-
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_section = "Adoption of Accounts";
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $analysis_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $analysis_text[]= $row;
-        }
-        $generic_array['analysis_text'] = $analysis_text;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_unaudited_statements` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $unaudited_statements_table = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $unaudited_statements_table[]= $row;
-        }
-        $generic_array['unaudited_statements_table'] = $unaudited_statements_table;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_financial_indicators` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $financial_indicators = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $financial_indicators[]= $row;
-        }
-        $generic_array['financial_indicators'] = $financial_indicators;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_contingent_liabilities` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $contingent_liabilities = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $contingent_liabilities[]= $row;
-        }
-        $generic_array['contingent_liabilities'] = $contingent_liabilities;
-
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_rpt` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $adoption_of_accounts_rpt = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $adoption_of_accounts_rpt[]= $row;
-        }
-        $generic_array['adoption_of_accounts_rpt'] = $adoption_of_accounts_rpt;
-
-
-        $stmt = $dbobject->prepare(" select `fiscal_year_end` from `companies` INNER JOIN `pa_reports` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`report_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $row=$stmt->fetch(PDO::FETCH_ASSOC);
-        $fiscal_month = "Mar";
-        switch($row['fiscal_year_end']) {
-            case 0:
-                $fiscal_month="Mar";
-                break;
-            case 1:
-                $fiscal_month="Jun";
-                break;
-            case 2:
-                $fiscal_month="Sept";
-                break;
-            case 3:
-                $fiscal_month="Dec";
-                break;
-        }
-        $generic_array['fiscal_month'] = $fiscal_month;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_adoption_of_accounts_standalone_consolidated_Acc` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $standalone_consolidated_Acc = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $standalone_consolidated_Acc[]= $row;
-        }
-        $generic_array['standalone_consolidated_acc'] = $standalone_consolidated_Acc;
 
         return $generic_array;
     }
@@ -407,31 +471,36 @@ class ReportBurning {
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
         $other_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $other_text[]=$row;
+        if($stmt->rowCount()>0) {
+            $generic_array['declaration_of_dividend_exists'] = true;
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $other_text[]=$row;
+            }
+            $generic_array['other_text'] = $other_text;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_section = "Declaration Of Dividend";
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_array['recommendation_text'] = $row;
+
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_section = "Declaration Of Dividend";
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $analysis_text = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[]= $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
         }
-        $generic_array['other_text'] = $other_text;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_section = "Declaration Of Dividend";
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $row=$stmt->fetch(PDO::FETCH_ASSOC);
-        $generic_array['recommendation_text'] = $row;
-
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_section = "Declaration Of Dividend";
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $analysis_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $analysis_text[]= $row;
+        else {
+            $generic_array['declaration_of_dividend_exists'] = true;
         }
-        $generic_array['analysis_text'] = $analysis_text;
-
         return $generic_array;
     }
     function esopsApprovalOfESOPScheme($report_id) {

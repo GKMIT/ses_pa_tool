@@ -1274,26 +1274,32 @@ class DatabaseReports {
     function saveDisclosuresInfo($info) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $pa_report_id = $_SESSION['report_id'];
+
+        $edit_mode=$info['edit_mode'];
+        if($edit_mode=="Edit Mode") {
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_disclosures` WHERE `pa_reports_id`='$pa_report_id'");
+            $stmt->execute();
+            $resolution_name = "Disclosure Required in Director's Report";
+            $resolution_section = "Disclosure Required in Director's Report";
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_analysis_text` WHERE `pa_reports_id`='$pa_report_id' and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+            $stmt->bindParam(":resolution_name",$resolution_name);
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+        }
+
         $total_disclosure=count($info['question']);
         $j=1;
+
         for($i=0;$i<$total_disclosure;$i++) {
             $stmt = $dbobject->prepare("insert into `pa_report_disclosures` (`pa_reports_id`, `question_no`, `status`) VALUES (:pa_reports_id, :question_no, :status)");
             $stmt->bindParam(":pa_reports_id",$pa_report_id);
             $stmt->bindParam(":question_no",$j);
             $stmt->bindParam(":status",$info['question'][$i]);
-            if($stmt->execute()) {
-                echo "done";
-
-            }
-            else {
-                echo "not";
-            }
+            $stmt->execute();
             $j++;
         }
         $this->saveAnalysis($info);
-        //$response['status']=200;
         $dbobject=null;
-        //return $response;
     }
     function getCompanyEDDirectors($company_id,$financial_year) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
@@ -2317,7 +2323,7 @@ class DatabaseReports {
         }
         $total_rpt_current_year=count($info['rpt_current_year']);
         for($i=0;$i<$total_rpt_current_year;$i++) {
-            $stmt=$dbobject->prepare("INSERT INTO `pa_report_adoption_of_accounts_rpt`(`pa_reports_id`,`field_name`,`rpt_current_year`,`rpt_previous_year`,`rpt_comments`,`rpt_year1`,`rpt_year2`) VALUES (:report_id,:label_related,:rpt_current_year,:rpt_previous_year,:rpt_comments,:rpt_year1,:rpt_year2)");
+            $stmt=$dbobject->prepare("INSERT INTO `pa_report_adoption_of_accounts_rpt` (`pa_reports_id`,`field_name`,`rpt_current_year`,`rpt_previous_year`,`rpt_comments`,`rpt_year1`,`rpt_year2`,`shift`) VALUES (:report_id,:label_related,:rpt_current_year,:rpt_previous_year,:rpt_comments,:rpt_year1,:rpt_year2,:shift)");
             $stmt->bindParam(":report_id",$_SESSION['report_id']);
             $stmt->bindParam(":label_related", $info['label_related'][$i]);
             $stmt->bindParam(":rpt_current_year", $info['rpt_current_year'][$i]);
@@ -2325,6 +2331,7 @@ class DatabaseReports {
             $stmt->bindParam(":rpt_comments", $info['rpt_comments'][$i]);
             $stmt->bindParam(":rpt_year1", $info['rpt_year1']);
             $stmt->bindParam(":rpt_year2", $info['rpt_year2']);
+            $stmt->bindParam(":shift", $info['shift_rpt'][$i]);
             $stmt->execute();
         }
         $total_standalone_value1=count($info['standalone_value1']);
@@ -3810,22 +3817,24 @@ class DatabaseReports {
         }
         for($i=0;$i<count($info['director_name']);$i++) {
 
-            $stmt = $dbobject->prepare("insert into `pa_report_remuneration_analysis` (`pa_reports_id`, `director_name`,`dir_din_no`, `promoter_non_promoter`,`rem_first_year`,`fixed_pay_first_year`,`total_pay_first_year`,`rem_second_year`,`fixed_pay_second_year`,`total_pay_second_year`,`rem_third_year`,`fixed_pay_third_year`,`total_pay_third_year`) VALUES (:pa_reports_id, :director_name,:dir_din_no,:promoter_non_promoter,:rem_first_year, :fixed_pay_first_year,:total_pay_first_year,:rem_second_year,:fixed_pay_second_year,:total_pay_second_year,:rem_third_year, :fixed_pay_third_year,:total_pay_third_year)");
-            $stmt->bindParam(":pa_reports_id",$pa_report_id);
-            $stmt->bindParam(":director_name",$info['director_name'][$i]);
-            $stmt->bindParam(":dir_din_no",$info['dir_din_no'][$i]);
-            $stmt->bindParam(":promoter_non_promoter",$info['promoter_non_promoter'][$i]);
-            $stmt->bindParam(":rem_first_year",$info['remuneration_year_1']);
-            $stmt->bindParam(":fixed_pay_first_year",$info['fixed_pay_first_year'][$i]);
-            $stmt->bindParam(":total_pay_first_year",$info['total_pay_first_year'][$i]);
-            $stmt->bindParam(":rem_second_year",$info['remuneration_year_2']);
-            $stmt->bindParam(":fixed_pay_second_year",$info['fixed_pay_second_year'][$i]);
-            $stmt->bindParam(":total_pay_second_year",$info['total_pay_second_year'][$i]);
-            $stmt->bindParam(":rem_third_year",$info['remuneration_year_3']);
-            $stmt->bindParam(":fixed_pay_third_year",$info['fixed_pay_third_year'][$i]);
-            $stmt->bindParam(":total_pay_third_year",$info['total_pay_third_year'][$i]);
-            $stmt->execute();
+                $stmt = $dbobject->prepare("insert into `pa_report_remuneration_analysis` (`pa_reports_id`, `director_name`,`dir_din_no`, `promoter_non_promoter`,`rem_first_year`,`fixed_pay_first_year`,`total_pay_first_year`,`rem_second_year`,`fixed_pay_second_year`,`total_pay_second_year`,`rem_third_year`,`fixed_pay_third_year`,`total_pay_third_year`,`ratio`) VALUES (:pa_reports_id, :director_name,:dir_din_no,:promoter_non_promoter,:rem_first_year, :fixed_pay_first_year,:total_pay_first_year,:rem_second_year,:fixed_pay_second_year,:total_pay_second_year,:rem_third_year, :fixed_pay_third_year,:total_pay_third_year,:ratio)");
+                $stmt->bindParam(":pa_reports_id",$pa_report_id);
+                $stmt->bindParam(":director_name",$info['director_name'][$i]);
+                $stmt->bindParam(":dir_din_no",$info['dir_din_no'][$i]);
+                $stmt->bindParam(":promoter_non_promoter",$info['promoter_non_promoter'][$i]);
+                $stmt->bindParam(":rem_first_year",$info['remuneration_year_1']);
+                $stmt->bindParam(":fixed_pay_first_year",$info['fixed_pay_first_year'][$i]);
+                $stmt->bindParam(":total_pay_first_year",$info['total_pay_first_year'][$i]);
+                $stmt->bindParam(":rem_second_year",$info['remuneration_year_2']);
+                $stmt->bindParam(":fixed_pay_second_year",$info['fixed_pay_second_year'][$i]);
+                $stmt->bindParam(":total_pay_second_year",$info['total_pay_second_year'][$i]);
+                $stmt->bindParam(":rem_third_year",$info['remuneration_year_3']);
+                $stmt->bindParam(":fixed_pay_third_year",$info['fixed_pay_third_year'][$i]);
+                $stmt->bindParam(":total_pay_third_year",$info['total_pay_third_year'][$i]);
+                $stmt->bindParam(":ratio",$info['ratio_to_mre'][$i]);
+                $stmt->execute();
         }
+
 
         for($i=0;$i<5;$i++) {
             $stmt = $dbobject->prepare("insert into `pa_report_executive_remuneration_growth` (`pa_reports_id`, `financial_year`, `md`,`indexed_tsr`) VALUES (:pa_reports_id, :financial_year, :md,:indexed_tsr)");
@@ -4283,6 +4292,24 @@ class DatabaseReports {
         }
         $dbobject=null;
         return $disclosures;
+    }
+    function getDisclousuresAnalysisText() {
+        $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+        $stmt=$dbobject->prepare("SELECT * FROM `pa_report_analysis_text` WHERE `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section");
+        $stmt->bindParam(":report_id",$_SESSION['report_id']);
+        $resolution_name = "Disclosure Required in Director's Report";
+        $resolution_section = "Disclosure Required in Director's Report";
+        $stmt->bindParam(":resolution_name",$resolution_name);
+        $stmt->bindParam(":resolution_section",$resolution_section);
+        $stmt->execute();
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+            if($row['analysis_text']=="&nbsp;") {
+                $row['analysis_text']="";
+            }
+            $analysis[]=$row;
+        }
+        $dbobject=null;
+        return $analysis;
     }
     //new changes
     function getTotalPayFromRemuneration() {

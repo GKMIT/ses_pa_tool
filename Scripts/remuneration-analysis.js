@@ -139,6 +139,7 @@ CustomJS.prototype = {
                 dataType:'JSON',
                 data:{CheckDataExistingOfRemunerationAnalysis:1},
                 success:function(data){
+                    console.log(data);
                     var resolution_name="";
                     if(data) {
                         $('#edit_mode').val("Edit Mode");
@@ -148,7 +149,6 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofRemunerationAnalysis:1,ResolutionName:resolution_name,MainSection:main_section},
                             success:function(data){
-                                console.log(data);
                                 var analysis_text = data.analysis;
                                 setTimeout(function() {
                                     $(".analysis-text").each(function(i,d) {
@@ -171,6 +171,7 @@ CustomJS.prototype = {
                                     row.find("td").eq(5).find('input').val(remuneration_analysis[i].total_pay_second_year);
                                     row.find("td").eq(6).find('input').val(remuneration_analysis[i].fixed_pay_third_year);
                                     row.find("td").eq(7).find('input').val(remuneration_analysis[i].total_pay_third_year);
+                                    row.find("td").eq(8).find('input').val(remuneration_analysis[i].ratio);
                                 });
                                 var executive_remuneration_growth = data.executive_remuneration_growth;
                                 $(".remuneration_growth").each(function(i,d) {
@@ -191,13 +192,13 @@ CustomJS.prototype = {
                                 $('.company2').find("input").val(executive_remuneration_peer_comparison[1].company_name);
                                 $('.company3').find("input").val(executive_remuneration_peer_comparison[2].company_name);
 
-                                $('.director1').find("input").val(executive_remuneration_peer_comparison[0].promoter_group);
-                                $('.director2').find("input").val(executive_remuneration_peer_comparison[1].promoter_group);
-                                $('.director3').find("input").val(executive_remuneration_peer_comparison[2].promoter_group);
+                                $('.director1').find("input").val(executive_remuneration_peer_comparison[0].director_name);
+                                $('.director2').find("input").val(executive_remuneration_peer_comparison[1].director_name);
+                                $('.director3').find("input").val(executive_remuneration_peer_comparison[2].director_name);
 
-                                $('.promoter1').find("input").val(executive_remuneration_peer_comparison[0].director_name);
-                                $('.promoter2').find("input").val(executive_remuneration_peer_comparison[1].director_name);
-                                $('.promoter3').find("input").val(executive_remuneration_peer_comparison[2].director_name);
+                                $('.promoter1').find("input").val(executive_remuneration_peer_comparison[0].promoter_group);
+                                $('.promoter2').find("input").val(executive_remuneration_peer_comparison[1].promoter_group);
+                                $('.promoter3').find("input").val(executive_remuneration_peer_comparison[2].promoter_group);
 
                                 $('.remuneration1').find("input").val(executive_remuneration_peer_comparison[0].remuneration);
                                 $('.remuneration2').find("input").val(executive_remuneration_peer_comparison[1].remuneration);

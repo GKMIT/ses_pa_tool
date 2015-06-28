@@ -3,6 +3,7 @@ session_start();
 include_once("../db/databasereport.php");
 date_default_timezone_set('Asia/Kolkata');
 require_once '../excellib/Classes/PHPExcel/IOFactory.php';
+$resolution_text_box = true;
 function burnExcel($report_id) {
     $db = new ReportBurning();
     $generic = $db->getGraphData($report_id);
@@ -255,6 +256,55 @@ function getDocxFormatDate($date) {
     }
     return "<span style='font-size: 10;'>".$formated_day."<sup>$super</sup>"." ".$formated_month.", ".$formated_year."</span>";
 }
+function getHeaderIndexFormatDate($date) {
+    $db_date = $date;
+    $formated_day = date_format(date_create_from_format('Y-m-d', $db_date), 'd');
+    $formated_month = date_format(date_create_from_format('Y-m-d', $db_date), 'F');
+    $formated_year = date_format(date_create_from_format('Y-m-d', $db_date), 'Y');
+    $super = "";
+    switch($formated_day) {
+        case "01":
+        case "21":
+        case "31":
+            $super = "st";
+            break;
+        case "02":
+        case "22":
+            $super = "nd";
+            break;
+        case "03":
+        case "23":
+            $super = "rd";
+            break;
+        case "04":
+        case "05":
+        case "06":
+        case "07":
+        case "08":
+        case "09":
+        case "10":
+        case "11":
+        case "12":
+        case "13":
+        case "14":
+        case "15":
+        case "16":
+        case "17":
+        case "18":
+        case "19":
+        case "20":
+        case "24":
+        case "25":
+        case "26":
+        case "27":
+        case "28":
+        case "29":
+        case "30":
+            $super = "th";
+            break;
+    }
+    return "<span style='font-size: 10;'>".$formated_day."<sup>$super</sup>"." ".$formated_month.", ".$formated_year."</span>";
+}
 function addHeader($docx,$report_id) {
     $db = new ReportBurning();
     $company_report_details = $db->getCompanyAndMeetingDetails($report_id);
@@ -293,11 +343,7 @@ function addHeader($docx,$report_id) {
     $headerDate = new WordFragment($docx, 'defaultHeader');
     $headerMetType = new WordFragment($docx, 'defaultHeader');
 
-//    $date = date_create($company_report_details['meeting_date']);
-//    $meeting_date = date_format($date, 'd-F-Y');
-
-//    $headerDate->addText('Meeting Date: '.$meeting_date, $textOptions2);
-    $headerDate->embedHTML("<span style='display:block;font-size:10; text-align:right;'>Meeting Date: ".getDocxFormatDate($company_report_details['meeting_date'])."</span>");
+    $headerDate->embedHTML("<span style='display:block;font-size:10; text-align:right;'>Meeting Date: ".getHeaderIndexFormatDate($company_report_details['meeting_date'])."</span>");
     $headerMetType->addText('Meeting Type : '.$company_report_details['meeting_type'], $textOptions3);
 
     $valuesTable = array(
@@ -399,6 +445,20 @@ function addOrangeTextBox($docx,$text) {
 function createIndexPage($docx_index,$report_id) {
     $db = new ReportBurning();
     $company_and_meeting_details = $db->getIndexPageInfo($report_id);
+    switch($company_and_meeting_details['meeting_type']) {
+        case 'AGM':
+            $company_and_meeting_details['meeting_type'] = "Annual General Meeting";
+            break;
+        case 'EGM':
+            $company_and_meeting_details['meeting_type'] = "Extraordinary General Meeting";
+            break;
+        case 'PB':
+            $company_and_meeting_details['meeting_type'] = "Postal Ballot";
+            break;
+        case 'CCM':
+            $company_and_meeting_details['meeting_type'] = "Court Convened Meeting";
+            break;
+    }
     $variables = array(
         'company_name'=>$company_and_meeting_details['name'],
         'bse_code' => $company_and_meeting_details['bse_code'],
@@ -418,11 +478,11 @@ function createIndexPage($docx_index,$report_id) {
     $docx_index->replaceVariableByHTML("notice_link","inline","<a style='font-size: 10;' href='$company_and_meeting_details[notice_link]'>Click here</a>");
     $docx_index->replaceVariableByHTML("annual_report","inline","<a style='font-size: 10;' href='$company_and_meeting_details[annual_report]'>$company_and_meeting_details[annual_report_name]</a>");
     $docx_index->replaceVariableByHTML("company_email","inline","<a style='font-size: 10;' href='mailto:$company_and_meeting_details[email]'>$company_and_meeting_details[email]</a>");
-    $date_in_format = getDocxFormatDate($company_and_meeting_details['e_voting_start_date']);
+    $date_in_format = getHeaderIndexFormatDate($company_and_meeting_details['e_voting_start_date']);
     $docx_index->replaceVariableByHTML("e_voting_start_date","inline",$date_in_format);
-    $date_in_format = getDocxFormatDate($company_and_meeting_details['e_voting_end_date']);
+    $date_in_format = getHeaderIndexFormatDate($company_and_meeting_details['e_voting_end_date']);
     $docx_index->replaceVariableByHTML("e_voting_end_date","inline",$date_in_format);
-    $date_in_format = getDocxFormatDate($company_and_meeting_details['meeting_date']);
+    $date_in_format = getHeaderIndexFormatDate($company_and_meeting_details['meeting_date']);
     $docx_index->replaceVariableByHTML("meeting_date","inline",$date_in_format);
 }
 function agendaItemsAndRecommendations($docx,$report_id) {
@@ -482,8 +542,8 @@ function companyBackground($docx,$report_id) {
                                     <td style='text-align:center; width:10%;border-bottom: 2px solid #000000;color: #FFFFFF;font-weight: bold; font-size: 10; background-color: #464646;'>".$financial_indicators[1]['financial_year']."</td>
                                     <td style='text-align:center;width:10%; color: #FFFFFF;border-bottom: 2px solid #000000; font-weight: bold; font-size: 10; background-color: #464646;'>".$financial_indicators[2]['financial_year']."</td>
                                     <td style='width:0.5%;'>&nbsp;&nbsp;</td>
-                                    <td style='width:22%; color: #FFFFFF;border-bottom: 2px solid #000000;font-weight: bold; font-size: 10; background-color: #464646; text-align:center;'>".$peer_comparision[0]['financial_year']."</td>
-                                    <td style='width:22%; color: #FFFFFF;font-weight: bold; font-size: 10;border-bottom: 2px solid #000000; background-color: #464646;text-align:center;'>".$peer_comparision[1]['financial_year']."</td>
+                                    <td style='width:22%; color: #FFFFFF;border-bottom: 2px solid #000000;font-weight: bold; font-size: 10; background-color: #464646; text-align:center;'>".$generic_array['peer_1_company_name']."</td>
+                                    <td style='width:22%; color: #FFFFFF;font-weight: bold; font-size: 10;border-bottom: 2px solid #000000; background-color: #464646;text-align:center;'>".$generic_array['peer_2_company_name']."</td>
                                 </tr>";
     $table_financial_indicators.="<tr>
                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>Revenue</td>
@@ -604,43 +664,50 @@ function companyBackground($docx,$report_id) {
                 </tbody>
             </table>";
     $docx->embedHTML($html);
-    //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
+
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
     $html = "<table style='border-collapse: collapse; width:100%; margin-bottom: 0; display: block;'>
                 <tbody>
                     <tr><td colspan='4' style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'><i>Standalone Data ; Source: Capitaline</i></td><td>&nbsp;&nbsp;</td><td style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>* As on [date]</td><td colspan='2' style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>\"Based on EPS for FY []</td></tr>
-                    <tr><td colspan='4' style='font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 3: FINANCIAL INDICATORS (STANDALONE)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 4: PEER COMPARISON ([year])</td></tr>
+                    <tr><td colspan='4' style='font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 3: FINANCIAL INDICATORS (STANDALONE)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 4: PEER COMPARISON (".$peer_comparision[0]['financial_year'].")</td></tr>
                     $table_financial_indicators
                     <tr><td colspan='4' style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'><i>Dividend pay-out includes Dividend Distribution Tax. Source: Capitaline</i></td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>&nbsp;</td></tr>";
     $html.="</table>";
     $docx->embedHTML($html);
-    //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
+
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-    $html ="<table style='border-collapse: collapse; width:100%; margin-bottom: 0; margin-top: 0;'>
+    $html ="<table style='border-collapse: collapse; width:100%; margin: 0;'>
                 <tr><td colspan='2' style='font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 5: MAJOR PUBLIC SHAREOLDERS (MAR'15)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 6: MAJOR PROMOTERS (MAR'15)</td></tr>
                 $table_public_share_holders_major_promoters
                 <tr><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td><td>&nbsp;</td><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td></tr>
-                <tr><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>SHAREHOLDING PATTERN (%) (DECEMBER)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom:2px solid #000000;'>DISCUSSION</td></tr>
+                <tr><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>SHAREHOLDING PATTERN (%) (MARCH)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom:2px solid #000000;'>DISCUSSION</td></tr>
               </table>";
     $docx->embedHTML($html);
-    //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
+
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
     $new_fragment = new WordFragment($docx,"aslk");
     $new_fragment->addExternalFile(array('src'=>'ShareholdingPattern.docx'));
+
+    $blank_fragment =  new WordFragment($docx,"aslk");
+    $blank_fragment->addText("");
+
+    $discussion_fragment =  new WordFragment($docx,"aslk");
+    $discussion_fragment->embedHTML("<p style='padding-top: 8px; padding-bottom: 8px; margin: 0; font-size: 10;line-height:135%; text-align: justify; '>Discussion</p>");
+
     $valuesTable = array(
         array(
             array('value' =>$new_fragment, 'vAlign' => 'center'),
-            array('value' =>"Matter", 'vAlign' => 'center'),
+            array('value' =>$blank_fragment,'fontSize' => 10, 'vAlign' => 'center','textAlign'=>'center'),
+            array('value' =>$discussion_fragment, 'vAlign' => 'top','textAlign'=>'left'),
         )
     );
     $widthTableCols = array(
-        7000,7000
+        5555,323,4240
     );
     $paramsTable = array(
         'border' => 'nil',
-        'borderWidth' => 8,
-        'borderColor' => 'cccccc',
-        'columnWidths' => $widthTableCols
+        'columnWidths' => $widthTableCols,
+        'indent'=>108
     );
     $docx->addTable($valuesTable, $paramsTable);
 }
@@ -651,8 +718,8 @@ function boardOfDirectorInfo($docx,$report_id) {
                                         <td colspan='2' style='text-align: center; border-right: 1px solid #FFFFFF; color: #FFFFFF; font-weight: bold; font-size: 9; background-color: #464646;'>Classification</td>
                                         <td rowspan='2' style='text-align:center; vertical-align: middle; border-right: 1px solid #FFFFFF;color: #FFFFFF; font-weight: bold; font-size: 9; background-color: #464646;'>Expertise/Specialization</td>
                                         <td rowspan='2' style='text-align:center; border-right: 1px solid #FFFFFF;color: #FFFFFF;font-weight: bold; font-size: 9; background-color: #464646;'>Tenure (Year)</td>
-                                        <td rowspan='2' style='text-align:center; border-right: 1px solid #FFFFFF;color: #FFFFFF;font-weight: bold; font-size: 9; background-color: #464646;'>Directorship</td>
-                                        <td rowspan='2' style='text-align:center; border-right: 1px solid #FFFFFF; color: #FFFFFF;font-weight: bold; font-size: 9; background-color: #464646;'><sup>[1]</sup>Committee Membership</td>
+                                        <td rowspan='2' style='text-align:center; border-right: 1px solid #FFFFFF;color: #FFFFFF;font-weight: bold; font-size: 9; background-color: #464646;'><b><sup style='font-size: 9;'>[1]</sup></b>Directorship</td>
+                                        <td rowspan='2' style='text-align:center; border-right: 1px solid #FFFFFF; color: #FFFFFF;font-weight: bold; font-size: 9; background-color: #464646;'><b><sup style='font-size: 9;'>[2]</sup></b>Committee Membership</td>
                                         <td rowspan='2' style='text-align:center; color: #FFFFFF;font-weight: bold; font-size: 9; background-color: #464646;'>Pay(<span style='font-family: Rupee Foradian;'>`</span> Lakh)</td>
                                     </tr>";
     $table_financial_indicators .="<tr>
@@ -664,7 +731,10 @@ function boardOfDirectorInfo($docx,$report_id) {
     $financial_year = $_SESSION['report_year'];
     $generic = $db->companyBoardOfDirectors($report_id,$company_id,$financial_year);
     $board_directors = $generic['board_directors'];
-    $standard_text = $generic['standard_text'];
+    $standard_text = $generic['standard_text']['standard_text'];
+    $liable_text = $generic['standard_text']['liable_analysis_text'];
+    $board_text = $generic['standard_text']['board_analysis_text'];
+    $analysis_text = $generic['analysis_text']['analysis_text'];
     $company_name = $generic['company_name'];
     $i=1;
     foreach($board_directors as $director) {
@@ -696,16 +766,15 @@ function boardOfDirectorInfo($docx,$report_id) {
         }
         $i++;
     }
-    $table_financial_indicators.="<tr><td colspan='9' style='font-size: 8; padding-top: 5px; padding-bottom: 5px; '><i>Reference: ID - Independent director, NED - Non-executive director, ED - Executive director, C - Chairman, P - Promoter, MD - Managing Director</i>";
-    $table_financial_indicators.="<br/><b>[1]</b><i>Committee memberships include committee chairmanships &nbsp;&nbsp;Up - Director up for appointment/ reappointment</i>";
-    $table_financial_indicators.="<br/><i>Note: Directorships, committee membership and committee chairmanship includes such positions in [$company_name]</i></td></tr>";
-    $table_financial_indicators.="<tr><td colspan='9' style='font-size: 9;'><p style='padding-top: 8px; padding-bottom: 8px; line-height: 135%; text-align: justify; margin: 0;'>$standard_text</p></td></tr>";
+    $table_financial_indicators.="<tr><td colspan='9' style='font-size: 8; padding-top: 5px; padding-bottom: 5px; '><i>Reference: ED - Executive Director, NED- Non-Executive Director, ID - Independent Director, NID- Non-Independent Director, P- Promoter, W - Woman Director, R- Liable to retire by Rotation, U- Up for Re-appointment, N- New Appointment, MD- Managing Director, C- Chairman, CMD- Chairman and Managing Director <br/><b>[1]</b> Directorships show Directorships in Public Companies (Total Directorships which include Directorships in both Public and Private Companies) <br/><b>[2]</b> Committee memberships include committee chairmanships</i>";
+    $table_financial_indicators.="<br/><i>Note: Directorships, committee membership and committee chairmanship includes such positions in $company_name</i></td></tr>";
+    $table_financial_indicators.="<tr><td colspan='9' style='font-size: 9;'>".htmlParserForTable($standard_text,9)."</td></tr>";
     $html = "<p style=''></p>";
     $html .= "<table style='border-collapse: collapse; width:100%;'>
                 <tbody>
                     <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 2px solid #000000; '>TABLE 7 - BOARD PROFILE </td></tr>
                     $table_financial_indicators
-                    <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-bottom: 2px solid #000000; border-top: 2px solid #000000; '>GRAPH 2 - BOARD PROFILE OF THE BOARD MEMBERS ON VARIOUS PARAMETERS IS AS UNDER:</td></tr>
+                    <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-bottom: 2px solid #000000; border-top: 2px solid #000000; '>GRAPH 2 - BOARD PROFILE</td></tr>
                 </tbody>
               </table>";
     $docx->embedHTML($html);
@@ -716,9 +785,14 @@ function boardOfDirectorInfo($docx,$report_id) {
     $board_compositions_fragment = new WordFragment($docx,"aslk");
     $board_compositions_fragment->addExternalFile(array('src'=>'BoardComposition.docx'));
     $retire_fragment_text = new WordFragment($docx,"standardtext");
-    $retire_fragment_text->addText("As per provisions of Section 149 and 152 of the Companies Act, 2013 Independent Directors shall not be liable to retire by rotation and unless provided by the Articles of the Company at least 2/3rd of the Non-Independent Directors should be liable to retire by rotation.",array('fontSize' => 9, 'color' => '000000', 'textAlign' => 'both'));
+
+    $retire_fragment_text->embedHTML("<p style='font-size: 9; margin 0; line-height:135%; padding: 0; text-align: justify; '>As per provisions of Section 149 and 152 of the Companies Act, 2013 Independent Directors shall not be liable to retire by rotation and unless provided by the Articles of the Company at least 2/3rd of the Non-Independent Directors should be liable to retire by rotation.</p>");
+    $retire_fragment_text->embedHTML(htmlParserForTable($liable_text,9));
+
     $board_compositions_fragment_text = new WordFragment($docx,"standardtext");
-    $board_compositions_fragment_text->addText("As per Clause 49(ii)(A) of the Listing Agreement, the Company should have at least 33% Independent Directors if the Chairman of the Board is a Non-Executive Director and should have at least 50% independent directors if the Board Chairman is a promoter or an executive director.",array('fontSize' => 9, 'color' => '000000', 'textAlign' => 'both'));
+    $board_compositions_fragment_text->embedHTML("<p style='font-size: 9; margin 0; line-height:135%; padding: 0; text-align: justify; '>As per Clause 49(ii)(A) of the Listing Agreement, the Company should have at least 33% Independent Directors if the Chairman of the Board is a Non-Executive Director and should have at least 50% independent directors if the Board Chairman is a promoter or an executive director.</p>");
+    $board_compositions_fragment_text->embedHTML(htmlParserForTable($board_text,9));
+
     $valuesTable = array(
         array(
             array('value' =>$retire_fragment, 'vAlign' => 'center','textAlign'=>'center','borderRight' => 'single','borderRightWidth'=>3,'borderRightColor' => '999999'),
@@ -734,8 +808,7 @@ function boardOfDirectorInfo($docx,$report_id) {
     );
     $paramsTable = array(
         'border' => 'nil',
-        'borderWidth' => 8,
-        'borderColor' => 'cccccc',
+        'indent'=>108,
         'columnWidths' => $widthTableCols
     );
     $docx->addTable($valuesTable, $paramsTable);
@@ -796,8 +869,8 @@ function boardOfDirectorInfo($docx,$report_id) {
                 <tbody>
                     <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 2px solid #000000; '>TABLE 8 - BOARD COMMITTEE PERFORMANCE</td></tr>
                     $board_committee_performance
-                    <tr><td colspan='8' style='font-size: 8; padding-top: 5px; padding-bottom: 5px; border-bottom: 2px solid #000;'><i>Reference: ID - Independent director, NID - Non-Independent director, ED - Executive director, C - Chairman, P - Promoter</i></td></tr>
-                    <tr><td colspan='8' style='font-size: 8; padding-top: 5px; padding-bottom: 5px; '><i>&nbsp;</td></tr>
+                    <tr><td colspan='8' style='font-size: 8; padding-top: 5px; padding-bottom: 5px;'><i>Reference: ED - Executive Director, NED- Non-Executive Director, ID - Independent Director, NID- Non-Independent Director, P- Promoter, C- Chairman, #- Number of Members</i></td></tr>
+                    <tr><td colspan='9' style='font-size: 9;'>".htmlParserForTable($analysis_text,9)."</td></tr>
                 </tbody>
               </table>";
     $docx->embedHTML($html);
@@ -861,11 +934,14 @@ function remunerationAnalysis($docx,$report_id) {
     $db = new ReportBurning();
     $generic = $db->remunerationAnalysis($report_id);
     $remuneration_analysis_data = $generic['remuneration_analysis'];
+    $analysis_text = $generic['analysis_text_1'];
+    $analysis_text_2 = $generic['analysis_text_2'];
     $remuneration_analysis= "<tr>
-                                <td colspan='2' style='border-bottom: 2px solid #FFF; text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>In <span style='font-family: Rupee Foradian;'>`</span> Crore</td>
-                                <td colspan='2' style='border-bottom: 2px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>".$remuneration_analysis_data[0]['rem_first_year']."</td>
-                                <td colspan='2' style='border-bottom: 2px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>".$remuneration_analysis_data[0]['rem_second_year']."</td>
-                                <td colspan='2' style='border-bottom: 2px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>".$remuneration_analysis_data[0]['rem_third_year']."</td>
+                                <td colspan='2' style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>In <span style='font-family: Rupee Foradian;'>`</span> Crore</td>
+                                <td colspan='2' style='border-bottom: 2px solid #FFF; border-left: 1px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>".$remuneration_analysis_data[0]['rem_first_year']."</td>
+                                <td colspan='2' style='border-bottom: 2px solid #FFF; border-left: 1px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>".$remuneration_analysis_data[0]['rem_second_year']."</td>
+                                <td colspan='2' style='border-bottom: 2px solid #FFF; border-left: 1px solid #FFF; border-right: 1px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>".$remuneration_analysis_data[0]['rem_third_year']."</td>
+                                <td style='vertical-align: middle; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Ratio</td>
                             </tr>";
     $remuneration_analysis .= "<tr>
                                     <td colspan='2' style='border-right: 1px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>&nbsp;</td>
@@ -874,7 +950,8 @@ function remunerationAnalysis($docx,$report_id) {
                                     <td style='border-right: 1px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Fixed Pay</td>
                                     <td style='border-right: 1px solid #FFF; text-align:center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Total Pay</td>
                                     <td style='border-right: 1px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Fixed Pay</td>
-                                    <td style='text-align:center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Total Pay</td>
+                                    <td style='border-right: 1px solid #FFF; text-align:center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Total Pay</td>
+                                    <td style='border-bottom: 2px solid #FFF; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>&nbsp;</td>
                                 </tr>";
 
     for($i=0;$i<count($remuneration_analysis_data);$i++) {
@@ -888,6 +965,7 @@ function remunerationAnalysis($docx,$report_id) {
                                         <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #F2F2F2;'>".$remuneration_analysis_data[$i]['total_pay_second_year']."</td>
                                         <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #F2F2F2;'>".$remuneration_analysis_data[$i]['fixed_pay_third_year']."</td>
                                         <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #F2F2F2;'>".$remuneration_analysis_data[$i]['total_pay_third_year']."</td>
+                                        <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #F2F2F2;'>".$remuneration_analysis_data[$i]['ratio']."</td>
                                        </tr>";
         }
         else {
@@ -900,22 +978,23 @@ function remunerationAnalysis($docx,$report_id) {
                                         <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #D9D9D9;'>".$remuneration_analysis_data[$i]['total_pay_second_year']."</td>
                                         <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #D9D9D9;'>".$remuneration_analysis_data[$i]['fixed_pay_third_year']."</td>
                                         <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #D9D9D9;'>".$remuneration_analysis_data[$i]['total_pay_third_year']."</td>
+                                        <td style='border-right: 1px solid #FFFFFF; text-align:center; font-size: 10; background-color: #D9D9D9;'>".$remuneration_analysis_data[$i]['ratio']."</td>
                                        </tr>";
         }
     }
     $html = "<p style=''></p>";
     $html .= "<table style='border-collapse: collapse; width:100%;'>
                 <tbody>
-                    <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 2px solid #000000; '>TABLE 10 - EXECUTIVE DIRECTORS' REMUNERATION ANALYSIS</td></tr>
+                    <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 2px solid #000000; '>TABLE 10 - EXECUTIVE DIRECTORS' REMUNERATION</td></tr>
                     $remuneration_analysis
-                    <tr><td colspan='8' style='border-top: 2px solid #000; font-size: 8; padding-top: 5px; padding-bottom: 5px; '><i>Note: Fixed pay includes basic pay, perquisites &amp; allowances. P - Promoter; NP - Non-Promoter</i></td></tr>
-                    <tr><td colspan='8' style='font-size: 9; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 2px solid #000000; '>DISCUSSION - INDEXED TSR vs. EXECUTIVE REMUNERATION GROWTH</td></tr>
+                    <tr><td colspan='9' style='border-top: 2px solid #000; font-size: 8; padding-top: 5px; padding-bottom: 5px; '><i>Note: Fixed pay includes basic pay, perquisites &amp; allowances. P- Promoter, NP- Non- Promoter, Ratio- Ratio of ED's remuneration to Median Remuneration of Employees, ND- Not Disclosed</i></td></tr>
+                    <tr><td colspan='9' style='font-size: 9;'>".htmlParserForTable($analysis_text['analysis_text'],9)."</td></tr>
+                    <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 2px solid #000000; '>DISCUSSION - INDEXED TSR vs. EXECUTIVE REMUNERATION</td></tr>
                 </tbody>
               </table>";
     $docx->embedHTML($html);
 
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-    //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
     // Graph start
 
     $retire_fragment = new WordFragment($docx,"aslk");
@@ -938,6 +1017,8 @@ function remunerationAnalysis($docx,$report_id) {
         'columnWidths' => $widthTableCols
     );
     $docx->addTable($valuesTable, $paramsTable);
+
+    $docx->embedHTML("<p style='margin: 0; text-align: justify; padding: 0; font-size: 8;'><i>Note: Indexed TSR (Total Shareholders Return) represents the value of <span style='font-family: Rupee Foradian;'>`</span> 100 invested in the Company at beginning of a 5-year period starting 1st April, 2011. One period return is calculated as (Final Price - Initial Price + Dividend) / Initial Price.</i></p>");
 
     // Graph end
 
@@ -989,7 +1070,7 @@ function remunerationAnalysis($docx,$report_id) {
                                 <td style='text-align:center; border-right: 1px solid #FFFFFF; border-bottom: 2px solid #000; font-size: 10; background-color: #F2F2F2;'>".$executive_remuneration_data[1]['rem_percentage']."%</td>
                                 <td style='text-align:center; border-right: 1px solid #FFFFFF; border-bottom: 2px solid #000; font-size: 10; background-color: #F2F2F2;'>".$executive_remuneration_data[2]['rem_percentage']."%</td>
                                </tr>";
-    //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
+
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
     $html = "<table style='border-collapse: collapse; width:100%;'>
                 <tbody>
@@ -998,62 +1079,66 @@ function remunerationAnalysis($docx,$report_id) {
                 </tbody>
               </table>";
     $docx->embedHTML($html);
+    if($analysis_text_2['analysis_text']!="" && $analysis_text_2['analysis_text']!="&nbsp;") {
+        $docx->embedHTML(htmlParser($analysis_text_2['analysis_text']));
+    }
 }
 function disclosures($docx,$report_id){
     $db = new ReportBurning();
     $generic = $db->disclosures($report_id);
     $disclosures_data = $generic['disclosures'];
+    $analysis_text = $generic['analysis_text'];
     $questions = array(
-        "Corporate Social Responsibility Committee Composition",
-        "Risk Management Policy",
-        "Corporate Social Responsibility Policy",
-        "Performance evaluation of Board, Committees and Directors",
-        "Corporate Social Responsibility Activities",
-        "Related Party Transactions",
-        "Corporate Social Responsibility Spending",
-        "Ratio of the remuneration of each director to the median employees remuneration",
-        "Extract of the Annual Return",
+        "Content of Corporate Social Responsibility Policy in prescribed format (if applicable)",
+        "Statement on performance evaluation of Board, Committees and Directors",
+        "Extract of the Annual Return as per Form No. MGT 9",
+        "Related Party Transactions as per Form No. AOC.2",
+        "Company's policy on appointment of directors and criteria for determining qualifications, positive attributes, director’s independence",
+        "Ratio of the remuneration of executive director to the median employees remuneration",
+        "Policy on remuneration of Directors, KMP and other employees",
         "Secretarial Audit Report",
-        "Company's policy of appointment and remuneration of directors, KMP and employees",
-        "Statement to the effect that independent director possesses appropriate balance of skills, experience and knowledge",
-        "Criteria for determining qualifications, positive attributes, director's independence",
-        "Receipt of commission by a director from the holding company or subsidiary company",
-        "Declaration by Independent Directors",
-        "Establishment of Vigil Mechanism",
+        "Statement on declaration by Independent Directors",
+        "Directors’ Responsibility Statement",
         "Particulars of loans, guarantees or investments",
-        "Voting rights not exercised directly by employees for shares to the ESOP scheme"
+        "Details of establishment of Vigil Mechanism",
+        "Statement indicating development and implementation of a risk management policy",
+        "Comments on qualifications made by Statutory Auditors/ CS"
     );
     $html = "<p style='font-size: 10'></p>";
     $html .="<table style='border-collapse: collapse; width:100%;'>
                 <tbody>
                     <tr><td colspan='5' style='font-weight: bold; font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; '>DISCLOSURE REQUIRED IN DIRECTOR'S REPORT</td></tr>
-                    <tr><td colspan='5' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; text-align: justify;'>The Companies Act, 2013 and Listing Agreement requires the listed companies to make certain disclosures in Directors' Report section of the Annual Report. The table below shows the status of compliance of such some important requirements by the Company.</td></tr>
+                    <tr><td colspan='5' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; text-align: justify;'>The Companies Act, 2013 requires the listed companies to make certain disclosures in Board's Report. The table below shows the status of compliance of such some important requirements, by the Company</td></tr>
                 </tbody>
               </table>";
     $docx->embedHTML($html);
-
-
     $docx->embedHtml("<p style='font-size: 2;'>&nbsp;</p>");
+    for($i=0;$i<14;$i=$i+2) {
 
-    for($i=0;$i<18;$i=$i+2) {
-
-
-        if($disclosures_data[$i]['status']=='yes') {
+        if($disclosures_data[$i]['status']=='disclosed') {
             $temp_fragment1 = new WordFragment($docx,"aslk");
             $temp_fragment1->addImage(array('src'=>'checked.png'));
         }
-        else {
+        elseif($disclosures_data[$i]['status']=='not disclosed') {
             $temp_fragment1 = new WordFragment($docx,"aslk");
             $temp_fragment1->addImage(array('src'=>'unchecked.png'));
         }
+        else {
+            $temp_fragment1 = new WordFragment($docx,"aslk");
+            $temp_fragment1->addImage(array('src'=>'na.png'));
+        }
 
-        if($disclosures_data[$i+1]['status']=='yes') {
+        if($disclosures_data[$i+1]['status']=='disclosed') {
             $temp_fragment3 = new WordFragment($docx,"aslk");
             $temp_fragment3->addImage(array('src'=>'checked.png'));
         }
-        else {
+        elseif($disclosures_data[$i+1]['status']=='not disclosed') {
             $temp_fragment3 = new WordFragment($docx,"aslk");
             $temp_fragment3->addImage(array('src'=>'unchecked.png'));
+        }
+        else {
+            $temp_fragment3 = new WordFragment($docx,"aslk");
+            $temp_fragment3->addImage(array('src'=>'na.png'));
         }
 
         $temp_fragment2 = new WordFragment($docx,"aslk");
@@ -1072,7 +1157,7 @@ function disclosures($docx,$report_id){
                     array('value' =>$temp_fragment4,'fontSize' => 10, 'vAlign' => 'center','textAlign'=>'center','borderTop' => 'single','borderTopWidth'=>13,'borderTopColor' => '000000')
                 );
         }
-        else if($i!=16) {
+        else if($i!=12) {
             $valuesTable[] =
                 array(
                     array('value' =>$temp_fragment1,'fontSize' => 10, 'vAlign' => 'center','textAlign'=>'center','borderTop' => 'single','borderTopWidth'=>13,'borderTopColor' => 'D9D9D9'),
@@ -1082,7 +1167,7 @@ function disclosures($docx,$report_id){
                     array('value' =>$temp_fragment4,'fontSize' => 10, 'vAlign' => 'center','textAlign'=>'center','borderTop' => 'single','borderTopWidth'=>13,'borderTopColor' => 'D9D9D9')
                 );
         }
-        if($i==16) {
+        if($i==12) {
             $valuesTable[] =
                 array(
                     array('value' =>$temp_fragment1,'fontSize' => 10, 'vAlign' => 'center','textAlign'=>'center','borderBottom' => 'single','borderBottomWidth'=>13,'borderBottomColor' => '000000','borderTop' => 'single','borderTopWidth'=>13,'borderTopColor' => 'D9D9D9'),
@@ -1092,274 +1177,255 @@ function disclosures($docx,$report_id){
                     array('value' =>$temp_fragment4,'fontSize' => 10, 'vAlign' => 'center','textAlign'=>'center','borderBottom' => 'single','borderBottomWidth'=>13,'borderBottomColor' => '000000','borderTop' => 'single','borderTopWidth'=>13,'borderTopColor' => 'D9D9D9')
                 );
         }
-
-        $row_array[] = array('minHeight'=>600);
+        $row_array[] = array('minHeight'=>800);
     }
 
     $widthTableCols = array(
-        200,9000,50,200,8000
+        200,7000,50,200,10000
     );
     $paramsTable = array(
         'border' => 'nil',
-        'borderWidth' => 8,
+        'indent'=>108,
         'fontSize' => 10,
         'borderColor' => 'cccccc',
         'columnWidths' => $widthTableCols
     );
     $docx->addTable($valuesTable, $paramsTable,$row_array);
-
+    $docx->embedHTML("<p style='margin: 0; padding: 0; text-align: justify; font-size: 9;'><i>* Not applicable</i></p>");
+    $docx->embedHTML("<p style='margin: 0; padding-top: 8px; padding-bottom: 8px; text-align: justify; line-height: 135%; font-size: 10;'>".$analysis_text['analysis_text']."</p>");
 }
 function adoptionOfAccounts($docx,$report_id) {
 
     $db = new ReportBurning();
     $generic_array = $db->adoptionOfAccount($report_id);
-    $other_text = $generic_array['other_text'];
-    $recommendation_text = $generic_array['recommendation_text'];
-    $triggers = $generic_array['triggers'];
-    $analysis_text = $generic_array['analysis_text'];
-    $unaudited_statements_table = $generic_array['unaudited_statements_table'];
-    $financial_indicators = $generic_array['financial_indicators'];
-    $contingent_liabilities = $generic_array['contingent_liabilities'];
-    $adoption_of_accounts_rpt = $generic_array['adoption_of_accounts_rpt'];
-    $standalone_consolidated_acc = $generic_array['standalone_consolidated_acc'];
+    if($generic_array['adoption_of_account_exists']) {
 
-    $p_text = "<p style='font-size: 10;'>&nbsp;</p>";
-    $docx->embedHTML($p_text);
-    resHeading($docx,"RESOLUTION []: ADOPTION OF ACCOUNTS",1);
-    $docx->embedHTML(htmlParser($other_text[0]['text']));
-    resHeading($docx,"SES RECOMMENDATION",1);
-    $docx->embedHtml(htmlParser($recommendation_text['recommendation_text'],1));
-    $html="<table style='width:100%; border-collapse: collapse; '>
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $triggers = $generic_array['triggers'];
+        $analysis_text = $generic_array['analysis_text'];
+        $unaudited_statements_table = $generic_array['unaudited_statements_table'];
+        $financial_indicators = $generic_array['financial_indicators'];
+        $contingent_liabilities = $generic_array['contingent_liabilities'];
+        $adoption_of_accounts_rpt = $generic_array['adoption_of_accounts_rpt'];
+        $standalone_consolidated_acc = $generic_array['standalone_consolidated_acc'];
+
+        $docx->addBreak(array('type' => 'page'));
+        global $resolution_text_box;
+        if($resolution_text_box) {
+            $text_box_5 = "<p style='font-size: 18; padding: 0; margin: 0; color: #FFF; text-align: center; font-family: Cambria;'><span style='font-size: 20;'>R</span>ESOLUTION <span style='font-size: 20;'>A</span>NALYSIS</p>";
+            addOrangeTextBox($docx,$text_box_5);
+            $resolution_text_box = false;
+        }
+
+        $p_text = "<p style='font-size: 10;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
+        resHeading($docx,"RESOLUTION []: ADOPTION OF ACCOUNTS",1);
+        $docx->embedHTML(htmlParser($other_text[0]['text']));
+        resHeading($docx,"SES RECOMMENDATION",1);
+        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text'],1));
+        resHeading($docx,"SES ANALYSIS",2);
+        $html="<table style='width:100%; border-collapse: collapse; '>
                 <tbody>
-                    <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #000000;border-bottom: 1px solid #000000; font-weight: bold;'>SES ANALYSIS</td></tr>
                     <tr><td colspan='8' style='font-size: 9;'><p style='line-height: 135%; margin:0; padding-top: 8px; padding-bottom: 8px;'><i>Note: Detailed analysis of the accounts is not within the scope of SES' activities. SES accepts the Report of the Directors and the Auditors to be true and fair representation of the company's financial position. The analysis below is aimed at enabling shareholders engage in discussions with the Board/ Management during the AGM.</i></p></td></tr>
                 </tbody>
             </table>";
-    $docx->embedHTML($html);
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    resBlackStrip($docx,"AUDIT QUALIFICATIONS");
-
-    if($triggers[0]['triggers']=='yes') {
-        $audit_text = "";
-        for($i=0;$i<=2;$i++) {
-            if($analysis_text[$i]['analysis_text']!="")
-                $audit_text .= $analysis_text[$i]['analysis_text'];
+        $docx->embedHTML($html);
+        resBlackStrip($docx,"AUDIT QUALIFICATIONS");
+        if($triggers[0]['triggers']=='yes') {
+            $audit_text = "";
+            for($i=0;$i<3;$i++) {
+                if($analysis_text[$i]['analysis_text']!="")
+                    $audit_text .= $analysis_text[$i]['analysis_text'];
+            }
+            $docx->embedHTML(htmlParser($audit_text));
         }
-        $docx->embedHTML(htmlParser($audit_text));
-    }
-    else {
-        $audit_text = "";
-        for($i=3;$i<=5;$i++) {
-            if($analysis_text[$i]['analysis_text']!="")
-                $audit_text .= $analysis_text[$i]['analysis_text'];
+        else {
+            $audit_text = "";
+            for($i=3;$i<=3;$i++) {
+                if($analysis_text[$i]['analysis_text']!="")
+                    $audit_text .= $analysis_text[$i]['analysis_text'];
+            }
+            $docx->embedHTML(htmlParser($audit_text));
         }
-        $docx->embedHTML(htmlParser($audit_text));
-    }
 
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    resBlackStrip($docx,"AUDITORS' COMMENTS ON STANDALONE ACCOUNTS");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"AUDITORS' COMMENTS ON STANDALONE ACCOUNTS");
 
-    if($triggers[1]['triggers']=='yes') {
-        $docx->embedHTML(htmlParser($analysis_text[6]['analysis_text']));
-    }
-    else {
-        $docx->embedHTML(htmlParser($analysis_text[7]['analysis_text']));
-    }
+        if($triggers[1]['triggers']=='yes') {
+            $docx->embedHTML(htmlParser($analysis_text[4]['analysis_text']));
+        }
+        else {
+            $docx->embedHTML(htmlParser($analysis_text[5]['analysis_text']));
+        }
 
-    if($triggers[2]['triggers']=='yes' && $triggers[3]['triggers']=='yes') {
-        // $html="<table style='width:100%; border-collapse: collapse; '>
-        //         <tbody>
-        //             <tr><td colspan='8' style='padding-top: 5px; padding-left: 1px; padding-bottom: 5px; font-size: 10; color: #FFFFFF; background-color: #464646; font-weight: bold;'>AUDITORS' COMMENTS ON CONSOLIDATED ACCOUNTS</td></tr>
-        //         </tbody>
-        //     </table>";
-        // $docx->embedHTML($html);
-        resBlackStrip($docx,"AUDITORS' COMMENTS ON CONSOLIDATED ACCOUNTS");
-        // $text ="<p style='font-size: 10; line-height:135%; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0; '>".$analysis_text[8]['analysis_text']."</p>";
-        $docx->embedHTML(htmlParser($analysis_text[8]['analysis_text']));
-    }
-    if($triggers[4]['triggers']=='yes') {
-        $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-        $text= "<tr>
+        if($triggers[2]['triggers']=='yes' && $triggers[3]['triggers']=='yes') {
+            resBlackStrip($docx,"AUDITORS' COMMENTS ON CONSOLIDATED ACCOUNTS");
+            $docx->embedHTML(htmlParser($analysis_text[6]['analysis_text']));
+        }
+        if($triggers[4]['triggers']=='yes') {
+            $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
+            $text= "<tr>
                     <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Consolidated Entity (all figures in <span style='font-family: Rupee Foradian;'>`</span> Cr.)</td>
                     <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>Total Assets</td>
                     <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>Total Revenue</td>
                     <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>Net Profit</td>
                     <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Net Cash Flow</td>
                 </tr>";
-        for($i=0;$i<count($unaudited_statements_table);$i++) {
-            if($i%2==0) {
-                $text.="<tr>
+            for($i=0;$i<count($unaudited_statements_table);$i++) {
+                if($i%2==0) {
+                    $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$unaudited_statements_table[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$unaudited_statements_table[$i]['total_assets']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$unaudited_statements_table[$i]['total_revenue']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$unaudited_statements_table[$i]['net_profit']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$unaudited_statements_table[$i]['net_cash_flow']."</td>
                            </tr>";
-            }
-            else {
-                $text.="<tr>
+                }
+                else {
+                    $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$unaudited_statements_table[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$unaudited_statements_table[$i]['total_assets']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$unaudited_statements_table[$i]['total_revenue']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$unaudited_statements_table[$i]['net_profit']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$unaudited_statements_table[$i]['net_cash_flow']."</td>
                            </tr>";
+                }
             }
-        }
-        $html = "<table style='border-collapse: collapse; width:100%;'>
-                <tbody>
-                    $text
-                </tbody>
+            $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                    <tbody>
+                        $text
+                    </tbody>
               </table>";
-        $docx->embedHTML($html);
-        // $text ="<p style='font-size: 10; line-height:135%; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0; '>".$other_text[1]['text']."</p>";
-        $docx->embedHTML(htmlParser($other_text[1]['text']));
-    }
-    // $html="<table style='width:100%; border-collapse: collapse; '>
-    //             <tbody>
-    //                 <tr><td colspan='8' style='padding-top: 5px; padding-left: 1px; padding-bottom: 5px; font-size: 10; color: #FFFFFF; background-color: #464646; font-weight: bold;'>ACCOUNTING POLICIES</td></tr>
-    //             </tbody>
-    //         </table>";
-    // $docx->embedHTML($html);
-    resBlackStrip($docx,"ACCOUNTING POLICIES");
-    $docx->embedHTML(htmlParser($other_text[2]['text']));
-    resBlackStrip($docx,"FINANCIAL INDICATORS");
-    $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
+            $docx->embedHTML($html);
+            $docx->embedHTML(htmlParser($other_text[1]['text']));
+        }
+        resBlackStrip($docx,"ACCOUNTING POLICIES");
+        $docx->embedHTML(htmlParser($other_text[2]['text']));
+        resBlackStrip($docx,"FINANCIAL INDICATORS");
+        $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
 
-    $text= "<tr>
+        $text= "<tr>
                 <td style='text-align: center;  width:25%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>&nbsp;</td>
                 <td style='text-align: center;  width:10%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>".$generic_array['fiscal_month']."' ".substr($financial_indicators[0]['year1'],2,2)."</td>
                 <td style='text-align: center;  width:10%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>".$generic_array['fiscal_month']."' ".substr($financial_indicators[0]['year2'],2,2)."</td>
                 <td style='text-align: center;  width:10%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>Shift</td>
                 <td style='text-align: center; width:45%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Company's Discussion</td>
             </tr>";
-    for($i=0;$i<count($financial_indicators);$i++) {
-        if($i%2==0) {
-            $text.="<tr>
+        for($i=0;$i<count($financial_indicators);$i++) {
+            if($i%2==0) {
+                $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['fi_current']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['fi_previous']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['shift']."%</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['company_discussion']."</td>
+                            <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #F2F2F2;'>".$financial_indicators[$i]['company_discussion']."</td>
                            </tr>";
-        }
-        else {
-            $text.="<tr>
+            }
+            else {
+                $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['fi_current']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['fi_previous']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['shift']."%</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['company_discussion']."</td>
+                            <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>".$financial_indicators[$i]['company_discussion']."</td>
                            </tr>";
+            }
         }
-    }
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
                 <tbody>
                     $text
                     <tr><td colspan='5' style='text-align:left; font-size: 8;'><i>Source: Company's Annual Reports / Capitaline/ Moneycontrol</i></td></tr>
                 </tbody>
               </table>";
-    $docx->embedHTML($html);
-    $text ="<p style='font-size: 9; line-height:135%; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0; '>SES is of the opinion that board should take note of structural shift (positive and negative both) in various financial parameters which have a bearing on company's future performance and positioning in market place and disclose an analysis of the same to shareholders. SES believes that 25% change either way should be the threshold for triggering analysis and disclosure requirements.</p>";
-    $docx->embedHTML($text);
+        $docx->embedHTML($html);
+        $text ="<p style='font-size: 9; line-height:135%; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0; '>SES is of the opinion that board should take note of structural shift (positive and negative both) in various financial parameters which have a bearing on company's future performance and positioning in market place and disclose an analysis of the same to shareholders. SES believes that 25% change either way should be the threshold for triggering analysis and disclosure requirements.</p>";
+        $docx->embedHTML($text);
 
-    // CONTINGENT LIABILITIES
-
-    // $html="<table style='width:100%; border-collapse: collapse; '>
-    //             <tbody>
-    //                 <tr><td colspan='8' style='padding-top: 5px; padding-left: 1px; padding-bottom: 5px; font-size: 10; color: #FFFFFF; background-color: #464646; font-weight: bold;'>CONTINGENT LIABILITIES</td></tr>
-    //             </tbody>
-    //         </table>";
-    resBlackStrip($docx,"CONTINGENT LIABILITIES");
-    $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
-    $text= "<tr>
+        resBlackStrip($docx,"CONTINGENT LIABILITIES");
+        $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
+        $text= "<tr>
                 <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>(All figures in <span style='font-family: Rupee Foradian;'>`</span> Crore)</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>".$generic_array['fiscal_month']."' ".substr($contingent_liabilities[0]['year1'],2,2)."</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>".$generic_array['fiscal_month']."' ".substr($contingent_liabilities[0]['year2'],2,2)."</td>
             </tr>";
-    $array_contingent_liabilities_cols = array(
-        'Total contingent liabilities',
-        'Net worth of the Company',
-        'Contingent liabilities as a percentage of net worth'
-    );
-    for($i=0;$i<count($contingent_liabilities);$i++) {
-        if($i%2==0) {
-            $text.="<tr>
+        $array_contingent_liabilities_cols = array(
+            'Total contingent liabilities',
+            'Net worth of the Company',
+            'Contingent liabilities as a percentage of net worth'
+        );
+        for($i=0;$i<count($contingent_liabilities);$i++) {
+            if($i%2==0) {
+                $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$array_contingent_liabilities_cols[$i]."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$contingent_liabilities[$i]['cl_current_year']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$contingent_liabilities[$i]['cl_previous_year']."</td>
                            </tr>";
-        }
-        else {
-            $text.="<tr>
+            }
+            else {
+                $text.="<tr>
                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$array_contingent_liabilities_cols[$i]."</td>
                         <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$contingent_liabilities[$i]['cl_current_year']."</td>
                         <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$contingent_liabilities[$i]['cl_previous_year']."</td>
                        </tr>";
+            }
         }
-    }
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
                 <tbody>
                     $text
                     <tr><td colspan='5' style='text-align:left; font-size: 8;'><i>Source: Company's Annual Reports/ Capitaline</i></td></tr>
                 </tbody>
               </table>";
-    $docx->embedHTML($html);
-    // $text ="<p style='font-size: 10; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height:135%;'>".$other_text[4]['text']."</p>";
-    $docx->embedHTML(htmlParser($other_text[4]['text']));
+        $docx->embedHTML($html);
+        $docx->embedHTML(htmlParser($other_text[4]['text']));
 
-    // related party transactions
+        resBlackStrip($docx,"RELATED PARTY TRANSACTIONS");
+        $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
 
-    // $html="<table style='width:100%; border-collapse: collapse; '>
-    //             <tbody>
-    //                 <tr><td colspan='8' style='padding-top: 5px; padding-left: 1px; padding-bottom: 5px; font-size: 10; color: #FFFFFF; background-color: #464646; font-weight: bold;'>RELATED PARTY TRANSACTIONS</td></tr>
-    //             </tbody>
-    //         </table>";
-    resBlackStrip($docx,"RELATED PARTY TRANSACTIONS");
-    $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
-
-    $text= "<tr>
+        $text= "<tr>
                 <td style='text-align: center; width: 35%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Outstanding (<span style='font-family: Rupee Foradian;'>`</span> Crore)</td>
                 <td style='text-align: center; width: 10%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>".$generic_array['fiscal_month']."' ".substr($adoption_of_accounts_rpt[0]['rpt_year1'],2,2)."</td>
                 <td style='text-align: center; width: 10%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>".$generic_array['fiscal_month']."' ".substr($adoption_of_accounts_rpt[0]['rpt_year2'],2,2)."</td>
+                <td style='text-align: center; border-right: 1px solid #FFF; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Shift</td>
                 <td style='text-align: center; width: 45%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Comments</td>
             </tr>";
-    for($i=0;$i<count($adoption_of_accounts_rpt);$i++) {
-        if($i%2==0) {
-            $text.="<tr>
+        for($i=0;$i<count($adoption_of_accounts_rpt);$i++) {
+            if($i%2==0) {
+                $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$adoption_of_accounts_rpt[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$adoption_of_accounts_rpt[$i]['rpt_current_year']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$adoption_of_accounts_rpt[$i]['rpt_previous_year']."</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$adoption_of_accounts_rpt[$i]['rpt_comments']."</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$adoption_of_accounts_rpt[$i]['shift']."</td>
+                            <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #F2F2F2;'>".$adoption_of_accounts_rpt[$i]['rpt_comments']."</td>
                            </tr>";
-        }
-        else {
-            $text.="<tr>
+            }
+            else {
+                $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$adoption_of_accounts_rpt[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$adoption_of_accounts_rpt[$i]['rpt_current_year']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$adoption_of_accounts_rpt[$i]['rpt_previous_year']."</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$adoption_of_accounts_rpt[$i]['rpt_comments']."</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>".$adoption_of_accounts_rpt[$i]['shift']."</td>
+                            <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>".$adoption_of_accounts_rpt[$i]['rpt_comments']."</td>
                            </tr>";
+            }
         }
-    }
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
                 <tbody>
                     $text
                     <tr><td colspan='5' style='text-align:left; font-size: 8;'><i>Source: Company's Annual Reports</i></td></tr>
                 </tbody>
               </table>";
-    $docx->embedHTML($html);
-    // $text ="<p style='font-size: 10; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0; line-height:135%;'>".$other_text[5]['text']."</p>";
-    $docx->embedHTML(htmlParser($other_text[5]['text']));
+        $docx->embedHTML($html);
+        $docx->embedHTML(htmlParser($other_text[5]['text']));
 
-    // standalone vs consolidated accounts
+        // standalone vs consolidated accounts
 
-    $standalone_consolidated_acc_str= "<tr>
+        $standalone_consolidated_acc_str= "<tr>
                                         <td rowspan='2' style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>(In <span style='font-family: Rupee Foradian;'>`</span> Crore)</td>
                                         <td colspan='3' style='text-align: center; color: #FFFFFF; font-weight: bold; border-bottom: 1px solid #FFFFFF; font-size: 10; background-color: #808080;'>Standalone Accounts</td>
                                         <td colspan='3' style='text-align: center; color: #FFFFFF; font-weight: bold; border-bottom: 1px solid #FFFFFF; font-size: 10; background-color: #808080;'>Consolidated Accounts</td>
                                     </tr>";
-    $standalone_consolidated_acc_str .= "<tr>
+        $standalone_consolidated_acc_str .= "<tr>
                                             <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$generic_array['fiscal_month']."' ".substr($standalone_consolidated_acc[0]['sa_year1'],2,2)."</td>
                                             <td style='text-align:center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$generic_array['fiscal_month']."' ".substr($standalone_consolidated_acc[0]['sa_year2'],2,2)."</td>
                                             <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$generic_array['fiscal_month']."' ".substr($standalone_consolidated_acc[0]['sa_year3'],2,2)."</td>
@@ -1368,15 +1434,15 @@ function adoptionOfAccounts($docx,$report_id) {
                                             <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$generic_array['fiscal_month']."' ".substr($standalone_consolidated_acc[0]['ca_year3'],2,2)."</td>
                                         </tr>";
 
-    $array_col_vals = array(
-        'Revenue',
-        'Net Profit',
-        'Total Assets',
-        'Net Worth'
-    );
-    for($i=0;$i<count($standalone_consolidated_acc);$i++) {
-        if($i%2==0) {
-            $standalone_consolidated_acc_str.="<tr>
+        $array_col_vals = array(
+            'Revenue',
+            'Net Profit',
+            'Total Assets',
+            'Net Worth'
+        );
+        for($i=0;$i<count($standalone_consolidated_acc);$i++) {
+            if($i%2==0) {
+                $standalone_consolidated_acc_str.="<tr>
                                                <td style=' font-size: 10; background-color: #F2F2F2; text-align: left; border-right: 1px solid #FFF;'>$array_col_vals[$i]</td>
                                                <td style='font-size: 10; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['standalone_value1']."</td>
                                                <td style='font-size: 10; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['standalone_value2']."</td>
@@ -1385,9 +1451,9 @@ function adoptionOfAccounts($docx,$report_id) {
                                                <td style='font-size: 10; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['consolidated_value2']."</td>
                                                <td style='font-size: 10; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['consolidated_value3']."</td>
                                            </tr>";
-        }
-        else {
-            $standalone_consolidated_acc_str.="<tr>
+            }
+            else {
+                $standalone_consolidated_acc_str.="<tr>
                                             <td style=' font-size: 10; background-color: #D9D9D9;  text-align: left; border-right: 1px solid #FFF;'>$array_col_vals[$i]</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['standalone_value1']."</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['standalone_value2']."</td>
@@ -1396,94 +1462,96 @@ function adoptionOfAccounts($docx,$report_id) {
                                             <td style='font-size: 10; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['consolidated_value2']."</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>".$standalone_consolidated_acc[$i]['consolidated_value3']."</td>
                                           </tr>";
+            }
         }
-    }
 
-    // $html="<table style='width:100%; border-collapse: collapse; '>
-    //             <tbody>
-    //                 <tr><td colspan='8' style='padding-top: 5px; padding-left: 1px; padding-bottom: 5px; font-size: 10; color: #FFFFFF; background-color: #464646; font-weight: bold;'>STANDALONE VS CONSOLIDATED ACCOUNTS</td></tr>
-    //             </tbody>
-    //         </table>";
-    resBlackStrip($docx,"STANDALONE VS CONSOLIDATED ACCOUNTS");
-    $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+        resBlackStrip($docx,"STANDALONE VS CONSOLIDATED ACCOUNTS");
+        $docx->embedHTML("<p style='font-size:1;'>&nbsp;</p>");
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
                 <tbody>
                     $standalone_consolidated_acc_str
                 </tbody>
               </table>";
-    $docx->embedHTML($html);
+        $docx->embedHTML($html);
+        if($other_text[6]['text']!="" && $other_text[6]['text']!="&nbsp;") {
+            $docx->embedHTML(htmlParser($other_text[6]['text']));
+        }
 
-    $analysis_txt = "";
-    for($i=12;$i<count($analysis_text)-1;$i++) {
-        if($analysis_text[$i]['analysis_text']!="") {
-            // $analysis_txt .= "<p style='font-size: 10; line-height:135%; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0;'>".$analysis_text[$i]['analysis_text']."</p>";;
-            $docx->embedHtml(htmlParser($analysis_text[$i]['analysis_text']));
+
+        $analysis_txt = "";
+        for($i=12;$i<count($analysis_text)-1;$i++) {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
+                $docx->embedHtml(htmlParser($analysis_text[$i]['analysis_text']));
+            }
+        }
+
+        if($analysis_txt=="") {
+            $docx->embedHtml(htmlParser($analysis_text[count($analysis_text)-1]['analysis_text']));
         }
     }
 
-    if($analysis_txt=="") {
-        // $analysis_txt = "<p style='font-size: 10; line-height:135%; text-align: justify; padding-top: 8px; padding-bottom: 8px; margin: 0;'>".$analysis_text[count($analysis_text)-1]['analysis_text']."</p>";;
-        $docx->embedHtml(htmlParser($analysis_text[count($analysis_text)-1]['analysis_text']));
-    }
-
-    // $docx->embedHTML($analysis_txt);
 }
 function declarationOfDividend($docx,$report_id) {
 
     $db = new ReportBurning();
     $generic_array = $db->declarationOfDevidend($report_id);
-    $other_text = $generic_array['other_text'];
-    $recommendation_text = $generic_array['recommendation_text'];
-    $analysis_text = $generic_array['analysis_text'];
 
-    $p_text = "<p style='font-size: 10;'>&nbsp;</p>";
-    $docx->embedHTML($p_text);
-    resHeading($docx,"RESOLUTION []: DECLARATION OF DIVIDEND",1);
-    $docx->embedHTML(htmlParser($other_text[0]['text']));
-    resHeading($docx,"SES RECOMMENDATION",1);
-    $docx->embedHTML(htmlParser($recommendation_text['recommendation_text'],1));
-    // $html="<table style='width:100%; border-collapse: collapse; '>
-    //             <tbody>
-    //                 <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #000000;border-bottom: 1px solid #000000; font-weight: bold;'>SES ANALYSIS</td></tr>
-    //             </tbody>
-    //         </table>";
-    // $docx->embedHTML($html);
-    resHeading($docx,"SES ANALYSIS",1);
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+    if($generic_array['declaration_of_dividend_exists']) {
 
-    // Graph Start
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
 
-    $dividend_and_earning = new WordFragment($docx,"aslk");
-    $dividend_and_earning->addExternalFile(array('src'=>'DividendAndEarning.docx'));
-    $dividend_payout_ratio = new WordFragment($docx,"aslk");
-    $dividend_payout_ratio->addExternalFile(array('src'=>'DividendPayoutRatio.docx'));
-    $valuesTable = array(
-        array(
-            array('value' =>$dividend_and_earning, 'vAlign' => 'center','textAlign'=>'center'),
-            array('value' =>$dividend_payout_ratio, 'vAlign' => 'center','textAlign'=>'center'),
-        )
-    );
-    $widthTableCols = array(
-        7000,7000
-    );
-    $paramsTable = array(
-        'border' => 'nil',
-        'borderWidth' => 8,
-        'borderColor' => 'cccccc',
-        'columnWidths' => $widthTableCols
-    );
-    $docx->addTable($valuesTable, $paramsTable);
-
-    // Graph Ends
-
-    $analysis_txt = "";
-    for($i=0;$i<count($analysis_text)-1;$i++) {
-        if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
-            $docx->embedHtml(htmlParser($analysis_text[$i]['analysis_text']));
+        $docx->addBreak(array('type' => 'page'));
+        global $resolution_text_box;
+        if($resolution_text_box) {
+            $text_box_5 = "<p style='font-size: 18; padding: 0; margin: 0; color: #FFF; text-align: center; font-family: Cambria;'><span style='font-size: 20;'>R</span>ESOLUTION <span style='font-size: 20;'>A</span>NALYSIS</p>";
+            addOrangeTextBox($docx,$text_box_5);
+            $resolution_text_box = false;
         }
-    }
-    if($analysis_txt=="") {
-        $docx->embedHtml(htmlParser($analysis_text[count($analysis_text)-1]['analysis_text']));
+        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
+        resHeading($docx, "RESOLUTION []: DECLARATION OF DIVIDEND", 1);
+        $docx->embedHTML(htmlParser($other_text[0]['text']));
+        resHeading($docx, "SES RECOMMENDATION", 1);
+        $docx->embedHTML(htmlParser($recommendation_text['recommendation_text'], 1));
+        resHeading($docx, "SES ANALYSIS", 1);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+
+        // Graph Start
+
+        $dividend_and_earning = new WordFragment($docx, "aslk");
+        $dividend_and_earning->addExternalFile(array('src' => 'DividendAndEarning.docx'));
+        $dividend_payout_ratio = new WordFragment($docx, "aslk");
+        $dividend_payout_ratio->addExternalFile(array('src' => 'DividendPayoutRatio.docx'));
+        $valuesTable = array(
+            array(
+                array('value' => $dividend_and_earning, 'vAlign' => 'center', 'textAlign' => 'center'),
+                array('value' => $dividend_payout_ratio, 'vAlign' => 'center', 'textAlign' => 'center'),
+            )
+        );
+        $widthTableCols = array(
+            7000, 7000
+        );
+        $paramsTable = array(
+            'border' => 'nil',
+            'borderWidth' => 8,
+            'borderColor' => 'cccccc',
+            'columnWidths' => $widthTableCols
+        );
+        $docx->addTable($valuesTable, $paramsTable);
+
+        // Graph Ends
+
+        $analysis_txt = "";
+        for ($i = 0; $i < count($analysis_text) - 1; $i++) {
+            if ($analysis_text[$i]['analysis_text'] != "" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
+                $docx->embedHtml(htmlParser($analysis_text[$i]['analysis_text']));
+            }
+        }
+        if ($analysis_txt == "") {
+            $docx->embedHtml(htmlParser($analysis_text[count($analysis_text) - 1]['analysis_text']));
+        }
     }
 }
 function appointmentOfAuditors($docx,$report_id) {
@@ -4990,4 +5058,182 @@ function alterrationInMoaAoa($docx,$report_id) {
     // Removal of clauses due to termination of shareholders' Agreement Burining Ends
 
 }
+function fillInvestmentLimits($docx,$report_id){
+    $db = new ReportBurning();
+    $generic_array = $db->fillInvestmentLimits($report_id);
+    if($generic_array['fill_investment_limits_exist']) {
+        echo "true";
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
+        resHeading($docx,"RESOLUTION []: FII INVESTMENT LIMITS",1);
+        $resolution_text = $other_text[0]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        resHeading($docx,"SES RECOMMENDATION",2);
+        $resolution_text = $recommendation_text['recommendation_text'];
+        $docx->embedHTML(htmlParser($resolution_text,1));
+        resHeading($docx,"SES ANALYSIS",2);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+
+        // Graph Start
+
+        $average_commision = new WordFragment($docx,"aslk");
+        $average_commision->addExternalFile(array('src'=>'ExecutiveCompensation.docx'));
+        $total_commision = new WordFragment($docx,"aslk");
+        $total_commision->addExternalFile(array('src'=>'ExecutiveCompensation.docx'));
+        $valuesTable = array(
+            array(
+                array('value' =>$average_commision, 'vAlign' => 'top','textAlign'=>'center'),
+                array('value' =>$total_commision, 'vAlign' => 'top','textAlign'=>'center'),
+            )
+        );
+        $widthTableCols = array(6000,6000);
+        $paramsTable = array(
+            'border' => 'nil',
+            'borderWidth' => 8,
+            'borderColor' => 'cccccc',
+            'columnWidths' => $widthTableCols
+        );
+        $docx->addTable($valuesTable, $paramsTable);
+
+        $analysis_txt = "";
+        for($i=0;$i<count($analysis_text);$i++) {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
+            }
+        }
+        if($analysis_txt!="")
+            $docx->embedHtml(htmlParser($analysis_txt));
+    }
+
+}
+function delistingOfShares($docx,$report_id){
+    $db = new ReportBurning();
+    $generic_array = $db->delistingOfShares($report_id);
+    if($generic_array['delisting_of_shares_exist']) {
+        echo "true";
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
+        resHeading($docx,"RESOLUTION []: DELISTING OF SHARES",1);
+        $resolution_text = $other_text[0]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        resHeading($docx,"SES RECOMMENDATION",2);
+        $resolution_text = $recommendation_text['recommendation_text'];
+        $docx->embedHTML(htmlParser($resolution_text,1));
+        resHeading($docx,"SES ANALYSIS",2);
+
+        $analysis_txt = "";
+        for($i=0;$i<count($analysis_text);$i++) {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
+            }
+        }
+        if($analysis_txt!="")
+            $docx->embedHtml(htmlParser($analysis_txt));
+    }
+}
+function donationToCharitableTrust($docx,$report_id){
+    $db = new ReportBurning();
+    $generic_array = $db->donationsToCharitableTrust($report_id);
+    if($generic_array['donation_to_charitable_trusts_exist']) {
+        echo "true";
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
+        resHeading($docx,"RESOLUTION []: DONATIONS TO CHARITABLE TRUSTS",1);
+        $resolution_text = $other_text[0]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        resHeading($docx,"SES RECOMMENDATION",2);
+        $resolution_text = $recommendation_text['recommendation_text'];
+        $docx->embedHTML(htmlParser($resolution_text,1));
+        resHeading($docx,"SES ANALYSIS",2);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+
+        // Graph Start
+
+        $average_commision = new WordFragment($docx,"aslk");
+        $average_commision->addExternalFile(array('src'=>'ExecutiveCompensation.docx'));
+
+        $total_commision = new WordFragment($docx,"aslk");
+        $total_commision->embedHTML(htmlParser($other_text[1]['text']));
+
+        $valuesTable = array(
+            array(
+                array('value' =>$average_commision, 'vAlign' => 'top','textAlign'=>'center'),
+                array('value' =>$total_commision, 'vAlign' => 'top','textAlign'=>'center'),
+            )
+        );
+        $widthTableCols = array(6000,6000);
+        $paramsTable = array(
+            'border' => 'nil',
+            'borderWidth' => 8,
+            'borderColor' => 'cccccc',
+            'columnWidths' => $widthTableCols
+        );
+        $docx->addTable($valuesTable, $paramsTable);
+
+        $analysis_txt = "";
+        for($i=0;$i<count($analysis_text);$i++) {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
+            }
+        }
+        if($analysis_txt!="")
+            $docx->embedHtml(htmlParser($analysis_txt));
+    }
+
+}
+function officeOfProfit($docx,$report_id){
+    $db = new ReportBurning();
+    $generic_array = $db->officeOfProfit($report_id);
+    if($generic_array['office_of_profit_exist']) {
+        echo "true";
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
+        resHeading($docx,"RESOLUTION []: OFFICE OF PROFIT",1);
+        $resolution_text = $other_text[0]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        resHeading($docx,"SES RECOMMENDATION",2);
+        $resolution_text = $recommendation_text['recommendation_text'];
+        $docx->embedHTML(htmlParser($resolution_text,1));
+        resHeading($docx,"SES ANALYSIS",2);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"PROFILE OF APPOINTEE");
+        $resolution_text = $other_text[1]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"REMUNERATION");
+        $resolution_text = $other_text[2]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        $resolution_text = "<span><strong>Is the remuneration comparable to remuneration of other employees in similar position/grade:</strong>".$other_text[2]['text'];
+        $docx->embedHTML($resolution_text);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"SELECTION PROCESS");
+        $resolution_text = $other_text[3]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $docx->embedHtml(htmlParser($other_text[4]['text']));
+
+        $analysis_txt = "";
+        for($i=0;$i<count($analysis_text);$i++) {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
+            }
+        }
+        if($analysis_txt!="")
+            $docx->embedHtml(htmlParser($analysis_txt));
+    }
+
+}
+
 ?>
