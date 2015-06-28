@@ -1395,6 +1395,24 @@ elseif(isset($_GET['appointment_directors'])) {
 	$response = $db->getAppointedDirectorInfo($company_id,$financial_year,$dir_din_no);
 	echo json_encode($response);
 }
+elseif(isset($_GET['appointment_directors_id'])) {
+	session_start();
+	$company_id = $_SESSION['company_id'];
+	$financial_year = $_SESSION['report_year'];
+	$dir_din_no = $_GET['dir_din_no'];
+	$db = new DatabaseReports();
+	$response = $db->getAppointedDirectorIDInfo($company_id,$financial_year,$dir_din_no);
+	echo json_encode($response);
+}
+elseif(isset($_GET['appointment_directors_ed'])) {
+	session_start();
+	$company_id = $_SESSION['company_id'];
+	$financial_year = $_SESSION['report_year'];
+	$dir_din_no = $_GET['dir_din_no'];
+	$db = new DatabaseReports();
+	$response = $db->getAppointedDirectorEDInfo($company_id,$financial_year,$dir_din_no);
+	echo json_encode($response);
+}
 elseif(isset($_POST['set_start_report'])) {
 	$db = new DatabaseReports();
 	$response = $db->getReportDetails($_POST['report_id']);

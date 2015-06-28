@@ -2082,7 +2082,14 @@ class DatabaseReports {
                 $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
             }
         }
-        $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
+
+        if($toal_neds!=0) {
+            $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
+        }
+        else {
+            $ned_pay_avg = 0;
+        }
+
         if($ned_pay_avg>$analysed_director_pay) {
             $values[]= "no";
         }
@@ -2107,6 +2114,482 @@ class DatabaseReports {
         $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
 
         $generic_details['analysis_values'] = $values;
+        $dbobject = null;
+        return $generic_details;
+    }
+    function getAppointedDirectorIDInfo($company_id,$financial_year,$dir_din_no) {
+        $generic_details = array();
+        $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+        $stmt = $dbobject->prepare(" select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `financial_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $director_details = $row;
+        $generic_details['functional_area'] = $row['expertise'];
+        $generic_details['education'] = $row['education'];
+        $generic_details['past_ex'] = $row['past_ex'];
+        $cpc = array();
+        if($row['audit_committee']=='C' || $row['audit_committee']=='M') {
+            $cpc[]="A($row[audit_committee])";
+        }
+        if($row['investor_grievance']=='C' || $row['investor_grievance']=='M') {
+            $cpc[]="SH($row[investor_grievance])";
+        }
+        if($row['nomination_remuneration']=='C' || $row['nomination_remuneration']=='M') {
+            $cpc[]="NR($row[nomination_remuneration])";
+        }
+        if($row['remuneration']=='C' || $row['remuneration']=='M') {
+            $cpc[]="R($row[remuneration])";
+        }
+        if($row['nomination']=='C' || $row['nomination']=='M') {
+            $cpc[]="N($row[nomination])";
+        }
+        if($row['csr']=='C' || $row['csr']=='M') {
+            $cpc[]="CSR($row[csr])";
+        }
+        $generic_details['committee_positions']=implode(",",$cpc);
+        $generic_details['total_association'] = $row['total_association'];
+        $generic_details['shareholding'] = $row['shares_held'];
+
+        $generic_details['total_directorship'] = $row['no_total_directorship'];
+        $generic_details['committee_memberships'] = $row['committee_memberships'];
+        $generic_details['committee_chairmanships'] = $row['committee_chairmanships'];
+
+        $stmt = $dbobject->prepare(" select * from `director_remuneration` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `rem_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $generic_details['remuneration'] = number_format(($row['variable_pay']+$row['fixed_pay'])*100,2);
+
+
+
+        $years = range($financial_year-3,$financial_year-1);
+        $total_attended = 0;
+        $total_agms = 0;
+        foreach($years as $year) {
+            $stmt = $dbobject->prepare(" select * from `director_agm_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if($row['attended']=='yes' || $row['attended']=='no') {
+                    $total_agms++;
+                    if($row['attended']=='yes') {
+                        $total_attended++;
+                    }
+                }
+            }
+        }
+        $last_3_year_attended_agms = $total_attended;
+        $last_3_year_held_agms = $total_agms;
+        $generic_details['last_3_agms'] = $total_attended."/".$total_agms;
+        $stmt = $dbobject->prepare(" select * from `director_board_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['board_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['board_meeting_last_year']="na";
+        }
+        $years = range($financial_year-2,$financial_year);
+        $total_board_meeting_held = 0;
+        $total_board_meeting_attended = 0;
+        foreach($years as $year) {
+            $stmt = $dbobject->prepare(" select * from `director_board_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $total_board_meeting_held += intval($row['held']);
+                $total_board_meeting_attended += intval($row['attended']);
+            }
+        }
+        $generic_details['board_meeting_last_years_avg']= ceil(($total_board_meeting_attended/$total_board_meeting_held)*100);
+
+        $stmt = $dbobject->prepare(" select * from `audit_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['audit_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['audit_meeting_last_year']="na";
+        }
+        $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['are_committees_seperate'] = $row['are_committees_seperate'];
+        }
+        else {
+            $generic_details['are_committees_seperate']="na";
+        }
+
+        if($generic_details['are_committees_seperate']=='yes') {
+            $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['nomination_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['nomination_meeting_last_year']="na";
+            }
+            $stmt = $dbobject->prepare(" select * from `remuneration_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['remuneration_meeting_last_year']="na";
+            }
+        }
+        else {
+            $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['nomination_remuneration_meeting_last_year']="na";
+            }
+        }
+
+        $stmt = $dbobject->prepare(" select * from `csr_committee_meetings_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['csr_meeting_last_year']="na";
+        }
+
+        $stmt = $dbobject->prepare(" select * from `investors_grievance_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['stack_meeting_last_year']="na";
+        }
+
+        // Analysis Questions values
+//        $values = array();
+//        $total_directors = $this->getCompanyDirectorsWithPay($company_id,$financial_year);
+//        $toal_ned_pay = 0;
+//        $analysed_director_pay = 0;
+//        $toal_neds = 0;
+//        foreach($total_directors as $director) {
+//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP')) {
+//                if($director['dir_din_no']!=$dir_din_no) {
+//                    $toal_ned_pay += floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+//                }
+//                $toal_neds++;
+//            }
+//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP') && $director['dir_din_no']==$dir_din_no) {
+//                $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+//            }
+//        }
+//
+//        if($toal_neds!=0) {
+//            $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
+//        }
+//        else {
+//            $ned_pay_avg = 0;
+//        }
+//
+//        if($ned_pay_avg>$analysed_director_pay) {
+//            $values[]= "no";
+//        }
+//        else {
+//            $values[]= "yes";
+//        }
+//        $values[]=$director_details['retiring_non_retiring'];
+//        $values[]=$generic_details['board_meeting_last_year']==100 ? 'yes' : 'no';
+//
+//        $values[]="";
+//        if($director_details['no_directorship_public']>10 || $director_details['no_total_directorship']>20) {
+//            $values[]="yes";
+//        }
+//        else {
+//            $values[]="no";
+//        }
+//        $values[] = $director_details['committee_memberships']>10 ? 'yes':'no';
+//        $values[] = $director_details['committee_chairmanships']>5 ? 'yes':'no';
+//        $values[]=$generic_details['board_meeting_last_year']==0 ? 'yes' : 'no';
+//        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
+//        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
+//        $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
+//
+//        $generic_details['analysis_values'] = $values;
+        $dbobject = null;
+        return $generic_details;
+    }
+    function getAppointedDirectorEDInfo($company_id,$financial_year,$dir_din_no) {
+        $generic_details = array();
+        $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+        $stmt = $dbobject->prepare(" select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `financial_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $director_details = $row;
+        $generic_details['functional_area'] = $row['expertise'];
+        $generic_details['education'] = $row['education'];
+        $generic_details['past_ex'] = $row['past_ex'];
+        $cpc = array();
+        if($row['audit_committee']=='C' || $row['audit_committee']=='M') {
+            $cpc[]="A($row[audit_committee])";
+        }
+        if($row['investor_grievance']=='C' || $row['investor_grievance']=='M') {
+            $cpc[]="SH($row[investor_grievance])";
+        }
+        if($row['nomination_remuneration']=='C' || $row['nomination_remuneration']=='M') {
+            $cpc[]="NR($row[nomination_remuneration])";
+        }
+        if($row['remuneration']=='C' || $row['remuneration']=='M') {
+            $cpc[]="R($row[remuneration])";
+        }
+        if($row['nomination']=='C' || $row['nomination']=='M') {
+            $cpc[]="N($row[nomination])";
+        }
+        if($row['csr']=='C' || $row['csr']=='M') {
+            $cpc[]="CSR($row[csr])";
+        }
+        $generic_details['committee_positions']=implode(",",$cpc);
+        $generic_details['retiring_non_retiring']=$row['retiring_non_retiring'];
+        $generic_details['part_promoter_group'] = ($row['company_classification']=="NED") ? 'no' : 'yes' ;
+        $generic_details['total_directorship'] = $row['no_total_directorship'];
+        $generic_details['committee_memberships'] = $row['committee_memberships'];
+        $generic_details['committee_chairmanships'] = $row['committee_chairmanships'];
+        $years = range($financial_year-3,$financial_year-1);
+        $total_attended = 0;
+        $total_agms = 0;
+        foreach($years as $year) {
+            $stmt = $dbobject->prepare(" select * from `director_agm_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if($row['attended']=='yes' || $row['attended']=='no') {
+                    $total_agms++;
+                    if($row['attended']=='yes') {
+                        $total_attended++;
+                    }
+                }
+            }
+        }
+        $last_3_year_attended_agms = $total_attended;
+        $last_3_year_held_agms = $total_agms;
+        $generic_details['last_3_agms'] = $total_attended."/".$total_agms;
+        $stmt = $dbobject->prepare(" select * from `director_board_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['board_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['board_meeting_last_year']="na";
+        }
+        $years = range($financial_year-2,$financial_year);
+        $total_board_meeting_held = 0;
+        $total_board_meeting_attended = 0;
+        foreach($years as $year) {
+            $stmt = $dbobject->prepare(" select * from `director_board_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $total_board_meeting_held += intval($row['held']);
+                $total_board_meeting_attended += intval($row['attended']);
+            }
+        }
+        $generic_details['board_meeting_last_years_avg']= ceil(($total_board_meeting_attended/$total_board_meeting_held)*100);
+
+        $stmt = $dbobject->prepare(" select * from `audit_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['audit_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['audit_meeting_last_year']="na";
+        }
+        $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['are_committees_seperate'] = $row['are_committees_seperate'];
+        }
+        else {
+            $generic_details['are_committees_seperate']="na";
+        }
+
+        if($generic_details['are_committees_seperate']=='yes') {
+            $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['nomination_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['nomination_meeting_last_year']="na";
+            }
+            $stmt = $dbobject->prepare(" select * from `remuneration_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['remuneration_meeting_last_year']="na";
+            }
+        }
+        else {
+            $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['nomination_remuneration_meeting_last_year']="na";
+            }
+        }
+
+        $stmt = $dbobject->prepare(" select * from `csr_committee_meetings_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['csr_meeting_last_year']="na";
+        }
+
+        $stmt = $dbobject->prepare(" select * from `investors_grievance_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+        }
+        else {
+            $generic_details['stack_meeting_last_year']="na";
+        }
+
+        // Analysis Questions values
+//        $values = array();
+//        $total_directors = $this->getCompanyDirectorsWithPay($company_id,$financial_year);
+//        $toal_ned_pay = 0;
+//        $analysed_director_pay = 0;
+//        $toal_neds = 0;
+//        foreach($total_directors as $director) {
+//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP')) {
+//                if($director['dir_din_no']!=$dir_din_no) {
+//                    $toal_ned_pay += floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+//                }
+//                $toal_neds++;
+//            }
+//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP') && $director['dir_din_no']==$dir_din_no) {
+//                $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+//            }
+//        }
+//
+//        if($toal_neds!=0) {
+//            $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
+//        }
+//        else {
+//            $ned_pay_avg = 0;
+//        }
+//
+//        if($ned_pay_avg>$analysed_director_pay) {
+//            $values[]= "no";
+//        }
+//        else {
+//            $values[]= "yes";
+//        }
+//        $values[]=$director_details['retiring_non_retiring'];
+//        $values[]=$generic_details['board_meeting_last_year']==100 ? 'yes' : 'no';
+//
+//        $values[]="";
+//        if($director_details['no_directorship_public']>10 || $director_details['no_total_directorship']>20) {
+//            $values[]="yes";
+//        }
+//        else {
+//            $values[]="no";
+//        }
+//        $values[] = $director_details['committee_memberships']>10 ? 'yes':'no';
+//        $values[] = $director_details['committee_chairmanships']>5 ? 'yes':'no';
+//        $values[]=$generic_details['board_meeting_last_year']==0 ? 'yes' : 'no';
+//        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
+//        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
+//        $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
+//
+//        $generic_details['analysis_values'] = $values;
         $dbobject = null;
         return $generic_details;
     }

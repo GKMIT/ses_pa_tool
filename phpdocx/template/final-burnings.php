@@ -1571,7 +1571,7 @@ function appointmentOfAuditors($docx,$report_id) {
         resHeading($docx,"RESOLUTION []: APPOINTMENT OF AUDITORS AT BANKS",1);
         $docx->embedHTML(htmlParser($other_text[0]['text']));
         resHeading($docx,"SES RECOMMENDATION",1);
-        $docx->embedHTML(htmlParser($recommendation_text['recommendation_text']));
+        $docx->embedHTML(htmlParser($recommendation_text['recommendation_text'],1));
         resHeading($docx,"SES ANALYSIS",1);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         resBlackStrip($docx,"COMPANY'S JUSTIFICATION");
@@ -1579,7 +1579,7 @@ function appointmentOfAuditors($docx,$report_id) {
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         $analysis_txt = "";
         for($i=0;$i<count($analysis_text);$i++) {
-            if($analysis_text[$i]['analysis_text']!="") {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
                 $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
         }
@@ -1598,7 +1598,7 @@ function appointmentOfAuditors($docx,$report_id) {
         resHeading($docx,"RESOLUTION []: APPOINTMENT OF AUDITORS AT PSU",1);
         $docx->embedHtml(htmlParser($other_text[0]['text']));
         resHeading($docx,"SES RECOMMENDATION",1);
-        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text']));
+        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text'],1));
         resHeading($docx,"SES ANALYSIS",1);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         resBlackStrip($docx,"COMPANY'S JUSTIFICATION");
@@ -1606,7 +1606,7 @@ function appointmentOfAuditors($docx,$report_id) {
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         $analysis_txt = "";
         for($i=0;$i<count($analysis_text);$i++) {
-            if($analysis_text[$i]['analysis_text']!="") {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
                 $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
         }
@@ -1624,14 +1624,14 @@ function appointmentOfAuditors($docx,$report_id) {
         resHeading($docx, "RESOLUTION []: APPOINTMENT OF BRANCH AUDITORS", 1);
         $docx->embedHtml(htmlParser($other_text[0]['text']));
         resHeading($docx, "SES RECOMMENDATION", 1);
-        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text']));
+        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text'],1));
         resHeading($docx, "SES ANALYSIS", 1);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         resBlackStrip($docx, "COMPANY'S JUSTIFICATION");
         $docx->embedHtml(htmlParser($other_text[1]['text']));
         $analysis_txt = "";
         for ($i = 0; $i < count($analysis_text); $i++) {
-            if ($analysis_text[$i]['analysis_text'] != "") {
+            if ($analysis_text[$i]['analysis_text'] != "" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
                 $analysis_txt .= $analysis_text[$i]['analysis_text'] ;
             }
         }
@@ -1658,7 +1658,7 @@ function appointmentOfAuditors($docx,$report_id) {
         $docx->embedHtml(htmlParser($other_text[1]['text']));
         $analysis_txt = "";
         for ($i = 0; $i < count($analysis_text); $i++) {
-            if ($analysis_text[$i]['analysis_text'] != "") {
+            if ($analysis_text[$i]['analysis_text'] != "" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
                 $analysis_txt .=  $analysis_text[$i]['analysis_text'] ;
             }
         }
@@ -1678,14 +1678,14 @@ function appointmentOfAuditors($docx,$report_id) {
         resHeading($docx,"RESOLUTION []: REMOVAL OF AUDITORS",1);
         $docx->embedHtml(htmlParser($other_text[0]['text']));
         resHeading($docx,"SES RECOMMENDATION",1);
-        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text']));
+        $docx->embedHtml(htmlParser($recommendation_text['recommendation_text'],1));
         resHeading($docx,"SES ANALYSIS",1);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         resBlackStrip($docx,"COMPANY'S JUSTIFICATION");
         $docx->embedHtml(htmlParser($other_text[1]['text']));
         $analysis_txt = "";
         for($i=0;$i<count($analysis_text);$i++) {
-            if($analysis_text[$i]['analysis_text']!="") {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
                 $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
         }
@@ -1712,24 +1712,22 @@ function appointmentOfAuditors($docx,$report_id) {
         $no_auditors = $triggers[1]['triggers'];
         $inner="";
         for($i=0;$i<$no_auditors;$i++) {
+
             $inner .= "<tr>
                         <td style='text-align: left; width:40%; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #d9d9d9;'>Name of the auditor up for appointment</td>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #d9d9d9;'>".$other_text[$i+1]['text'].",".$triggers[$i+2]['triggers']."</td>
+                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #d9d9d9;'>".$triggers[$i+2]['triggers']."</td>
                       </tr>";
             $inner .= "<tr>
                         <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>Auditors' eligibility for appointment</td>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$triggers[$i*2+5]['triggers']."</td>
+                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".ucwords($triggers[$i*2+5]['triggers'])."</td>
                       </tr>";
             $inner .= "<tr>
                         <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #d9d9d9;'>Auditors' independence certificate</td>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #d9d9d9;'>".$triggers[$i*2+6]['triggers']."</td>
+                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #d9d9d9;'>".ucwords($triggers[$i*2+6]['triggers'])."</td>
                       </tr>";
-            $inner .= "<tr>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>Auditor's Network</td>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i+4]['text']."</td>
-                      </tr>";
+
         }
-        $html = "<table style='border-collapse: collapse; width: 100%; '>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px; '>
                     <tbody>$inner</tbody>
                 </table>";
         $docx->embedHTML($html);
@@ -1743,12 +1741,16 @@ function appointmentOfAuditors($docx,$report_id) {
         for($i=0;$i<$no_auditors;$i++) {
             $inner .= "<tr>
                         <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i+1]['text']."</td>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i+7]['text']."</td>
+                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i+7]['text']." years</td>
                         <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i*2+15]['text']."</td>
-                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i*2+16]['text']."</td>
+                        <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i*2+16]['text']." years</td>
                     </tr>";
         }
-        $html = "<table style='border-collapse: collapse; width: 100%; '>
+        $inner .= "<tr>
+                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>Auditor's Network</td>
+                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>".$other_text[$i+4]['text']."</td>
+                      </tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px; '>
                         <tbody>$inner</tbody>
                     </table>";
         $docx->embedHTML($html);

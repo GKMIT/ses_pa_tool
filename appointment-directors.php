@@ -441,11 +441,13 @@ if(isset($_POST['aoopintment_directors'])) {
                                         $directors = $db->getCompanyDirectors($company_id,$financial_year);
                                         ?>
                                         <div class="col-md-3">
-                                            <select class="form-control director-number" name="used_in_text[]">
-                                                <option value="">Select Director</option>
+                                            <select class="form-control ned-ids" name="used_in_text[]">
+                                                <option value="" selected>Select Director</option>
                                                 <?php
                                                 foreach($directors as $director) {
-                                                    echo "<option value='$director[dir_din_no]'>$director[dir_name]</option>";
+                                                    if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP') && $director['additional_classification']!='M(Resign)' && $director['additional_classification']!='C(Resign)') {
+                                                        echo "<option value='$director[dir_din_no]'>$director[dir_name]</option>";
+                                                    }
                                                 }
                                                 ?>
                                             </select>
@@ -1702,9 +1704,15 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <div class="col-md-3">
                                             <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                             <input type="hidden" name="used_in[]" value="Directors">
-                                            <select class="form-control" name="used_in_text[]">
-                                                <option>Select Director</option>
-                                                <option>First Director</option>
+                                            <select class="form-control id-ids" name="used_in_text[]">
+                                                <option value="" selected>Select Director</option>
+                                                <?php
+                                                foreach($directors as $director) {
+                                                    if($director['company_classification']=='ID' && $director['additional_classification']!='M(Resign)' && $director['additional_classification']!='C(Resign)') {
+                                                        echo "<option value='$director[dir_din_no]'>$director[dir_name]</option>";
+                                                    }
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -1822,13 +1830,13 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Functional Area">
                                                     <td>Functional Area</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-functional-area" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Education">
                                                     <td>Education</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-education" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
@@ -1840,13 +1848,13 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Past Experience">
                                                     <td>Past Experience</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-past-ex" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Committee positions in the Company">
                                                     <td>Committee positions in the Company</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-committee-positions" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
@@ -1880,7 +1888,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Current tenure/association">
                                                     <td style="width: 30%;">Current tenure/association</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-total-association" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
@@ -1904,13 +1912,13 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Shareholding / ESOPs">
                                                     <td>Shareholding / ESOPs</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-shareholding" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Remuneration">
                                                     <td>Remuneration (<i class="fa fa-rupee"></i> Lakhs)</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-remuneration" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
@@ -1944,19 +1952,19 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Total Directorships">
                                                     <th style="width: 30%;">Total Directorships </th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-total-directorship" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Total Committee memberships">
                                                     <th>Total Committee memberships</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-committee-memberships" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Total Committee Chairmanship">
                                                     <th>Total Committee Chairmanship</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-committee-chairmanship" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
@@ -1972,7 +1980,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <div class="col-md-12">
                                             <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                             <input type="hidden" name="used_in[]" value="Discussion about Director's Time">
-                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor   " placeholder="Discussion about Director's Time"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Discussion about Director's Time"></textarea>
                                         </div>
                                     </div>
                                     <p><strong>Director's Performance</strong></p>
@@ -1984,55 +1992,55 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Last 3 AGMs">
                                                     <th style="width: 30%;">Last 3 AGMs</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-last-3-agms" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Board meetings held last year">
                                                     <th>Board meetings held last year</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-board-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Board meetings in last 3 years (avg.)">
                                                     <th>Board meetings in last 3 years (avg.)</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-board-meeting-last-years-avg" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Audit Committee meetings">
                                                     <th>Audit Committee meetings</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-audit-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
-                                                <tr class="tr-td-center">
+                                                <tr class="tr-td-center id-nomination-remuneration-row">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Nomination & Remuneration Committee meetings">
                                                     <th>Nomination & Remuneration Committee meetings</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-nomination-remuneration-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
-                                                <tr class="tr-td-center hidden">
+                                                <tr class="tr-td-center hidden id-nomination-row">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Nomination Committee meetings">
                                                     <th>Nomination Committee meetings</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-nomination-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
-                                                <tr class="tr-td-center hidden">
+                                                <tr class="tr-td-center hidden id-remuneration-row">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Remuneration Committee meetings">
                                                     <th>Remuneration Committee meetings</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-remuneration-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="CSR Committee meetings">
                                                     <th>CSR Committee meetings</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-csr-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Independent Directors">
                                                     <input type="hidden" name="used_in[]" value="Stakeholders' Relationship Committee meetings">
                                                     <th>Stakeholders' Relationship Committee meetings</th>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control id-stack-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -3461,9 +3469,15 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <input type="hidden" name="used_in[]" value="Directors">
                                         <label class="col-md-2">Directors</label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="used_in_text[]">
+                                            <select class="form-control ed-ids" name="used_in_text[]">
                                                 <option value="">Select Director</option>
-                                                <option value="First Director">First Director</option>
+                                                <?php
+                                                foreach($directors as $director) {
+                                                    if(($director['company_classification']=='ED' || $director['company_classification']=='EDP') && $director['additional_classification']!='M(Resign)' && $director['additional_classification']!='C(Resign)') {
+                                                        echo "<option value='$director[dir_din_no]'>$director[dir_name]</option>";
+                                                    }
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -3482,37 +3496,37 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Functional Area">
                                                     <td>Functional Area</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-functional-area" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Education">
                                                     <td>Education</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-education" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Part of Promoter Group?">
                                                     <td>Part of Promoter Group?</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-part-promoter-group" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Past Experience">
                                                     <td>Past Experience</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-past-ex" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Committee positions in the Company">
                                                     <td>Committee positions in the Company</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-committee-positions" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Retirement by rotation?">
                                                     <td>Retirement by rotation?</td>
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-retiring-non-retiring" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
@@ -3546,7 +3560,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <th class="text-center" colspan="2" rowspan="2" style="width: 30%; vertical-align: middle;">In&nbsp;<i class="fa fa-rupee"></i>&nbsp;Crores</th>
                                                     <th class="text-center" colspan="2">
                                                         <select class="form-control" id="remuneration_years" name="past_rem_year1">
-                                                            <option>Select Year</option>
+                                                            <option value="">Select Year</option>
                                                             <?php
                                                             for($year=2010;$year<=2020;$year++) {
                                                                 echo "<option value='$year'>$year</option>";
@@ -3593,7 +3607,9 @@ if(isset($_POST['aoopintment_directors'])) {
                                                 <tr>
                                                     <td class="text-center">Company</td>
                                                     <td><input class="form-control company1" name="ex_rem_col_1[]"/> </td>
-                                                    <td><input class="form-control company2" name="ex_rem_col_2[]"/> </td>
+                                                    <td>
+                                                        <select name="ex_rem_col_2[]" class="form-control company2"></select>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">Promoter</td>
@@ -3633,8 +3649,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                                 <tbody id="remuneration_growth">
                                                 <tr class="find_tr">
                                                     <td>
-                                                        <select class="form-control year_table2" name="ex_rem_years[]">
-                                                            <option>Select Year</option>
+                                                        <select class="form-control year_table2" id="indexed_tsr_year_start_year" name="ex_rem_years[]">
+                                                            <option value="">Select Year</option>
                                                             <?php
                                                             for($year=2010;$year<=2020;$year++) {
                                                                 echo "<option value='$year'>$year</option>";
@@ -3642,6 +3658,12 @@ if(isset($_POST['aoopintment_directors'])) {
                                                             ?>
                                                         </select>
                                                     </td>
+                                                    <td><input class="form-control edr" name="ed_remuneration[]"></td>
+                                                    <td><input class="form-control index" name="indexed_tsr[]"></td>
+                                                    <td><input class="form-control np" name="net_profit[]"></td>
+                                                </tr>
+                                                <tr class="find_tr">
+                                                    <td><input class="form-control year_table2" name="ex_rem_years[]"></td>
                                                     <td><input class="form-control edr" name="ed_remuneration[]"></td>
                                                     <td><input class="form-control index" name="indexed_tsr[]"></td>
                                                     <td><input class="form-control np" name="net_profit[]"></td>
@@ -3683,19 +3705,19 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <th style="width: 30%;">Total Directorships</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Total Directorships">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-total-directorship" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Total Committee memberships</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Total Committee memberships">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-committee-memberships" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Total Committee Chairmanship</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Total Committee Chairmanship">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-committee-chairmanship" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Full time role/ executive position</th>
@@ -3723,55 +3745,55 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <th style="width: 30%;">Last 3 AGMs</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Last 3 AGMs">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-last-3-agms" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Board meetings held last year</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Board meetings held last year">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-board-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Board meetings in last 3 years (avg.)</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Board meetings in last 3 years (avg.)">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-board-meeting-last-years-avg" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Audit Committee meetings</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Audit Committee meetings">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-audit-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
-                                                <tr class="tr-td-center">
+                                                <tr class="tr-td-center ed-nomination-remuneration-row">
                                                     <th>Nomination & Remuneration Committee meetings</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Nomination & Remuneration Committee meetings">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-nomination-remuneration-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
-                                                <tr class="tr-td-center hidden">
+                                                <tr class="tr-td-center hidden ed-nomination-row">
                                                     <th>Nomination Committee meetings</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Nomination Committee meetings">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-nomination-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
-                                                <tr class="tr-td-center hidden">
+                                                <tr class="tr-td-center hidden ed-remuneration-row">
                                                     <th>Remuneration Committee meetings</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="Remuneration Committee meetings">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-remuneration-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>CSR Committee meetings</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors">
                                                     <input type="hidden" name="used_in[]" value="CSR Committee meetings">
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-csr-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 <tr class="tr-td-center">
                                                     <th>Stakeholders' Relationship Committee meetings</th>
                                                     <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors" />
                                                     <input type="hidden" name="used_in[]" value="Stakeholders' Relationship Committee meetings" />
-                                                    <td><textarea class="form-control" name="used_in_text[]"></textarea></td>
+                                                    <td><textarea class="form-control ed-stack-meeting-last-year" name="used_in_text[]"></textarea></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -3922,21 +3944,21 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <div class="col-md-12">
                                             <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors" />
                                             <input type="hidden" name="used_in[]" value="Comments on Variable Pay" />
-                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Comments on Variable Pay"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Comments on Variable Pay"><b>Comments on Variable Pay: </b></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors" />
                                             <input type="hidden" name="used_in[]" value="Comments on Minimum Remuneration" />
-                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Comments on Minimum Remuneration"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Comments on Minimum Remuneration"><b>Comments on Minimum Remuneration: </b></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Executive Directors" />
                                             <input type="hidden" name="used_in[]" value="Comments on skewness of remuneration" />
-                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Comments on skewness of remuneration"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="Comments on skewness of remuneration"><b>Comments on skewness of remuneration: </b></textarea>
                                         </div>
                                     </div>
                                     <p><strong>General Recommendation Guidelines</strong></p>

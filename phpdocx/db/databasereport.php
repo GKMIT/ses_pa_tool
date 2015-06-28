@@ -2623,25 +2623,30 @@ class ReportBurning {
             $row=$stmt->fetch(PDO::FETCH_ASSOC);
             $generic_array['recommendation_text'] = $row;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_revision_in_executive_past_remuneration` where `pa_reports_id`=:report_id");
+            $stmt = $dbobject->prepare(" select * from `pa_report_revision_in_executive_past_remuneration` INNER JOIN `directors` ON `directors`.`din_no`=`pa_report_revision_in_executive_past_remuneration`.`executive_director` where `pa_reports_id`=:report_id");
             $stmt->bindParam(":report_id",$report_id);
             $stmt->execute();
-            //echo "No of rows: ".$stmt->rowCount();
             $past_remuneration = array();
             while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
                 $past_remuneration[]=$row;
             }
             $generic_array['past_remuneration'] = $past_remuneration;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_revision_in_executive_peer_comparsion` where `pa_reports_id`=:report_id");
+            $stmt = $dbobject->prepare(" select * from `pa_report_revision_in_executive_peer_comparsion`  where `pa_reports_id`=:report_id");
             $stmt->bindParam(":report_id",$report_id);
             $stmt->execute();
-            //echo "No of rows: ".$stmt->rowCount();
             $peer_comparison = array();
             while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
                 $peer_comparison[]=$row;
             }
             $generic_array['peer_comparison'] = $peer_comparison;
+
+            $stmt = $dbobject->prepare(" select `dir_name` from `directors`  where `din_no`=:din_no");
+            $stmt->bindParam(":din_no",$peer_comparison[0]['peer1']);
+            $stmt->execute();
+            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_array['com_dir_name'] = $row['dir_name'];
+
 
             $stmt = $dbobject->prepare(" select * from `pa_report_revision_in_executive_remuneration_package` where `pa_reports_id`=:report_id");
             $stmt->bindParam(":report_id",$report_id);
@@ -2789,7 +2794,7 @@ class ReportBurning {
         $stmt = $dbobject->prepare(" select * from `pa_report_checkbox` where `pa_reports_id`=:report_id and `main_section`=:main_section and `checkbox`=:checkbox");
         $stmt->bindParam(":report_id",$report_id);
         $main_section = "Directors' Remuneration";
-        $checkbox = "Remuneration Independent Directors";
+        $checkbox = "Remuneration to Independent Directors";
         $stmt->bindParam(":main_section",$main_section);
         $stmt->bindParam(":checkbox",$checkbox);
         $stmt->execute();

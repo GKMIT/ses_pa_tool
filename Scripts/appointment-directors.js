@@ -499,12 +499,114 @@ CustomJS.prototype = {
             $(".total_score").html(total);
         });
 
+        $("#remuneration_years").change(function() {
+
+            var array_din_numbers = [];
+            array_din_numbers.push({"din_no":$(".ed-ids").val()});
+            var final_dins = JSON.stringify(array_din_numbers);
+
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    remuneration_analysis_3_years:true,
+                    first_year:$("#remuneration_years").val(),
+                    din_nos:final_dins
+                },
+                success: function(data) {
+                    console.log(data);
+                    var total_pay = 0;
+                    $("#rem_second_year").val($("#remuneration_years").val()-1);
+                    $("#rem_third_year").val($("#remuneration_years").val()-2);
+                    var no_directors = data.length;
+                    for(var i=0;i<no_directors;i++) {
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(1).find("input").val(data[i].first_year_fixed_pay);
+                        if(data[i].first_year_fixed_pay!="NA" && data[i].first_year_variable_pay!="NA") {
+                            total_pay = parseFloat(data[i].first_year_fixed_pay)+parseFloat(data[i].first_year_variable_pay);
+                            total_pay = total_pay.toFixed(2);
+                        }
+                        else {
+                            total_pay = "NA";
+                        }
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(2).find("input").val(total_pay);
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(3).find("input").val(data[i].second_year_fixed_pay);
+                        if(data[i].second_year_fixed_pay!="NA" && data[i].second_year_variable_pay!="NA") {
+                            total_pay = parseFloat(data[i].second_year_fixed_pay)+parseFloat(data[i].second_year_variable_pay);
+                            total_pay = total_pay.toFixed(2);
+                        }
+                        else {
+                            total_pay = "NA";
+                        }
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(4).find("input").val(total_pay);
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(5).find("input").val(data[i].third_year_fixed_pay);
+                        if(data[i].third_year_fixed_pay!="NA" && data[i].third_year_variable_pay!="NA") {
+                            total_pay = parseFloat(data[i].third_year_fixed_pay)+parseFloat(data[i].third_year_variable_pay);
+                            total_pay = total_pay.toFixed(2);
+                        }
+                        else {
+                            total_pay = "NA";
+                        }
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(6).find("input").val(total_pay);
+                    }
+                }
+            });
+        });
+
+        $("#indexed_tsr_year_start_year").change(function () {
+            $.ajax({
+                url:"jquery-data-2.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    dividend_data_5_years:true,
+                    first_year:$("#indexed_tsr_year_start_year").val(),
+                    highest_paid_ed : $(".ed-ids").val()
+                },
+                success: function(data) {
+                    var indexed_tsr = 0;
+                    for(var i= 5,j=0;i>=0;i--,j++) {
+
+                        $("#remuneration_growth tr").eq(j).find("td").eq(0).find("input").val(data.remuneration_growth[i].year);
+                        $("#remuneration_growth tr").eq(j).find("td").eq(1).find("input").val(data.remuneration_growth[i].total_pay);
+                        if(data.remuneration_growth[i].indexed_tsr==null)
+                            indexed_tsr = 0;
+                        else
+                            indexed_tsr = data.remuneration_growth[i].indexed_tsr;
+                        $("#remuneration_growth tr").eq(j).find("td").eq(2).find("input").val(indexed_tsr.toFixed(2));
+                        $("#remuneration_growth tr").eq(j).find("td").eq(3).find("input").val(data.net_profits[i].net_profit);
+                    }
+                }
+            });
+        });
+
+        $(".company2").change(function() {
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                beforeSend: function() {
+                },
+                data:{
+                    peer_executive_remuneration: true,
+                    company_name : $(".company2").val()
+                },
+                success: function(data) {
+                    console.log(data);
+                    $(".director2").val(data.director_name);
+                    $(".promotor2").val(data.promoter_group);
+                    $(".remuneration2").val(data.remuneration);
+                    $(".netprofit2").val(data.net_profits);
+                    $(".ratio2").val(parseFloat(data.rem_percentage).toFixed(2));
+                }
+            });
+        });
 
     },
 
     pageload: function() {
-       console.log("hi");
-        $(".director-number").change(function() {
+
+        $(".ned-ids").change(function() {
             var $director = $(this);
             $.ajax({
                 url: "jquery-data.php",
@@ -513,6 +615,9 @@ CustomJS.prototype = {
                 data: {
                     appointment_directors: true,
                     dir_din_no:$director.val()
+                },
+                error: function (data) {
+                    console.log(data);
                 },
                 success: function (data) {
                     console.log(data);
@@ -548,6 +653,149 @@ CustomJS.prototype = {
                     $(".ned-analysis-values").each(function(i,d) {
                         $(this).html("["+analysis_values[i]+"]");
                     });
+                }
+            });
+        });
+
+        $(".id-ids").change(function() {
+            var $director = $(this);
+            $.ajax({
+                url: "jquery-data.php",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    appointment_directors_id: true,
+                    dir_din_no:$director.val()
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $(".id-functional-area").html(data.functional_area);
+                    $(".id-education").html(data.education);
+                    $(".id-past-ex").html(data.past_ex);
+                    $(".id-committee-positions").html(data.committee_positions);
+                    $(".id-total-association").html(data.total_association);
+                    $(".id-shareholding").html(data.shareholding);
+                    $(".id-remuneration").html(data.remuneration);
+                    $(".id-total-directorship").html(data.total_directorship);
+                    $(".id-committee-memberships").html(data.committee_memberships);
+                    $(".id-committee-chairmanship").html(data.committee_chairmanships);
+                    $(".id-last-3-agms").html(data.last_3_agms);
+                    $(".id-board-meeting-last-year").html(data.board_meeting_last_year+"%");
+                    $(".id-board-meeting-last-years-avg").html(data.board_meeting_last_years_avg+"%");
+                    $(".id-audit-meeting-last-year").html(data.audit_meeting_last_year+"%");
+                    if(data.are_committees_seperate=='yes') {
+                        $(".id-nomination-row").removeClass('hidden');
+                        $(".id-remuneration-row").removeClass('hidden');
+                        $(".id-nomination-remuneration-row").addClass('hidden');
+                        $(".id-nomination-meeting-last-year").html(data.nomination_meeting_last_year+"%");
+                        $(".id-remuneration-meeting-last-year").html(data.remuneration_meeting_last_year+"%");
+                    }
+                    else {
+                        $(".id-nomination-row").addClass('hidden');
+                        $(".id-remuneration-row").addClass('hidden');
+                        $(".id-nomination-remuneration-row").removeClass('hidden');
+                        $(".id-nomination-remuneration-meeting-last-year").html(data.nomination_remuneration_meeting_last_year+"%");
+                    }
+                    $(".id-csr-meeting-last-year").html(data.csr_meeting_last_year+"%");
+                    $(".id-stack-meeting-last-year").html(data.stack_meeting_last_year+"%");
+
+                    //var analysis_values = data.analysis_values;
+                    //$(".ned-analysis-values").each(function(i,d) {
+                    //    $(this).html("["+analysis_values[i]+"]");
+                    //});
+                }
+            });
+        });
+
+        $(".ed-ids").change(function() {
+            var $director = $(this);
+
+            if($("#remuneration_years").val()!="")
+                $("#remuneration_years").trigger('change');
+
+            if($("#indexed_tsr_year_start_year").val()!="")
+                $("#indexed_tsr_year_start_year").trigger('change');
+
+
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    executive_remuneration: true,
+                    dir_din_no : $director.val()
+                },
+                success: function(data) {
+                    $(".director1").val($director.find('option:selected').text());
+                    $(".promotor1").val(data.company_promoter);
+                    $(".remuneration1").val(data.remuneration);
+                    $(".netprofit1").val(data.company_net_profit);
+                    $(".ratio1").val(data.company_rem_per.toFixed(2));
+                }
+            });
+
+            $.ajax({
+                url:'jquery-data.php',
+                type:'GET',
+                dataType:'JSON',
+                data:{DirectorsPeerInfo:1},
+                success:function(data) {
+                    $(".company2").append("<option value=''>Select Peer</option>");
+                    $(".company2").append("<option value='"+data.peer_1_company_name+"'>"+data.peer_1_company_name+"</option>");
+                    $(".company2").append("<option value='"+data.peer_2_company_name+"'>"+data.peer_2_company_name+"</option>");
+                    $('.company1').val(data.company_name);
+                }
+            });
+
+            $.ajax({
+                url: "jquery-data.php",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    appointment_directors_ed: true,
+                    dir_din_no:$director.val()
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#past_rem_dir_name").val($director.find('option:selected').text());
+                    $(".ed-functional-area").html(data.functional_area);
+                    $(".ed-education").html(data.education);
+                    $(".ed-past-ex").html(data.past_ex);
+                    $(".ed-committee-positions").html(data.committee_positions);
+                    $(".ed-retiring-non-retiring").html(data.retiring_non_retiring);
+                    $(".ed-part-promoter-group").html(data.part_promoter_group);
+                    $(".ed-total-directorship").html(data.total_directorship);
+                    $(".ed-committee-memberships").html(data.committee_memberships);
+                    $(".ed-committee-chairmanship").html(data.committee_chairmanships);
+                    $(".ed-last-3-agms").html(data.last_3_agms);
+                    $(".ed-board-meeting-last-year").html(data.board_meeting_last_year+"%");
+                    $(".ed-board-meeting-last-years-avg").html(data.board_meeting_last_years_avg+"%");
+                    $(".ed-audit-meeting-last-year").html(data.audit_meeting_last_year+"%");
+                    if(data.are_committees_seperate=='yes') {
+                        $(".ed-nomination-row").removeClass('hidden');
+                        $(".ed-remuneration-row").removeClass('hidden');
+                        $(".ed-nomination-remuneration-row").addClass('hidden');
+                        $(".ed-nomination-meeting-last-year").html(data.nomination_meeting_last_year+"%");
+                        $(".ed-remuneration-meeting-last-year").html(data.remuneration_meeting_last_year+"%");
+                    }
+                    else {
+                        $(".ed-nomination-row").addClass('hidden');
+                        $(".ed-remuneration-row").addClass('hidden');
+                        $(".ed-nomination-remuneration-row").removeClass('hidden');
+                        $(".ed-nomination-remuneration-meeting-last-year").html(data.nomination_remuneration_meeting_last_year+"%");
+                    }
+                    $(".ed-csr-meeting-last-year").html(data.csr_meeting_last_year+"%");
+                    $(".ed-stack-meeting-last-year").html(data.stack_meeting_last_year+"%");
+                    //var analysis_values = data.analysis_values;
+                    //$(".ned-analysis-values").each(function(i,d) {
+                    //    $(this).html("["+analysis_values[i]+"]");
+                    //});
                 }
             });
         });
@@ -725,7 +973,6 @@ CustomJS.prototype = {
                         $("#total_pay_year2").val("");
                         $("#fixed_pay_year3").val("");
                         $("#total_pay_year3").val("");
-
                         $('.director1').val("");
                         $('.director2').val("");
                         $('.company1').val("");

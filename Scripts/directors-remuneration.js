@@ -976,7 +976,6 @@ CustomJS.prototype = {
             });
             if(array_din_numbers.length>0) {
                 var final_dins = JSON.stringify(array_din_numbers);
-                console.log(final_dins);
                 $.ajax({
                     url:"jquery-data.php",
                     type:"GET",
@@ -1023,8 +1022,6 @@ CustomJS.prototype = {
                         }
                     }
                 });
-
-
             }
         }
         function calculateRatio() {
