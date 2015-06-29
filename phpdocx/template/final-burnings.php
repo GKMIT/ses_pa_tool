@@ -2855,6 +2855,7 @@ function appointmentOfDirectors($docx,$report_id) {
 }
 function directorsRemuneration($docx,$report_id){
     $db = new ReportBurning();
+
     $generic_array = $db->directorsRemunerationREDR($report_id);
     if($generic_array['non_executive_commision_exists']) {
         $docx->addBreak(array('type' => 'page'));
@@ -2903,7 +2904,7 @@ function directorsRemuneration($docx,$report_id){
         for($i=0;$i<count($past_remuneration);$i++) {
             if($i%2==0) {
                 $past_remuneration_table.="<tr>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; font-weight: bold;'>".$past_remuneration[$i]['executive_director']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center;'>".$past_remuneration[$i]['dir_name']."</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year1_fixed']."</td>
                                              <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year1_total']."</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year2_fixed']."</td>
@@ -2914,7 +2915,7 @@ function directorsRemuneration($docx,$report_id){
             }
             else {
                 $past_remuneration_table.="<tr>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; font-weight: bold; '>".$past_remuneration[$i]['executive_director']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['dir_name']."</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year1_fixed']."</td>
                                              <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year1_total']."</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year2_fixed']."</td>
@@ -2924,7 +2925,7 @@ function directorsRemuneration($docx,$report_id){
                                         </tr>";
             }
         }
-        $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
             <tbody>
                 $past_remuneration_table
             </tbody>
@@ -2936,7 +2937,7 @@ function directorsRemuneration($docx,$report_id){
                             </tr>";
         $peer_comparison_table.="<tr>
                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Director</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[0]['peer1']."</td>
+                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$generic_array['com_dir_name']."</td>
                                  <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[0]['peer2']."</td>
                                </tr>";
         $peer_comparison_table.="<tr>
@@ -3043,7 +3044,7 @@ function directorsRemuneration($docx,$report_id){
                                 <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Includes variable pay: ".$remuneration_package[0]['includes_variable']."</td>
                             </tr>";
 
-        $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
             <tbody>
                 $remuneration_package_table
             </tbody>
@@ -3067,6 +3068,7 @@ function directorsRemuneration($docx,$report_id){
             $docx->embedHtml(htmlParser($resolution_text));
 
     }
+
     $generic_array = $db->directorsRemunerationNEDC($report_id);
     if($generic_array['non_executive_directors_commission_exists']) {
         $docx->addBreak(array('type' => 'page'));
@@ -3130,6 +3132,7 @@ function directorsRemuneration($docx,$report_id){
         if($resolution_text!="")
             $docx->embedHTML(htmlParser($resolution_text));
     }
+
     $generic_array = $db->directorsRemunerationRNINED($report_id);
     if($generic_array['remuneration_non_independent_exists']) {
         $docx->addBreak(array('type' => 'page'));
@@ -3141,18 +3144,20 @@ function directorsRemuneration($docx,$report_id){
         resHeading($docx,"RESOLUTION []: REMUNERATION TO NON-INDEPENDENT NON-EXECUTIVE DIRECTORS",1);
         $resolution_text = $other_text[0]['text'];
         $docx->embedHTML(htmlParser($resolution_text));
-        $docx->addText("SES RECOMMENDATION",array('headingLevel'=>2,'color'=>'000000','borderBottomSpacing'=>2,'borderTopSpacing'=>2,'fontSize'=>10,'bold'=>true));
+        resHeading($docx,"SES RECOMMENDATION",2);
         $resolution_text = $recommendation_text['recommendation_text'];
         $docx->embedHTML(htmlParser($resolution_text,1));
-        $docx->addText("SES ANALYSIS",array('headingLevel'=>2,'color'=>'000000','borderBottomSpacing'=>2,'borderTopSpacing'=>2,'fontSize'=>10,'bold'=>true));
+        resHeading($docx,"SES ANALYSIS",2);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         if($analysis_text[0]['analysis_text']!="" && $analysis_text[0]['analysis_text']!="&nbsp;") {
             $resolution_text = $analysis_text[0]['analysis_text'];
             $docx->embedHTML(htmlParser($resolution_text));
         }
     }
+
     $generic_array = $db->directorsRemunerationRID($report_id);
     if($generic_array['remuneration_independent_exists']) {
+
         $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $analysis_text = $generic_array['analysis_text'];
@@ -3172,6 +3177,7 @@ function directorsRemuneration($docx,$report_id){
             $docx->embedHTML(htmlParser($resolution_text));
         }
     }
+
     $generic_array = $db->directorsRemunerationWER($report_id);
     if($generic_array['waiver_excess_remuneration_exists']) {
         $docx->addBreak(array('type' => 'page'));

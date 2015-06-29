@@ -4863,7 +4863,7 @@ class DatabaseReports {
         $dbobject=null;
         return $remuneration_package;
     }
-    
+
     // disclousres
     function checkExistingOfDataDisclosures() {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);

@@ -15,6 +15,18 @@ class ReportBurning {
         $dbobject = null;
         return $agenda_items;
     }
+
+    function getDirectorName($din_no) {
+        $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+        $stmt = $dbobject->prepare(" select `dir_name` from `directors`  where `din_no`=:din_no");
+        $stmt->bindParam(":din_no",$din_no);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $dir_name = $row['dir_name'];
+        $dbobject = null;
+        return $dir_name;
+    }
+
     function getCompanyAndMeetingDetails($report_id) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $stmt = $dbobject->prepare(" select * from `companies` INNER JOIN `pa_reports` ON `companies`.`id`=`pa_reports`.`company_id` INNER JOIN `pa_report_meeting_details` ON `pa_report_meeting_details`.`pa_reports_id`=`pa_reports`.`report_id` where `pa_reports`.`report_id`=:report_id");
@@ -2468,6 +2480,20 @@ class ReportBurning {
                 $rem_package[]=$row;
             }
             $generic_array['rem_package'] = $rem_package;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id", $report_id);
+            $resolution_name = "Appointment Of Directors";
+            $resolution_section = "Appointment/Reappointment of Executive Directors";
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->execute();
+            $analysis_text = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[] = $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
+
         }
         else{
             $generic_array['appointment_of_executive_directors_exists'] = false;

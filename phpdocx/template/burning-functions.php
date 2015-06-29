@@ -487,38 +487,107 @@ function createIndexPage($docx_index,$report_id) {
     $date_in_format = getHeaderIndexFormatDate($company_and_meeting_details['meeting_date']);
     $docx_index->replaceVariableByHTML("meeting_date","inline",$date_in_format);
 }
-function directorsRemuneration($docx,$report_id){
+function appointmentOfDirectors($docx,$report_id) {
     $db = new ReportBurning();
-
-    $generic_array = $db->directorsRemunerationREDR($report_id);
-    if($generic_array['non_executive_commision_exists']) {
-        $docx->addBreak(array('type' => 'page'));
+    $generic_array = $db->appointmentOfDirectorsED($report_id);
+    if($generic_array['appointment_of_executive_directors_exists']) {
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $no_of_executive = $generic_array['no_of_executive'];
         $past_remuneration = $generic_array['past_remuneration'];
         $peer_comparison = $generic_array['peer_comparison'];
-        $remuneration_package = $generic_array['remuneration_package'];
-        $analysis_text = $generic_array['analysis_text'];
+        $rem_package = $generic_array['rem_package'];
+        $docx->addBreak(array('type' => 'page'));
         $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
         $docx->embedHTML($p_text);
-        resHeading($docx,"RESOLUTION []: REVISION IN EXECUTIVE REMUNERATION",1);
-        $resolution_text = $other_text[0]['text'];
+        resHeading($docx,"RESOLUTION []: APPOINTMENT/REAPPOINTMENT OF EXECUTIVE DIRECTORS",1);
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[27*$i]['text']!="" && $other_text[27*$i]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i]['text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text));
         resHeading($docx,"SES RECOMMENDATION",2);
-        $resolution_text = $recommendation_text['recommendation_text'];
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($recommendation_text[$i]['recommendation_text']!="" && $recommendation_text[$i]['recommendation_text']!="&nbsp;")
+                $resolution_text .= $recommendation_text[$i]['recommendation_text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text,1));
         resHeading($docx,"SES ANALYSIS",2);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        resBlackStrip($docx,"REASON FOR REVISION");
-        $resolution_text = $other_text[1]['text'];
+        resBlackStrip($docx,"DIRECTOR'S PROFILE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_profile = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>&nbsp;</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $director_name = $db->getDirectorName($other_text[29*$i+1]['text']);
+            $directors_profile.="<td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF; text-align: center; '>".$director_name."</td>";
+        }
+        $directors_profile.= "</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Current full time position</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+2]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Functional Area</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+3]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Education</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+4]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Part of promoter group?</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".ucfirst($other_text[29*$i+5]['text'])."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+6]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Committee positions in the Company</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+7]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Retirement by rotation</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+8]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; font-size: 10; background-color: #FE642E; color: #FFFFFF; text-align: left; '>SES Recommendation</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; color: #FFFFFF; font-size: 10; background-color: #FE642E; font-weight: bold; text-align: center;'>".strtoupper($other_text[29*$i+9]['text'])."</td>";
+        }
+        $directors_profile.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left:8px;'>
+                <tbody>
+                    $directors_profile
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "<p style='margin:0; padding-top: 5px; padding-bottom: 8px; font-size: 9; font-style: italic; line-height:135%; padding-left: 0px;  text-align: justify; '>A - Audit Committee, SR - Stakeholders' Relationship Committee, NR - Nomination & Remuneration Committee, CSR - Corporate Social Responsibility Committee, M - Member, C - Chairman</p>";
+        $docx->embedHTML($resolution_text);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[29*$i+10]['text']!="" && $other_text[29*$i+10]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i+10]['text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text));
+
         resBlackStrip($docx,"PAST REMUNERATION OF THE DIRECTOR");
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        $year_1 = intval(substr($past_remuneration[0]['current_year'],2,2));
+        $year_1 = intval(substr($past_remuneration[0]['year1'],2,2));
         $year_1 = "FY ".($year_1-1)."/".$year_1;
-        $year_2 = intval(substr($past_remuneration[0]['prev_year1'],2,2));
+        $year_2 = intval(substr($past_remuneration[0]['year2'],2,2));
         $year_2 = "FY ".($year_2-1)."/".$year_2;
-        $year_3 = intval(substr($past_remuneration[0]['prev_year2'],2,2));
+        $year_3 = intval(substr($past_remuneration[0]['year3'],2,2));
         $year_3 = "FY ".($year_3-1)."/".$year_3;
         $past_remuneration_table= "<tr>
                                     <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF; border-bottom: 1px solid #FFF;'>In <span style='font-family: Rupee Foradian;'>`</span>Crore</td>
@@ -538,85 +607,86 @@ function directorsRemuneration($docx,$report_id){
         for($i=0;$i<count($past_remuneration);$i++) {
             if($i%2==0) {
                 $past_remuneration_table.="<tr>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center;'>".$past_remuneration[$i]['dir_name']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year1_fixed']."</td>
-                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year1_total']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year2_fixed']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year2_total']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year3_fixed']."</td>
-                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$past_remuneration[$i]['year3_total']."</td>
-                                        </tr>";
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right;'>".$past_remuneration[$i]['dir_name']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right; '>".$past_remuneration[$i]['fixed_pay_year1']."</td>
+                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right; '>".$past_remuneration[$i]['total_pay_year1']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right; '>".$past_remuneration[$i]['fixed_pay_year2']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right; '>".$past_remuneration[$i]['total_pay_year2']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right; '>".$past_remuneration[$i]['fixed_pay_year3']."</td>
+                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: right; '>".$past_remuneration[$i]['total_pay_year3']."</td>
+                                           </tr>";
             }
             else {
                 $past_remuneration_table.="<tr>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['dir_name']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year1_fixed']."</td>
-                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year1_total']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year2_fixed']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year2_total']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year3_fixed']."</td>
-                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$past_remuneration[$i]['year3_total']."</td>
-                                        </tr>";
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['dir_name']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['fixed_pay_year1']."</td>
+                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['total_pay_year1']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['fixed_pay_year2']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['total_pay_year2']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['fixed_pay_year3']."</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: right; '>".$past_remuneration[$i]['total_pay_year3']."</td>
+                                           </tr>";
             }
         }
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
-            <tbody>
-                $past_remuneration_table
-            </tbody>
-          </table>";
+                <tbody>
+                    $past_remuneration_table
+                </tbody>
+              </table>";
         $docx->embedHtml($html);
-        $docx->embedHTML("<p style='font-size: 3;'>&nbsp;</p>");
-        $peer_comparison_table= "<tr>
-                                <td colspan='3' style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Executive Remuneration - Peer Comparison</td>
-                            </tr>";
-        $peer_comparison_table.="<tr>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Director</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$generic_array['com_dir_name']."</td>
-                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[0]['peer2']."</td>
-                               </tr>";
-        $peer_comparison_table.="<tr>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>Company</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[1]['peer1']."</td>
-                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[1]['peer2']."</td>
-                               </tr>";
-        $peer_comparison_table.="<tr>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Promoter</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[2]['peer1']."</td>
-                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[2]['peer2']."</td>
-                               </tr>";
-        $peer_comparison_table.="<tr>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>Remuneration (<span style='font-family: Rupee Foradian;'>`</span> Cr) (A)</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[3]['peer1']."</td>
-                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[3]['peer2']."</td>
-                               </tr>";
-        $peer_comparison_table.="<tr>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Net Profits (<span style='font-family: Rupee Foradian;'>`</span> Cr) (B)</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[4]['peer1']."</td>
-                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[4]['peer2']."</td>
-                               </tr>";
-        $peer_comparison_table.="<tr>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>Ratio (A/B)</td>
-                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[5]['peer1']."</td>
-                                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[5]['peer2']."</td>
 
-                               </tr>";
+        $peer_comparison_table= "<tr><td colspan='3' style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Executive Remuneration - Peer Comparison</td></tr>";
+        $peer_comparison_table.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Director</td>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[0]['col_1']."</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[0]['col_2']."</td>
+
+                                   </tr>";
+        $peer_comparison_table.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>Company</td>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[1]['col_1']."</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[1]['col_2']."</td>
+
+                                   </tr>";
+        $peer_comparison_table.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Promoter</td>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[2]['col_1']."</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[2]['col_2']."</td>
+
+                                   </tr>";
+        $peer_comparison_table.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>Remuneration (<span style='font-family: Rupee Foradian;'>`</span> Cr) (A)</td>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[3]['col_1']."</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[3]['col_2']."</td>
+
+                                   </tr>";
+        $peer_comparison_table.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>Net Profits (<span style='font-family: Rupee Foradian;'>`</span> Cr) (B)</td>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[4]['col_1']."</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$peer_comparison[4]['col_2']."</td>
+
+                                   </tr>";
+        $peer_comparison_table.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>Ratio (A/B)</td>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[5]['col_1']."</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$peer_comparison[5]['col_2']."</td>
+
+                                   </tr>";
         $html = "<table style='border-collapse: collapse; width:100%;'>
-            <tbody>
-                $peer_comparison_table
-            </tbody>
-          </table>";
+                <tbody>
+                    $peer_comparison_table
+                </tbody>
+              </table>";
 
         // Graph Start 
-        $_peer_comparison = new WordFragment($docx,"Table");
-        $_peer_comparison->embedHTML($html);
-        $resolution_text = "Has the Company disclosed its Remuneration Policy: ".$other_text[2]['text'];
-        $_peer_comparison->embedHTML(htmlParser($resolution_text));
-        $executive_compensation = new WordFragment($docx,"aslk");
-        $executive_compensation->addExternalFile(array('src'=>'ExecutiveRemuneration.docx'));
+        $dividend_and_earning = new WordFragment($docx,"aslk");
+        $dividend_and_earning->embedHTML($html);
+        $dividend_payout_ratio = new WordFragment($docx,"aslk");
+        $dividend_payout_ratio->addExternalFile(array('src'=>'ExecutiveRemuneration.docx'));
         $valuesTable = array(
             array(
-                array('value' =>$_peer_comparison, 'vAlign' => 'top','textAlign'=>'center'),
-                array('value' =>$executive_compensation, 'vAlign' => 'top','textAlign'=>'center'),
+                array('value' =>$dividend_and_earning, 'vAlign' => 'top','textAlign'=>'center'),
+                array('value' =>$dividend_payout_ratio, 'vAlign' => 'top','textAlign'=>'center'),
             )
         );
         $widthTableCols = array(6000,5000);
@@ -629,207 +699,863 @@ function directorsRemuneration($docx,$report_id){
         $docx->addTable($valuesTable, $paramsTable);
         // Graph Ends 
 
-        resBlackStrip($docx,"REMUNERATION PACKAGE");
+        $p_text = "<p style='font-size: 1;'><br/></p>";
+        $docx->embedHTML($p_text);
+        resBlackStrip($docx,"DIRECTORS' TIME COMMITMENTS");
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        $remuneration_package_table= "<tr>
-                                <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Component</td>
-                                <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Proposed Remuneration</td>
-                                <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Comments</td>
-                            </tr>";
-        $remuneration_package_table.="<tr>
-                                <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Basic Pay</td>
-                                <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Proposed Salary: ".$remuneration_package[0]['proposed_salary']."</td>
-                                <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Increase in remuneration: ".$remuneration_package[0]['increase_in_remuneration']."</td>
-                               </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Annual increment: ".$remuneration_package[0]['annual_increment']."</td>
-                                     </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td rowspan='2' style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Perquisites/ Allowances</td>
-                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>All perquisites clearly defined: ".$remuneration_package[0]['all_perquisites']."</td>
-                                        <td rowspan='2' style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Cap placed on perquisites: ".$remuneration_package[0]['can_placed_perquisites']."</td>
-                                     </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Total allowances: ".$remuneration_package[0]['total_allowances']."</td>
-                                      </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Variable Pay</td>
-                                        <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>".$remuneration_package[0]['variable_pay']."</td>
-                                        <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Performance criteria disclosed: ".$remuneration_package[0]['performance_criteria']."</td>
-                                     </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Cap placed on variable pay: ".$remuneration_package[0]['can_placed_on_variable']."</td>
-                                      </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Notice Period</td>
-                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>".$remuneration_package[0]['notice_period_month']." months</td>
-                                        <td rowspan='2' style='font-size: 10; background-color: #D9D9D9; text-align: left; '>".$remuneration_package[0]['notice_period_comment']."</td>
-                                      </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Severance Pay</td>
-                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>".$remuneration_package[0]['severance_pay_months']." months</td>
-                                      </tr>";
-        $remuneration_package_table.="<tr>
-                                        <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Minimum Remuneration</td>
-                                        <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>".$remuneration_package[0]['minimum_remuneration']."</td>
-                                        <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Within limits prescribed: ".$remuneration_package[0]['within_limits']."</td>
-                                     </tr>";
-        $remuneration_package_table.="<tr>
-                                <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Includes variable pay: ".$remuneration_package[0]['includes_variable']."</td>
-                            </tr>";
+        $time_commitment_table = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Criteria</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $director_name=$db->getDirectorName($other_text[29*$i+1]['text']);
+            $time_commitment_table.="<td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $time_commitment_table.= "</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Directorships </td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+11]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Total Committee memberships</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+12]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Committee Chairmanship </td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+13]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Full time role/ executive position</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+14]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $time_commitment_table
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "<p style='margin:0; padding-top: 5px; padding-bottom: 8px; font-size: 9; line-height:135%; padding-left: 0px;  text-align: justify; '>Note: Committee memberships include Committee chairmanships, Total Directorships include Directorships in Public as well Private Companies</p>";
+        $docx->embedHTML($resolution_text);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[29*$i+15]['text']!="" && $other_text[29*$i+15]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i+15]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        resBlackStrip($docx,"DIRECTORS’ PERFORMANCE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_performance = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Attendance record</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $director_name = $db->getDirectorName($other_text[29*$i+1]['text']);
+            $directors_performance.="<td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $directors_performance.= "</tr>";
+        $directors_performance.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Last 3 AGMs </td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+16]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Board meetings held last year</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+17]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Board meetings in last 3 years (avg.) </td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+18]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Audit Committee meetings</td>";
+        for($i=0;$i<$no_of_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+19]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        if($generic_array['are_committees_seperate']=='yes') {
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Nomination Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+21]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Remuneration Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+22]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>CSR Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+23]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Stakeholders' Relationship Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+24]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+        }
+        else {
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Nomination &amp; Remuneration Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+20]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>CSR Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[29*$i+23]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Stakeholders' Relationship Committee meetings</td>";
+            for($i=0;$i<$no_of_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[29*$i+24]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+        }
 
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
-            <tbody>
-                $remuneration_package_table
-            </tbody>
-          </table>";
+                <tbody>
+                    $directors_performance
+                </tbody>
+              </table>";
         $docx->embedHtml($html);
 
-        $resolution_text="";
-        for($i=3;$i<=5;$i++) {
-            if($other_text[$i]['text']!="" && $other_text[$i]['text']!="&nbsp;") {
-                $resolution_text .= $other_text[$i]['text'];
-            }
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[29*$i+25]['text']!="" && $other_text[29*$i+25]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i+25]['text'];
         }
-        $docx->embedHtml(htmlParser($resolution_text));
-        $resolution_text="";
-        for($i=0;$i<count($analysis_text);$i++) {
-            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
-                $resolution_text .= $analysis_text[$i]['analysis_text'];
-            }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        for($i=0;$i<$no_of_executive;$i++) {
+
+            $remuneration_package= "<tr>
+                                    <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Component</td>
+                                    <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Proposed Remuneration</td>
+                                    <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Comments</td>
+                                </tr>";
+            $remuneration_package.="<tr>
+                                    <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Basic Pay</td>
+                                    <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Proposed Salary: <span style='font-family: Rupee Foradian;'>`</span>".$rem_package[$i*15]['field_value']."</td>
+                                    <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Increase in remuneration: ".$rem_package[$i*15+1]['field_value']."</td>
+                                   </tr>";
+            $remuneration_package.="<tr>
+                                    <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Annual increment: ".$rem_package[$i*15+2]['field_value']."</td>
+                                </tr>";
+
+            $remuneration_package.="<tr>
+                                        <td rowspan='2' style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Perquisites/ Allowances</td>
+                                        <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>All perquisites clearly defined: ".$rem_package[$i*15+3]['field_value']."</td>
+                                        <td rowspan='2' style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Cap placed on perquisites: ".$rem_package[$i*15+4]['field_value']."</td>
+                                   </tr>";
+            $remuneration_package.="<tr>
+                                    <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Total allowances: <span style='font-family: Rupee Foradian;'>`</span>".$rem_package[$i*15+5]['field_value']."</td>
+                                   </tr>";
+
+            $remuneration_package.="<tr>
+                                    <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Variable Pay</td>
+                                    <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>".$rem_package[$i*15+6]['field_value']."</td>
+                                    <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Performance criteria disclosed: ".$rem_package[$i*15+7]['field_value']."</td>
+                                   </tr>";
+            $remuneration_package.="<tr>
+                                    <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Cap placed on variable pay: ".$rem_package[$i*15+8]['field_value']."</td>
+                                </tr>";
+
+            $remuneration_package.="<tr>
+                                    <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Notice Period</td>
+                                    <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>".$rem_package[$i*15+9]['field_value']." months</td>
+                                    <td rowspan='2' style='font-size: 10; background-color: #D9D9D9; text-align: left; '>".$rem_package[$i*15+10]['field_value']."</td>
+                                   </tr>";
+            $remuneration_package.="<tr>
+                                    <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>Severance Pay</td>
+                                    <td style='font-size: 10; background-color: #D9D9D9; text-align: left; '>".$rem_package[$i*15+11]['field_value']." months</td>
+                                   </tr>";
+            $remuneration_package.="<tr>
+                                    <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Minimum Remuneration</td>
+                                   <td rowspan='2' style='font-size: 10; background-color: #F2F2F2; text-align: left; '>".$rem_package[$i*15+12]['field_value']."</td>
+                                    <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Within limits prescribed: ".$rem_package[$i*15+13]['field_value']."</td>
+
+                                   </tr>";
+            $remuneration_package.="<tr>
+                                    <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Includes variable pay: ".$rem_package[$i*15+14]['field_value']."</td>
+                                </tr>";
+            resBlackStrip($docx,"REMUNERATION PACKAGE OF ".strtoupper($db->getDirectorName($other_text[29*$i+1]['text'])));
+            $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+            $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $remuneration_package
+                </tbody>
+              </table>";
+            $docx->embedHtml($html."<p style='font-size: 4;'>&nbsp;</p>");
         }
-        if($resolution_text!="")
-            $docx->embedHtml(htmlParser($resolution_text));
 
-    }
-
-    $generic_array = $db->directorsRemunerationNEDC($report_id);
-    if($generic_array['non_executive_directors_commission_exists']) {
-        $docx->addBreak(array('type' => 'page'));
-        $other_text = $generic_array['other_text'];
-        $recommendation_text = $generic_array['recommendation_text'];
-        $analysis_text = $generic_array['analysis_text'];
-        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
-        $docx->embedHTML($p_text);
-        resHeading($docx,"RESOLUTION []: PAYMENT OF COMMISSIONS TO NON-EXECUTIVE DIRECTORS",1);
-        $resolution_text = $other_text[0]['text'];
-        $docx->embedHTML(htmlParser($resolution_text));
-        resHeading($docx,"SES RECOMMENDATION",2);
-        $resolution_text = $recommendation_text['recommendation_text'];
-        $docx->embedHTML(htmlParser($resolution_text,1));
-        resHeading($docx,"SES ANALYSIS",2);
-        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        resBlackStrip($docx,"COMMISSION PAYABLE");
-        $resolution_text = $other_text[1]['text'];
-        $docx->embedHTML(htmlParser($resolution_text));
-        $resolution_text = $other_text[2]['text'];
-        $docx->embedHTML(htmlParser($resolution_text));
-        $resolution_text = $other_text[3]['text'];
-        $docx->embedHTML(htmlParser($resolution_text));
-        $resolution_text = $other_text[4]['text'];
-        $docx->embedHTML(htmlParser($resolution_text));
-        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        resBlackStrip($docx,"DISTRIBUTION OF COMMISSION");
-        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        // Graph Start 
-        $average_commision = new WordFragment($docx,"aslk");
-        $average_commision->addExternalFile(array('src'=>'AverageCommission.docx'));
-        $total_commision = new WordFragment($docx,"aslk");
-        $total_commision->addExternalFile(array('src'=>'TotalCommission.docx'));
-        $valuesTable = array(
-            array(
-                array('value' =>$average_commision, 'vAlign' => 'top','textAlign'=>'center'),
-                array('value' =>$total_commision, 'vAlign' => 'top','textAlign'=>'center'),
-            )
-        );
-        $widthTableCols = array(6000,6000);
-        $paramsTable = array(
-            'border' => 'nil',
-            'borderWidth' => 8,
-            'borderColor' => 'cccccc',
-            'columnWidths' => $widthTableCols
-        );
-        $docx->addTable($valuesTable, $paramsTable);
-        // Graph Ends 
-
-        $resolution_text = $other_text[8]['text'];
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[29*$i+26]['text']!="" && $other_text[29*$i+26]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i+26]['text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text));
 
-        $resolution_text="";
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[29*$i+27]['text']!="" && $other_text[29*$i+27]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i+27]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_executive;$i++) {
+            if($other_text[29*$i+28]['text']!="" && $other_text[29*$i+28]['text']!="&nbsp;")
+                $resolution_text .= $other_text[29*$i+28]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+
+        $analysis_txt = "";
         for($i=0;$i<count($analysis_text)-1;$i++) {
             if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
-                $resolution_text .= $analysis_text[$i]['analysis_text'];
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
         }
-        if($resolution_text=="")
-            $resolution_text = $analysis_text[count($analysis_text)-1]['analysis_text'];
-        if($resolution_text!="")
-            $docx->embedHTML(htmlParser($resolution_text));
+        if($analysis_txt=="") {
+            $analysis_txt = $analysis_text[count($analysis_text)-1]['analysis_text'];
+        }
+        $docx->embedHTML(htmlParser($analysis_txt));
     }
-
-    $generic_array = $db->directorsRemunerationRNINED($report_id);
-    if($generic_array['remuneration_non_independent_exists']) {
-        $docx->addBreak(array('type' => 'page'));
+    $generic_array = $db->appointmentOfDirectorsNED($report_id);
+    if($generic_array['appointment_of_non_executive_directors_exists']) {
         $other_text = $generic_array['other_text'];
-        $analysis_text = $generic_array['analysis_text'];
         $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $no_of_non_executive = $generic_array['no_of_non_executive'];
+        $docx->addBreak(array('type' => 'page'));
         $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
         $docx->embedHTML($p_text);
-        resHeading($docx,"RESOLUTION []: REMUNERATION TO NON-INDEPENDENT NON-EXECUTIVE DIRECTORS",1);
-        $resolution_text = $other_text[0]['text'];
+        resHeading($docx,"RESOLUTION []: APPOINTMENT/REAPPOINTMENT OF NON-EXECUTIVE DIRECTORS",1);
+        $resolution_text = "";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            if($other_text[28*$i]['text']!="" && $other_text[28*$i]['text']!="&nbsp;")
+                $resolution_text .= $other_text[28*$i]['text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text));
         resHeading($docx,"SES RECOMMENDATION",2);
-        $resolution_text = $recommendation_text['recommendation_text'];
+        $resolution_text = "";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            if($recommendation_text[$i]['recommendation_text']!="" && $recommendation_text[$i]['recommendation_text']!="&nbsp;")
+                $resolution_text .= $recommendation_text[$i]['recommendation_text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text,1));
         resHeading($docx,"SES ANALYSIS",2);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        if($analysis_text[0]['analysis_text']!="" && $analysis_text[0]['analysis_text']!="&nbsp;") {
-            $resolution_text = $analysis_text[0]['analysis_text'];
+        resBlackStrip($docx,"DIRECTOR'S PROFILE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_profile = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>&nbsp;</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $director_name = $db->getDirectorName($other_text[28*$i+1]['text']);
+            $directors_profile.="<td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF; text-align: center; '>".$director_name."</td>";
+        }
+        $directors_profile.= "</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Current full time position</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+2]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Functional Area</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+3]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Education</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+4]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Impact on diversity</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+5]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+6]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Committee positions in the Company</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+7]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Retirement by rotation</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+8]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Part of promoter group?</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".ucfirst($other_text[28*$i+9]['text'])."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; font-size: 10; background-color: #FE642E; color: #FFFFFF; text-align: left; '>SES Recommendation</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; color: #FFFFFF; font-size: 10; background-color: #FE642E; text-align: center;'>".$other_text[28*$i+10]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left:8px;'>
+                <tbody>
+                    $directors_profile
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "<p style='margin:0; padding-top: 5px; padding-bottom: 8px; font-size: 9; font-style: italic; line-height:135%; padding-left: 0px;  text-align: justify; '>A - Audit Committee, SR - Stakeholders' Relationship Committee, NR - Nomination & Remuneration Committee, CSR - Corporate Social Responsibility Committee, M - Member, C - Chairman</p>";
+        $docx->embedHTML($resolution_text);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            if($other_text[28*$i+11]['text']!="" && $other_text[28*$i+11]['text']!="&nbsp;")
+                $resolution_text .= $other_text[28*$i+11]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        resBlackStrip($docx,"DIRECTORS' TIME COMMITMENTS");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $time_commitment_table = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Criteria</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $director_name = $db->getDirectorName($other_text[28*$i+1]['text']);
+            $time_commitment_table.="<td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $time_commitment_table.= "</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Directorships </td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+12]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Total Committee memberships</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+13]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Committee Chairmanship </td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+14]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Full time role/ executive position</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+15]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left:8px;'>
+                <tbody>
+                    $time_commitment_table
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "<p style='margin:0; padding-top: 5px; padding-bottom: 8px; font-size: 9; line-height:135%; padding-left: 0px;  text-align: justify; '>Note: committee memberships include committee chairmanships</p>";
+        $docx->embedHTML($resolution_text);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            if($other_text[28*$i+16]['text']!="" && $other_text[28*$i+16]['text']!="&nbsp;")
+                $resolution_text .= $other_text[28*$i+16]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        resBlackStrip($docx,"DIRECTORS’ PERFORMANCE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_performance = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Attendance record</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $director_name = $db->getDirectorName($other_text[28*$i+1]['text']);
+            $directors_performance.="<td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $directors_performance.= "</tr>";
+        $directors_performance.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Last 3 AGMs </td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+17]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Board meetings held last year</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+18]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Board meetings in last 3 years (avg.) </td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+19]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Audit Committee meetings</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+20]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        if($generic_array['are_committees_seperate']=='yes') {
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Nomination Committee meetings</td>";
+            for($i=0;$i<$no_of_non_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+22]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Remuneration Committee meetings</td>";
+            for($i=0;$i<$no_of_non_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+23]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+        }
+        else {
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Nomination &amp; Remuneration Committee meetings</td>";
+            for($i=0;$i<$no_of_non_executive;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+21]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+        }
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>CSR Committee meetings</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[28*$i+24]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Stakeholders' Relationship Committee meetings</td>";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[28*$i+25]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $directors_performance
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            if($other_text[28*$i+26]['text']!="" && $other_text[28*$i+26]['text']!="&nbsp;")
+                $resolution_text .= $other_text[28*$i+26]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+        resBlackStrip($docx,"DIRECTOR'S REMUNERATION");
+        $resolution_text = "";
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            if($other_text[28*$i+27]['text']!="" && $other_text[28*$i+27]['text']!="&nbsp;")
+                $resolution_text .= $other_text[28*$i+27]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        $total_analysis_rows = count($analysis_text);
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $resolution_text = "";
+            for($j=0;$j<$total_analysis_rows-1;$j++) {
+                if($analysis_text[51*$i+$j]['analysis_text']!="" && $analysis_text[51*$i+$j]['analysis_text']!="&nbsp;")
+                    $resolution_text .= $analysis_text[51*$i+$j]['analysis_text'];
+            }
+            if($resolution_text=="") {
+                $resolution_text .= $analysis_text[51*$i+$total_analysis_rows-1]['analysis_text'];
+            }
             $docx->embedHTML(htmlParser($resolution_text));
         }
     }
+    $generic_array = $db->appointmentOfDirectorsID($report_id);
+    if($generic_array['appointment_of_independent_directors_exists']) {
 
-    $generic_array = $db->directorsRemunerationRID($report_id);
-    if($generic_array['remuneration_independent_exists']) {
-
-        $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $analysis_text = $generic_array['analysis_text'];
         $recommendation_text = $generic_array['recommendation_text'];
+        $no_of_independent = $generic_array['no_of_independent'];
+        $docx->addBreak(array('type' => 'page'));
         $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
         $docx->embedHTML($p_text);
-        resHeading($docx,"RESOLUTION []: REMUNERATION TO INDEPENDENT DIRECTORS",1);
-        $resolution_text = $other_text[0]['text'];
-        $docx->embedHTML(htmlParser($resolution_text));
-        $docx->addText("SES RECOMMENDATION",array('headingLevel'=>2,'color'=>'000000','borderBottomSpacing'=>2,'borderTopSpacing'=>2,'fontSize'=>10,'bold'=>true));
-        $resolution_text = $recommendation_text['recommendation_text'];
-        $docx->embedHTML(htmlParser($resolution_text,1));
-        $docx->addText("SES ANALYSIS",array('headingLevel'=>2,'color'=>'000000','borderBottomSpacing'=>2,'borderTopSpacing'=>2,'fontSize'=>10,'bold'=>true));
-        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        if($analysis_text[0]['analysis_text']!="" && $analysis_text[0]['analysis_text']!="&nbsp;") {
-            $resolution_text = $analysis_text[0]['analysis_text'];
-            $docx->embedHTML(htmlParser($resolution_text));
+        resHeading($docx,"RESOLUTION []: APPOINTMENT/REAPPOINTMENT OF INDEPENDENT DIRECTORS",1);
+        $resolution_text = "";
+        for($i=0;$i<$no_of_independent;$i++) {
+            if($other_text[65*$i]['text']!="" && $other_text[65*$i]['text']!="&nbsp;")
+                $resolution_text .= $other_text[65*$i]['text'];
         }
-    }
-
-    $generic_array = $db->directorsRemunerationWER($report_id);
-    if($generic_array['waiver_excess_remuneration_exists']) {
-        $docx->addBreak(array('type' => 'page'));
-        $other_text = $generic_array['other_text'];
-        $analysis_text = $generic_array['analysis_text'];
-        $recommendation_text = $generic_array['recommendation_text'];
-        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
-        $docx->embedHTML($p_text);
-        resHeading($docx,"RESOLUTION []: WAIVER OF EXCESS REMUNERATION",1);
-        $resolution_text = $other_text[0]['text'];
         $docx->embedHTML(htmlParser($resolution_text));
-        $docx->addText("SES RECOMMENDATION",array('headingLevel'=>2,'color'=>'000000','borderBottomSpacing'=>2,'borderTopSpacing'=>2,'fontSize'=>10,'bold'=>true));
-        $resolution_text = $recommendation_text['recommendation_text'];
+        resHeading($docx,"SES RECOMMENDATION",1);
+        $resolution_text = "";
+        for($i=0;$i<$no_of_independent;$i++) {
+            if($recommendation_text[$i]['recommendation_text']!="" && $recommendation_text[$i]['recommendation_text']!="&nbsp;")
+                $resolution_text .= $recommendation_text[$i]['recommendation_text'];
+        }
         $docx->embedHTML(htmlParser($resolution_text,1));
-        $docx->addText("SES ANALYSIS",array('headingLevel'=>2,'color'=>'000000','borderBottomSpacing'=>2,'borderTopSpacing'=>2,'fontSize'=>10,'bold'=>true));
+        resHeading($docx,"SES ANALYSIS",2);
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        if($analysis_text[0]['analysis_text']!="" && $analysis_text[0]['analysis_text']!="&nbsp;") {
-            $resolution_text = $analysis_text[0]['analysis_text'];
+        resBlackStrip($docx,"COMPLIANCE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $Compliance_table = "<tr>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>Is Company complying with the retirement policy?</td>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>".ucfirst($other_text[2]['text'])."</td>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>".$other_text[3]['text']."</td>
+                            </tr>";
+        $Compliance_table .= "<tr>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>Has the Company disclosed the Independence Certificate provided by the Independent Directors</td>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>".ucfirst($other_text[4]['text'])."</td>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>".$other_text[5]['text']."</td>
+                            </tr>";
+        $Compliance_table .= "<tr>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>Has the Company disclosed the terms of appointment of Independent Directors</td>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>".ucfirst($other_text[6]['text'])."</td>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>".$other_text[7]['text']."</td>
+                            </tr>";
+        $Compliance_table .= "<tr>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>Has the Company disclosed Board evaluation and Directors' Evaluation Policy</td>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>".ucfirst($other_text[8]['text'])."</td>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>".$other_text[9]['text']."</td>
+                            </tr>";
+        $Compliance_table .= "<tr>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>Did Independent Directors meet atleast once without the Management</td>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>".ucfirst($other_text[10]['text'])."</td>
+                                <td style='text-align: left; font-size: 10; background-color: #F2F2F2;'>".$other_text[11]['text']."</td>
+                            </tr>";
+        $Compliance_table .= "<tr>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>Does the Company has a Lead independent Director?</td>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>".ucfirst($other_text[12]['text'])."</td>
+                                <td style='text-align: left; font-size: 10; background-color: #D9D9D9;'>".$other_text[13]['text']."</td>
+                            </tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $Compliance_table
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $docx->embedHTML("<p style='font-size: 1;padding-top:8px'>&nbsp;</p>");
+
+        resBlackStrip($docx,"DIRECTOR'S PROFILE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_profile = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>&nbsp;</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $director_name = $db->getDirectorName($other_text[65*$i+1]['text']);
+            $directors_profile.="<td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF; text-align: center; '>".$director_name."</td>";
+        }
+        $directors_profile.= "</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Current full time position</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+14]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Functional Area</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+15]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Education</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+16]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Impact on diversity</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+17]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+18]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Committee positions in the Company</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+19]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $directors_profile.="<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; font-size: 10; background-color: #FE642E; color: #FFFFFF; text-align: left; '>SES Recommendation</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_profile.="<td style='border-right: 1px solid #FFFFFF; color: #FFFFFF; font-size: 10; background-color: #FE642E; text-align: center;'>".$other_text[65*$i+20]['text']."</td>";
+        }
+        $directors_profile.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $directors_profile
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "<p style='margin:0; padding-top: 5px; padding-bottom: 8px; font-size: 9; font-style: italic; line-height:135%; padding-left: 0px;  text-align: justify; '>A - Audit Committee, SR - Stakeholders' Relationship Committee, NR - Nomination & Remuneration Committee, CSR - Corporate Social Responsibility Committee, M - Member, C - Chairman</p>";
+        $docx->embedHTML($resolution_text);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_independent;$i++) {
+            if($other_text[65*$i+21]['text']!="" && $other_text[65*$i+21]['text']!="&nbsp;")
+                $resolution_text .= $other_text[65*$i+21]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+        $docx->embedHTML("<p style='font-size: 1;padding-top:8px'>&nbsp;</p>");
+        resBlackStrip($docx,"DIRECTORS' INDEPENDENCE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_independence = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Criteria</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $director_name = $db->getDirectorName($other_text[65*$i+1]['text']);
+            $directors_independence.="<td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $directors_independence.= "</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Current tenure/association</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>".$other_text[65*$i+22]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Directorships at group companies</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>".$other_text[65*$i+23]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Relationships with the Company</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>".$other_text[65*$i+24]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Nominee director</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>".$other_text[65*$i+25]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Shareholding / ESOPs</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>".$other_text[65*$i+26]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Remuneration ( <span style='font-family: Rupee Foradian;'>`</span> Lakhs)</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>".$other_text[65*$i+27]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $directors_independence.="<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; color: #FFFFFF; font-size: 10; background-color: #FE642E; text-align: left; '>SES Classification</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_independence.="<td style='border-right: 1px solid #FFFFFF; color: #FFFFFF; font-size: 10; background-color: #FE642E; text-align: left; '>".$other_text[65*$i+28]['text']."</td>";
+        }
+        $directors_independence.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $directors_independence
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "";
+        for($i=0;$i<$no_of_independent;$i++) {
+            if($other_text[65*$i+29]['text']!="" && $other_text[65*$i+29]['text']!="&nbsp;")
+                $resolution_text .= $other_text[65*$i+29]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        resBlackStrip($docx,"DIRECTORS' TIME COMMITMENTS");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $time_commitment_table = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Criteria</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $director_name = $db->getDirectorName($other_text[65*$i+1]['text']);
+            $time_commitment_table.="<td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $time_commitment_table.= "</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Directorships </td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+30]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Total Committee memberships</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+31]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Committee Chairmanship </td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+32]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $time_commitment_table.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Full time role/ executive position</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $time_commitment_table.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+33]['text']."</td>";
+        }
+        $time_commitment_table.="</tr>";
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $time_commitment_table
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+        $resolution_text = "<p style='margin:0; padding-top: 5px; padding-bottom: 8px; font-size: 9; line-height:135%; padding-left: 0px;  text-align: justify; '>Note: committee memberships include committee chairmanships</p>";
+        $docx->embedHTML($resolution_text);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_independent;$i++) {
+            if($other_text[65*$i+34]['text']!="" && $other_text[65*$i+34]['text']!="&nbsp;")
+                $resolution_text .= $other_text[65*$i+34]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        resBlackStrip($docx,"DIRECTORS’ PERFORMANCE");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $directors_performance = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Attendance record</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $director_name = $db->getDirectorName($other_text[65*$i+1]['text']);
+            $directors_performance.="<td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>".$director_name."</td>";
+        }
+        $directors_performance.= "</tr>";
+        $directors_performance.="<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Last 3 AGMs </td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+35]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Board meetings held last year</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+36]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Board meetings in last 3 years (avg.) </td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+37]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Audit Committee meetings</td>";
+        for($i=0;$i<$no_of_independent;$i++) {
+            $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+38]['text']."</td>";
+        }
+        $directors_performance.="</tr>";
+        if($generic_array['are_committees_seperate']=='yes') {
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Nomination Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+40]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Remuneration Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+41]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>CSR Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+42]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Stakeholders' Relationship Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+43]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+        }
+        else {
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Nomination &amp; Remuneration Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+39]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>CSR Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>".$other_text[65*$i+42]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+            $directors_performance.="<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Stakeholders' Relationship Committee meetings</td>";
+            for($i=0;$i<$no_of_independent;$i++) {
+                $directors_performance.="<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>".$other_text[65*$i+43]['text']."</td>";
+            }
+            $directors_performance.="</tr>";
+        }
+
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $directors_performance
+                </tbody>
+              </table>";
+        $docx->embedHtml($html);
+
+        $resolution_text = "";
+        for($i=0;$i<$no_of_independent;$i++) {
+            if($other_text[65*$i+44]['text']!="" && $other_text[65*$i+44]['text']!="&nbsp;")
+                $resolution_text .= $other_text[65*$i+44]['text'];
+        }
+        $docx->embedHTML(htmlParser($resolution_text));
+
+        resHeading($docx,"DIRECTOR PERFORMANCE INDEX ADD DRAWS SKEWED REMUNERATION DISCUSS",2);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        for($i=0;$i<$no_of_independent;$i++) {
+            $total_score = 0;
+            $directors_performance_index = "<tr>
+                                            <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Criteria</td>
+                                            <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Response</td>
+                                            <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Score</td>
+                                            <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Maximum</td>
+                                        </tr>";
+            $directors_performance_index .= "<tr>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Board Meetings Attendance held in the last year</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 45]['text'] . "</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 46]['text'] . "</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>5</td>
+                                        </tr>";
+            $total_score+=$other_text[65 * $i + 46]['text'];
+            $directors_performance_index .= "<tr>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Board Meetings Attendance held in the last 3 years</td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 47]['text'] . " </td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 48]['text'] . " </td>
+                                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>15</td>
+                                        </tr>";
+            $total_score+=$other_text[65 * $i + 48]['text'];
+            $directors_performance_index .= "<tr>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Audit Committee Meetings Attendance</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 49]['text'] . " </td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 50]['text'] . "</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>10 </td>
+                                            </tr>";
+            $total_score+=$other_text[65 * $i + 50]['text'];
+            $directors_performance_index .= "<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Nomination & Remuneration Committee Meetings Attendance</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 51]['text'] . " </td>
+                                      <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 52]['text'] . " </td>
+                                       <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>10</td>
+                                    </tr>";
+            $total_score+=$other_text[65 * $i + 52]['text'];
+            $directors_performance_index .= "<tr>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Directorships</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 57]['text'] . " </td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 58]['text'] . "</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>15 </td>
+                                            </tr>";
+            $total_score+=$other_text[65 * $i + 58]['text'];
+            $directors_performance_index .= "<tr>
+                                    <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Total Committee memberships</td>
+                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 59]['text'] . " </td>
+                                      <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 60]['text'] . " </td>
+                                       <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>15</td>
+                                    </tr>";
+            $total_score+=$other_text[65 * $i + 60]['text'];
+            $directors_performance_index .= "<tr>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Committee Chairmanships</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 61]['text'] . " </td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 62]['text'] . "</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>15 </td>
+                                             </tr>";
+            $total_score+=$other_text[65 * $i + 62]['text'];
+            $directors_performance_index .= "<tr>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Full Time Role/Executive Position</td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 63]['text'] . " </td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 64]['text'] . " </td>
+                                                <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>15</td>
+                                            </tr>";
+            $total_score+=$other_text[65 * $i + 64]['text'];
+            $directors_performance_index .= "<tr>
+                                                <td colspan='2' style='padding-top: 2px; padding-bottom: 2px; border-right: 1px solid #FFFFFF; border-top: 2px solid #000000; font-size: 10; background-color: #FFFFFF; text-align: left; border-bottom: 2px solid #000000;'>Total</td>
+                                                <td style='padding-top: 2px; padding-bottom: 2px; border-right: 1px solid #FFFFFF; border-top: 2px solid #000000; font-size: 10; background-color: #FFFFFF; text-align: center;border-bottom: 2px solid #000000; '>$total_score</td>
+                                                <td style='padding-top: 2px; padding-bottom: 2px; border-right: 1px solid #FFFFFF; border-top: 2px solid #000000; font-size: 10; background-color: #FFFFFF; text-align: center;border-bottom: 2px solid #000000; '>100</td>
+                                            </tr>";
+
+            $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
+                <tbody>
+                    $directors_performance_index
+                </tbody>
+              </table>";
+            $docx->embedHtml($html);
+            $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        }
+
+        $total_analysis_rows = count($analysis_text);
+        for($i=0;$i<$no_of_non_executive;$i++) {
+            $resolution_text = "";
+            for($j=0;$j<$total_analysis_rows-1;$j++) {
+                if($analysis_text[51*$i+$j]['analysis_text']!="" && $analysis_text[51*$i+$j]['analysis_text']!="&nbsp;")
+                    $resolution_text .= $analysis_text[51*$i+$j]['analysis_text'];
+            }
+            if($resolution_text=="") {
+                $resolution_text .= $analysis_text[51*$i+$total_analysis_rows-1]['analysis_text'];
+            }
             $docx->embedHTML(htmlParser($resolution_text));
         }
     }
