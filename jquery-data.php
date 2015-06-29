@@ -1395,6 +1395,24 @@ elseif(isset($_GET['appointment_directors'])) {
 	$response = $db->getAppointedDirectorInfo($company_id,$financial_year,$dir_din_no);
 	echo json_encode($response);
 }
+elseif(isset($_GET['appointment_directors_id'])) {
+	session_start();
+	$company_id = $_SESSION['company_id'];
+	$financial_year = $_SESSION['report_year'];
+	$dir_din_no = $_GET['dir_din_no'];
+	$db = new DatabaseReports();
+	$response = $db->getAppointedDirectorIDInfo($company_id,$financial_year,$dir_din_no);
+	echo json_encode($response);
+}
+elseif(isset($_GET['appointment_directors_ed'])) {
+	session_start();
+	$company_id = $_SESSION['company_id'];
+	$financial_year = $_SESSION['report_year'];
+	$dir_din_no = $_GET['dir_din_no'];
+	$db = new DatabaseReports();
+	$response = $db->getAppointedDirectorEDInfo($company_id,$financial_year,$dir_din_no);
+	echo json_encode($response);
+}
 elseif(isset($_POST['set_start_report'])) {
 	$db = new DatabaseReports();
 	$response = $db->getReportDetails($_POST['report_id']);
@@ -1476,6 +1494,21 @@ elseif(isset($_POST['remember_selection'])) {
 	$_SESSION['input_sheet_company_id'] = $_POST['company_id'];
 	echo json_encode(array('status'=>200));
 }
+elseif(isset($_GET['executive_remuneration'])) {
+	session_start();
+	$company_id = $_SESSION['company_id'];
+	$db = new Database();
+	$response = $db->remunerationAnalysis($_GET['dir_din_no'],$company_id,$_SESSION['report_year']);
+	echo json_encode($response);
+}
+elseif(isset($_GET['peer_executive_remuneration'])) {
+	session_start();
+	$report_id = $_SESSION['report_id'];
+	$db = new Database();
+	$response = $db->peerExecutiveRemuneration($report_id,$_GET['company_name']);
+	echo json_encode($response);
+}
+
 
 // Pradeep's section
 // Adoption of accounts
@@ -1823,6 +1856,7 @@ elseif(isset($_GET['GetExistingDataofSchemeOfArrangement'])) {
 			'share_holding'=>$share_holding)
 	);
 }
+
 // appointment directors
 elseif(isset($_GET['CheckDataExistingAD'])) {
 	session_start();
@@ -1859,6 +1893,7 @@ elseif(isset($_GET['GetExistingDataofAppointmentOfDirectors'])) {
 			'remuneration_package'=>$remuneration_package)
 	);
 }
+
 // fill investment
 elseif(isset($_GET['GetExistingDataofFillInvestment'])) {
 	session_start();
@@ -1943,6 +1978,8 @@ elseif(isset($_GET['GetExistingDataofDisclosures'])) {
     $resolution_section=$_GET['ResolutionName'];
     $analysis=$db->getAnalysisData($resolution_section,$main_section);
 	$disclosures=$db->getDisclosures();
+	$analysis=$db->getDisclousuresAnalysisText();
+
 	echo json_encode(array(
 			'disclosures'=>$disclosures,
 			'analysis'=>$analysis

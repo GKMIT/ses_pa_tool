@@ -1303,12 +1303,15 @@ class Database {
 			$stmt->bindParam(':company_auditors_info_id',$company_auditors_info_id);
 			if($stmt->execute()) {
 				for($i=0;$i<$info['no_of_auditors'];$i++) {
-					$stmt=$dbobject->prepare("insert into `company_auditors_details` (`company_auditor_info_id`, `auditor_name`, `parent_company`, `auditor_tenure`, `partner_name`,`partner_tenure`) VALUES (:company_auditor_info_id,:auditor_name,:parent_company,:auditor_tenure,:partner_name,:partner_tenure)");
+					$stmt=$dbobject->prepare("insert into `company_auditors_details` (`company_auditor_info_id`, `auditor_name`,`auditor_reg_no`, `parent_company`, `auditor_tenure`, `partner_name`,`partner_membership_no`,`partner_tenure`)
+																			  VALUES (:company_auditor_info_id,:auditor_name,:auditor_reg_no,:parent_company,:auditor_tenure,:partner_name,:partner_membership_no,:partner_tenure)");
 					$stmt->bindParam(':company_auditor_info_id',$company_auditors_info_id);
 					$stmt->bindParam(':auditor_name',$info['auditor_name'][$i]);
+					$stmt->bindParam(':auditor_reg_no',$info['auditor_reg_no'][$i]);
 					$stmt->bindParam(':parent_company',$info['auditor_parent_company'][$i]);
 					$stmt->bindParam(':auditor_tenure',$info['auditor_tenure'][$i]);
 					$stmt->bindParam(':partner_name',$info['auditor_partner_name'][$i]);
+					$stmt->bindParam(':partner_membership_no',$info['auditor_partner_membership_no'][$i]);
 					$stmt->bindParam(':partner_tenure',$info['auditor_partner_tenure'][$i]);
 					$stmt->execute();
 				}
@@ -2058,10 +2061,10 @@ class Database {
 		$string_headers.="</tr></thead>";
 		$string_rows = "<tbody>";
 		$array_cols = array(
-			"Market Price at year start (In <i class='fa fa-rupee'></i> Crore)",
-			"Market Price at year end (In <i class='fa fa-rupee'></i> Crore)",
-			"Dividend (In <i class='fa fa-rupee'></i> Crore)",
-			"EPS (In <i class='fa fa-rupee'></i> Crore)"
+			"Dividend",
+			"Market Price at year start",
+			"Market Price at year end",
+			"EPS"
 		);
 		$array_column_names = array('dividend','market_price_start','market_price_end','eps');
 		for($counter=0;$counter<4;$counter++) {
@@ -2365,6 +2368,14 @@ class Database {
 				$single_director['third_year_variable_pay']="NA";
 			}
 
+			$stmt=$dbobject->prepare("select `ratio_to_mre` from `director_info` where `dir_din_no`=:dir_din_no and `financial_year`=:financial_year and `company_id`=:company_id");
+			$stmt->bindParam(':dir_din_no',$din);
+			$stmt->bindParam(':financial_year',$first_year);
+			$stmt->bindParam(':company_id',$company_id);
+			$stmt->execute();
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$single_director['ratio_to_mre'] = $row['ratio_to_mre'];
+
 			$directors_rem_details[] = $single_director;
 		}
 
@@ -2386,6 +2397,62 @@ class Database {
 			$response[] = $row;
 		}
 		$dbobject = null;
+		return $response;
+	}
+	function remunerationAnalysis($dir_no,$company_id,$financial_year) {
+
+		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
+		$stmt = $dbobject->prepare("select * from `director_info` where `dir_din_no`=:dir_no and `financial_year`=:financial_year and `company_id`=:company_id");
+		$stmt->bindParam(":company_id", $company_id);
+		$stmt->bindParam(":financial_year", $financial_year);
+		$stmt->bindParam(":dir_no", $dir_no);
+		$stmt->execute();
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($row['company_classification']=="EDP") {
+			$response['company_promoter'] = "yes";
+		}
+		else {
+			$response['company_promoter'] = "no";
+		}
+		$stmt = $dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_no and `rem_year`=:financial_year and `company_id`=:company_id");
+		$stmt->bindParam(":company_id", $company_id);
+		$stmt->bindParam(":financial_year", $financial_year);
+		$stmt->bindParam(":dir_no", $dir_no);
+		$stmt->execute();
+		if($stmt->rowCount()>0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$response['remuneration'] = $row['variable_pay']+$row['fixed_pay'];
+		}
+		else {
+			$response['remuneration'] = 0;
+		}
+
+		$stmt = $dbobject->prepare("select `net_profit` from `company_auditors_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+		$stmt->bindParam(":company_id", $company_id);
+		$stmt->bindParam(":financial_year", $financial_year);
+		$stmt->execute();
+		if($stmt->rowCount()>0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$response['company_net_profit'] = $row['net_profit'];
+		}
+		else {
+			$response['company_net_profit'] = 0;
+		}
+
+		if($response['company_net_profit'] != 0) {
+			$response['company_rem_per'] = ($response['remuneration']/$response['company_net_profit']) * 100;
+		}
+		return $response;
+	}
+	function peerExecutiveRemuneration($report_id,$company_name) {
+		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
+		$stmt = $dbobject->prepare("select * from `pa_report_executive_remuneration_peer_comparison` where `pa_reports_id`=:report_id and `company_name`=:company_name");
+		$stmt->bindParam(":company_name", $company_name);
+		$stmt->bindParam(":report_id", $report_id);
+		$stmt->execute();
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$response = $row;
+		$dbobject=null;
 		return $response;
 	}
 }

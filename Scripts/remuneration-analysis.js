@@ -74,6 +74,7 @@ CustomJS.prototype = {
                                 total_pay = "NA";
                             }
                             $("#remuneration_table_body tr").eq(i).find("td").eq(7).find("input").val(total_pay);
+                            $("#remuneration_table_body tr").eq(i).find("td").eq(8).find("input").val(data[i].ratio_to_mre);
                         }
                     }
                 });
@@ -86,7 +87,8 @@ CustomJS.prototype = {
                 dataType: "JSON",
                 data:{
                     dividend_data_5_years:true,
-                    first_year:$("#indexed_tsr_year_start_year").val()
+                    first_year:$("#indexed_tsr_year_start_year").val(),
+                    highest_paid_ed : $(".din_numbers").eq(0).val()
                 },
                 error: function(data) {
                     console.log(data);
@@ -94,7 +96,7 @@ CustomJS.prototype = {
                 success: function(data) {
                     console.log(data);
                     var indexed_tsr = 0;
-                    for(var i= 4,j=0;i>=0;i--,j++) {
+                    for(var i= 5,j=0;i>=1;i--,j++) {
                         if(j!=0) {
                             $("#indexed_tsr_tbody tr").eq(j).find("td").eq(0).find("input").val(data.dividend_data[i].year);
                         }
@@ -102,7 +104,6 @@ CustomJS.prototype = {
                         $("#indexed_tsr_tbody tr").eq(j).find("td").eq(2).find("input").val(data.dividend_data[i].market_price_end);
                         $("#indexed_tsr_tbody tr").eq(j).find("td").eq(3).find("input").val(data.dividend_data[i].dividend);
                         $("#indexed_tsr_tbody tr").eq(j).find("td").eq(4).find("input").val(data.dividend_data[i].total_dividend);
-
 
                         $("#remuneration_growth tr").eq(j).find("td").eq(0).find("input").val(data.remuneration_growth[i].year);
                         $("#remuneration_growth tr").eq(j).find("td").eq(1).find("input").val(data.remuneration_growth[i].total_pay);
@@ -115,6 +116,19 @@ CustomJS.prototype = {
                 }
             });
         });
+
+
+        function calculatePercentage(data_col_id) {
+            var rem_percent = $("#rem_percent_"+data_col_id).val();
+            var net_profit = $("#net_profit_"+data_col_id).val();
+            if(rem_percent!="" && net_profit!="") {
+                $("#percentage_"+data_col_id).val((rem_percent/net_profit*100).toFixed(2));
+            }
+        }
+
+        $(".rem_percent,.net_profit").keyup(function() {
+            calculatePercentage($(this).attr('data-col-id'));
+        });
     },
     pageload:function(){
         $(document).ready(function(){
@@ -125,6 +139,7 @@ CustomJS.prototype = {
                 dataType:'JSON',
                 data:{CheckDataExistingOfRemunerationAnalysis:1},
                 success:function(data){
+                    console.log(data);
                     var resolution_name="";
                     if(data) {
                         $('#edit_mode').val("Edit Mode");
@@ -134,7 +149,6 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofRemunerationAnalysis:1,ResolutionName:resolution_name,MainSection:main_section},
                             success:function(data){
-                                console.log(data);
                                 var analysis_text = data.analysis;
                                 setTimeout(function() {
                                     $(".analysis-text").each(function(i,d) {
@@ -157,6 +171,7 @@ CustomJS.prototype = {
                                     row.find("td").eq(5).find('input').val(remuneration_analysis[i].total_pay_second_year);
                                     row.find("td").eq(6).find('input').val(remuneration_analysis[i].fixed_pay_third_year);
                                     row.find("td").eq(7).find('input').val(remuneration_analysis[i].total_pay_third_year);
+                                    row.find("td").eq(8).find('input').val(remuneration_analysis[i].ratio);
                                 });
                                 var executive_remuneration_growth = data.executive_remuneration_growth;
                                 $(".remuneration_growth").each(function(i,d) {
@@ -177,13 +192,13 @@ CustomJS.prototype = {
                                 $('.company2').find("input").val(executive_remuneration_peer_comparison[1].company_name);
                                 $('.company3').find("input").val(executive_remuneration_peer_comparison[2].company_name);
 
-                                $('.director1').find("input").val(executive_remuneration_peer_comparison[0].promoter_group);
-                                $('.director2').find("input").val(executive_remuneration_peer_comparison[1].promoter_group);
-                                $('.director3').find("input").val(executive_remuneration_peer_comparison[2].promoter_group);
+                                $('.director1').find("input").val(executive_remuneration_peer_comparison[0].director_name);
+                                $('.director2').find("input").val(executive_remuneration_peer_comparison[1].director_name);
+                                $('.director3').find("input").val(executive_remuneration_peer_comparison[2].director_name);
 
-                                $('.promoter1').find("input").val(executive_remuneration_peer_comparison[0].director_name);
-                                $('.promoter2').find("input").val(executive_remuneration_peer_comparison[1].director_name);
-                                $('.promoter3').find("input").val(executive_remuneration_peer_comparison[2].director_name);
+                                $('.promoter1').find("input").val(executive_remuneration_peer_comparison[0].promoter_group);
+                                $('.promoter2').find("input").val(executive_remuneration_peer_comparison[1].promoter_group);
+                                $('.promoter3').find("input").val(executive_remuneration_peer_comparison[2].promoter_group);
 
                                 $('.remuneration1').find("input").val(executive_remuneration_peer_comparison[0].remuneration);
                                 $('.remuneration2').find("input").val(executive_remuneration_peer_comparison[1].remuneration);

@@ -552,8 +552,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="CMD">Chairman &amp; Managing Director</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="MD">Managing Director</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -564,8 +564,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>
@@ -577,8 +577,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>
@@ -601,8 +601,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>
@@ -614,8 +614,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>
@@ -627,8 +627,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>
@@ -640,8 +640,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>
@@ -653,8 +653,8 @@ if(isset($_POST['btn_director_info'])) {
                                                         <option value="">Select Option</option>
                                                         <option value="C">Chairman</option>
                                                         <option value="M">Member</option>
-                                                        <option value="C (Resign)">Chairman (Resigned)</option>
-                                                        <option value="M (Resign)">Member (Resigned)</option>
+                                                        <option value="C(Resign)">Chairman (Resigned)</option>
+                                                        <option value="M(Resign)">Member (Resigned)</option>
                                                         <option value="none">None</option>
                                                     </select>
                                                 </div>

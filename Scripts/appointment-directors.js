@@ -5,6 +5,7 @@ function CustomJS() {
 CustomJS.prototype = {
     initialization: function() {
 
+        context = self;
         $("textarea[name='used_in_text[]']").each(function(){
             $(this).addClass('other-text');
         });
@@ -20,6 +21,7 @@ CustomJS.prototype = {
         $("textarea[name='analysis_text[]']").each(function(){
             $(this).addClass('analysis-text');
         });
+
         $("textarea[name='recommendation_text[]']").each(function(){
             $(this).addClass('recommendation-text');
         });
@@ -499,12 +501,114 @@ CustomJS.prototype = {
             $(".total_score").html(total);
         });
 
+        $("#remuneration_years").change(function() {
+
+            var array_din_numbers = [];
+            array_din_numbers.push({"din_no":$(".ed-ids").val()});
+            var final_dins = JSON.stringify(array_din_numbers);
+
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    remuneration_analysis_3_years:true,
+                    first_year:$("#remuneration_years").val(),
+                    din_nos:final_dins
+                },
+                success: function(data) {
+                    console.log(data);
+                    var total_pay = 0;
+                    $("#rem_second_year").val($("#remuneration_years").val()-1);
+                    $("#rem_third_year").val($("#remuneration_years").val()-2);
+                    var no_directors = data.length;
+                    for(var i=0;i<no_directors;i++) {
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(1).find("input").val(data[i].first_year_fixed_pay);
+                        if(data[i].first_year_fixed_pay!="NA" && data[i].first_year_variable_pay!="NA") {
+                            total_pay = parseFloat(data[i].first_year_fixed_pay)+parseFloat(data[i].first_year_variable_pay);
+                            total_pay = total_pay.toFixed(2);
+                        }
+                        else {
+                            total_pay = "NA";
+                        }
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(2).find("input").val(total_pay);
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(3).find("input").val(data[i].second_year_fixed_pay);
+                        if(data[i].second_year_fixed_pay!="NA" && data[i].second_year_variable_pay!="NA") {
+                            total_pay = parseFloat(data[i].second_year_fixed_pay)+parseFloat(data[i].second_year_variable_pay);
+                            total_pay = total_pay.toFixed(2);
+                        }
+                        else {
+                            total_pay = "NA";
+                        }
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(4).find("input").val(total_pay);
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(5).find("input").val(data[i].third_year_fixed_pay);
+                        if(data[i].third_year_fixed_pay!="NA" && data[i].third_year_variable_pay!="NA") {
+                            total_pay = parseFloat(data[i].third_year_fixed_pay)+parseFloat(data[i].third_year_variable_pay);
+                            total_pay = total_pay.toFixed(2);
+                        }
+                        else {
+                            total_pay = "NA";
+                        }
+                        $("#remuneration_table_body tr").eq(i).find("td").eq(6).find("input").val(total_pay);
+                    }
+                }
+            });
+        });
+
+        $("#indexed_tsr_year_start_year").change(function () {
+            $.ajax({
+                url:"jquery-data-2.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    dividend_data_5_years:true,
+                    first_year:$("#indexed_tsr_year_start_year").val(),
+                    highest_paid_ed : $(".ed-ids").val()
+                },
+                success: function(data) {
+                    var indexed_tsr = 0;
+                    for(var i= 5,j=0;i>=0;i--,j++) {
+
+                        $("#remuneration_growth tr").eq(j).find("td").eq(0).find("input").val(data.remuneration_growth[i].year);
+                        $("#remuneration_growth tr").eq(j).find("td").eq(1).find("input").val(data.remuneration_growth[i].total_pay);
+                        if(data.remuneration_growth[i].indexed_tsr==null)
+                            indexed_tsr = 0;
+                        else
+                            indexed_tsr = data.remuneration_growth[i].indexed_tsr;
+                        $("#remuneration_growth tr").eq(j).find("td").eq(2).find("input").val(indexed_tsr.toFixed(2));
+                        $("#remuneration_growth tr").eq(j).find("td").eq(3).find("input").val(data.net_profits[i].net_profit);
+                    }
+                }
+            });
+        });
+
+        $(".company2").change(function() {
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                beforeSend: function() {
+                },
+                data:{
+                    peer_executive_remuneration: true,
+                    company_name : $(".company2").val()
+                },
+                success: function(data) {
+                    console.log(data);
+                    $(".director2").val(data.director_name);
+                    $(".promotor2").val(data.promoter_group);
+                    $(".remuneration2").val(data.remuneration);
+                    $(".netprofit2").val(data.net_profits);
+                    $(".ratio2").val(parseFloat(data.rem_percentage).toFixed(2));
+                }
+            });
+        });
 
     },
 
     pageload: function() {
-       console.log("hi");
-        $(".director-number").change(function() {
+
+        $(".ned-ids").change(function() {
             var $director = $(this);
             $.ajax({
                 url: "jquery-data.php",
@@ -513,6 +617,9 @@ CustomJS.prototype = {
                 data: {
                     appointment_directors: true,
                     dir_din_no:$director.val()
+                },
+                error: function (data) {
+                    console.log(data);
                 },
                 success: function (data) {
                     console.log(data);
@@ -552,6 +659,149 @@ CustomJS.prototype = {
             });
         });
 
+        $(".id-ids").change(function() {
+            var $director = $(this);
+            $.ajax({
+                url: "jquery-data.php",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    appointment_directors_id: true,
+                    dir_din_no:$director.val()
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $(".id-functional-area").val(data.functional_area);
+                    $(".id-education").val(data.education);
+                    $(".id-past-ex").val(data.past_ex);
+                    $(".id-committee-positions").val(data.committee_positions);
+                    $(".id-total-association").val(data.total_association);
+                    $(".id-shareholding").val(data.shareholding);
+                    $(".id-remuneration").val(data.remuneration);
+                    $(".id-total-directorship").val(data.total_directorship);
+                    $(".id-committee-memberships").val(data.committee_memberships);
+                    $(".id-committee-chairmanship").val(data.committee_chairmanships);
+                    $(".id-last-3-agms").val(data.last_3_agms);
+                    $(".id-board-meeting-last-year").val(data.board_meeting_last_year+"%");
+                    $(".id-board-meeting-last-years-avg").val(data.board_meeting_last_years_avg+"%");
+                    $(".id-audit-meeting-last-year").val(data.audit_meeting_last_year+"%");
+                    if(data.are_committees_seperate=='yes') {
+                        $(".id-nomination-row").removeClass('hidden');
+                        $(".id-remuneration-row").removeClass('hidden');
+                        $(".id-nomination-remuneration-row").addClass('hidden');
+                        $(".id-nomination-meeting-last-year").val(data.nomination_meeting_last_year+"%");
+                        $(".id-remuneration-meeting-last-year").val(data.remuneration_meeting_last_year+"%");
+                    }
+                    else {
+                        $(".id-nomination-row").addClass('hidden');
+                        $(".id-remuneration-row").addClass('hidden');
+                        $(".id-nomination-remuneration-row").removeClass('hidden');
+                        $(".id-nomination-remuneration-meeting-last-year").val(data.nomination_remuneration_meeting_last_year+"%");
+                    }
+                    $(".id-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
+                    $(".id-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
+
+                    //var analysis_values = data.analysis_values;
+                    //$(".ned-analysis-values").each(function(i,d) {
+                    //    $(this).html("["+analysis_values[i]+"]");
+                    //});
+                }
+            });
+        });
+
+        $(".ed-ids").change(function() {
+            var $director = $(this);
+
+            if($("#remuneration_years").val()!="")
+                $("#remuneration_years").trigger('change');
+
+            if($("#indexed_tsr_year_start_year").val()!="")
+                $("#indexed_tsr_year_start_year").trigger('change');
+
+
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    executive_remuneration: true,
+                    dir_din_no : $director.val()
+                },
+                success: function(data) {
+                    $(".director1").val($director.find('option:selected').text());
+                    $(".promotor1").val(data.company_promoter);
+                    $(".remuneration1").val(data.remuneration);
+                    $(".netprofit1").val(data.company_net_profit);
+                    $(".ratio1").val(data.company_rem_per.toFixed(2));
+                }
+            });
+
+            $.ajax({
+                url:'jquery-data.php',
+                type:'GET',
+                dataType:'JSON',
+                data:{DirectorsPeerInfo:1},
+                success:function(data) {
+                    $(".company2").append("<option value=''>Select Peer</option>");
+                    $(".company2").append("<option value='"+data.peer_1_company_name+"'>"+data.peer_1_company_name+"</option>");
+                    $(".company2").append("<option value='"+data.peer_2_company_name+"'>"+data.peer_2_company_name+"</option>");
+                    $('.company1').val(data.company_name);
+                }
+            });
+
+            $.ajax({
+                url: "jquery-data.php",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    appointment_directors_ed: true,
+                    dir_din_no:$director.val()
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#past_rem_dir_name").val($director.find('option:selected').text());
+                    $(".ed-functional-area").val(data.functional_area);
+                    $(".ed-education").val(data.education);
+                    $(".ed-past-ex").val(data.past_ex);
+                    $(".ed-committee-positions").val(data.committee_positions);
+                    $(".ed-retiring-non-retiring").val(data.retiring_non_retiring);
+                    $(".ed-part-promoter-group").val(data.part_promoter_group);
+                    $(".ed-total-directorship").val(data.total_directorship);
+                    $(".ed-committee-memberships").val(data.committee_memberships);
+                    $(".ed-committee-chairmanship").val(data.committee_chairmanships);
+                    $(".ed-last-3-agms").val(data.last_3_agms);
+                    $(".ed-board-meeting-last-year").val(data.board_meeting_last_year+"%");
+                    $(".ed-board-meeting-last-years-avg").val(data.board_meeting_last_years_avg+"%");
+                    $(".ed-audit-meeting-last-year").val(data.audit_meeting_last_year+"%");
+                    if(data.are_committees_seperate=='yes') {
+                        $(".ed-nomination-row").removeClass('hidden');
+                        $(".ed-remuneration-row").removeClass('hidden');
+                        $(".ed-nomination-remuneration-row").addClass('hidden');
+                        $(".ed-nomination-meeting-last-year").val(data.nomination_meeting_last_year+"%");
+                        $(".ed-remuneration-meeting-last-year").val(data.remuneration_meeting_last_year+"%");
+                    }
+                    else {
+                        $(".ed-nomination-row").addClass('hidden');
+                        $(".ed-remuneration-row").addClass('hidden');
+                        $(".ed-nomination-remuneration-row").removeClass('hidden');
+                        $(".ed-nomination-remuneration-meeting-last-year").val(data.nomination_remuneration_meeting_last_year+"%");
+                    }
+                    $(".ed-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
+                    $(".ed-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
+                    //var analysis_values = data.analysis_values;
+                    //$(".ned-analysis-values").each(function(i,d) {
+                    //    $(this).html("["+analysis_values[i]+"]");
+                    //});
+                }
+            });
+        });
+
         $("#slot_no").change(function(){
             var main_section=$('#main_section').val();
             var slot_no = $('#slot_no').find('option:selected').text();
@@ -586,16 +836,9 @@ CustomJS.prototype = {
                                     var other_text = data.other_text;
 
                                     $(".other-text").each(function(i,d) {
-
                                         var text_area = $(this);
                                         if(text_area.hasClass('inline-editor')) {
                                             text_area.parent().find(".cke_textarea_inline").html(other_text[i]['text']);
-                                        }
-                                        else if(text_area.is("input")) {
-                                            text_area.val(other_text[i]['text']);
-                                        }
-                                        else if(text_area.is("select")) {
-                                            text_area.val(other_text[i]['text']);
                                         }
                                         else {
                                             text_area.val(other_text[i]['text']);
@@ -691,14 +934,8 @@ CustomJS.prototype = {
                             if(text_area.hasClass('inline-editor')) {
                                 text_area.parent().find(".cke_textarea_inline").html("");
                             }
-                            else if(text_area.is("input")) {
-                                text_area.val("");
-                            }
-                            else if(text_area.is("select")) {
-                                text_area.val("Select");
-                            }
                             else {
-                                text_area.html("");
+                                text_area.val("");
                             }
                         });
                         $("textarea[name='analysis_text[]']").each(function(i,d) {
@@ -725,7 +962,6 @@ CustomJS.prototype = {
                         $("#total_pay_year2").val("");
                         $("#fixed_pay_year3").val("");
                         $("#total_pay_year3").val("");
-
                         $('.director1').val("");
                         $('.director2').val("");
                         $('.company1').val("");

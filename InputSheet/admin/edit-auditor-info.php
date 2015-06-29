@@ -19,9 +19,11 @@ if(isset($_POST['btn_edit_auditor_info'])) {
     $info['non_audit_fee']=trim($_POST['non_audit_fee']);
     $info['total_auditors_fee']=trim($_POST['total_auditors_fee']);
     $info['auditor_name'] = $_POST['auditor_name'];
+    $info['auditor_reg_no'] = $_POST['auditor_reg_no'];
     $info['auditor_parent_company'] = $_POST['auditor_parent_company'];
     $info['auditor_tenure'] = $_POST['auditor_tenure'];
     $info['auditor_partner_name'] = $_POST['auditor_partner_name'];
+    $info['auditor_partner_membership_no'] = $_POST['auditor_partner_membership_no'];
     $info['auditor_partner_tenure'] = $_POST['auditor_partner_tenure'];
     $info['comments'] = $_POST['comments'];
     $response = $db->editAuditorInfo($info);
@@ -462,6 +464,18 @@ if(isset($_POST['btn_edit_auditor_info'])) {
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="col-md-3 control-label">Auditor's Reg. No</label>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control flushable auditor_reg_no_1" name="auditor_reg_no[]" placeholder="First auditor's Reg. No."/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control flushable auditor_reg_no_2 hidden" name="auditor_reg_no[]" placeholder="Second auditor's Reg. No."/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control flushable auditor_reg_no_3 hidden" name="auditor_reg_no[]" placeholder="Third auditor's Reg. No."/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-md-3 control-label">Auditor's Parent Company</label>
                                                 <div class="col-md-3">
                                                     <input type="text" class="form-control flushable auditor_parent_company_1" name="auditor_parent_company[]" placeholder="First auditor's parent company"/>
@@ -495,6 +509,18 @@ if(isset($_POST['btn_edit_auditor_info'])) {
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" class="form-control flushable auditor_partner_name_3 hidden" name="auditor_partner_name[]" placeholder="Third audit partner name"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Audit Partner Membership No.</label>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control flushable auditor_partner_membership_no_1" name="auditor_partner_membership_no[]" placeholder="First audit partner membership no."/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control flushable flushable auditor_partner_membership_no_2 hidden" name="auditor_partner_membership_no[]" placeholder="Second audit partner membership no."/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control flushable auditor_partner_membership_no_3 hidden" name="auditor_partner_membership_no[]" placeholder="Third audit partner membership no."/>
                                                 </div>
                                             </div>
                                             <div class="form-group">

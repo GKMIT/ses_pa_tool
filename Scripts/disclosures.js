@@ -30,18 +30,12 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofDisclosures:1,ResolutionName:resolution_name,MainSection:main_section},
                             success:function(data){
+                                console.log(data);
                                 var disclosures = data.disclosures;
-                                $(".triggers").each(function(i,d) {
-                                    var select = $(this);
-                                    select.val(disclosures[i]['status']);
+                                $(".trigger").each(function(i,d) {
+                                    $(this).val(disclosures[i]['status']);
                                 });
-                                setTimeout(function(){
-                                    var analysis_text = data.analysis;
-                                    $(".analysis-text").each(function(i,d) {
-                                        var text_area = $(this);
-                                        text_area.parent().find(".cke_textarea_inline").html(analysis_text[i]['analysis_text']);
-                                    });
-                                },3000);
+                                $(".analysis-text").val(data.analysis[0].analysis_text);
                             }
                         });
                     }

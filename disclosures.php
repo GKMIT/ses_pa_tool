@@ -7,9 +7,6 @@ if(isset($_POST['disclosures'])) {
     $db = new DatabaseReports();
     $info = $_POST;
     $response = $db->saveDisclosuresInfo($info);
-//    if($response['status']==200) {
-//        $flag = true;
-//    }
 }
 ?>
 <!DOCTYPE html>

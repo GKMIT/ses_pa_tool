@@ -2638,16 +2638,20 @@ CustomJS.prototype = {
             var no = parseInt($(this).val());
             for(var i=1;i<=no;i++) {
                 $(".auditor_name_"+i).removeClass('hidden');
+                $(".auditor_reg_no_"+i).removeClass('hidden');
                 $(".auditor_parent_company_"+i).removeClass('hidden');
                 $(".auditor_tenure_"+i).removeClass('hidden');
                 $(".auditor_partner_name_"+i).removeClass('hidden');
+                $(".auditor_partner_membership_no_"+i).removeClass('hidden');
                 $(".auditor_partner_tenure_"+i).removeClass('hidden');
             }
             for(var j=no+1;j<=3;j++) {
                 $(".auditor_name_"+j).addClass('hidden');
+                $(".auditor_reg_no_"+i).addClass('hidden');
                 $(".auditor_parent_company_"+j).addClass('hidden');
                 $(".auditor_tenure_"+j).addClass('hidden');
                 $(".auditor_partner_name_"+j).addClass('hidden');
+                $(".auditor_partner_membership_no_"+i).addClass('hidden');
                 $(".auditor_partner_tenure_"+j).addClass('hidden');
             }
         });
@@ -2731,9 +2735,11 @@ CustomJS.prototype = {
                         $("#no_of_auditors").change();
                         for(var i=0;i<$auditor_details.length;i++) {
                             $(".auditor_name_"+(i+1)).val($auditor_details[i].auditor_name);
+                            $(".auditor_reg_no_"+(i+1)).val($auditor_details[i].auditor_name);
                             $(".auditor_parent_company_"+(i+1)).val($auditor_details[i].parent_company);
                             $(".auditor_tenure_"+(i+1)).val($auditor_details[i].auditor_tenure);
                             $(".auditor_partner_name_"+(i+1)).val($auditor_details[i].partner_name);
+                            $(".auditor_partner_membership_no_"+(i+1)).val($auditor_details[i].partner_name);
                             $(".auditor_partner_tenure_"+(i+1)).val($auditor_details[i].partner_tenure);
                         }
                     }
