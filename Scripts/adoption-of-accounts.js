@@ -4,6 +4,24 @@ function CustomJS() {
 CustomJS.prototype = {
     initialization: function() {
         var context = this;
+        $(".analysis-text").each(function(i,d) {
+            $(this).addClass('inline-editor');
+        });
+
+        $("textarea[name='recommendation_text[]']").each(function() {
+            CKEDITOR.inline( $(this).attr('id') );
+        });
+
+        $("div").find("textarea[name='used_in_text[]']").each(function(i,d){
+            $(this).addClass('inline-editor');
+        });
+        var j=10;
+
+        $(".inline-editor").each(function(i,d) {
+            $(this).attr("id","inline_editor_"+j);
+            CKEDITOR.inline( $(this).attr('id') );
+            j++;
+        });
 
         $('#has_the_company_defaulted_in_payment').change(function(){
             var self=$(this);
@@ -290,7 +308,7 @@ CustomJS.prototype = {
         delete_row();
         function delete_row() {
             $(".financial_button").click(function(){
-                var value1= $(this).parent().parent().find(".add_label").text();
+                var value1= $(this).parent().parent().find("input").eq(0).val();
                 var id=$(this).parent().parent().attr('id');
                 var newOption = "<option value="+id+">"+ value1+"</option>";
                 $("#label_select").append(newOption);
@@ -316,7 +334,13 @@ CustomJS.prototype = {
         var i=8;
         $("#addbtn").click(function()
         {
-            $('#financial_indicators').append("<tr class='table-description' id='tr"+i+"'><th><input class='add_label form-control' name='label_name[]' /></th><th><input class='form-control fy15' name='fi_current[]' /></th><th><input class='form-control fy14' name='fi_previous[]'  /></th><th><input class='form-control shift' name='shift[]'/></th><th><textarea class='form-control' name='company_discussion[]' ></textarea></th><th><button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button></th></tr>");
+            $('#financial_indicators').append("<tr class='table-description financial-indicator' id='tr"+i+"'>" +
+            "<th><input class='add_label form-control label-name' name='label_name[]' /></th>" +
+            "<th><input class='form-control fy15' name='fi_current[]' /></th>" +
+            "<th><input class='form-control fy14' name='fi_previous[]'  /></th>" +
+            "<th><input class='form-control shift' name='shift[]'/></th>" +
+            "<th><textarea class='form-control' name='company_discussion[]' ></textarea></th>" +
+            "<th><button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button></th></tr>");
             delete_row();
             fy14();
             fy15();

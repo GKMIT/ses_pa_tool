@@ -3863,6 +3863,7 @@ class DatabaseReports {
         $status = array();
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
         $report_id=$_SESSION['report_id'];
+        print_r($info['checkbox']);
         $edit_mode=$info['edit_mode'];
         if($edit_mode=="Edit Mode") {
             $stmt=$dbobject->prepare("DELETE FROM `pa_report_intercorparate_other_text` WHERE `pa_reports_id`='$report_id'");

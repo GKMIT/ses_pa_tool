@@ -710,21 +710,21 @@ if(isset($_POST['directors_remuneration'])) {
                                         <div class="col-md-12">
                                             <input type="hidden" name="used_in[]" value="Comments on Variable Pay" />
                                             <input type="hidden" name="resolution_section[]" value="Revision in Executive Directors' Remuneration" />
-                                            <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder="Comments on Variable Pay"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder="Comments on Variable Pay"><b>Comments on Variable Pay</b></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="hidden" name="used_in[]" value="Comments on Minimum Remuneration" />
                                             <input type="hidden" name="resolution_section[]" value="Revision in Executive Directors' Remuneration" />
-                                            <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder="Comments on Minimum Remuneration"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder="Comments on Minimum Remuneration"><b>Comments on Minimum Remuneration</b></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <input type="hidden" name="used_in[]" value="Comments on Skewness of Remuneration" />
                                             <input type="hidden" name="resolution_section[]" value="Revision in Executive Directors' Remuneration" />
-                                            <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder="Comments on Skewness of Remuneration"></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control other-text" placeholder="Comments on Skewness of Remuneration"><b>Comments on Skewness of Remuneration</b></textarea>
                                         </div>
                                     </div>
                                     <p><strong>GENERAL </strong></p>

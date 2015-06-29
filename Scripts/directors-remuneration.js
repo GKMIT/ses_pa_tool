@@ -29,7 +29,6 @@ CustomJS.prototype = {
             CKEDITOR.inline( $(this).attr('id') );
             j++;
         });
-
         var context = this;
 
         $(".check-trigger").click(function() {

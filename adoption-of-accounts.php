@@ -676,8 +676,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     <tbody>
                                                     <tr id='tr1' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" name="label_name[]" value="Debtors Turnover"/>
-                                                            <label class='add_label'>Debtors Turnover</label>
+                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Debtors Turnover"/>
+                                                            <label class=''>Debtors Turnover</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' id='debtors15' name='fi_current[]' />
@@ -697,8 +697,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     <tr id='tr2' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" name="label_name[]" value="Inventory Turnover"/>
-                                                            <label class='add_label' >Inventory Turnover</label>
+                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Inventory Turnover"/>
+                                                            <label class='' >Inventory Turnover</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' id='' name="fi_current[]" />
@@ -718,8 +718,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     <tr id='tr3' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" name="label_name[]" value="Interest Coverage Ratio"/>
-                                                            <label class='add_label'>Interest Coverage Ratio</label>
+                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Interest Coverage Ratio"/>
+                                                            <label class=''>Interest Coverage Ratio</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' name="fi_current[]"/>
@@ -739,8 +739,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     <tr id='tr4' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" name="label_name[]" value="Current Ratio"/>
-                                                            <label class='add_label'>Current Ratio</label>
+                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Current Ratio"/>
+                                                            <label class=''>Current Ratio</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' name="fi_current[]"/>
@@ -760,8 +760,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     <tr id='tr5' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" name="label_name[]" value="Debt Equity Ratio"/>
-                                                            <label class='add_label'>Debt Equity Ratio</label>
+                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Debt Equity Ratio"/>
+                                                            <label class=''>Debt Equity Ratio</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' name="fi_current[]"/>
@@ -781,8 +781,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     <tr id='tr6' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" name="label_name[]" value="Operating Profit Margin(%)"/>
-                                                            <label class='add_label'>Operating Profit Margin(%)</label>
+                                                            <input type="hidden" class="add_label label_name" name="label_name[]" value="Operating Profit Margin(%)"/>
+                                                            <label class=''>Operating Profit Margin(%)</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' id="current_opm" name="fi_current[]"/>
@@ -802,8 +802,8 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     <tr id='tr7' class="table-description financial-indicator tr-td-center">
                                                         <th>
-                                                            <input type="hidden" class="label-name" name="label_name[]" value="Net Profit Margin(%)"/>
-                                                            <label class='add_label'>Net Profit Margin(%)</label>
+                                                            <input type="hidden" class="add_label label-name" name="label_name[]" value="Net Profit Margin(%)"/>
+                                                            <label class=''>Net Profit Margin(%)</label>
                                                         </th>
                                                         <th>
                                                             <input class='form-control fy15' id="current_npm" name="fi_current[]"/>
@@ -1762,29 +1762,6 @@ if(isset($_POST['adoption_of_accounts'])) {
         <script src="Scripts/adoption-of-accounts.js"></script>
         <script>
             jQuery(document).ready(function() {
-
-                $(".analysis-text").each(function(i,d) {
-                    $(this).addClass('inline-editor');
-                });
-
-                $("textarea[name='recommendation_text[]']").each(function() {
-                    CKEDITOR.inline( $(this).attr('id') );
-                    console.log("first Loop");
-                });
-
-                $("div").find("textarea[name='used_in_text[]']").each(function(i,d){
-                    $(this).addClass('inline-editor');
-                    console.log("second Loop");
-                });
-                var j=10;
-
-                $(".inline-editor").each(function(i,d) {
-                    $(this).attr("id","inline_editor_"+j);
-                    CKEDITOR.inline( $(this).attr('id') );
-                    j++;
-                    console.log("third Loop");
-                });
-
                 App.init();
                 object.initialization();
                 object.pageload();

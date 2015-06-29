@@ -582,7 +582,7 @@ if(isset($_POST['intercorporate_loans'])){
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group hidden triggers" id="has_the_company_defaulted_on_any_sub_part" name="triggers[]">
+                                    <div class="form-group hidden" id="has_the_company_defaulted_on_any_sub_part">
                                         <label class="col-md-9 col-md-offset-1">Is the loan being made to a material operating subsidiary which is giving positive cash flow?</label>
                                         <div class="col-md-2">
                                             <select class='form-control recommendations-fire-intercorporate-loans triggers' name="triggers[]" id="is_the_loan_being_made_to_a_material">
