@@ -182,6 +182,9 @@ CustomJS.prototype = {
                 type:'GET',
                 dataType:'JSON',
                 data:{CheckDataExisting:1,MainSection:main_section},
+                beforeSend: function() {
+                    $.loader_add();
+                },
                 success:function(data){
                     console.log(data);
                     var resolution_name="office_of_profit";
@@ -219,18 +222,17 @@ CustomJS.prototype = {
                                         var text_area = $(this);
                                         text_area.parent().find(".cke_editable_inline").html(recommendation_text[i]['recommendation_text']);
                                     });
-                                    
+                                    $.loader_remove();
                                 },3000);
                             }
                         });
                     }
                     else {
                         $('#edit_mode').val("");
-                      
+                        $.loader_remove();
                     }
                 }
             });
-        // });
         });
     }
 

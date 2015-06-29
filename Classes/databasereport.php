@@ -4302,7 +4302,6 @@ class DatabaseReports {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
         $report_id=$_SESSION['report_id'];
         $edit_mode=$info['edit_mode'];
-        echo $edit_mode;
         if($edit_mode=="Edit Mode") {
             $stmt=$dbobject->prepare("DELETE FROM `pa_report_office_of_profit_other_text` WHERE `pa_reports_id`='$report_id'");
             $stmt->execute();

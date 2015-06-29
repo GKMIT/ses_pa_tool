@@ -402,6 +402,13 @@
 											<textarea rows="4" name="used_in_text[]" class="form-control" placeholder="Enter text"><b>Annual Remuneration:</b></textarea>
 										</div>
 									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<input type="hidden" name="used_in[]" value="Is the remuneration comparable to remuneration of other employees in similar position" />
+											<input type="hidden" name="resolution_section[]" value="Office of Profit" />
+											<textarea rows="4" name="used_in_text[]" class="form-control" placeholder="Enter text"><b>Is the remuneration comparable to remuneration of other employees in similar position/grade:</b></textarea>
+										</div>
+									</div>
 									<h4 class="form-section">Selection Process</h4>
 									<div class="form-group">
 										<div class="col-md-12">
@@ -553,6 +560,7 @@
 <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
 <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="Scripts/loader-plugin.js"></script>
 <script type="text/javascript" src="Scripts/office-of-profit.js"></script>
 <script type="text/javascript" src="assets/scripts/core/app.js"></script>
 <script src="assets/scripts/ckeditor.js" type="text/javascript"></script>

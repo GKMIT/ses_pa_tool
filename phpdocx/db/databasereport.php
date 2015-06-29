@@ -2609,6 +2609,126 @@ class ReportBurning {
         }
         return $generic_array;
     }
+    function appointmentOfDirectorsCessationDirectorship($report_id) {
+        $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+        $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_checkbox` where `pa_reports_id`=:report_id and `main_section`=:main_section and `checkbox`=:checkbox");
+        $stmt->bindParam(":report_id",$report_id);
+        $main_section = "Appointment of Directors";
+        $checkbox = "Cessation of Directorship";
+        $stmt->bindParam(":main_section",$main_section);
+        $stmt->bindParam(":checkbox",$checkbox);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $generic_array['cessation_directorship'] = true;
+        }
+        else {
+            $generic_array['cessation_directorship'] = false;
+        }
+        if($generic_array['cessation_directorship']) {
+
+            $slot_no = 1;
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name and `director_no`=:slot_no");
+            $stmt->bindParam(":report_id", $report_id);
+            $section_name = "Cessation of Directorship";
+            $stmt->bindParam(":section_name", $section_name);
+            $stmt->bindParam(":slot_no", $slot_no);
+            $stmt->execute();
+            $other_text = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $other_text[] = $row;
+            }
+            $generic_array['other_text'] = $other_text;
+
+            $stmt = $dbobject->prepare("select * from `pa_report_appointment_directors_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section and `director_no`=:slot_no");
+            $stmt->bindParam(":report_id", $report_id);
+            $resolution_name = "Appointment Of Directors";
+            $resolution_section = "Cessation of Directorship";
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->bindParam(":slot_no", $slot_no);
+            $stmt->execute();
+            $recommendation = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $recommendation[] = $row;
+            }
+            $generic_array['recommendation_text'] = $recommendation;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section and `director_no`=:slot_no");
+            $stmt->bindParam(":report_id", $report_id);
+            $resolution_name = "Appointment Of Directors";
+            $resolution_section = "Cessation of Directorship";
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->bindParam(":slot_no", $slot_no);
+            $stmt->execute();
+            $analysis_text = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[] = $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
+        }
+        return $generic_array;
+    }
+    function appointmentOfDirectorsAlternateDirectors($report_id) {
+        $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+        $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_checkbox` where `pa_reports_id`=:report_id and `main_section`=:main_section and `checkbox`=:checkbox");
+        $stmt->bindParam(":report_id",$report_id);
+        $main_section = "Appointment of Directors";
+        $checkbox = "Alternate Directors";
+        $stmt->bindParam(":main_section",$main_section);
+        $stmt->bindParam(":checkbox",$checkbox);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $generic_array['alternate_directors'] = true;
+        }
+        else {
+            $generic_array['alternate_directors'] = false;
+        }
+        if($generic_array['alternate_directors']) {
+
+            $slot_no = 1;
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name and `director_no`=:slot_no");
+            $stmt->bindParam(":report_id", $report_id);
+            $section_name = "Alternate Directors";
+            $stmt->bindParam(":section_name", $section_name);
+            $stmt->bindParam(":slot_no", $slot_no);
+            $stmt->execute();
+            $other_text = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $other_text[] = $row;
+            }
+            $generic_array['other_text'] = $other_text;
+
+            $stmt = $dbobject->prepare("select * from `pa_report_appointment_directors_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and `resolution_section`=:resolution_section and `director_no`=:slot_no");
+            $stmt->bindParam(":report_id", $report_id);
+            $resolution_name = "Appointment Of Directors";
+            $resolution_section = "Alternate Directors";
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->bindParam(":slot_no", $slot_no);
+            $stmt->execute();
+            $recommendation = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $recommendation[] = $row;
+            }
+            $generic_array['recommendation_text'] = $recommendation;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section and `director_no`=:slot_no");
+            $stmt->bindParam(":report_id", $report_id);
+            $resolution_name = "Appointment Of Directors";
+            $resolution_section = "Alternate Directors";
+            $stmt->bindParam(":resolution_name", $resolution_name);
+            $stmt->bindParam(":resolution_section", $resolution_section);
+            $stmt->bindParam(":slot_no", $slot_no);
+            $stmt->execute();
+            $analysis_text = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[] = $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
+        }
+        return $generic_array;
+    }
     function directorsRemunerationREDR($report_id) {
 
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
@@ -2934,67 +3054,69 @@ class ReportBurning {
         $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_other_text` where `pa_reports_id`=:report_id");
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
-        $other_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $other_text[]=$row;
-        }
-        $generic_array['other_text'] = $other_text;
+        if($stmt->rowCount()>0) {
+            $other_text = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $other_text[]=$row;
+            }
+            $generic_array['other_text'] = $other_text;
+            $generic_array['scheme_arrangement_exists'] = true;
+            $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_name = "SCHEME OF ARRANGEMENT/AMALGAMATION";
+            $resolution_section = "SCHEME OF ARRANGEMENT/AMALGAMATION";
+            $stmt->bindParam(":resolution_name",$resolution_name);
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_array['recommendation_text'] = $row;
 
-        $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_name = "SCHEME OF ARRANGEMENT/AMALGAMATION";
-        $resolution_section = "SCHEME OF ARRANGEMENT/AMALGAMATION";
-        $stmt->bindParam(":resolution_name",$resolution_name);
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $row=$stmt->fetch(PDO::FETCH_ASSOC);
-        $generic_array['recommendation_text'] = $row;
+            $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_profiles_of_the_companies` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            // echo $stmt->rowCount();
+            $profiles = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $profiles[]=$row;
+            }
+            $generic_array['profiles'] = $profiles;
 
-        $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_profiles_of_the_companies` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        // echo $stmt->rowCount();
-        $profiles = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $profiles[]=$row;
-        }
-        $generic_array['profiles'] = $profiles;
+            $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_share_holding` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            // echo $stmt->rowCount();
+            $pattern = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $pattern[]=$row;
+            }
+            $generic_array['pattern'] = $pattern;
 
-        $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_share_holding` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        // echo $stmt->rowCount();
-        $pattern = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $pattern[]=$row;
-        }
-        $generic_array['pattern'] = $pattern;
+            $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_capital_structure` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            // echo $stmt->rowCount();
+            $capital = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $capital[]=$row;
+            }
+            $generic_array['capital'] = $capital;
 
-        $stmt = $dbobject->prepare(" select * from `pa_report_scheme_of_arrangement_capital_structure` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        // echo $stmt->rowCount();
-        $capital = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $capital[]=$row;
+            $resolution_section = "SCHEME OF ARRANGEMENT/AMALGAMATION ";
+            $resolution_name = "SCHEME OF ARRANGEMENT/AMALGAMATION ";
+            $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section and `resolution_name`=:resolution_name");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->bindParam(":resolution_name",$resolution_name);
+            $stmt->execute();
+            $analysis_text = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[]= $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
         }
-        $generic_array['capital'] = $capital;
-
-        $resolution_section = "SCHEME OF ARRANGEMENT/AMALGAMATION ";
-        $resolution_name = "SCHEME OF ARRANGEMENT/AMALGAMATION ";
-        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section and `resolution_name`=:resolution_name");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->bindParam(":resolution_name",$resolution_name);
-        $stmt->execute();
-        echo "hello";
-        echo $stmt->rowCount();
-        echo "hello";
-        $analysis_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $analysis_text[]= $row;
+        else {
+            $generic_array['scheme_arrangement_exists'] = false;
         }
-        $generic_array['analysis_text'] = $analysis_text;
 
         $dbobject=null;
         return $generic_array;

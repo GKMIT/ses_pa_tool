@@ -405,10 +405,10 @@ if(isset($_POST['alteration_moa_aoa'])) {
                                             <input type="checkbox" name="checkbox[]" value="Change in Registered office of the Company" class="check-trigger checkbox" hidden-id="check_4"/> Change in Registered office of the Company
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="checkbox" name="checkbox[]" value=" Change in Authorized Capital" class="check-trigger checkbox" hidden-id="check_5"/> Change in Authorized Capital
+                                            <input type="checkbox" name="checkbox[]" value="Change in Authorized Capital" class="check-trigger checkbox" hidden-id="check_5"/> Change in Authorized Capital
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="checkbox" name="checkbox[]" value=" Increase in Board Strength" class="check-trigger checkbox" hidden-id="check_6"/> Increase in Board Strength
+                                            <input type="checkbox" name="checkbox[]" value="Increase in Board Strength" class="check-trigger checkbox" hidden-id="check_6"/> Increase in Board Strength
                                         </div>
                                         <div class="col-md-4">
                                             <input type="checkbox" name="checkbox[]" value="Changes due to shareholders' Agreements" class="check-trigger checkbox" hidden-id="check_7"/> Changes due to shareholders' Agreements
@@ -900,14 +900,14 @@ if(isset($_POST['alteration_moa_aoa'])) {
                                     <p><strong>Analysis</strong></p>
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <input type="hidden" name="analysis_section[]" value=" Increase in Board Strength">
+                                            <input type="hidden" name="analysis_section[]" value="Increase in Board Strength">
                                             <textarea rows="4" name="analysis_text[]" class="form-control analysis-text" placeholder="Enter analysis"></textarea>
                                         </div>
                                     </div>
                                     <p><strong>Recommendation</strong></p>
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <input type="hidden" name="recommendation_section[]" value=" Increase in Board Strength">
+                                            <input type="hidden" name="recommendation_section[]" value="Increase in Board Strength">
                                             <textarea rows="4" name="recommendation_text[]" class="form-control recommendation-text" placeholder="Enter recommendation"></textarea>
                                         </div>
                                     </div>
