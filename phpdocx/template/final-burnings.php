@@ -5158,7 +5158,8 @@ function fillInvestmentLimits($docx,$report_id){
     $db = new ReportBurning();
     $generic_array = $db->fillInvestmentLimits($report_id);
     if($generic_array['fill_investment_limits_exist']) {
-        echo "true";
+
+        $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
         $analysis_text = $generic_array['analysis_text'];
@@ -5176,9 +5177,9 @@ function fillInvestmentLimits($docx,$report_id){
         // Graph Start
 
         $average_commision = new WordFragment($docx,"aslk");
-        $average_commision->addExternalFile(array('src'=>'ExecutiveCompensation.docx'));
+        $average_commision->addExternalFile(array('src'=>'FiiShareholding.docx'));
         $total_commision = new WordFragment($docx,"aslk");
-        $total_commision->addExternalFile(array('src'=>'ExecutiveCompensation.docx'));
+        $total_commision->addExternalFile(array('src'=>'PromoterShareholding.docx'));
         $valuesTable = array(
             array(
                 array('value' =>$average_commision, 'vAlign' => 'top','textAlign'=>'center'),
@@ -5209,7 +5210,7 @@ function delistingOfShares($docx,$report_id){
     $db = new ReportBurning();
     $generic_array = $db->delistingOfShares($report_id);
     if($generic_array['delisting_of_shares_exist']) {
-        echo "true";
+        $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
         $analysis_text = $generic_array['analysis_text'];
@@ -5237,7 +5238,7 @@ function donationToCharitableTrust($docx,$report_id){
     $db = new ReportBurning();
     $generic_array = $db->donationsToCharitableTrust($report_id);
     if($generic_array['donation_to_charitable_trusts_exist']) {
-        echo "true";
+        $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
         $analysis_text = $generic_array['analysis_text'];
@@ -5253,13 +5254,10 @@ function donationToCharitableTrust($docx,$report_id){
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
 
         // Graph Start
-
         $average_commision = new WordFragment($docx,"aslk");
-        $average_commision->addExternalFile(array('src'=>'ExecutiveCompensation.docx'));
-
+        $average_commision->addExternalFile(array('src'=>'CSRContribution.docx'));
         $total_commision = new WordFragment($docx,"aslk");
         $total_commision->embedHTML(htmlParser($other_text[1]['text']));
-
         $valuesTable = array(
             array(
                 array('value' =>$average_commision, 'vAlign' => 'top','textAlign'=>'center'),
@@ -5290,7 +5288,7 @@ function officeOfProfit($docx,$report_id){
     $db = new ReportBurning();
     $generic_array = $db->officeOfProfit($report_id);
     if($generic_array['office_of_profit_exist']) {
-        echo "true";
+        $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
         $analysis_text = $generic_array['analysis_text'];
@@ -5311,14 +5309,13 @@ function officeOfProfit($docx,$report_id){
         resBlackStrip($docx,"REMUNERATION");
         $resolution_text = $other_text[2]['text'];
         $docx->embedHTML(htmlParser($resolution_text));
-        $resolution_text = "<span><strong>Is the remuneration comparable to remuneration of other employees in similar position/grade:</strong>".$other_text[2]['text'];
-        $docx->embedHTML($resolution_text);
-        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        resBlackStrip($docx,"SELECTION PROCESS");
         $resolution_text = $other_text[3]['text'];
         $docx->embedHTML(htmlParser($resolution_text));
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-        $docx->embedHtml(htmlParser($other_text[4]['text']));
+        resBlackStrip($docx,"SELECTION PROCESS");
+        $resolution_text = $other_text[4]['text'];
+        $docx->embedHTML(htmlParser($resolution_text));
+        $docx->embedHtml(htmlParser($other_text[5]['text']));
 
         $analysis_txt = "";
         for($i=0;$i<count($analysis_text);$i++) {
@@ -5331,5 +5328,4 @@ function officeOfProfit($docx,$report_id){
     }
 
 }
-
 ?>
