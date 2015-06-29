@@ -22,7 +22,7 @@ CustomJS.prototype = {
         });
 
         var context = this;
-        $(".check-trigger").click(function(){
+        $(".checkbox").click(function(){
             var self=$(this);
             if(self.is(':checked')) {
                 $('#existing_transaction_with_the_recipient').removeClass("hidden");
@@ -476,9 +476,9 @@ CustomJS.prototype = {
                 type:'GET',
                 dataType:'JSON',
                 data:{CheckDataExisting:1,MainSection:main_section},
-                beforeSend: function() {
-                    $.loader_add();
-                },
+                //beforeSend: function() {
+                //    $.loader_add();
+                //},
                 success:function(data){
                     var resolution_name="intercorparate";
                     if(data.status=="Existing") {
@@ -519,20 +519,24 @@ CustomJS.prototype = {
                                     });
 
                                     var checkbox = data.checkbox;
-                                    var j=0;
-                                    $(".checkbox").each(function(i,d) {
-                                        if(j!=checkbox.length) {
-                                            var $checkboxobj = $(this);
-                                            var checked=$(this).val();
-                                            var saveCheck = checkbox[j]['checkbox'];
-                                            if(checked==saveCheck) {
-                                                $checkboxobj.attr('checked',true);
-                                                $checkboxobj.parent().addClass('checked');
-                                                $("#"+$checkboxobj.attr("hidden-id")).removeClass('hidden');
-                                                j++;
+                                    if(checkbox!=null) {
+                                        var j=0;
+                                        $(".checkbox").each(function(i,d) {
+                                            if(j!=checkbox.length) {
+                                                var $checkboxobj = $(this);
+                                                var checked=$(this).val();
+                                                var saveCheck = checkbox[j]['checkbox'];
+                                                if(checked==saveCheck) {
+                                                    $checkboxobj.attr('checked',true);
+                                                    $checkboxobj.parent().addClass('checked');
+                                                    $("#existing_transaction_with_the_recipient").removeClass('hidden');
+                                                    j++;
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+
+                                    }
+
                                     var the_recipient=data.the_recipient;
                                     $('.date1').val(the_recipient[0].s_date);
                                     $('.date2').val(the_recipient[1].s_date);
@@ -579,14 +583,14 @@ CustomJS.prototype = {
                                         row.find("td").eq(2).find('input').val(existing_transactions[i].details_values1);
                                         row.find("td").eq(3).find('input').val(existing_transactions[i].details_values2);
                                     });
-                                    $.loader_remove();
+                                    //$.loader_remove();
                                 },3000);
                             }
                         });
                     }
                     else {
                         $('#edit_mode').val("");
-                        $.loader_remove();
+                        //$.loader_remove();
                     }
                 }
             });
