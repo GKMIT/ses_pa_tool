@@ -662,153 +662,153 @@ if(isset($_POST['adoption_of_accounts'])) {
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr id='tr1' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Debtors Turnover"/>
-                                                            <label class=''>Debtors Turnover</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' id='debtors15' name='fi_current[]' />
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' id='debtors14' name='fi_previous[]' />
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' id='debtors_shift' name='shift[]' />
-                                                        </th>
-                                                        <th>
-                                                            <textarea  class='form-control' name="company_discussion[]"></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button no='1' type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
-                                                    <tr id='tr2' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Inventory Turnover"/>
-                                                            <label class='' >Inventory Turnover</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' id='' name="fi_current[]" />
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' name="fi_previous[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' name="shift[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <textarea class='form-control' name="company_discussion[]"></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button no='2' type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
-                                                    <tr id='tr3' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Interest Coverage Ratio"/>
-                                                            <label class=''>Interest Coverage Ratio</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' name="fi_current[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' name="fi_previous[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' name="shift[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <textarea class='form-control' name="company_discussion[]" ></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
-                                                    <tr id='tr4' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Current Ratio"/>
-                                                            <label class=''>Current Ratio</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' name="fi_current[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' name="fi_previous[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' name="shift[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <textarea class='form-control' name="company_discussion[]"></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
-                                                    <tr id='tr5' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Debt Equity Ratio"/>
-                                                            <label class=''>Debt Equity Ratio</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' name="fi_current[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' name="fi_previous[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' name="shift[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <textarea class='form-control' name="company_discussion[]"></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
-                                                    <tr id='tr6' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label_name" name="label_name[]" value="Operating Profit Margin(%)"/>
-                                                            <label class=''>Operating Profit Margin(%)</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' id="current_opm" name="fi_current[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' id="previous_opm" name="fi_previous[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' name="shift[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <textarea class='form-control' name="company_discussion[]"></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
-                                                    <tr id='tr7' class="table-description financial-indicator tr-td-center">
-                                                        <th>
-                                                            <input type="hidden" class="add_label label-name" name="label_name[]" value="Net Profit Margin(%)"/>
-                                                            <label class=''>Net Profit Margin(%)</label>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy15' id="current_npm" name="fi_current[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input class='form-control fy14' id="previous_npm" name="fi_previous[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <input readonly class='form-control shift' name="shift[]"/>
-                                                        </th>
-                                                        <th>
-                                                            <textarea class='form-control company-discussion' name="company_discussion[]"></textarea>
-                                                        </th>
-                                                        <th>
-                                                            <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
-                                                        </th>
-                                                    </tr>
+                                                        <tr id='tr1' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Debtors Turnover"/>
+                                                                <label>Debtors Turnover</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' id='debtors15' name='fi_current[]' />
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' id='debtors14' name='fi_previous[]' />
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' id='debtors_shift' name='shift[]' />
+                                                            </th>
+                                                            <th>
+                                                                <textarea  class='form-control' name="company_discussion[]"></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button no='1' type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr id='tr2' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Inventory Turnover"/>
+                                                                <label>Inventory Turnover</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' id='' name="fi_current[]" />
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' name="fi_previous[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' name="shift[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <textarea class='form-control' name="company_discussion[]"></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button no='2' type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr id='tr3' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Interest Coverage Ratio"/>
+                                                                <label>Interest Coverage Ratio</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' name="fi_current[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' name="fi_previous[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' name="shift[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <textarea class='form-control' name="company_discussion[]" ></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr id='tr4' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Current Ratio"/>
+                                                                <label>Current Ratio</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' name="fi_current[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' name="fi_previous[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' name="shift[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <textarea class='form-control' name="company_discussion[]"></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr id='tr5' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label_name" name="label_name[]" name="label_name[]" value="Debt Equity Ratio"/>
+                                                                <label>Debt Equity Ratio</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' name="fi_current[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' name="fi_previous[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' name="shift[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <textarea class='form-control' name="company_discussion[]"></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr id='tr6' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label_name" name="label_name[]" value="Operating Profit Margin(%)"/>
+                                                                <label>Operating Profit Margin(%)</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' id="current_opm" name="fi_current[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' id="previous_opm" name="fi_previous[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' name="shift[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <textarea class='form-control' name="company_discussion[]"></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
+                                                        <tr id='tr7' class="table-description financial-indicator tr-td-center">
+                                                            <th>
+                                                                <input type="hidden" class="add_label label-name" name="label_name[]" value="Net Profit Margin(%)" />
+                                                                <label>Net Profit Margin(%)</label>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy15' id="current_npm" name="fi_current[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input class='form-control fy14' id="previous_npm" name="fi_previous[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <input readonly class='form-control shift' name="shift[]"/>
+                                                            </th>
+                                                            <th>
+                                                                <textarea class='form-control company-discussion' name="company_discussion[]"></textarea>
+                                                            </th>
+                                                            <th>
+                                                                <button type='button' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button>
+                                                            </th>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                                 <div class="form-group">
@@ -1717,8 +1717,6 @@ if(isset($_POST['adoption_of_accounts'])) {
             </div>
             <!-- END CONTENT -->
         </div>
-        <!-- END CONTAINER -->
-        <!-- BEGIN FOOTER -->
         <div class="footer">
             <div class="footer-inner">
                 2014 &copy; Metronic by keenthemes.
@@ -1729,13 +1727,8 @@ if(isset($_POST['adoption_of_accounts'])) {
 		</span>
             </div>
         </div>
-        <!-- END FOOTER -->
-        <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-        <!-- BEGIN CORE PLUGINS -->
-        <!--[if lt IE 9]>
         <script src="assets/plugins/respond.min.js"></script>
         <script src="assets/plugins/excanvas.min.js"></script>
-        <![endif]-->
         <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
         <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
         <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

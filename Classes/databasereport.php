@@ -303,6 +303,7 @@ class DatabaseReports {
         return $response;
     }
     function getCurrentReportCompanyDetails($report_id) {
+
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $response = array();
         $stmt = $dbobject->prepare(" select `companies`.`peer1`,`companies`.`peer2`, `companies`.`name`, `companies`.`bse_code` from `companies` INNER JOIN `pa_reports` ON `pa_reports`.`company_id`=`companies`.`id` where `pa_reports`.`report_id`=:report_id");

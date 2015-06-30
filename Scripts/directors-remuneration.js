@@ -1111,11 +1111,9 @@ CustomJS.prototype = {
                 console.log(data);
             },
             success:function(data){
-                console.log(data);
-                console.log("askks");
-                $('.nedp-avg').val(data.avg_nedp.toFixed(2));
-                $('.ID-avg').val(data.avg_id.toFixed(2));
-                $('.NED-avg').val(data.avg_ned.toFixed(2));
+                $('.nedp-avg').val(parseFloat(data.avg_nedp).toFixed(2));
+                $('.ID-avg').val(parseFloat(data.avg_id).toFixed(2));
+                $('.NED-avg').val(parseFloat(data.avg_ned).toFixed(2));
             }
         });
 
@@ -1162,7 +1160,7 @@ CustomJS.prototype = {
                     $(".promotor1").val(data.company_promoter);
                     $(".remuneration1").val(data.remuneration);
                     $(".netprofit1").val(data.company_net_profit);
-                    $(".ratio1").val(data.company_rem_per.toFixed(2));
+                    $(".ratio1").val(parseFloat(data.company_rem_per).toFixed(2));
                 }
             });
         });
@@ -1183,7 +1181,7 @@ CustomJS.prototype = {
                     $(".promotor2").val(data.promoter_group);
                     $(".remuneration2").val(data.remuneration);
                     $(".netprofit2").val(data.net_profits);
-                    $(".ratio2").val(data.rem_percentage.toFixed(2));
+                    $(".ratio2").val(parseFloat(data.rem_percentage).toFixed(2));
                 }
             });
         });

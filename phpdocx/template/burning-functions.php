@@ -73,9 +73,9 @@ function burnExcel($report_id) {
     // Board Independence
 
     $objPHPExcel->getActiveSheet()->SetCellValue('C28', $board_independence['id_as_per_ses']/100);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C29', $board_independence['nid_as_per_ses']/100);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C30', $board_independence['nid_as_per_company']/100);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C31', $board_independence['id_as_per_company']/100);
+    $objPHPExcel->getActiveSheet()->SetCellValue('D28', $board_independence['nid_as_per_ses']/100);
+    $objPHPExcel->getActiveSheet()->SetCellValue('D29', $board_independence['nid_as_per_company']/100);
+    $objPHPExcel->getActiveSheet()->SetCellValue('C29', $board_independence['id_as_per_company']/100);
 
     // Variation
 
@@ -98,8 +98,6 @@ function burnExcel($report_id) {
         $objPHPExcel->getActiveSheet()->SetCellValue('C'.$i, $dividend_payout_ratio[$j]['eps']);
         $objPHPExcel->getActiveSheet()->SetCellValue('D'.$i, $dividend_payout_ratio[$j]['dividend_payout']);
     }
-
-    // appointment_auditors_table_1
 
 //    $appointment_auditors_table_1
 

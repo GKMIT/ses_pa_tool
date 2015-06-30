@@ -685,11 +685,12 @@ CustomJS.prototype = {
             swal({
                     title: "Company background data has been saved successfully"
                 },
-                function() {
+                function () {
                     window.location = "board-of-directors.php";
                 }
             );
         }
+
         $("#btn_populate_share_holders").click(function() {
             var button = $(this);
             $.ajax({

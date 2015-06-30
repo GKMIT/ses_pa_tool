@@ -301,16 +301,16 @@ CustomJS.prototype = {
         function fy15(){
             $(".fy15").keyup(function(){
                 shift();
-
             });
         }
         fy15();
         delete_row();
         function delete_row() {
             $(".financial_button").click(function(){
-                var value1= $(this).parent().parent().find("input").eq(0).val();
-                var id=$(this).parent().parent().attr('id');
-                var newOption = "<option value="+id+">"+ value1+"</option>";
+                var row= $(this).closest(".table-description");
+                var id= row.attr("id");
+                var hidden_label = row.find("th").eq(0).find("input[type='hidden']").val();
+                var newOption = "<option value="+id+">"+hidden_label+"</option>";
                 $("#label_select").append(newOption);
                 var par = $(this).closest('.financial-indicator');
                 par.find(".fy15").val("");
@@ -320,22 +320,25 @@ CustomJS.prototype = {
                 par.addClass('hidden');
                 $("#show").removeClass('hidden');
             });
-
         }
+
         $("#recover_row").click(function(){
             var add_row = $("#label_select").find('option:selected').text();
             var add_row_value = $("#label_select").find('option:selected').val();
-
-            //alert(add_row_value);
             $("#"+add_row_value +"").removeClass('hidden');
-            //$("#financial_indicators tr").eq(add_row_value-1).after("<tr><th><label class='add_label'>"+ add_row+"</label></th><th><input class='form-control fy15' /></th><th><input class='form-control fy14' /></th><th><input class='form-control shift' /></th><th><input class='form-control' /></th><th><button no='2' class='btn btn-danger financial_button'><i class='fa fa-times'></i></button></th></tr>");
             $("#label_select").find('option:selected').remove();
         });
+
+        function initializeFinancialIndicatorsHiddenFieldNaming() {
+            $(".label-name").keyup (function() {
+                $(this).parent().find("input[type='hidden']").val($(this).val());
+            });
+        }
+
         var i=8;
-        $("#addbtn").click(function()
-        {
-            $('#financial_indicators').append("<tr class='table-description financial-indicator' id='tr"+i+"'>" +
-            "<th><input class='add_label form-control label-name' name='label_name[]' /></th>" +
+        $("#addbtn").click(function() {
+            $('#financial_indicators tbody').append("<tr class='table-description financial-indicator' id='tr"+i+"'>" +
+            "<th><input class='add_label form-control label-name' name='label_name[]' /><input type='hidden' class='add_label label-name' name='label_name[]' value='' /></th>" +
             "<th><input class='form-control fy15' name='fi_current[]' /></th>" +
             "<th><input class='form-control fy14' name='fi_previous[]'  /></th>" +
             "<th><input class='form-control shift' name='shift[]'/></th>" +
@@ -345,6 +348,7 @@ CustomJS.prototype = {
             fy14();
             fy15();
             shift();
+            initializeFinancialIndicatorsHiddenFieldNaming();
             i++;
         });
 
