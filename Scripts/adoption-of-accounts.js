@@ -311,6 +311,7 @@ CustomJS.prototype = {
                 var value1= $(this).parent().parent().find("input").eq(0).val();
                 var id=$(this).parent().parent().attr('id');
                 var newOption = "<option value="+id+">"+ value1+"</option>";
+                console.log(newOption);
                 $("#label_select").append(newOption);
                 var par = $(this).closest('.financial-indicator');
                 par.find(".fy15").val("");
@@ -320,8 +321,10 @@ CustomJS.prototype = {
                 par.addClass('hidden');
                 $("#show").removeClass('hidden');
             });
-
         }
+        $('.financial_button').click(function(){
+            delete_row();
+        });
         $("#recover_row").click(function(){
             var add_row = $("#label_select").find('option:selected').text();
             var add_row_value = $("#label_select").find('option:selected').val();
