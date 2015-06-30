@@ -307,10 +307,10 @@ CustomJS.prototype = {
         delete_row();
         function delete_row() {
             $(".financial_button").click(function(){
-                var row= $(this).closest(".table-description");
-                var id= row.attr("id");
-                var hidden_label = row.find("th").eq(0).find("input[type='hidden']").val();
-                var newOption = "<option value="+id+">"+hidden_label+"</option>";
+                var value1= $(this).parent().parent().find("input").eq(0).val();
+                var id=$(this).parent().parent().attr('id');
+                var newOption = "<option value="+id+">"+ value1+"</option>";
+                console.log(newOption);
                 $("#label_select").append(newOption);
                 var par = $(this).closest('.financial-indicator');
                 par.find(".fy15").val("");
@@ -321,7 +321,7 @@ CustomJS.prototype = {
                 $("#show").removeClass('hidden');
             });
         }
-
+        
         $("#recover_row").click(function(){
             var add_row = $("#label_select").find('option:selected').text();
             var add_row_value = $("#label_select").find('option:selected').val();

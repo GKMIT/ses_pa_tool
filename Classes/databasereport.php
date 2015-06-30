@@ -4919,5 +4919,19 @@ class DatabaseReports {
         $dbobject=null;
         return $past_value;
     }
+    function getMarketDataEps() {
+        $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+        $company_id=$_SESSION['company_id'];
+        $financial_year=$_SESSION['report_year'];
+        $stmt=$dbobject->prepare("SELECT * FROM `dividend_info` WHERE `company_id`=:company_id AND `financial_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+            $eps[]=$row;
+        }
+        $dbobject=null;
+        return $eps;
+    }
 }
 ?>

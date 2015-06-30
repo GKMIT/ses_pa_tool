@@ -1986,4 +1986,14 @@ elseif(isset($_GET['GetExistingDataofDisclosures'])) {
 		)
 	);
 }
+elseif(isset($_GET['marketDataEpo'])) {
+	session_start();
+	$db=new DatabaseReports();
+    $eps=$db->getMarketDataEps();
+
+	echo json_encode(array(
+			'eps'=>$eps
+		)
+	);
+}
 ?>

@@ -476,9 +476,9 @@ CustomJS.prototype = {
                 type:'GET',
                 dataType:'JSON',
                 data:{CheckDataExisting:1,MainSection:main_section},
-                //beforeSend: function() {
-                //    $.loader_add();
-                //},
+                beforeSend: function() {
+                    $.loader_add();
+                },
                 success:function(data){
                     var resolution_name="intercorparate";
                     if(data.status=="Existing") {
@@ -583,14 +583,14 @@ CustomJS.prototype = {
                                         row.find("td").eq(2).find('input').val(existing_transactions[i].details_values1);
                                         row.find("td").eq(3).find('input').val(existing_transactions[i].details_values2);
                                     });
-                                    //$.loader_remove();
+                                    $.loader_remove();
                                 },3000);
                             }
                         });
                     }
                     else {
                         $('#edit_mode').val("");
-                        //$.loader_remove();
+                        $.loader_remove();
                     }
                 }
             });

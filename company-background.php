@@ -417,6 +417,8 @@ if(isset($_SESSION['report_id'])) {
 												</th>
 												<th>
 													<input class='form-control' name="pe_ratio" value="<?php echo $market_data['pe_ratio']; ?>"/>
+													<input type="hidden" class='form-control' id="market_data_eps" name="" value=""/>
+
 												</th>
 											</tr>
 											</tbody>
@@ -935,6 +937,7 @@ if(isset($_SESSION['report_id'])) {
 								<?php
 								}
 								else {
+                                    echo "comming into saved";
 								?>
 									<div class="form-body">
 										<h4 class="form-section">TABLE 4: PEER COMPARISION</h4>
