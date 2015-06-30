@@ -379,6 +379,7 @@ if(isset($_SESSION['report_id'])) {
 					<div class="portlet box">
 						<div class="portlet-body form">
 							<form class="form-horizontal" role="form" action="company-background.php" method="post">
+								<input type="hidden" class='form-control' id="market_data_eps"  value=""/>
 								<?php
 								if($report_data_exists) {
 									echo "<input type='hidden' name='report_data_exists' />";
@@ -407,7 +408,7 @@ if(isset($_SESSION['report_id'])) {
 											<tbody>
 											<tr>
 												<th>
-													<input class='form-control' name="price" value="<?php echo $market_data['price']; ?>" />
+													<input class='form-control' id="market_data_price" name="price" value="<?php echo $market_data['price']; ?>" />
 												</th>
 												<th>
 													<input class='form-control' name="market_capitalization" value="<?php echo $market_data['market_capitalization']; ?>"/>
@@ -416,9 +417,7 @@ if(isset($_SESSION['report_id'])) {
 													<input class='form-control' name="shares" value="<?php echo $market_data['shares']; ?>"/>
 												</th>
 												<th>
-													<input class='form-control' name="pe_ratio" value="<?php echo $market_data['pe_ratio']; ?>"/>
-													<input type="hidden" class='form-control' id="market_data_eps" name="" value=""/>
-
+													<input class='form-control' id="market_data_pe_ratio" name="pe_ratio" value="<?php echo $market_data['pe_ratio']; ?>"/>
 												</th>
 											</tr>
 											</tbody>
@@ -487,7 +486,6 @@ if(isset($_SESSION['report_id'])) {
 									?>
 									<div class="form-body">
 										<h4 class="form-section">TABLE 3: FINANCIAL INDICATORS (STANDALONE)</h4>
-
 										<div class="table-responsive">
 											<table class="table table-striped table-hover">
 												<thead>
@@ -496,83 +494,45 @@ if(isset($_SESSION['report_id'])) {
 														In <i class="fa fa-rupee"></i> Crores
 													</th>
 													<th style="position:relative;">
-														<input class="form-control" name="financial_indicators_year[]" value="<?php echo $array_years[0]; ?>"/>
+														<input class="form-control financial_years" name="financial_indicators_year[]" value="<?php echo $array_years[0]; ?>"/>
 													</th>
 													<th>
-														<input class="form-control"
-															   name="financial_indicators_year[]"
-															   value="<?php echo $array_years[1]; ?>"/>
+														<input class="form-control financial_years" name="financial_indicators_year[]" value="<?php echo $array_years[1]; ?>"/>
 													</th>
 													<th>
-														<input class="form-control"
-															   name="financial_indicators_year[]"
-															   value="<?php echo $array_years[2]; ?>"/>
+														<input class="form-control financial_years" name="financial_indicators_year[]" value="<?php echo $array_years[2]; ?>"/>
 													</th>
 												</tr>
 												</thead>
 												<tbody>
 												<tr>
 													<td>Revenue</td>
-													<td><input name='financial_indicators_revenue[]' type='text'
-															   class='form-control'
-															   value='<?php echo $revenue[0]; ?>'/></td>
-													<td><input type='text' name='financial_indicators_revenue[]'
-															   class='form-control'
-															   value='<?php echo $revenue[1]; ?>'/></td>
-													<td><input type='text' name='financial_indicators_revenue[]'
-															   class='form-control'
-															   value='<?php echo $revenue[2]; ?>'/></td>
+													<td><input name='financial_indicators_revenue[]' type='text' class='form-control' value='<?php echo $revenue[0]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_revenue[]' class='form-control' value='<?php echo $revenue[1]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_revenue[]' class='form-control' value='<?php echo $revenue[2]; ?>'/></td>
 												</tr>
 												<tr>
 													<td>Other Income</td>
-													<td><input type='text'
-															   name='financial_indicators_other_income[]'
-															   class='form-control'
-															   value='<?php echo $other_income[0]; ?>'/></td>
-													<td><input type='text'
-															   name='financial_indicators_other_income[]'
-															   class='form-control'
-															   value='<?php echo $other_income[1]; ?>'/></td>
-													<td><input type='text'
-															   name='financial_indicators_other_income[]'
-															   class='form-control'
-															   value='<?php echo $other_income[2]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_other_income[]' class='form-control' value='<?php echo $other_income[0]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_other_income[]' class='form-control' value='<?php echo $other_income[1]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_other_income[]' class='form-control' value='<?php echo $other_income[2]; ?>'/></td>
 												</tr>
 												<tr>
 													<td>Total Income</td>
-													<td><input type='text'
-															   name='financial_indicators_total_income[]'
-															   class='form-control'
-															   value='<?php echo $total_income[0]; ?>'/></td>
-													<td><input type='text'
-															   name='financial_indicators_total_income[]'
-															   class='form-control'
-															   value='<?php echo $total_income[1]; ?>'/></td>
-													<td><input type='text'
-															   name='financial_indicators_total_income[]'
-															   class='form-control'
-															   value='<?php echo $total_income[2]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_total_income[]' class='form-control' value='<?php echo $total_income[0]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_total_income[]' class='form-control' value='<?php echo $total_income[1]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_total_income[]' class='form-control' value='<?php echo $total_income[2]; ?>'/></td>
 												</tr>
 												<tr>
 													<td>PBDT</td>
-													<td><input type='text' name='financial_indicators_pbdt[]'
-															   class='form-control'
-															   value='<?php echo $pbdt[0]; ?>'/></td>
-													<td><input type='text' name='financial_indicators_pbdt[]'
-															   class='form-control'
-															   value='<?php echo $pbdt[1]; ?>'/></td>
-													<td><input type='text' name='financial_indicators_pbdt[]'
-															   class='form-control'
-															   value='<?php echo $pbdt[2]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_pbdt[]' class='form-control' value='<?php echo $pbdt[0]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_pbdt[]' class='form-control' value='<?php echo $pbdt[1]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_pbdt[]' class='form-control' value='<?php echo $pbdt[2]; ?>'/></td>
 												</tr>
 												<tr>
 													<td>Net Profit</td>
-													<td><input type='text' name='financial_indicators_net_profit[]'
-															   class='form-control'
-															   value='<?php echo $net_profit[0]; ?>'/></td>
-													<td><input type='text' name='financial_indicators_net_profit[]'
-															   class='form-control'
-															   value='<?php echo $net_profit[1]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_net_profit[]' class='form-control' value='<?php echo $net_profit[0]; ?>'/></td>
+													<td><input type='text' name='financial_indicators_net_profit[]' class='form-control' value='<?php echo $net_profit[1]; ?>'/></td>
 													<td><input type='text' name='financial_indicators_net_profit[]'
 															   class='form-control'
 															   value='<?php echo $net_profit[2]; ?>'/></td>
@@ -591,8 +551,7 @@ if(isset($_SESSION['report_id'])) {
 												</tr>
 												<tr>
 													<td>Dividend / Share&nbsp;(<i class="fa fa-rupee"></i>)</td>
-													<td><input type='text'
-															   name='financial_indicators_dividend_per_share[]'
+													<td><input type='text' name='financial_indicators_dividend_per_share[]'
 															   class='form-control dividend-per-share'
 															   data-dividend-no='1'
 															   placeholder='Enter Dividend / Share'/></td>
@@ -805,10 +764,10 @@ if(isset($_SESSION['report_id'])) {
 												<thead>
 												<tr>
 													<td>&nbsp;</td>
-													<td><input class="form-control" name="peer_comparision_year[]"
+													<td><input class="form-control financial_years" name="peer_comparision_year[]"
 															   placeholder="Enter year" readonly
 															   value="<?php echo $year1; ?>"/></td>
-													<td><input class="form-control" name="peer_comparision_year[]"
+													<td><input class="form-control financial_years" name="peer_comparision_year[]"
 															   placeholder="Enter year" readonly
 															   value="<?php echo $year2; ?>"/></td>
 												</tr>

@@ -691,6 +691,14 @@ CustomJS.prototype = {
             );
         }
 
+        $("#market_data_price").keyup( function () {
+            var price = $(this).val();
+            var eps = $("#market_data_eps").val();
+            if(price!="" && eps!="") {
+                $("#market_data_pe_ratio").val((parseFloat(price)/eps).toFixed(2));
+            }
+        }) ;
+
         $("#btn_populate_share_holders").click(function() {
             var button = $(this);
             $.ajax({
@@ -718,22 +726,41 @@ CustomJS.prototype = {
                 }
             });
         });
-        $.ajax({
-            url:"jquery-data.php",
-            type:"GET",
-            dataType:"JSON",
-            data:{
-                marketDataEpo:1
-            },
-            beforeSend:function() {
 
-            },
-            success:function(data) {
-                var eps=data.eps;
-                console.log(data);
-                $('#market_data_eps').val(eps[0].eps);
+
+        var financial_years = [];
+        $(".financial_years").each(function(i,data){
+            var self = $(this);
+            if($(this).val()!="") {
+                financial_years.push({"year":self.val()});
             }
         });
+        if(financial_years.length>0) {
+            var final_years = JSON.stringify(financial_years);
+            $.ajax({
+                url:"jquery-data.php",
+                type:"GET",
+                dataType:"JSON",
+                data:{
+                    marketDataEPSAndDividend:1,
+                    financial_years : final_years
+                },
+                success:function(data) {
+                    console.log(data);
+                    var dividend=data.dividend;
+                    $('#market_data_eps').val(data.eps);
+                    $(".dividend-per-share").each(function(i,d) {
+                        $(this).val(dividend[i]);
+                        $(this).trigger('keyup');
+                    });
+                },
+                error: function(data) {
+
+                }
+            });
+
+        }
+
         $(".dividend-per-share").keyup(function() {
             var no = $(this).attr('data-dividend-no');
             if($(".eps-"+no).val() !="" && $(this).val() !="") {

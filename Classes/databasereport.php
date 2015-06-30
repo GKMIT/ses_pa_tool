@@ -4919,7 +4919,7 @@ class DatabaseReports {
         $dbobject=null;
         return $past_value;
     }
-    function getMarketDataEps() {
+    function getMarketDataEpsAndDividend($financial_years) {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
         $company_id=$_SESSION['company_id'];
         $financial_year=$_SESSION['report_year'];
@@ -4927,11 +4927,38 @@ class DatabaseReports {
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
         $stmt->execute();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $eps[]=$row;
+        $row=$stmt->fetch(PDO::FETCH_ASSOC);
+        $response['eps']=$row['eps'];
+
+        $array_financial_years = json_decode(stripslashes($financial_years),true);
+        $total_ids = count($array_financial_years);
+        for ($i=0; $i <$total_ids ; $i++) {
+            $array_years[] = $array_financial_years[$i]['year'];
         }
+
+        $stmt = $dbobject->prepare(" select `companies`.`peer1`,`companies`.`peer2` from `companies` where `id`=:company_id");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $company_ids = array($company_id,$company_id,$company_id,$row['peer1'],$row['peer2']);
+
+        for($i=0;$i<5;$i++) {
+            $stmt=$dbobject->prepare("SELECT * FROM `dividend_info` WHERE `company_id`=:company_id AND `financial_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_ids[$i]);
+            $stmt->bindParam(":financial_year",$array_years[$i]);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $dividend[]= $row['dividend'];
+            }
+            else {
+                $dividend[]= 0;
+            }
+        }
+        $response['dividend'] = $dividend;
         $dbobject=null;
-        return $eps;
+        return $response;
     }
 }
 ?>

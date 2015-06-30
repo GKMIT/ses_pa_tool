@@ -321,7 +321,7 @@ CustomJS.prototype = {
                 $("#show").removeClass('hidden');
             });
         }
-        
+
         $("#recover_row").click(function(){
             var add_row = $("#label_select").find('option:selected').text();
             var add_row_value = $("#label_select").find('option:selected').val();
