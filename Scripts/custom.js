@@ -717,6 +717,22 @@ CustomJS.prototype = {
                 }
             });
         });
+        $.ajax({
+            url:"jquery-data.php",
+            type:"GET",
+            dataType:"JSON",
+            data:{
+                marketDataEpo:1
+            },
+            beforeSend:function() {
+
+            },
+            success:function(data) {
+                var eps=data.eps;
+                console.log(data);
+                $('#market_data_eps').val(eps[0].eps);
+            }
+        });
         $(".dividend-per-share").keyup(function() {
             var no = $(this).attr('data-dividend-no');
             if($(".eps-"+no).val() !="" && $(this).val() !="") {
