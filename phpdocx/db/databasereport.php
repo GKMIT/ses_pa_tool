@@ -342,6 +342,38 @@ class ReportBurning {
         }
         $generic_details['borrowing_limits']=$borrowing_limits;
 
+        // 16th graph
+
+        $stmt = $dbobject->prepare(" select * from `pa_report_fill_investment_limits_fii` where `pa_reports_id`=:report_id");
+        $stmt->bindParam(":report_id",$report_id);
+        $stmt->execute();
+        $fii_shareholding=array();
+        while( $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $fii_shareholding[]=$row;
+        }
+        $generic_details['fii_shareholding']=$fii_shareholding;
+
+        // 17th graph
+
+        $stmt = $dbobject->prepare(" select * from `pa_report_fill_investment_limits_promoter` where `pa_reports_id`=:report_id");
+        $stmt->bindParam(":report_id",$report_id);
+        $stmt->execute();
+        $promoter_shareholding=array();
+        while( $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $promoter_shareholding[]=$row;
+        }
+        $generic_details['promoter_shareholding']=$promoter_shareholding;
+
+        // 18th graph
+
+        $stmt = $dbobject->prepare(" select * from `pa_report_donations_to_charitable_trust_csr_contributors` where `pa_reports_id`=:report_id");
+        $stmt->bindParam(":report_id",$report_id);
+        $stmt->execute();
+        $csr_contributors=array();
+        while( $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $csr_contributors[]=$row;
+        }
+        $generic_details['csr_contributors']=$csr_contributors;
 
 
         $dbobject = null;
