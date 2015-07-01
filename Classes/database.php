@@ -1523,7 +1523,6 @@ class Database {
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$response['peer2_company_details']= $row;
 
-
 		$dbobject = null;
 		return $response;
 	}

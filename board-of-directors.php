@@ -13,7 +13,6 @@ if(isset($_POST['board_of_directors'])) {
         $flag = true;
     }
 }
-
 if(isset($_SESSION['report_id'])) {
     $db = new DatabaseReports();
     $report_id = $_SESSION['report_id'];
@@ -454,7 +453,8 @@ if(isset($_SESSION['report_id'])) {
                                             $company_id = $_SESSION['company_id'];
                                             $financial_year = $_SESSION['report_year'];
                                             $directors = $db->getCompanyDirectorsWithPay($company_id, $financial_year);
-                                            foreach ($directors as $director) {
+                                            $filtered_directors =$db->filteredDirectors($directors);
+                                            foreach ($filtered_directors as $director) {
                                                 ?>
                                                 <tr>
                                                     <td class="text-center"><input name="dir_name[]" class="form-control" value="<?php echo $director['dir_name']; ?>"/>

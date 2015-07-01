@@ -671,58 +671,64 @@ class ReportBurning {
         return $generic_array;
     }
     function intercorporateLoans($report_id) {
+
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
 
         $stmt = $dbobject->prepare(" select * from `pa_report_intercorparate_other_text` where `pa_reports_id`=:report_id");
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
         $other_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $other_text[]=$row;
+        if($stmt->rowCount()>0) {
+            $generic_array['intercorporate_exists'] = true;
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $other_text[]=$row;
+            }
+            $generic_array['other_text'] = $other_text;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
+            $stmt->bindParam(":report_id",$report_id);
+            $resolution_name = "Intercorporate loans/guarantees/investments";
+            $resolution_section = "Intercorporate loans/guarantees/investments";
+            $stmt->bindParam(":resolution_name",$resolution_name);
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->execute();
+            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+            $generic_array['recommendation_text'] = $row;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_intercorporate_loans_the_recipient` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $the_recipient = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $the_recipient[]=$row;
+            }
+            $generic_array['the_recipient'] = $the_recipient;
+
+            $stmt = $dbobject->prepare(" select * from `pa_report_intercorporate_loans_existing_transactions` where `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->execute();
+            $existing_transactions = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $existing_transactions[]=$row;
+            }
+            $generic_array['existing_transactions'] = $existing_transactions;
+
+            $resolution_section = "Intercorporate loans/guarantees/investments";
+            $resolution_name = "Intercorporate loans/guarantees/investments";
+            $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section and `resolution_name`=:resolution_name");
+            $stmt->bindParam(":report_id",$report_id);
+            $stmt->bindParam(":resolution_section",$resolution_section);
+            $stmt->bindParam(":resolution_name",$resolution_name);
+            $stmt->execute();
+            $analysis_text = array();
+            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+                $analysis_text[]= $row;
+            }
+            $generic_array['analysis_text'] = $analysis_text;
         }
-        $generic_array['other_text'] = $other_text;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
-        $stmt->bindParam(":report_id",$report_id);
-        $resolution_name = "Intercorporate loans/guarantees/investments";
-        $resolution_section = "Intercorporate loans/guarantees/investments";
-        $stmt->bindParam(":resolution_name",$resolution_name);
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->execute();
-        $row=$stmt->fetch(PDO::FETCH_ASSOC);
-        $generic_array['recommendation_text'] = $row;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_intercorporate_loans_the_recipient` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $the_recipient = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $the_recipient[]=$row;
+        else {
+            $generic_array['intercorporate_exists'] = false;
         }
-        $generic_array['the_recipient'] = $the_recipient;
-
-        $stmt = $dbobject->prepare(" select * from `pa_report_intercorporate_loans_existing_transactions` where `pa_reports_id`=:report_id");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->execute();
-        $existing_transactions = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $existing_transactions[]=$row;
-        }
-        $generic_array['existing_transactions'] = $existing_transactions;
-
-        $resolution_section = "Intercorporate loans/guarantees/investments";
-        $resolution_name = "Intercorporate loans/guarantees/investments";
-        $stmt = $dbobject->prepare(" select * from `pa_report_analysis_text` where `pa_reports_id`=:report_id and `resolution_section`=:resolution_section and `resolution_name`=:resolution_name");
-        $stmt->bindParam(":report_id",$report_id);
-        $stmt->bindParam(":resolution_section",$resolution_section);
-        $stmt->bindParam(":resolution_name",$resolution_name);
-        $stmt->execute();
-        $analysis_text = array();
-        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-            $analysis_text[]= $row;
-        }
-        $generic_array['analysis_text'] = $analysis_text;
-
         $dbobject=null;
         return $generic_array;
     }

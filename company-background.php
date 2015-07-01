@@ -1015,9 +1015,7 @@ if(isset($_SESSION['report_id'])) {
 												</select>
 											</div>
 											<div class="col-md-2">
-												<button id="btn_populate_share_holders" class="btn green" type="button"
-														style="width:100%;">Get Data
-												</button>
+												<button id="btn_populate_share_holders" class="btn green" type="button" style="width:100%;">Get Data</button>
 											</div>
 										</div>
 									<?php
@@ -1078,31 +1076,31 @@ if(isset($_SESSION['report_id'])) {
 												</tr>
 												<tr>
 													<td>Promoter</td>
-													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[0]['promoter']; ?>" class="form-control"></td>
-													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[1]['promoter']; ?>" class="form-control"></td>
-													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[2]['promoter']; ?>" class="form-control"></td>
-													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[3]['promoter']; ?>" class="form-control"></td>
+													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[0]['promoter']; ?>" class="form-control promoter" id="promoter_1" data-col-id="1"></td>
+													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[1]['promoter']; ?>" class="form-control promoter" id="promoter_2" data-col-id="2"></td>
+													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[2]['promoter']; ?>" class="form-control promoter" id="promoter_3" data-col-id="3"></td>
+													<td><input name="promoter[]" value="<?php echo $share_holding_pattern[3]['promoter']; ?>" class="form-control promoter" id="promoter_4" data-col-id="4"></td>
 												</tr>
 												<tr>
 													<td>FII</td>
-													<td><input name="fii[]" value="<?php echo $share_holding_pattern[0]['fii']; ?>" class="form-control"></td>
-													<td><input name="fii[]" value="<?php echo $share_holding_pattern[1]['fii']; ?>" class="form-control"></td>
-													<td><input name="fii[]" value="<?php echo $share_holding_pattern[2]['fii']; ?>" class="form-control"></td>
-													<td><input name="fii[]" value="<?php echo $share_holding_pattern[3]['fii']; ?>" class="form-control"></td>
+													<td><input name="fii[]" value="<?php echo $share_holding_pattern[0]['fii']; ?>" class="form-control fii" id="fii_1" data-col-id="1"></td>
+													<td><input name="fii[]" value="<?php echo $share_holding_pattern[1]['fii']; ?>" class="form-control fii" id="fii_2" data-col-id="2"></td>
+													<td><input name="fii[]" value="<?php echo $share_holding_pattern[2]['fii']; ?>" class="form-control fii" id="fii_3" data-col-id="3"></td>
+													<td><input name="fii[]" value="<?php echo $share_holding_pattern[3]['fii']; ?>" class="form-control fii" id="fii_4" data-col-id="4"></td>
 												</tr>
 												<tr>
 													<td>DII</td>
-													<td><input name="dii[]" value="<?php echo $share_holding_pattern[0]['dii']; ?>" class="form-control"></td>
-													<td><input name="dii[]" value="<?php echo $share_holding_pattern[1]['dii']; ?>" class="form-control"></td>
-													<td><input name="dii[]" value="<?php echo $share_holding_pattern[2]['dii']; ?>" class="form-control"></td>
-													<td><input name="dii[]" value="<?php echo $share_holding_pattern[3]['dii']; ?>" class="form-control"></td>
+													<td><input name="dii[]" value="<?php echo $share_holding_pattern[0]['dii']; ?>" class="form-control dii" id="dii_1" data-col-id="1"></td>
+													<td><input name="dii[]" value="<?php echo $share_holding_pattern[1]['dii']; ?>" class="form-control dii" id="dii_2" data-col-id="2"></td>
+													<td><input name="dii[]" value="<?php echo $share_holding_pattern[2]['dii']; ?>" class="form-control dii" id="dii_3" data-col-id="3"></td>
+													<td><input name="dii[]" value="<?php echo $share_holding_pattern[3]['dii']; ?>" class="form-control dii" id="dii_4" data-col-id="4"></td>
 												</tr>
 												<tr>
 													<td>Others</td>
-													<td><input name="others[]" class="form-control" value="<?php echo $share_holding_pattern[0]['others']; ?>"></td>
-													<td><input name="others[]" class="form-control" value="<?php echo $share_holding_pattern[1]['others']; ?>"></td>
-													<td><input name="others[]" class="form-control" value="<?php echo $share_holding_pattern[2]['others']; ?>"></td>
-													<td><input name="others[]" class="form-control" value="<?php echo $share_holding_pattern[3]['others']; ?>"></td>
+													<td><input name="others[]" class="form-control others" id="others_1"  data-col-id='1' value="<?php echo $share_holding_pattern[0]['others']; ?>"></td>
+													<td><input name="others[]" class="form-control others" id="others_2" data-col-id='2' value="<?php echo $share_holding_pattern[1]['others']; ?>"></td>
+													<td><input name="others[]" class="form-control others" id="others_3" data-col-id='3' value="<?php echo $share_holding_pattern[2]['others']; ?>"></td>
+													<td><input name="others[]" class="form-control others" id="others_4" data-col-id='4' value="<?php echo $share_holding_pattern[3]['others']; ?>"></td>
 												</tr>
 											</tbody>
 											<?php

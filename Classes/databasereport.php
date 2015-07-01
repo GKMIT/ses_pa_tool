@@ -4960,5 +4960,201 @@ class DatabaseReports {
         $dbobject=null;
         return $response;
     }
+
+    function filteredDirectors($directors) {
+
+        $is_chairman_id = false;
+        $is_chairman_ed = false;
+        $is_chairman_edp = false;
+        $is_chairman_nedp = false;
+        $is_chairman_ned = false;
+
+        foreach ($directors as $director) {
+            if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                $is_chairman_id = true;
+            }
+            if($director['company_classification']=='ED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                $is_chairman_ed = true;
+            }
+            if($director['company_classification']=='EDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                $is_chairman_edp = true;
+            }
+            if($director['company_classification']=='NEDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                $is_chairman_nedp = true;
+            }
+            if($director['company_classification']=='NED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                $is_chairman_ned = true;
+            }
+        }
+        if($is_chairman_id) {
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NEDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='EDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+        }
+
+        if($is_chairman_ed) {
+
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='EDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NEDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ID') {
+                    $filtered_directors[]=$director;
+                }
+            }
+        }
+
+        if($is_chairman_edp) {
+
+            foreach ($directors as $director) {
+                if($director['company_classification']=='EDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NEDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ID') {
+                    $filtered_directors[]=$director;
+                }
+            }
+        }
+
+        if($is_chairman_nedp) {
+
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NEDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ID') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='EDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+        }
+
+        if($is_chairman_ned) {
+
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='NEDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ID') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='EDP') {
+                    $filtered_directors[]=$director;
+                }
+            }
+            foreach ($directors as $director) {
+                if($director['company_classification']=='ED') {
+                    $filtered_directors[]=$director;
+                }
+            }
+        }
+        return $filtered_directors;
+    }
 }
 ?>

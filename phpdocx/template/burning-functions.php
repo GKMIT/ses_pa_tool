@@ -203,7 +203,7 @@ function burnExcel($report_id) {
     for($i=0;$i<4;$i++) {
         $month_1 = substr(ucfirst($promoter_shareholding[$i]['quarter']),0,3);
         $objPHPExcel->getActiveSheet()->SetCellValue('C'.$row,$month_1."'".substr($promoter_shareholding[$i]['year'],2,2));
-        $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row,$promoter_shareholding[$i]['fii_shareholding']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('D'.$row,$promoter_shareholding[$i]['promoter_shareholding']);
         $row++;
     }
 
@@ -3622,80 +3622,82 @@ function relatedPartyTransaction($docx,$report_id) {
 }
 function intercorporateLoans($docx,$report_id) {
     $db = new ReportBurning();
+
     $generic_array = $db->intercorporateLoans($report_id);
-    $other_text = $generic_array['other_text'];
-    $recommendation_text = $generic_array['recommendation_text'];
-    $analysis_text = $generic_array['analysis_text'];
-    $the_recipient = $generic_array['the_recipient'];
-    $existing_transactions = $generic_array['existing_transactions'];
+    if($generic_array['intercorporate_exists']) {
 
-    print_r($recommendation_text);
+        $docx->addBreak(array('type' => 'page'));
+        $other_text = $generic_array['other_text'];
+        $recommendation_text = $generic_array['recommendation_text'];
+        $analysis_text = $generic_array['analysis_text'];
+        $the_recipient = $generic_array['the_recipient'];
+        $existing_transactions = $generic_array['existing_transactions'];
 
-    $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
-    $docx->embedHTML($p_text);
+        $p_text = "<p style='font-size: 1;'>&nbsp;</p>";
+        $docx->embedHTML($p_text);
 
-    resHeading($docx,"RESOLUTION []: INTERCORPORATE LOANS/GUARANTEES/INVESTMENTS",1);
-    $docx->embedHTML(htmlParser($other_text[0]['text']));
+        resHeading($docx,"RESOLUTION []: INTERCORPORATE LOANS/GUARANTEES/INVESTMENTS",1);
+        $docx->embedHTML(htmlParser($other_text[0]['text']));
 
-    resHeading($docx,"SES RECOMMENDATION",2);
-    $docx->embedHTML(htmlParser($recommendation_text['recommendation_text'],1));
+        resHeading($docx,"SES RECOMMENDATION",2);
+        $docx->embedHTML(htmlParser($recommendation_text['recommendation_text'],1));
 
-    resHeading($docx,"SES ANALYSIS",2);
+        resHeading($docx,"SES ANALYSIS",2);
 
-    resBlackStrip($docx,"THE RECIPIENT");
-    $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-    $text= "<tr>
+        resBlackStrip($docx,"THE RECIPIENT");
+        $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
+        $text= "<tr>
                 <td rowspan='2' style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>In <span style='font-family: Rupee Foradian;'>`</span> crore</td>
                 <td colspan='2' style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Lender Company</td>
                 <td colspan='2' style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; '>Recipient Copany</td>
             </tr>";
-    $the_recipient[0]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[0]['s_date']), 'd M Y');
-    $the_recipient[1]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[1]['s_date']), 'd M Y');
-    $the_recipient[2]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[2]['s_date']), 'd M Y');
-    $the_recipient[3]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[3]['s_date']), 'd M Y');
-    $text.="<tr>
+        $the_recipient[0]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[0]['s_date']), 'd M Y');
+        $the_recipient[1]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[1]['s_date']), 'd M Y');
+        $the_recipient[2]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[2]['s_date']), 'd M Y');
+        $the_recipient[3]['s_date'] = date_format(date_create_from_format('Y-m-d',$the_recipient[3]['s_date']), 'd M Y');
+        $text.="<tr>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$the_recipient[0]['s_date']."</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$the_recipient[1]['s_date']."</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>".$the_recipient[2]['s_date']."</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; '>".$the_recipient[3]['s_date']."</td>
             </tr>";
 
-    $text.="<tr>
+        $text.="<tr>
                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Share Capital</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[0]['share']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[1]['share']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[2]['share']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[3]['share']."</td>
              </tr>";
-    $text.="<tr>
+        $text.="<tr>
                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Reserves and Surplus</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[0]['reserves_and_surplus']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[1]['reserves_and_surplus']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[2]['reserves_and_surplus']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[3]['reserves_and_surplus']."</td>
              </tr>";
-    $text.="<tr>
+        $text.="<tr>
                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Total Assets</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[0]['assets']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[1]['assets']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[2]['assets']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[3]['assets']."</td>
              </tr>";
-    $text.="<tr>
+        $text.="<tr>
                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Total Liabilities</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[0]['liabilities']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[1]['liabilities']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[2]['liabilities']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[3]['liabilities']."</td>
              </tr>";
-    $text.="<tr>
+        $text.="<tr>
                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Revenues</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[0]['revenues']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[1]['revenues']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[2]['revenues']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$the_recipient[3]['revenues']."</td>
              </tr>";
-    $text.="<tr>
+        $text.="<tr>
                 <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Profit After Tax</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[0]['profit_after_tax']."</td>
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[1]['profit_after_tax']."</td>
@@ -3703,91 +3705,92 @@ function intercorporateLoans($docx,$report_id) {
                 <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$the_recipient[3]['profit_after_tax']."</td>
              </tr>";
 
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left:8px;'>
                 <tbody>
                     $text
                 </tbody>
               </table>";
-    $docx->embedHTML($html);
-    $other_txt = $other_text[1]['text'];
-    $other_txt .= $other_text[2]['text'];
-    $other_txt .= $other_text[3]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
+        $docx->embedHTML($html);
+        $other_txt = $other_text[1]['text'];
+        $other_txt .= $other_text[2]['text'];
+        $other_txt .= $other_text[3]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
 
-    resBlackStrip($docx,"EXISTING TRANSACTIONS WITH THE RECIPIENT");
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    $text="<tr>
+        resBlackStrip($docx,"EXISTING TRANSACTIONS WITH THE RECIPIENT");
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        $text="<tr>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Type</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Transaction Details</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Date 1</td>
                 <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; '>Date 2</td>
             </tr>";
-    $text.="<tr>
+        $text.="<tr>
             <td rowspan='2' style='border-right: 1px solid #FFFFFF;border-bottom: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>".$existing_transactions[0]['type']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$existing_transactions[0]['transaction_details']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$existing_transactions[0]['details_values1']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$existing_transactions[0]['details_values2']."</td>
          </tr>";
-    $text.="<tr>
+        $text.="<tr>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$existing_transactions[1]['transaction_details']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$existing_transactions[1]['details_values1']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$existing_transactions[1]['details_values2']."</td>
          </tr>";
-    $text.="<tr>
+        $text.="<tr>
             <td rowspan='2' style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>".$existing_transactions[2]['type']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$existing_transactions[2]['transaction_details']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$existing_transactions[2]['details_values1']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; '>".$existing_transactions[2]['details_values2']."</td>
          </tr>";
-    $text.="<tr>
+        $text.="<tr>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$existing_transactions[3]['transaction_details']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$existing_transactions[3]['details_values1']."</td>
             <td style='text-align:center; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; '>".$existing_transactions[3]['details_values2']."</td>
          </tr>";
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+        $html = "<table style='border-collapse: collapse; width:98%; margin-left:8px;'>
                 <tbody>
                     $text
                 </tbody>
               </table>";
-    $docx->embedHTML($html);
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    resBlackStrip($docx,"PURPOSE OF THE TRANSACTION");
-    $other_txt = $other_text[4]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    resBlackStrip($docx,"TERMS AND CONDITIONS OF THE TRANSACTION");
-    $other_txt = $other_text[5]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
-    $other_txt = $other_text[6]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    resBlackStrip($docx,"FAIRNESS OF THE TRANSACTION");
-    $other_txt = $other_text[7]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
-    $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
-    resBlackStrip($docx,"DIRECTORS' INTERESTS");
-    $other_txt = $other_text[8]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
-    $other_txt = $other_text[9]['text'];
-    $docx->embedHTML(htmlParser($other_txt));
+        $docx->embedHTML($html);
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"PURPOSE OF THE TRANSACTION");
+        $other_txt = $other_text[4]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"TERMS AND CONDITIONS OF THE TRANSACTION");
+        $other_txt = $other_text[5]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
+        $other_txt = $other_text[6]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"FAIRNESS OF THE TRANSACTION");
+        $other_txt = $other_text[7]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
+        $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
+        resBlackStrip($docx,"DIRECTORS' INTERESTS");
+        $other_txt = $other_text[8]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
+        $other_txt = $other_text[9]['text'];
+        $docx->embedHTML(htmlParser($other_txt));
 
-    $analysis_txt = "";
-    for($i=0;$i<count($analysis_text)-1;$i++) {
-        if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
-            $analysis_txt .= $analysis_text[$i]['analysis_text'];
+        $analysis_txt = "";
+        for($i=0;$i<count($analysis_text)-1;$i++) {
+            if($analysis_text[$i]['analysis_text']!="" && $analysis_text[$i]['analysis_text']!="&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
+            }
         }
+        if($analysis_txt=="")
+            $analysis_txt = $analysis_text[count($analysis_text)-1]['analysis_text'];
+        if($analysis_txt!="")
+            $docx->embedHtml(htmlParser($analysis_txt));
     }
-    if($analysis_txt=="")
-        $analysis_txt = $analysis_text[count($analysis_text)-1]['analysis_text'];
-    if($analysis_txt!="")
-        $docx->embedHtml(htmlParser($analysis_txt));
-
 }
 function corporateAction($docx,$report_id) {
 
     $db = new ReportBurning();
     $generic_array = $db->corporateActionStockSplit($report_id);
     if($generic_array['stock_split_exists']) {
+        $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
         $analysis_text = $generic_array['analysis_text'];

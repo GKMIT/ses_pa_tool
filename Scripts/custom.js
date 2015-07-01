@@ -691,6 +691,22 @@ CustomJS.prototype = {
             );
         }
 
+        function calShareholdingPatters (data_col_id) {
+            var promoter = $("#promoter_"+data_col_id);
+            var fii = $("#fii_"+data_col_id);
+            var dii = $("#dii_"+data_col_id);
+            if(promoter.val()!="" && fii.val()!="" && dii.val()!="") {
+                $("#others_"+data_col_id).val((100 - (parseFloat(promoter.val())+parseFloat(fii.val())+parseFloat(dii.val()))).toFixed(2));
+            }
+        }
+
+        function initializeKeyUp() {
+            $(".promoter,.fii,.dii").keyup(function() {
+                calShareholdingPatters($(this).attr('data-col-id'));
+            });
+        }
+
+
         $("#market_data_price").keyup( function () {
             var price = $(this).val();
             var eps = $("#market_data_eps").val();
@@ -719,14 +735,13 @@ CustomJS.prototype = {
                     $("#top_public_shareholders").html(data.top_public_shareholders);
                     $("#major_promoters").html(data.major_promoters);
                     $("#share_holding_patters").html(data.share_holding_patters);
+                    initializeKeyUp();
                 },
                 error: function (data) {
-                    alert("No Data Found");
                     button.html("Get Data");
                 }
             });
         });
-
 
         var financial_years = [];
         $(".financial_years").each(function(i,data){

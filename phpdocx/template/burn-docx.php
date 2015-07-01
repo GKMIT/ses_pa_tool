@@ -53,25 +53,26 @@ $merge = new MultiMerge();
 $merge->mergeDocx('index_page.docx', array('try.docx'), 'report.docx',array());
 burnExcel($report_id);
 $zip_files_array = array(
+	'AuditorsRemuneration.docx',
+	'AverageCommission.docx',
 	'BoardComposition.docx',
+	'CSRContribution.docx',
     'DividendAndEarning.docx',
     'DividendPayoutRatio.docx',
 	'ExecutiveCompensation.docx',
 	'ExecutiveRemuneration.docx',
 	'MasterExcelFile.xlsx',
+	'PromoterShareholding.docx',
+	'RemunerationComponents.docx',
 	'RetireByRotation.docx',
 	'ShareholdingPattern.docx',
-	'VariationInDirectorsRemuneration.docx',
-	'report.docx',
-	'graph_excel.xlsx',
 	'StockPerformance.docx',
 	'StockPrice.docx',
 	'TotalCommission.docx',
 	'UtilizationBorrowingLimits.docx',
 	'VariationInDirectorsRemuneration.docx',
-    'AuditorsRemuneration.docx',
-    'RemunerationComponents.docx',
-	'AverageCommission.docx',
+	'report.docx',
+	'graph_excel.xlsx'
 );
 $zip = new ZipArchive;
 if($zip->open("report.zip",ZipArchive::CREATE)) {
