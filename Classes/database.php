@@ -1624,7 +1624,7 @@ class Database {
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$directors[]=$row;
 		}
-
+		$directors = $this->filteredDirectors($directors);
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `rem_year` from `director_remuneration` where `rem_year`<=:financial_year ORDER BY `rem_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1676,6 +1676,8 @@ class Database {
 			$directors[]=$row;
 		}
 
+		$directors = $this->filteredDirectors($directors);
+
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `director_agm_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1726,6 +1728,7 @@ class Database {
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$directors[]=$row;
 		}
+		$directors = $this->filteredDirectors($directors);
 
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `director_board_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
@@ -1778,6 +1781,8 @@ class Database {
 			$directors[]=$row;
 		}
 
+		$directors = $this->filteredDirectors($directors);
+
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `audit_committee_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
 		$stmt->execute();
@@ -1824,6 +1829,8 @@ class Database {
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$directors[]=$row;
 		}
+
+		$directors = $this->filteredDirectors($directors);
 
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `investors_grievance_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1872,6 +1879,8 @@ class Database {
 			$directors[]=$row;
 		}
 
+		$directors = $this->filteredDirectors($directors);
+
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `csr_committee_meetings_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
 		$stmt->execute();
@@ -1918,6 +1927,8 @@ class Database {
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$directors[]=$row;
 		}
+
+		$directors = $this->filteredDirectors($directors);
 
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `risk_management_committee_meetings_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -2132,7 +2143,7 @@ class Database {
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 				$directors[]=$row;
 			}
-
+			$directors = $this->filteredDirectors($directors);
 			$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 			$stmt=$dbobject->prepare("select DISTINCT `att_year` from `nomination_remuneration_committee_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 			$stmt->bindParam(':financial_year',$financial_year);
@@ -2176,7 +2187,7 @@ class Database {
 			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 				$directors[]=$row;
 			}
-
+			$directors = $this->filteredDirectors($directors);
 			$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 			$stmt=$dbobject->prepare("select DISTINCT `att_year` from `nomination_committee_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 			$stmt->bindParam(':financial_year',$financial_year);
@@ -2453,6 +2464,201 @@ class Database {
 		$response = $row;
 		$dbobject=null;
 		return $response;
+	}
+	function filteredDirectors($directors) {
+
+		$is_chairman_id = false;
+		$is_chairman_ed = false;
+		$is_chairman_edp = false;
+		$is_chairman_nedp = false;
+		$is_chairman_ned = false;
+
+		foreach ($directors as $director) {
+			if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_id = true;
+			}
+			if($director['company_classification']=='ED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_ed = true;
+			}
+			if($director['company_classification']=='EDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_edp = true;
+			}
+			if($director['company_classification']=='NEDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_nedp = true;
+			}
+			if($director['company_classification']=='NED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_ned = true;
+			}
+		}
+		if($is_chairman_id) {
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_ed) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_edp) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_nedp) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_ned) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+		return $filtered_directors;
 	}
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 
 require_once '../classes/CreateDocx.inc';
+require_once '../classes/DocxUtilities.inc';
 require_once 'burning-functions.php';
 
 $report_id=$_GET['report_id'];
@@ -48,9 +49,18 @@ delistingOfShares($docx,$report_id);
 donationToCharitableTrust($docx,$report_id);
 officeOfProfit($docx,$report_id);
 $docx->createDocx('try');
+
+$docx = new DocxUtilities();
+$source = 'try.docx';
+$target = 'try2.docx';
+////$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>500,'width'=>780));
+$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>500,'width'=>500));
+
 require_once '../classes/MultiMerge.inc';
 $merge = new MultiMerge();
-$merge->mergeDocx('index_page.docx', array('try.docx'), 'report.docx',array());
+$merge->mergeDocx('index_page.docx', array('try2.docx'), 'report.docx',array());
+
+
 burnExcel($report_id);
 $zip_files_array = array(
 	'AuditorsRemuneration.docx',

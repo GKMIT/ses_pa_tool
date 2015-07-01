@@ -6,6 +6,7 @@ $months = array('3'=>'March','6'=>'June','9'=>'September','12'=>'December');
 $fiscal_year = $months[$company_details['fiscal_year_end']];
 $generic_array = $db->getCompanyDirectors($_GET['company_id'],$_GET['financial_year']);
 $directors = $generic_array['directors'];
+$directors = $db->filteredDirectors($directors);
 $director_details = "";
 $are_committees_seperate = $generic_array['are_committees_seperate'];
 if($generic_array['are_committees_seperate']=='yes') {

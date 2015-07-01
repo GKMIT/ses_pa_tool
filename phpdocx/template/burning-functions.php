@@ -439,6 +439,7 @@ function addFooter($docx) {
 
     $footerText = new WordFragment($docx);
     $footerText->addText('© 2012 | Stakeholders Empowerment Services | All Rights Reserved', $textOptions);
+    $footerText->addText('Report Release Date: ', $textOptions);
 
 
     $valuesTable = array(
