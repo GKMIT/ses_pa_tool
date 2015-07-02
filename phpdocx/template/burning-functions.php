@@ -570,7 +570,8 @@ function agendaItemsAndRecommendations($docx,$report_id) {
                 </tbody>
               </table>";
     $docx->embedHTML($html);
-    $html = "<p style='font-size:9;margin-top:5px;margin-bottom: 0; text-align:justify; '><i><span style='font-weight: bold;'>C - Compliance: </span>The Company has not met statutory compliance requirements</i></p>";
+    $html = "<p style='font-size:5'>&nbsp;</p>";
+    $html .= "<p style='font-size:9;margin-top:5px;margin-bottom: 0; text-align:justify; '><i><span style='font-weight: bold;'>C - Compliance: </span>The Company has not met statutory compliance requirements</i></p>";
     $html .= "<p style='font-size:9; margin: 0; text-align:justify;'><i><span style='font-weight: bold;'>F - Fairness: </span>The Company has proposed steps which may lead to undue advantage of a particular class of shareholders and can have adverse impact on non-controlling shareholders including minority shareholders</i></p>";
     $html .= "<p style='font-size:9;margin: 0; text-align:justify;'><i><span style='font-weight: bold;'>G - Governance: </span>SES questions the governance practices of the Company. The Company may have complied with the statutory requirements in letter. However, SES finds governance issues as per its standards.</i></p>";
     $html .= "<p style='font-size:9; margin: 0; text-align:justify;'><i><span style='font-weight: bold;'>T - Disclosures &amp; Transparency: </span>The Company has not made adequate disclosures necessary for shareholders to make an informed decision. The Company has intentionally or unintentionally kept the shareholders in dark.</i></p>";

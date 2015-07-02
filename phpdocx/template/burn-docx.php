@@ -53,13 +53,12 @@ $docx->createDocx('try');
 $docx = new DocxUtilities();
 $source = 'try.docx';
 $target = 'try2.docx';
-////$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>500,'width'=>780));
-$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>500,'width'=>500));
+$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>900,'width'=>780,'decolorate'=>false));
+//$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>900,'width'=>500,'decolorate'=>false));
 
 require_once '../classes/MultiMerge.inc';
 $merge = new MultiMerge();
 $merge->mergeDocx('index_page.docx', array('try2.docx'), 'report.docx',array());
-
 
 burnExcel($report_id);
 $zip_files_array = array(

@@ -2089,7 +2089,6 @@ class DatabaseReports {
         else {
             $ned_pay_avg = 0;
         }
-
         if($ned_pay_avg>$analysed_director_pay) {
             $values[]= "no";
         }
@@ -2167,7 +2166,7 @@ class DatabaseReports {
 
 
 
-        $years = range($financial_year-3,$financial_year-1);
+        $years = range($financial_year-2,$financial_year);
         $total_attended = 0;
         $total_agms = 0;
         foreach($years as $year) {
@@ -2202,8 +2201,10 @@ class DatabaseReports {
             $generic_details['board_meeting_last_year']="na";
         }
         $years = range($financial_year-2,$financial_year);
+
         $total_board_meeting_held = 0;
         $total_board_meeting_attended = 0;
+
         foreach($years as $year) {
             $stmt = $dbobject->prepare(" select * from `director_board_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
@@ -2309,55 +2310,325 @@ class DatabaseReports {
             $generic_details['stack_meeting_last_year']="na";
         }
 
-        // Analysis Questions values
-//        $values = array();
-//        $total_directors = $this->getCompanyDirectorsWithPay($company_id,$financial_year);
-//        $toal_ned_pay = 0;
-//        $analysed_director_pay = 0;
-//        $toal_neds = 0;
-//        foreach($total_directors as $director) {
-//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP')) {
-//                if($director['dir_din_no']!=$dir_din_no) {
-//                    $toal_ned_pay += floatval($director['fixed_pay'])+floatval($director['variable_pay']);
-//                }
-//                $toal_neds++;
-//            }
-//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP') && $director['dir_din_no']==$dir_din_no) {
-//                $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
-//            }
-//        }
+//         Analysis Questions values
+        $values = array();
+        if($generic_details['are_committees_seperate']=='yes') {
+
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `financial_year`=:financial_year and (`nomination`=:nom_c or `nomination`=:nom_m)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $nom_c = "C";
+            $nom_m = "M";
+            $stmt->bindParam(":nom_c",$nom_c);
+            $stmt->bindParam(":nom_m",$nom_m);
+            $stmt->execute();
+            if($stmt->rowCount()) {
+                $values[]="yes";
+            }
+            else {
+                $values[]="no";
+            }
+
+        }
+        else {
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `financial_year`=:financial_year and (`nomination_remuneration`=:nom_c or `nomination_remuneration`=:nom_m)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $nom_c = "C";
+            $nom_m = "M";
+            $stmt->bindParam(":nom_c",$nom_c);
+            $stmt->bindParam(":nom_m",$nom_m);
+            $stmt->execute();
+            if($stmt->rowCount()) {
+                $values[]="yes";
+            }
+            else {
+                $values[]="no";
+            }
+        }
+
+
+        $stmt = $dbobject->prepare(" select * from `director_remuneration` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `rem_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $values[] = $row['variable_pay']=="N.D." ? 'no' : 'yes';
+        }
+
+
+        $total_directors = $this->getCompanyDirectorsWithPay($company_id,$financial_year);
+        $toal_md_pay = 0;
+        $analysed_director_pay = 0;
+        foreach($total_directors as $director) {
+            if(($director['additional_classification']=='CMD' || $director['additional_classification']=='MD')) {
+                if($director['dir_din_no']!=$dir_din_no) {
+                    $toal_md_pay += floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+                }
+            }
+            if($director['dir_din_no']==$dir_din_no) {
+                $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+            }
+        }
+
+        if($toal_md_pay==0) {
+            $stmt = $dbobject->prepare(" select * from `director_info` INNER JOIN `directors` ON `directors`.`din_no`=`director_info`.`dir_din_no` INNER JOIN `director_remuneration` ON `director_remuneration`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and `director_remuneration`.`company_id`=:company_id and `director_remuneration`.`rem_year`=:financial_year and `company_classification`='ED' or `company_classification`='EDP' ORDER BY (`director_remuneration`.`variable_pay`+`director_remuneration`.`fixed_pay`) desc limit 1");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if((($analysed_director_pay/($row['variable_pay']+$row['fixed_pay']))*100)>25) {
+                $values[]= "yes";
+            }
+            else {
+                $values[]= "no";
+            }
+        }
+        else {
+            if((($analysed_director_pay/$toal_md_pay)*100)>25) {
+                $values[]= "yes";
+            }
+            else {
+                $values[]= "no";
+            }
+        }
+
+
+        $toal_ned_pay = 0;
+        $analysed_director_pay = 0;
+        $toal_neds = 0;
+        foreach($total_directors as $director) {
+            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP' || $director['company_classification']=='ID') && ($director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)")) {
+                if($director['dir_din_no']!=$dir_din_no) {
+                    $toal_ned_pay += floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+                    $toal_neds++;
+                }
+            }
+            if($director['dir_din_no']==$dir_din_no) {
+                $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
+            }
+        }
+        if($toal_neds!=0) {
+            $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
+            if(($analysed_director_pay/$ned_pay_avg)>3) {
+                $values[]= "yes";
+            }
+            else {
+                $values[]= "no";
+            }
+        }
+        else {
+            $values[]="";
+        }
+
+
 //
-//        if($toal_neds!=0) {
-//            $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
-//        }
-//        else {
-//            $ned_pay_avg = 0;
-//        }
-//
-//        if($ned_pay_avg>$analysed_director_pay) {
-//            $values[]= "no";
-//        }
-//        else {
-//            $values[]= "yes";
-//        }
-//        $values[]=$director_details['retiring_non_retiring'];
-//        $values[]=$generic_details['board_meeting_last_year']==100 ? 'yes' : 'no';
+        $values[]=$director_details['retiring_non_retiring'];
+        $values[]=$generic_details['board_meeting_last_year']==100 ? 'yes' : 'no';
+        $values[]=$director_details['total_association']>10 ? 'yes' : 'no';
+        $values[]=$director_details['other_pecuniary_relationship']=="N" ? "no" : "yes";
 //
 //        $values[]="";
-//        if($director_details['no_directorship_public']>10 || $director_details['no_total_directorship']>20) {
-//            $values[]="yes";
-//        }
-//        else {
-//            $values[]="no";
-//        }
-//        $values[] = $director_details['committee_memberships']>10 ? 'yes':'no';
-//        $values[] = $director_details['committee_chairmanships']>5 ? 'yes':'no';
-//        $values[]=$generic_details['board_meeting_last_year']==0 ? 'yes' : 'no';
-//        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
-//        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
-//        $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
-//
-//        $generic_details['analysis_values'] = $values;
+        if($director_details['no_directorship_public']>10 || $director_details['no_total_directorship']>20) {
+            $values[]="yes";
+        }
+        else {
+            $values[]="no";
+        }
+        $values[] = $director_details['committee_memberships']>10 ? 'yes':'no';
+        $values[] = $director_details['committee_chairmanships']>5 ? 'yes':'no';
+        $values[]=$generic_details['board_meeting_last_year']==0 ? 'yes' : 'no';
+        $values[]=$director_details['no_directorship_listed_companies']>7 ? 'yes' : 'no';
+        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
+        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
+
+        $total_audit_meeting_held = 0;
+        $total_audit_meeting_attended = 0;
+
+        foreach($years as $year) {
+            $stmt = $dbobject->prepare(" select * from `audit_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $total_audit_meeting_held += intval($row['held']);
+                $total_audit_meeting_attended += intval($row['attended']);
+            }
+        }
+        $generic_details['audit_committee_last_years_avg']= ceil(($total_audit_meeting_attended/$total_audit_meeting_held)*100);
+        $values[] = $generic_details['audit_committee_last_years_avg'];
+
+        $flag =false;
+        foreach($years as $year) {
+
+            $stmt = $dbobject->prepare(" select * from `company_auditors_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if((($row['non_audit_fee']/$row['total_auditors_fee'])*100)>50) {
+                    $flag = true;
+                }
+            }
+        }
+
+        if($flag) {
+            $values[]='yes';
+        }
+        else {
+            $values[] = 'no';
+        }
+
+        $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `financial_year`=:financial_year and `audit_committee`=:audit");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":financial_year",$year);
+        $audit = "C";
+        $stmt->bindParam(":audit",$audit);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $stmt = $dbobject->prepare(" select * from `director_agm_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year and `attended`=:att");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $year = $financial_year-1;
+            $stmt->bindParam(":financial_year",$year);
+            $att = 'yes';
+            $stmt->bindParam(":att",$att);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $values[]='yes';
+            }
+            else {
+                $values[]='no';
+            }
+        }
+        else {
+            $values[]='no';
+        }
+
+        $values[] = $generic_details['board_meeting_last_year']<50 ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
+
+        if($generic_details['are_committees_seperate']=='yes') {
+            $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $values[] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $values[] = "na";
+            }
+            $total_nomination_meeting_held = 0;
+            $total_nomination_meeting_attended=0;
+            foreach($years as $year) {
+                $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+                $stmt->bindParam(":company_id",$company_id);
+                $stmt->bindParam(":dir_din_no",$dir_din_no);
+                $stmt->bindParam(":financial_year",$year);
+                $stmt->execute();
+                if($stmt->rowCount()>0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $total_nomination_meeting_held += intval($row['held']);
+                    $total_nomination_meeting_attended += intval($row['attended']);
+                }
+            }
+            $generic_details['nomination_meeting_last_years_avg']= ceil(($total_nomination_meeting_attended/$total_nomination_meeting_held)*100);
+            $values[]= $generic_details['nomination_meeting_last_years_avg'] ;
+
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `financial_year`=:financial_year and (`nomination`=:chairman or `nomination`=:member)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $chairman = "C";
+            $member = "M";
+            $stmt->bindParam(":chairman",$chairman);
+            $stmt->bindParam(":member",$member);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $values[] = "yes";
+            }
+            else {
+                $values[] = "na";
+            }
+
+        }
+        else {
+            $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                $values[] = $generic_details['nomination_remuneration_meeting_last_year']."%";
+            }
+            else {
+                $generic_details['nomination_remuneration_meeting_last_year']="na";
+                $values[] = "";
+            }
+
+            $total_nomination_remuneration_meeting_held = 0;
+            $total_nomination_remuneration_meeting_attended=0;
+            foreach($years as $year) {
+                $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
+                $stmt->bindParam(":company_id",$company_id);
+                $stmt->bindParam(":dir_din_no",$dir_din_no);
+                $stmt->bindParam(":financial_year",$year);
+                $stmt->execute();
+                if($stmt->rowCount()>0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $total_nomination_remuneration_meeting_held += intval($row['held']);
+                    $total_nomination_remuneration_meeting_attended += intval($row['attended']);
+                }
+            }
+            $generic_details['nomination_remuneration_meeting_last_years_avg']= ceil(($total_nomination_remuneration_meeting_attended/$total_nomination_remuneration_meeting_held)*100);
+            $values[]= $generic_details['nomination_remuneration_meeting_last_years_avg']."%" ;
+
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `financial_year`=:financial_year and (`nomination_remuneration`=:chairman or `nomination_remuneration`=:member)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":dir_din_no",$dir_din_no);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $chairman = "C";
+            $member = "M";
+            $stmt->bindParam(":chairman",$chairman);
+            $stmt->bindParam(":member",$member);
+            $stmt->execute();
+            if($stmt->rowCount()>0) {
+                $values[] = "yes";
+            }
+            else {
+                $values[] = "na";
+            }
+
+        }
+
+        $values[] = $generic_details['board_meeting_last_year']."%";
+        $values[] = $generic_details['audit_meeting_last_year']."%";
+        $values[] = $generic_details['board_meeting_last_years_avg']."%";
+        $values[] = $generic_details['audit_committee_last_years_avg']."%";
+        if($generic_details['are_committees_seperate']=='yes') {
+            $values [] =$generic_details['nomination_meeting_last_years_avg'];
+        }
+        else {
+            $values[] = $generic_details['nomination_remuneration_meeting_last_years_avg']."%";
+        }
+        $values[]=$director_details['retiring_non_retiring'];
+
+        $generic_details['analysis_values'] = $values;
+
         $dbobject = null;
         return $generic_details;
     }
@@ -2395,11 +2666,11 @@ class DatabaseReports {
         }
         $generic_details['committee_positions']=implode(",",$cpc);
         $generic_details['retiring_non_retiring']=$row['retiring_non_retiring'];
-        $generic_details['part_promoter_group'] = ($row['company_classification']=="NED") ? 'no' : 'yes' ;
+        $generic_details['part_promoter_group'] = ($row['company_classification']=="EDP") ? 'no' : 'yes' ;
         $generic_details['total_directorship'] = $row['no_total_directorship'];
         $generic_details['committee_memberships'] = $row['committee_memberships'];
         $generic_details['committee_chairmanships'] = $row['committee_chairmanships'];
-        $years = range($financial_year-3,$financial_year-1);
+        $years = range($financial_year-2,$financial_year);
         $total_attended = 0;
         $total_agms = 0;
         foreach($years as $year) {
@@ -2542,54 +2813,101 @@ class DatabaseReports {
         }
 
         // Analysis Questions values
-//        $values = array();
-//        $total_directors = $this->getCompanyDirectorsWithPay($company_id,$financial_year);
-//        $toal_ned_pay = 0;
-//        $analysed_director_pay = 0;
-//        $toal_neds = 0;
-//        foreach($total_directors as $director) {
-//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP')) {
-//                if($director['dir_din_no']!=$dir_din_no) {
-//                    $toal_ned_pay += floatval($director['fixed_pay'])+floatval($director['variable_pay']);
-//                }
-//                $toal_neds++;
-//            }
-//            if(($director['company_classification']=='NED' || $director['company_classification']=='NEDP') && $director['dir_din_no']==$dir_din_no) {
-//                $analysed_director_pay = floatval($director['fixed_pay'])+floatval($director['variable_pay']);
-//            }
-//        }
-//
-//        if($toal_neds!=0) {
-//            $ned_pay_avg = ($toal_ned_pay/$toal_neds) * 3;
-//        }
-//        else {
-//            $ned_pay_avg = 0;
-//        }
-//
-//        if($ned_pay_avg>$analysed_director_pay) {
-//            $values[]= "no";
-//        }
-//        else {
-//            $values[]= "yes";
-//        }
-//        $values[]=$director_details['retiring_non_retiring'];
-//        $values[]=$generic_details['board_meeting_last_year']==100 ? 'yes' : 'no';
-//
-//        $values[]="";
-//        if($director_details['no_directorship_public']>10 || $director_details['no_total_directorship']>20) {
-//            $values[]="yes";
-//        }
-//        else {
-//            $values[]="no";
-//        }
-//        $values[] = $director_details['committee_memberships']>10 ? 'yes':'no';
-//        $values[] = $director_details['committee_chairmanships']>5 ? 'yes':'no';
-//        $values[]=$generic_details['board_meeting_last_year']==0 ? 'yes' : 'no';
-//        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
-//        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
-//        $values[] = $generic_details['board_meeting_last_year']>75 ? 'yes' : 'no';
-//
-//        $generic_details['analysis_values'] = $values;
+        $values = array();
+        if($generic_details['are_committees_seperate']=='yes') {
+
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `financial_year`=:financial_year and (`nomination`=:nom_c or `nomination`=:nom_m)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $nom_c = "C";
+            $nom_m = "M";
+            $stmt->bindParam(":nom_c",$nom_c);
+            $stmt->bindParam(":nom_m",$nom_m);
+            $stmt->execute();
+            if($stmt->rowCount()) {
+                $values[]="yes";
+            }
+            else {
+                $values[]="no";
+            }
+
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `financial_year`=:financial_year and (`remuneration`=:nom_c or `remuneration`=:nom_m)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $nom_c = "C";
+            $nom_m = "M";
+            $stmt->bindParam(":nom_c",$nom_c);
+            $stmt->bindParam(":nom_m",$nom_m);
+            $stmt->execute();
+            if($stmt->rowCount()) {
+                $values[]="yes";
+            }
+            else {
+                $values[]="no";
+            }
+
+        }
+        else {
+            $stmt = $dbobject->prepare(" select * from `director_info` where `company_id`=:company_id and `financial_year`=:financial_year and (`nomination_remuneration`=:nom_c or `nomination_remuneration`=:nom_m)");
+            $stmt->bindParam(":company_id",$company_id);
+            $stmt->bindParam(":financial_year",$financial_year);
+            $nom_c = "C";
+            $nom_m = "M";
+            $stmt->bindParam(":nom_c",$nom_c);
+            $stmt->bindParam(":nom_m",$nom_m);
+            $stmt->execute();
+            if($stmt->rowCount()) {
+                $values[]="yes";
+                $values[]="yes";
+            }
+            else {
+                $values[]="no";
+                $values[]="no";
+            }
+        }
+
+        $stmt = $dbobject->prepare(" select * from `director_remuneration` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `rem_year`=:financial_year");
+        $stmt->bindParam(":company_id",$company_id);
+        $stmt->bindParam(":dir_din_no",$dir_din_no);
+        $stmt->bindParam(":financial_year",$financial_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            //  Has the remuneration paid to the director disclosed?
+            $values[] = $row['variable_pay']=="N.D." ? 'no' : 'yes';
+        }
+        if($generic_details['are_committees_seperate']=='yes') {
+            if($director_details['nomination']=='C' || $director_details['nomination']=='M') {
+                $values[] = 'yes';
+            }
+            else {
+                $values[] = 'no';
+            }
+        }
+        else {
+            if($director_details['nomination_remuneration']=='C' || $director_details['nomination_remuneration']=='M') {
+                $values[] = 'yes';
+            }
+            else {
+                $values[] = 'no';
+            }
+        }
+        $values[] = $generic_details['board_meeting_last_years_avg']<75 ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_year']==100 ? 'no' : 'yes';
+        $values[] = $director_details['no_directorship_public']>10 ? "yes" : "no";
+        $values[] = $director_details['no_total_directorship']>20 ? "yes" : "no";
+        $values[] = $director_details['no_directorship_listed_companies']>3 ? "yes" : "no";
+        $values[] = $director_details['committee_memberships']>10 ? 'yes':'no';
+        $values[] = $director_details['committee_chairmanships']>5 ? 'yes':'no';
+        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
+        $values[] = $generic_details['board_meeting_last_years_avg'];
+        $values[] = $generic_details['board_meeting_last_years_avg'];
+        $values[] = $values[0];
+        $values[] = $last_3_year_attended_agms!=$last_3_year_held_agms ? 'yes' : 'no';
+        $values[]=$generic_details['board_meeting_last_years_avg'];
+        $values[]=$generic_details['board_meeting_last_years_avg'];
+
+        $generic_details['analysis_values'] = $values;
         $dbobject = null;
         return $generic_details;
     }
@@ -4414,22 +4732,22 @@ class DatabaseReports {
         }
         for($i=0;$i<count($info['director_name']);$i++) {
 
-                $stmt = $dbobject->prepare("insert into `pa_report_remuneration_analysis` (`pa_reports_id`, `director_name`,`dir_din_no`, `promoter_non_promoter`,`rem_first_year`,`fixed_pay_first_year`,`total_pay_first_year`,`rem_second_year`,`fixed_pay_second_year`,`total_pay_second_year`,`rem_third_year`,`fixed_pay_third_year`,`total_pay_third_year`,`ratio`) VALUES (:pa_reports_id, :director_name,:dir_din_no,:promoter_non_promoter,:rem_first_year, :fixed_pay_first_year,:total_pay_first_year,:rem_second_year,:fixed_pay_second_year,:total_pay_second_year,:rem_third_year, :fixed_pay_third_year,:total_pay_third_year,:ratio)");
-                $stmt->bindParam(":pa_reports_id",$pa_report_id);
-                $stmt->bindParam(":director_name",$info['director_name'][$i]);
-                $stmt->bindParam(":dir_din_no",$info['dir_din_no'][$i]);
-                $stmt->bindParam(":promoter_non_promoter",$info['promoter_non_promoter'][$i]);
-                $stmt->bindParam(":rem_first_year",$info['remuneration_year_1']);
-                $stmt->bindParam(":fixed_pay_first_year",$info['fixed_pay_first_year'][$i]);
-                $stmt->bindParam(":total_pay_first_year",$info['total_pay_first_year'][$i]);
-                $stmt->bindParam(":rem_second_year",$info['remuneration_year_2']);
-                $stmt->bindParam(":fixed_pay_second_year",$info['fixed_pay_second_year'][$i]);
-                $stmt->bindParam(":total_pay_second_year",$info['total_pay_second_year'][$i]);
-                $stmt->bindParam(":rem_third_year",$info['remuneration_year_3']);
-                $stmt->bindParam(":fixed_pay_third_year",$info['fixed_pay_third_year'][$i]);
-                $stmt->bindParam(":total_pay_third_year",$info['total_pay_third_year'][$i]);
-                $stmt->bindParam(":ratio",$info['ratio_to_mre'][$i]);
-                $stmt->execute();
+            $stmt = $dbobject->prepare("insert into `pa_report_remuneration_analysis` (`pa_reports_id`, `director_name`,`dir_din_no`, `promoter_non_promoter`,`rem_first_year`,`fixed_pay_first_year`,`total_pay_first_year`,`rem_second_year`,`fixed_pay_second_year`,`total_pay_second_year`,`rem_third_year`,`fixed_pay_third_year`,`total_pay_third_year`,`ratio`) VALUES (:pa_reports_id, :director_name,:dir_din_no,:promoter_non_promoter,:rem_first_year, :fixed_pay_first_year,:total_pay_first_year,:rem_second_year,:fixed_pay_second_year,:total_pay_second_year,:rem_third_year, :fixed_pay_third_year,:total_pay_third_year,:ratio)");
+            $stmt->bindParam(":pa_reports_id",$pa_report_id);
+            $stmt->bindParam(":director_name",$info['director_name'][$i]);
+            $stmt->bindParam(":dir_din_no",$info['dir_din_no'][$i]);
+            $stmt->bindParam(":promoter_non_promoter",$info['promoter_non_promoter'][$i]);
+            $stmt->bindParam(":rem_first_year",$info['remuneration_year_1']);
+            $stmt->bindParam(":fixed_pay_first_year",$info['fixed_pay_first_year'][$i]);
+            $stmt->bindParam(":total_pay_first_year",$info['total_pay_first_year'][$i]);
+            $stmt->bindParam(":rem_second_year",$info['remuneration_year_2']);
+            $stmt->bindParam(":fixed_pay_second_year",$info['fixed_pay_second_year'][$i]);
+            $stmt->bindParam(":total_pay_second_year",$info['total_pay_second_year'][$i]);
+            $stmt->bindParam(":rem_third_year",$info['remuneration_year_3']);
+            $stmt->bindParam(":fixed_pay_third_year",$info['fixed_pay_third_year'][$i]);
+            $stmt->bindParam(":total_pay_third_year",$info['total_pay_third_year'][$i]);
+            $stmt->bindParam(":ratio",$info['ratio_to_mre'][$i]);
+            $stmt->execute();
         }
 
 

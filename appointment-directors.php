@@ -2187,7 +2187,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <p><strong>General Recommendation Guidelines</strong></p>
                                     <!--1-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the Company have a Nomination and Remuneration Committee? <b>value</b></label>
+                                        <!--seperate hai to nomination-->
+                                        <label class="col-md-10">Does the Company have a Nomination and Remuneration Committee? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="235" id="arid_1">
                                                 <option value="">Select</option>
@@ -2204,7 +2205,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                     </div>
                                     <div class="form-group hidden" id="arid_1_block_1">
-                                        <label class="col-md-10">Is the Nomination and Remuneration Committee Compliant? <b>value</b></label>
+                                        <label class="col-md-10">Is the Nomination and Remuneration Committee Compliant?</label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control recommendations-fire-arid' id="is_the_nomination_and_remuneration_committee_compliant">
                                                 <option value="">Select</option>
@@ -2221,7 +2222,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-10">Has the Company disclosed remuneration paid to the director? <b>value</b></label>
+                                        <!--read the question-->
+                                        <label class="col-md-10">Has the Company disclosed remuneration paid to the director? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="237" id="has_the_company_disclosed_remuneration_paid_to_the_director">
                                                 <option value="">Select</option>
@@ -2239,7 +2241,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--3-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the Company paying remuneration more than 25% of MD remuneration without any adequate Justification? (Not Applicable if director is getting remuneration due to other commitments)  <b>value</b></label>
+                                        <!--((director ka remuneration / additional classification mai cmd ya md) * 100) > 25-->
+                                        <label class="col-md-10">Is the Company paying remuneration more than 25% of MD remuneration without any adequate Justification? (Not Applicable if director is getting remuneration due to other commitments)  <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="238" id="arid_3">
                                                 <option value="">Select</option>
@@ -2257,7 +2260,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--4-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the remuneration paid to director more than 3 times the average NED remuneration (excluding the director being analysed) without adequate justification? (Not Applicable if director is getting remuneration due to other commitments) <b>value</b></label>
+                                        <!--((director ka remuneration / avg of ned ,nedp, id excluding the director) > 3 to yes) -->
+                                        <label class="col-md-10">Is the remuneration paid to director more than 3 times the average NED remuneration (excluding the director being analysed) without adequate justification? (Not Applicable if director is getting remuneration due to other commitments) <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="239" id="arid_4">
                                                 <option value="">Select</option>
@@ -2293,7 +2297,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--6-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the director liable to retire by rotation? <b>Value</b></label>
+                                        <!--read question -->
+                                        <label class="col-md-10">Is the director liable to retire by rotation? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="241" id="arid_6">
                                                 <option value="">Select</option>
@@ -2329,7 +2334,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--8-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Has the Company formed the board committees required under Companies Act, 2013? <b>Value</b></label>
+                                        <label class="col-md-10">Has the Company formed the board committees required under Companies Act, 2013? </label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="243" id="arid_8">
                                                 <option value="">Select</option>
@@ -2347,7 +2352,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--9-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Did the Director attend all the Board Meetings held last year? <b>Value</b></label>
+                                        <!--read question-->
+                                        <label class="col-md-10">Did the Director attend all the Board Meetings held last year? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="244" id="arid_9">
                                                 <option value="">Select</option>
@@ -2365,7 +2371,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--10-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Will the Board Composition fall below the applicable regulatory norms upon appointment of the director? <b>Value</b></label>
+                                        <label class="col-md-10">Will the Board Composition fall below the applicable regulatory norms upon appointment of the director? </label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="245" id="arid_10">
                                                 <option value="">Select</option>
@@ -2403,7 +2409,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <p><strong>Independence of Independent Director</strong></p>
                                     <!--12-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the tenure of director more than 10 years (in Company or group company)?</label>
+                                        <!--association > 10 to yes-->
+                                        <label class="col-md-10">Is the tenure of director more than 10 years (in Company or group company)? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="283" id="arid_12">
                                                 <option value="">Select</option>
@@ -2475,7 +2482,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--16-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the Director have a pecuniary relationship with the Company?</label>
+                                        <!--read the question-->
+                                        <label class="col-md-10">Does the Director have a pecuniary relationship with the Company? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="287" id="arid_16">
                                                 <option value="">Select</option>
@@ -2531,7 +2539,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <p><strong>Time Commitments:</strong></p>
                                     <!--19-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the Director holds more than 10 public directorships or more than 20 total directorships?</label>
+                                        <!--read the question-->
+                                        <label class="col-md-10">Does the Director holds more than 10 public directorships or more than 20 total directorships? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="247" id="arid_19">
                                                 <option value="">Select</option>
@@ -2549,7 +2558,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--20-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the Director holds more than 10 committee memberships?</label>
+                                        <!--read the question-->
+                                        <label class="col-md-10">Does the Director holds more than 10 committee memberships? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="248" id="arid_20">
                                                 <option value="">Select</option>
@@ -2567,7 +2577,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--21-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the Director hold more than 5 committee chairmanships?</label>
+                                        <!--read the question-->
+                                        <label class="col-md-10">Does the Director hold more than 5 committee chairmanships? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="249" id="arid_21">
                                                 <option value="">Select</option>
@@ -2621,7 +2632,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--24-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Has the Director missed all the Board meetings in the financial year?</label>
+                                        <!--read the question-->
+                                        <label class="col-md-10">Has the Director missed all the Board meetings in the financial year? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="252" id="arid_24">
                                                 <option value="">Select</option>
@@ -2639,7 +2651,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--25-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the Director serve on boards of more than 7 listed companies (3 in case the person is serving as a whole time director in a listed company) and total directorships in public companies is more than 10?</label>
+                                        <!--director listed company mai 7 se jyada to yes else no-->
+                                        <label class="col-md-10">Does the Director serve on boards of more than 7 listed companies (3 in case the person is serving as a whole time director in a listed company) and total directorships in public companies is more than 10? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="290" id="arid_25">
                                                 <option value="">Select</option>
@@ -2671,7 +2684,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--26-->
                                     <div class="board-chairman-arid-questions hidden">
                                         <div class="form-group">
-                                            <label class="col-md-10">Has the director missed more than 1 AGM held in the last three years and the Company has not disclosed compelling reason(s) for the same?</label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Has the director missed more than 1 AGM held in the last three years and the Company has not disclosed compelling reason(s) for the same? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="253" id="arid_26">
                                                     <option value="">Select</option>
@@ -2689,7 +2703,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--27-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance of the Director at board meetings held in the last three years less than 75%?</label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Is the attendance of the Director at board meetings held in the last three years less than 75%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control' id="arid_27">
                                                     <option value="">Select</option>
@@ -2700,7 +2715,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                             </div>
                                         </div>
                                         <div class="form-group hidden" id="arid_27_block_1">
-                                            <label class="col-md-10">Is the attendance of the director at board meetings held in the last year more than 75%? <b>Value</b></label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Is the attendance of the director at board meetings held in the last year more than 75%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="254" id="arid_27">
                                                     <option value="">Select</option>
@@ -2718,7 +2734,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--28-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Does the Company have a non-compliant Audit Committee? <b>Value</b></label>
+                                            <label class="col-md-10">Does the Company have a non-compliant Audit Committee? </label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="255" id="arid_28">
                                                     <option value="">Select</option>
@@ -2823,7 +2839,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <div class="audit-committee-questions-arid hidden">
                                         <!--34-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Has the Director missed more than 1 AGM held in the last three years and the Company has not disclosed compelling reason(s) for the same?</label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Has the Director missed more than 1 AGM held in the last three years and the Company has not disclosed compelling reason(s) for the same? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="260" id="arid_34">
                                                     <option value="">Select</option>
@@ -2841,7 +2858,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--35-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance of the Director at board meetings held in the last three years less than75%?</label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Is the attendance of the Director at board meetings held in the last three years less than 75%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control' id="arid_35">
                                                     <option value="">Select</option>
@@ -2853,7 +2871,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--36-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance of the director at board meetings held in the last year more than 75%?  <b>Value</b></label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Is the attendance of the director at board meetings held in the last year more than 75%?  <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="261" id="arid_36">
                                                     <option value="">Select</option>
@@ -2871,7 +2890,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--37-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance at Audit Committee meetings held in last three years less than 75%? <b>Value</b></label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Is the attendance at Audit Committee meetings held in last three years less than 75%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="262" id="arid_37">
                                                     <option value="">Select</option>
@@ -2907,7 +2927,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--39-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the Non-audit fee for the Auditors consistently more than 50% for the last 3 years?</label>
+                                            <!--non audit fee / total auditors fee > 50 in any of the last three years then yes-->
+                                            <label class="col-md-10">Is the Non-audit fee for the Auditors consistently more than 50% for the last 3 years? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="264" id="arid_39">
                                                     <option value="">Select</option>
@@ -3051,7 +3072,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--47-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Was the Audit Committee Chairman present at the last AGM?</label>
+                                            <!--read the question-->
+                                            <label class="col-md-10">Was the Audit Committee Chairman present at the last AGM? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="272" id="arid_47">
                                                     <option value="">Select</option>
@@ -3084,7 +3106,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <div class="nom-rem-questions-arid hidden">
                                         <!--49-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance at board meetings held last year less than 50%?</label>
+                                            <!--read the question / percentage-->
+                                            <label class="col-md-10">Is the attendance at board meetings held last year less than 50%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="273" id="arid_49">
                                                     <option value="">Select</option>
@@ -3102,7 +3125,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--50-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the Attendance at board meetings held in the last three years less than 75%? <b>Value</b></label>
+                                            <!--read the question / per-->
+                                            <label class="col-md-10">Is the Attendance at board meetings held in the last three years less than 75%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="274" id="arid_50">
                                                     <option value="">Select</option>
@@ -3120,7 +3144,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--51-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance at Nomination & Remuneration Committee meetings held last year less than 50%? <b>Value</b></label>
+                                            <!--read the question / per-->
+                                            <label class="col-md-10">Is the attendance at Nomination & Remuneration Committee meetings held last year less than 50%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="275" id="arid_51">
                                                     <option value="">Select</option>
@@ -3138,7 +3163,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--52-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Is the attendance at Nomination &amp; Remuneration Committee meetings held in last 3 years less than 75%?</label>
+                                            <!--read the question / per and peperate hui to nomination-->
+                                            <label class="col-md-10">Is the attendance at Nomination &amp; Remuneration Committee meetings held in last 3 years less than 75%? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="276" id="arid_52">
                                                     <option value="">Select</option>
@@ -3192,7 +3218,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                         <!--55-->
                                         <div class="form-group">
-                                            <label class="col-md-10">Did Nomination and Remuneration Committee meet last year?</label>
+                                            <!-- no of meetings held in current year is > 0 then yes -->
+                                            <label class="col-md-10">Did Nomination and Remuneration Committee meet last year? <b class="id-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="no" data-trigger-no="279" id="arid_55">
                                                     <option value="">Select</option>
@@ -3284,7 +3311,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <p><strong>Director's Performance:</strong></p>
                                     <!--60-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the attendance at board meetings held last year was less than 50%?</label>
+                                        <!--read the question / per-->
+                                        <label class="col-md-10">Is the attendance at board meetings held last year was less than 50%? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="292" id="arid_60">
                                                 <option value="">Select</option>
@@ -3302,7 +3330,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--61-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Was the Attendance at Audit Committee meetings held last year was less than 50%? </label>
+                                        <!--read the question / per-->
+                                        <label class="col-md-10">Was the Attendance at Audit Committee meetings held last year was less than 50%? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="293" id="arid_61">
                                                 <option value="">Select</option>
@@ -3320,7 +3349,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--62-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Was the attendance at board meetings held in the last three years was less than 75%? (NA if attendance increased in recent years)</label>
+                                        <!--read the question / per-->
+                                        <label class="col-md-10">Was the attendance at board meetings held in the last three years was less than 75%? (NA if attendance increased in recent years) <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="294" id="arid_62">
                                                 <option value="">Select</option>
@@ -3338,7 +3368,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--63-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Was the attendance at Audit Committee meetings held in last three years was less than 75%?</label>
+                                        <!--read the question / per-->
+                                        <label class="col-md-10">Was the attendance at Audit Committee meetings held in last three years was less than 75%? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="295" id="arid_63">
                                                 <option value="">Select</option>
@@ -3356,7 +3387,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--64-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Was the attendance at Nomination & Remuneration Committee meetings held in last 3 years less than 75%?</label>
+                                        <!--read the question / per-->
+                                        <label class="col-md-10">Was the attendance at Nomination & Remuneration Committee meetings held in last 3 years less than 75%? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="296" id="arid_64">
                                                 <option value="">Select</option>
@@ -3374,7 +3406,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--65-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the Independent Director(s) liable to retire by rotation?</label>
+                                        <!--read the question / per being analysed-->
+                                        <label class="col-md-10">Is the Independent Director(s) liable to retire by rotation? <b class="id-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-arid' data-trigger-value="yes" data-trigger-no="297" id="arid_65">
                                                 <option value="">Select</option>
@@ -3967,7 +4000,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!-- agar commitee same hai and present hai to yes
                                          agal hai or nomination hai to yes
                                          -->
-                                        <label class="col-md-10">Does the Company have a Nomination &amp; Remuneration Committee? (Related to Appointment) <b>value</b></label>
+                                        <label class="col-md-10">Does the Company have a Nomination &amp; Remuneration Committee? (Related to Appointment) <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="no" data-trigger-no="300" id="ared_1">
                                                 <option value="">Select</option>
@@ -3988,7 +4021,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!-- agar commitee same hai and present hai to yes
                                          agal hai or remuneration hai to yes
                                          -->
-                                        <label class="col-md-10">Does the Company have a Nomination & Remuneration Committee? (Related to Remuneration)  <b>value</b></label>
+                                        <label class="col-md-10">Does the Company have a Nomination & Remuneration Committee? (Related to Remuneration) <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="no" data-trigger-no="301" id="ared_2">
                                                 <option value="">Select</option>
@@ -4025,7 +4058,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--4-->
                                     <div class="form-group">
                                         <!-- if remuneration is present then yes else no -->
-                                        <label class="col-md-10">Has the remuneration paid to the director disclosed? <b>value</b></label>
+                                        <label class="col-md-10">Has the remuneration paid to the director disclosed? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="no" data-trigger-no="303" id="ared_4">
                                                 <option value="">Select</option>
@@ -4044,7 +4077,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--5-->
                                     <div class="form-group">
                                         <!-- if member hai to yes / agal hai to nomination ka member hai to yes -->
-                                        <label class="col-md-10">Is the director a member of the Nomination & Remuneration Committee? <b>value</b></label>
+                                        <label class="col-md-10">Is the director a member of the Nomination & Remuneration Committee? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="304" id="ared_5">
                                                 <option value="">Select</option>
@@ -4063,7 +4096,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--6-->
                                     <div class="form-group">
                                         <!-- read the question -->
-                                        <label class="col-md-10">Was the Director’s attendance at board meetings held in the last three years less than 75% (NA if increased in recent years) <b>Value</b></label>
+                                        <label class="col-md-10">Was the Director’s attendance at board meetings held in the last three years less than 75% (NA if increased in recent years) <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="305" id="ared_6">
                                                 <option value="">Select</option>
@@ -4082,7 +4115,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--7-->
                                     <div class="form-group">
                                         <!-- read the question -->
-                                        <label class="col-md-10">Did the director not attend any of the Board meetings held in last financial year? <b>Value</b></label>
+                                        <label class="col-md-10">Did the director not attend any of the Board meetings held in last financial year? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="306" id="ared_7">
                                                 <option value="">Select</option>
@@ -4138,7 +4171,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--10-->
                                     <div class="form-group">
                                         <!-- public directorship > 10 then yes else no -->
-                                        <label class="col-md-10">Does the director hold directorship in more than 10 public companies? <b>Value</b></label>
+                                        <label class="col-md-10">Does the director hold directorship in more than 10 public companies? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="309" id="ared_10">
                                                 <option value="">Select</option>
@@ -4157,7 +4190,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--11-->
                                     <div class="form-group">
                                         <!-- total directorship > 20 then yes else no -->
-                                        <label class="col-md-10">Does the director hold directorship in more than 20 companies? <b>Value</b></label>
+                                        <label class="col-md-10">Does the director hold directorship in more than 20 companies? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="310" id="ared_11">
                                                 <option value="">Select</option>
@@ -4176,7 +4209,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--12-->
                                     <div class="form-group">
                                         <!-- listed company directorship > 3 then yes else no -->
-                                        <label class="col-md-10">Does the director hold directorship in more than 3 listed companies? <b>Value</b></label>
+                                        <label class="col-md-10">Does the director hold directorship in more than 3 listed companies? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="311" id="ared_12">
                                                 <option value="">Select</option>
@@ -4195,7 +4228,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--13-->
                                     <div class="form-group">
                                         <!-- committee membership > 10 then yes else no -->
-                                        <label class="col-md-10">Does the director holds more than 10 committee memberships? <b>Value</b></label>
+                                        <label class="col-md-10">Does the director holds more than 10 committee memberships? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="312" id="ared_13">
                                                 <option value="">Select</option>
@@ -4214,7 +4247,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <!--14-->
                                     <div class="form-group">
                                         <!-- committee chairmanship > 10 then yes else no -->
-                                        <label class="col-md-10">Does the director holds more than 5 committee chairmanships? <b>Value</b></label>
+                                        <label class="col-md-10">Does the director holds more than 5 committee chairmanships? <b class="ed-analysis-values">value</b></label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="313" id="ared_14">
                                                 <option value="">Select</option>
@@ -4282,7 +4315,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!--18-->
                                         <div class="form-group">
                                             <!-- pichle 3 saal mai ek bhi agm miss kiya hai then yes else no -->
-                                            <label class="col-md-10">Has the director missed more than 1 AGM held in the last three years and the Company has not disclosed a compelling reason for the same? </label>
+                                            <label class="col-md-10">Has the director missed more than 1 AGM held in the last three years and the Company has not disclosed a compelling reason for the same? <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="316" id="ared_18">
                                                     <option value="">Select</option>
@@ -4301,7 +4334,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!--19-->
                                         <div class="form-group">
                                             <!-- read question and give percentage-->
-                                            <label class="col-md-10">Was the attendance at board meetings held last year less than 67% ?(NA if increased in recent years)</label>
+                                            <label class="col-md-10">Was the attendance at board meetings held last year less than 67% ?(NA if increased in recent years) <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="317" id="ared_19">
                                                     <option value="">Select</option>
@@ -4320,7 +4353,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!--20-->
                                         <div class="form-group">
                                             <!-- read question and give percentage-->
-                                            <label class="col-md-10">Was the attendance at board meetings held in the last three years less than 75% (NA if increased recent years) </label>
+                                            <label class="col-md-10">Was the attendance at board meetings held in the last three years less than 75% (NA if increased recent years) <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="318" id="ared_20">
                                                     <option value="">Select</option>
@@ -4393,7 +4426,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!--24-->
                                         <div class="form-group">
                                             <!-- read question agar alag hai to nomination check karni hai -->
-                                            <label class="col-md-10">Does the Company have a Nomination & Remuneration Committee?</label>
+                                            <label class="col-md-10">Does the Company have a Nomination & Remuneration Committee? <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="no" data-trigger-no="322" id="ared_24">
                                                     <option value="">Select</option>
@@ -4426,7 +4459,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <div class="is-director-ceo-cfo-questions-ared hidden">
                                         <div class="form-group">
                                             <!-- read question yes/no-->
-                                            <label class="col-md-10">Has the director missed more than 1 AGM held in the last three years and the Company has not disclosed a compelling reason for the same? </label>
+                                            <label class="col-md-10">Has the director missed more than 1 AGM held in the last three years and the Company has not disclosed a compelling reason for the same? <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="323" id="ared_26">
                                                     <option value="">Select</option>
@@ -4445,7 +4478,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!--27-->
                                         <div class="form-group">
                                             <!-- read question and percentage-->
-                                            <label class="col-md-10">Was the attendance at board meetings held last year less than 67% ?(NA if increased in recent years) <b>Value</b></label>
+                                            <label class="col-md-10">Was the attendance at board meetings held last year less than 67% ?(NA if increased in recent years) <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="324" id="ared_27">
                                                     <option value="">Select</option>
@@ -4464,7 +4497,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <!--28-->
                                         <div class="form-group">
                                             <!-- read question and percentage-->
-                                            <label class="col-md-10">Was the attendance at board meetings held in the last three years less than 75% (NA if increased recent years) <b>Value</b></label>
+                                            <label class="col-md-10">Was the attendance at board meetings held in the last three years less than 75% (NA if increased recent years) <b class="ed-analysis-values">value</b></label>
                                             <div class="col-md-2">
                                                 <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="325" id="ared_28">
                                                     <option value="">Select</option>
@@ -4605,7 +4638,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--36-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Is the remuneration paid to the executive director excessive? (Not applicable if the Director is appointed elsewhere also) <b>Value</b></label>
+                                        <label class="col-md-10">Is the remuneration paid to the executive director excessive? (Not applicable if the Director is appointed elsewhere also)</label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="333" id="ared_36">
                                                 <option value="">Select</option>
@@ -4623,7 +4656,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                     </div>
                                     <!--37-->
                                     <div class="form-group">
-                                        <label class="col-md-10">Does the resolution provide the Board discretion to change remuneration without taking further shareholder approval and the total remuneration is without any limit? <b>Value</b></label>
+                                        <label class="col-md-10">Does the resolution provide the Board discretion to change remuneration without taking further shareholder approval and the total remuneration is without any limit?</label>
                                         <div class="col-md-2">
                                             <select name="triggers[]" class='form-control analysis_trigger recommendations-fire-ared' data-trigger-value="yes" data-trigger-no="334" id="ared_37">
                                                 <option value="">Select</option>

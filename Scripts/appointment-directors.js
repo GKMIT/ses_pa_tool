@@ -395,7 +395,6 @@ CustomJS.prototype = {
                         table_id:final_ids
                     },
                     success: function(data) {
-                        console.log(data);
                         $("#recommendation_text_arned").parent().find(".cke_textarea_inline").html(data.recommendation_text);
                     }
                 });
@@ -425,7 +424,6 @@ CustomJS.prototype = {
                         table_id:final_ids
                     },
                     success: function(data) {
-                        console.log(data);
                         $("#recommendation_text_arid").parent().find(".cke_textarea_inline").html(data.recommendation_text);
                     }
                 });
@@ -455,7 +453,6 @@ CustomJS.prototype = {
                         table_id:final_ids
                     },
                     success: function(data) {
-                        console.log(data);
                         $("#recommendation_text_ared").parent().find(".cke_textarea_inline").html(data.recommendation_text);
                     }
                 });
@@ -517,7 +514,6 @@ CustomJS.prototype = {
                     din_nos:final_dins
                 },
                 success: function(data) {
-                    console.log(data);
                     var total_pay = 0;
                     $("#rem_second_year").val($("#remuneration_years").val()-1);
                     $("#rem_third_year").val($("#remuneration_years").val()-2);
@@ -594,7 +590,6 @@ CustomJS.prototype = {
                     company_name : $(".company2").val()
                 },
                 success: function(data) {
-                    console.log(data);
                     $(".director2").val(data.director_name);
                     $(".promotor2").val(data.promoter_group);
                     $(".remuneration2").val(data.remuneration);
@@ -619,10 +614,8 @@ CustomJS.prototype = {
                     dir_din_no:$director.val()
                 },
                 error: function (data) {
-                    console.log(data);
                 },
                 success: function (data) {
-                    console.log(data);
                     $(".ned-functional-area").html(data.functional_area);
                     $(".ned-education").html(data.education);
                     $(".ned-past-ex").html(data.past_ex);
@@ -673,7 +666,7 @@ CustomJS.prototype = {
                     console.log(data);
                 },
                 success: function (data) {
-                    console.log(data);
+
                     $(".id-functional-area").val(data.functional_area);
                     $(".id-education").val(data.education);
                     $(".id-past-ex").val(data.past_ex);
@@ -704,10 +697,10 @@ CustomJS.prototype = {
                     $(".id-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
                     $(".id-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
 
-                    //var analysis_values = data.analysis_values;
-                    //$(".ned-analysis-values").each(function(i,d) {
-                    //    $(this).html("["+analysis_values[i]+"]");
-                    //});
+                    var analysis_values = data.analysis_values;
+                    $(".id-analysis-values").each(function(i,d) {
+                        $(this).html("["+analysis_values[i]+"]");
+                    });
                 }
             });
         });
@@ -761,10 +754,9 @@ CustomJS.prototype = {
                     dir_din_no:$director.val()
                 },
                 error: function (data) {
-                    console.log(data);
                 },
                 success: function (data) {
-                    console.log(data);
+
                     $("#past_rem_dir_name").val($director.find('option:selected').text());
                     $(".ed-functional-area").val(data.functional_area);
                     $(".ed-education").val(data.education);
@@ -794,10 +786,11 @@ CustomJS.prototype = {
                     }
                     $(".ed-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
                     $(".ed-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
-                    //var analysis_values = data.analysis_values;
-                    //$(".ned-analysis-values").each(function(i,d) {
-                    //    $(this).html("["+analysis_values[i]+"]");
-                    //});
+                    var analysis_values = data.analysis_values;
+                    console.log(analysis_values);
+                    $(".ed-analysis-values").each(function(i,d) {
+                        $(this).html("["+analysis_values[i]+"]");
+                    });
                 }
             });
         });
@@ -814,7 +807,6 @@ CustomJS.prototype = {
                     $.loader_add();
                 },
                 success:function(data) {
-                    console.log(data);
                     var resolution_name="appointment_directors";
                     if(data.status=="Existing") {
                         $('#edit_mode').val("Edit Mode");
@@ -825,7 +817,6 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofAppointmentOfDirectors:1,ResolutionName:resolution_name,MainSection:main_section,Slot_no:slot_no},
                             success:function(data){
-                                console.log(data);
                                 var triggers = data.triggers;
                                 $("select[name='triggers[]']").each(function(i,d) {
                                     var select = $(this);
