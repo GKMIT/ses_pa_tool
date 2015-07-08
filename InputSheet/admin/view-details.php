@@ -663,6 +663,7 @@ if(!isset($_SESSION['logged_in'])) {
                     $(".ajax-waiting").removeClass('hidden');
                 },
                 success: function(data) {
+                    console.log(data);
                     $("#anchor_excel_export").attr("href","../sheet-writer.php?company_id="+$("#companies_id").val()+"&financial_year="+$("#financial_year").val());
                     $(".ajax-waiting").addClass('hidden');
                     $("#director_info").html(data.director_details);

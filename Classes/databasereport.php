@@ -5278,8 +5278,7 @@ class DatabaseReports {
         $dbobject=null;
         return $response;
     }
-
-    function filteredDirectors($directors) {
+    function filteredDirectorsForSheet($directors) {
 
         $is_chairman_id = false;
         $is_chairman_ed = false;
@@ -5305,33 +5304,34 @@ class DatabaseReports {
             }
         }
         if($is_chairman_id) {
+
             foreach ($directors as $director) {
                 if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5345,27 +5345,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5379,27 +5379,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5413,27 +5413,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5447,27 +5447,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }

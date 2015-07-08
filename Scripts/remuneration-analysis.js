@@ -47,7 +47,12 @@ CustomJS.prototype = {
                         $("#rem_third_year").val($("#remuneration_years").val()-2);
                         var no_directors = data.length;
                         for(var i=0;i<no_directors;i++) {
-                            $("#remuneration_table_body tr").eq(i).find("td").eq(2).find("input").val(data[i].first_year_fixed_pay);
+                            if(data[i].first_year_fixed_pay!="NA") {
+                                var val = parseFloat(data[i].first_year_fixed_pay).toFixed(2);
+                                $("#remuneration_table_body tr").eq(i).find("td").eq(2).find("input").val(val);
+                            }
+                            else
+                                $("#remuneration_table_body tr").eq(i).find("td").eq(2).find("input").val(data[i].first_year_fixed_pay);
                             if(data[i].first_year_fixed_pay!="NA" && data[i].first_year_variable_pay!="NA") {
                                 total_pay = parseFloat(data[i].first_year_fixed_pay)+parseFloat(data[i].first_year_variable_pay);
                                 total_pay = total_pay.toFixed(2);
@@ -56,7 +61,14 @@ CustomJS.prototype = {
                                 total_pay = "NA";
                             }
                             $("#remuneration_table_body tr").eq(i).find("td").eq(3).find("input").val(total_pay);
-                            $("#remuneration_table_body tr").eq(i).find("td").eq(4).find("input").val(data[i].second_year_fixed_pay);
+
+                            if(data[i].second_year_fixed_pay!="NA") {
+                                var val = parseFloat(data[i].second_year_fixed_pay).toFixed(2);
+                                $("#remuneration_table_body tr").eq(i).find("td").eq(4).find("input").val(val);
+                            }
+                            else
+                                $("#remuneration_table_body tr").eq(i).find("td").eq(4).find("input").val(data[i].second_year_fixed_pay);
+
                             if(data[i].second_year_fixed_pay!="NA" && data[i].second_year_variable_pay!="NA") {
                                 total_pay = parseFloat(data[i].second_year_fixed_pay)+parseFloat(data[i].second_year_variable_pay);
                                 total_pay = total_pay.toFixed(2);
@@ -65,7 +77,12 @@ CustomJS.prototype = {
                                 total_pay = "NA";
                             }
                             $("#remuneration_table_body tr").eq(i).find("td").eq(5).find("input").val(total_pay);
-                            $("#remuneration_table_body tr").eq(i).find("td").eq(6).find("input").val(data[i].third_year_fixed_pay);
+                            if(data[i].third_year_fixed_pay!="NA") {
+                                var val = parseFloat(data[i].third_year_fixed_pay).toFixed(2);
+                                $("#remuneration_table_body tr").eq(i).find("td").eq(6).find("input").val(val);
+                            }
+                            else
+                                $("#remuneration_table_body tr").eq(i).find("td").eq(6).find("input").val(data[i].third_year_fixed_pay);
                             if(data[i].third_year_fixed_pay!="NA" && data[i].third_year_variable_pay!="NA") {
                                 total_pay = parseFloat(data[i].third_year_fixed_pay)+parseFloat(data[i].third_year_variable_pay);
                                 total_pay = total_pay.toFixed(2);
@@ -90,11 +107,7 @@ CustomJS.prototype = {
                     first_year:$("#indexed_tsr_year_start_year").val(),
                     highest_paid_ed : $(".din_numbers").eq(0).val()
                 },
-                error: function(data) {
-                    console.log(data);
-                },
                 success: function(data) {
-                    console.log(data);
                     var indexed_tsr = 0;
                     for(var i= 5,j=0;i>=1;i--,j++) {
                         if(j!=0) {
@@ -110,8 +123,8 @@ CustomJS.prototype = {
                         if(data.remuneration_growth[i].indexed_tsr==null)
                             indexed_tsr = 0;
                         else
-                            indexed_tsr = data.remuneration_growth[i].indexed_tsr;
-                        $("#remuneration_growth tr").eq(j).find("td").eq(2).find("input").val(data.remuneration_growth[i].indexed_tsr.toFixed(2));
+                            indexed_tsr = data.remuneration_growth[i].indexed_tsr.toFixed(2);
+                        $("#remuneration_growth tr").eq(j).find("td").eq(2).find("input").val(indexed_tsr);
                     }
                 }
             });
@@ -139,7 +152,6 @@ CustomJS.prototype = {
                 dataType:'JSON',
                 data:{CheckDataExistingOfRemunerationAnalysis:1},
                 success:function(data){
-                    console.log(data);
                     var resolution_name="";
                     if(data) {
                         $('#edit_mode').val("Edit Mode");
