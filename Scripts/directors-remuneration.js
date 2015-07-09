@@ -1123,11 +1123,12 @@ CustomJS.prototype = {
                 type:"GET",
                 dataType: "JSON",
                 data:{
-                    dividend_data_5_years:true,
+                    dividend_data_6_years:true,
                     first_year:$("#indexed_tsr_year_start_year").val(),
                     highest_paid_ed : $(".din_numbers").find("option").eq(1).val()
                 },
                 success: function(data) {
+                    console.log(data);
                     var indexed_tsr = 0;
                     for(var i= 5,j=0;i>=0;i--,j++) {
 

@@ -109,7 +109,7 @@ CustomJS.prototype = {
                 },
                 success: function(data) {
                     var indexed_tsr = 0;
-                    for(var i= 5,j=0;i>=1;i--,j++) {
+                    for(var i= 4,j=0;i>=0;i--,j++) {
                         if(j!=0) {
                             $("#indexed_tsr_tbody tr").eq(j).find("td").eq(0).find("input").val(data.dividend_data[i].year);
                         }
