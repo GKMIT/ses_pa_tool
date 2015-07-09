@@ -453,7 +453,7 @@ if(isset($_SESSION['report_id'])) {
                                             $company_id = $_SESSION['company_id'];
                                             $financial_year = $_SESSION['report_year'];
                                             $directors = $db->getCompanyDirectorsWithPay($company_id, $financial_year);
-                                            $filtered_directors =$db->filteredDirectors($directors);
+                                            $filtered_directors =$db->filteredDirectorsForSheet($directors);
                                             foreach ($filtered_directors as $director) {
                                                 ?>
                                                 <tr>

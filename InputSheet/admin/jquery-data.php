@@ -6,7 +6,7 @@ $months = array('3'=>'March','6'=>'June','9'=>'September','12'=>'December');
 $fiscal_year = $months[$company_details['fiscal_year_end']];
 $generic_array = $db->getCompanyDirectors($_GET['company_id'],$_GET['financial_year']);
 $directors = $generic_array['directors'];
-$directors = $db->filteredDirectors($directors);
+$directors = $db->filteredDirectorsForSheet($directors);
 $director_details = "";
 $are_committees_seperate = $generic_array['are_committees_seperate'];
 if($generic_array['are_committees_seperate']=='yes') {
@@ -60,12 +60,14 @@ else {
 $director_remuneration_info = $db->getCompanyDirectorsRemunerationDetails($_GET['company_id'],$_GET['financial_year']);
 $director_agm_info = $db->getCompanyDirectorsAGMDetails($_GET['company_id'],$_GET['financial_year']);
 $director_board_attendance_info = $db->getCompanyDirectorsBoardAttendance($_GET['company_id'],$_GET['financial_year']);
-$audit_committee_attendance_info = $db->getCompanyAuditCommitteeAttendance($_GET['company_id'],$_GET['financial_year']);
-$stackholders_committee_attendance_info = $db->getCompanyStackholdersCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year']);
-$csr_committee_attendance_info = $db->getCompanyCSRCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year']);
-$risk_management_committee_attendance_info = $db->getCompanyRiskManagementCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year']);
+
+$audit_committee_attendance_info = $db->getCompanyAuditCommitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
+$stackholders_committee_attendance_info = $db->getCompanyStackholdersCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
+$csr_committee_attendance_info = $db->getCompanyCSRCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
+$risk_management_committee_attendance_info = $db->getCompanyRiskManagementCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
 $is_rem_nom_same = $generic_array['are_committees_seperate']=='yes' ? 'no' : 'yes';
-$generic_array = $db->getRemunerationNominationCommitteeAttendance($_GET['company_id'],$_GET['financial_year'],$is_rem_nom_same);
+$generic_array = $db->getRemunerationNominationCommitteeAttendance($_GET['company_id'],$_GET['financial_year'],$is_rem_nom_same,$directors);
+
 $audit_fee_details = $db->getAuditFeeInfo($_GET['company_id'],$_GET['financial_year']);
 $auditors_detail = $db->getAuditorDetails($_GET['company_id'],$_GET['financial_year']);
 $dividend_info = $db->getDividendInfoViewSheet($_GET['company_id'],$_GET['financial_year']);

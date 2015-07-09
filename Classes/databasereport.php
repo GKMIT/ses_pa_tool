@@ -510,10 +510,12 @@ class DatabaseReports {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $held = $row['held'];
             $attended = $row['attended'];
-            $per = round($attended/$held*100,2);
-            if($per<75) {
-                $per = round($per);
-                $directors[]=$row['dir_name']."(".$per."%)";
+            if($held!=0) {
+                $per = round($attended/$held*100,2);
+                if($per<75) {
+                    $per = round($per);
+                    $directors[]=$row['dir_name']."(".$per."%)";
+                }
             }
         }
         if(count($directors)!=0)
@@ -571,9 +573,11 @@ class DatabaseReports {
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $held = $row['held'];
             $attended = $row['attended'];
-            $per = round($attended/$held*100,2);
-            if($per<75) {
-                $directors[]=$row['dir_name']."(".$per.")";
+            if($held!=0) {
+                $per = round($attended / $held * 100, 2);
+                if ($per < 75) {
+                    $directors[] = $row['dir_name'] . "(" . $per . ")";
+                }
             }
         }
         if(count($directors)!=0)
@@ -633,7 +637,7 @@ class DatabaseReports {
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_NUM);
             $committee_meetings_held =$row[0];
-            $stmt = $dbobject->prepare(" select * from `nomination_committee_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`nomination_committee_attendance`.`dir_din_no` where `nomination_committee_attendance`.`company_id`=:company_id and `nomination_committee_attendance`.`att_year`=:financial_year");
+            $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_attendance` INNER JOIN `directors` ON `directors`.`din_no`=`nomination_remuneration_committee_attendance`.`dir_din_no` where `nomination_remuneration_committee_attendance`.`company_id`=:company_id and `nomination_remuneration_committee_attendance`.`att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":financial_year",$financial_year);
             $stmt->execute();
@@ -646,9 +650,11 @@ class DatabaseReports {
                     $directors[]=$row['dir_name']."(".$per.")";
                 }
                 else {
-                    $per = round($attended/$held*100,2);
-                    if($per<75) {
-                        $directors[]=$row['dir_name']."(".$per.")";
+                    if($held!=0) {
+                        $per = round($attended / $held * 100, 2);
+                        if ($per < 75) {
+                            $directors[] = $row['dir_name'] . "(" . $per . ")";
+                        }
                     }
                 }
             }
@@ -720,9 +726,11 @@ class DatabaseReports {
                     $directors[]=$row['dir_name']."(".$per.")";
                 }
                 else {
-                    $per = round($attended/$held*100,2);
-                    if($per<75) {
-                        $directors[]=$row['dir_name']."(".$per.")";
+                    if($held!=0) {
+                        $per = round($attended / $held * 100, 2);
+                        if ($per < 75) {
+                            $directors[] = $row['dir_name'] . "(" . $per . ")";
+                        }
                     }
                 }
             }
@@ -794,9 +802,11 @@ class DatabaseReports {
                     $directors[]=$row['dir_name']."(".$per.")";
                 }
                 else {
-                    $per = round($attended/$held*100,2);
-                    if($per<75) {
-                        $directors[]=$row['dir_name']."(".$per.")";
+                    if($held!=0) {
+                        $per = round($attended / $held * 100, 2);
+                        if ($per < 75) {
+                            $directors[] = $row['dir_name'] . "(" . $per . ")";
+                        }
                     }
                 }
             }
@@ -868,9 +878,11 @@ class DatabaseReports {
                 $directors[]=$row['dir_name']."(".$per.")";
             }
             else {
-                $per = round($attended/$held*100,2);
-                if($per<75) {
-                    $directors[]=$row['dir_name']."(".$per.")";
+                if($held!=0) {
+                    $per = round($attended / $held * 100, 2);
+                    if ($per < 75) {
+                        $directors[] = $row['dir_name'] . "(" . $per . ")";
+                    }
                 }
             }
         }
@@ -940,9 +952,11 @@ class DatabaseReports {
                 $directors[]=$row['dir_name']."(".$per.")";
             }
             else {
-                $per = round($attended/$held*100,2);
-                if($per<75) {
-                    $directors[]=$row['dir_name']."(".$per.")";
+                if($held!=0) {
+                    $per = round($attended / $held * 100, 2);
+                    if ($per < 75) {
+                        $directors[] = $row['dir_name'] . "(" . $per . ")";
+                    }
                 }
             }
         }
@@ -1042,12 +1056,14 @@ class DatabaseReports {
         return $company_directors;
     }
     function getLast5YearsDividendData($company_id,$start_year,$highest_paid_ed) {
+
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
-        $years = range($start_year-5,$start_year);
+        $years = range($start_year-4,$start_year);
         $total_dividend = 0;
         $market_price_at_year_start = 1;
         $indexed_tsr = array();
         foreach($years as $year) {
+
             $stmt=$dbobject->prepare("select * from `dividend_info` where `company_id`=:company_id and `financial_year`=:financial_year");
             $stmt->bindParam(':company_id',$company_id);
             $stmt->bindParam(':financial_year',$year);
@@ -1073,6 +1089,107 @@ class DatabaseReports {
                 $dividend_temp['total_dividend'] = 0;
             }
             $dividend_data[] = $dividend_temp;
+        }
+
+        // Remuneration Details of Last 5 Years Highest Paid EDP or ED
+        $highest_paid_ed_5_years = array();
+        $i=0;
+        foreach($years as $year) {
+
+            $stmt = $dbobject->prepare(" select * from `director_remuneration` where `company_id`=:company_id and  `dir_din_no`=:din_no and `rem_year`=:financial_year");
+            $stmt->bindParam(":company_id", $company_id);
+            $stmt->bindParam(":financial_year", $year);
+            $stmt->bindParam(":din_no", $highest_paid_ed);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $temp['dir_name'] = $row['dir_name'];
+                $temp['year'] = $year;
+                $temp['total_pay'] = $row['fixed_pay']+$row['variable_pay'];
+                $temp['indexed_tsr'] = $indexed_tsr[$i++];
+            }
+            else {
+                $temp['dir_name'] = "NA";
+                $temp['year'] = $year;
+                $temp['total_pay'] = 0;
+                $temp['indexed_tsr'] = $indexed_tsr[$i++];
+            }
+            $highest_paid_ed_5_years[] = $temp;
+        }
+
+        foreach($years as $year) {
+            $stmt = $dbobject->prepare("select * from `company_auditors_info`  where `company_id`=:company_id and `financial_year`=:financial_year ");
+            $stmt->bindParam(":company_id", $company_id);
+            $stmt->bindParam(":financial_year", $year);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $net_temp['net_profit'] = $row['net_profit'];
+                $net_temp['year'] = $year;
+            }
+            else {
+                $net_temp['net_profit'] = 0;
+                $net_temp['year'] = $year;
+            }
+            $net_profits[] = $net_temp;
+        }
+
+        $generic_array['dividend_data'] = $dividend_data;
+        $generic_array['remuneration_growth'] = $highest_paid_ed_5_years;
+        $generic_array['aa'] = $market_price_at_year_start;
+        $generic_array['net_profits'] = $net_profits;
+
+        $dbobject = null;
+        return $generic_array;
+    }
+    function getLast6YearsDividendData($company_id,$start_year,$highest_paid_ed) {
+
+        $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
+        $years = range($start_year-5,$start_year);
+        $total_dividend = 0;
+        $market_price_at_year_start = 1;
+        $indexed_tsr = array();
+
+        $base_year = $start_year-4;
+        $stmt=$dbobject->prepare("select * from `dividend_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+        $stmt->bindParam(':company_id',$company_id);
+        $stmt->bindParam(':financial_year',$base_year);
+        $stmt->execute();
+        if($stmt->rowCount()>0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $market_price_at_year_start = $row['market_price_start'];
+        }
+
+        foreach($years as $year) {
+
+            if($year!=$start_year-5) {
+                $stmt=$dbobject->prepare("select * from `dividend_info` where `company_id`=:company_id and `financial_year`=:financial_year");
+                $stmt->bindParam(':company_id',$company_id);
+                $stmt->bindParam(':financial_year',$year);
+                $stmt->execute();
+                if($stmt->rowCount()>0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $dividend_temp['market_price_start'] = $row['market_price_start'];
+                    $dividend_temp['market_price_end'] = $row['market_price_end'];
+                    $dividend_temp['dividend'] = $row['dividend'];
+                    $dividend_temp['year'] = $year;
+                    $total_dividend += floatval($row['dividend']);
+                    $dividend_temp['total_dividend'] = $total_dividend;
+                    $indexed_tsr[] = ((floatval($row['market_price_end'])+floatval($total_dividend))/$market_price_at_year_start)*100;
+                }
+                else {
+                    $dividend_temp['market_price_start'] = "NA";
+                    $dividend_temp['market_price_end'] = "NA";
+                    $dividend_temp['dividend'] = "NA";
+                    $dividend_temp['year'] = $year;
+                    $dividend_temp['total_dividend'] = 0;
+                    $indexed_tsr[] = 0;
+                }
+                $dividend_data[] = $dividend_temp;
+            }
+            else {
+                $indexed_tsr[] = 0;
+            }
         }
 
         // Remuneration Details of Last 5 Years Highest Paid EDP or ED
@@ -5278,8 +5395,7 @@ class DatabaseReports {
         $dbobject=null;
         return $response;
     }
-
-    function filteredDirectors($directors) {
+    function filteredDirectorsForSheet($directors) {
 
         $is_chairman_id = false;
         $is_chairman_ed = false;
@@ -5305,33 +5421,34 @@ class DatabaseReports {
             }
         }
         if($is_chairman_id) {
+
             foreach ($directors as $director) {
                 if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5345,27 +5462,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5379,27 +5496,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5413,27 +5530,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED') {
+                if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
@@ -5447,27 +5564,27 @@ class DatabaseReports {
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C')) {
+                if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='NEDP') {
+                if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ID') {
+                if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='EDP') {
+                if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }
             foreach ($directors as $director) {
-                if($director['company_classification']=='ED') {
+                if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
                     $filtered_directors[]=$director;
                 }
             }

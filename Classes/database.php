@@ -1624,7 +1624,7 @@ class Database {
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$directors[]=$row;
 		}
-		$directors = $this->filteredDirectors($directors);
+		$directors = $this->filteredDirectorsForSheet($directors);
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `rem_year` from `director_remuneration` where `rem_year`<=:financial_year ORDER BY `rem_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1676,7 +1676,7 @@ class Database {
 			$directors[]=$row;
 		}
 
-		$directors = $this->filteredDirectors($directors);
+		$directors = $this->filteredDirectorsForSheet($directors);
 
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `director_agm_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
@@ -1728,7 +1728,7 @@ class Database {
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$directors[]=$row;
 		}
-		$directors = $this->filteredDirectors($directors);
+		$directors = $this->filteredDirectorsForSheet($directors);
 
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `director_board_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
@@ -1766,23 +1766,17 @@ class Database {
 		$dbobject = null;
 		return $string_headers.$string_rows;
 	}
-	function getCompanyAuditCommitteeAttendance($company_id,$financial_year) {
+	function getCompanyAuditCommitteeAttendance($company_id,$financial_year,$fil_directors) {
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`audit_committee`='C' or `director_info`.`audit_committee`='M')");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
+		foreach($fil_directors as $director) {
+			if($director['audit_committee']=='C' || $director['audit_committee']=='M') {
+				$directors[]=$director;
+			}
 		}
-
-		$directors = $this->filteredDirectors($directors);
-
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `audit_committee_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
 		$stmt->execute();
@@ -1795,10 +1789,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `audit_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':att_year',$year['att_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
@@ -1816,21 +1810,18 @@ class Database {
 		$dbobject = null;
 		return $string_headers.$string_rows;
 	}
-	function getCompanyStackholdersCosmmitteeAttendance($company_id,$financial_year) {
+	function getCompanyStackholdersCosmmitteeAttendance($company_id,$financial_year,$fil_directors) {
+
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`investor_grievance`='C' or `director_info`.`investor_grievance`='M')");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
+		foreach($fil_directors as $director) {
+			if($director['investor_grievance']=='C' || $director['investor_grievance']=='M') {
+				$directors[]=$director;
+			}
 		}
-
-		$directors = $this->filteredDirectors($directors);
 
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `investors_grievance_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1844,10 +1835,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `investors_grievance_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':att_year',$year['att_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
@@ -1865,21 +1856,18 @@ class Database {
 		$dbobject = null;
 		return $string_headers.$string_rows;
 	}
-	function getCompanyCSRCosmmitteeAttendance($company_id,$financial_year) {
+	function getCompanyCSRCosmmitteeAttendance($company_id,$financial_year,$fil_directors) {
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`csr`='C' or `director_info`.`csr`='M')");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
-		}
 
-		$directors = $this->filteredDirectors($directors);
+		foreach($fil_directors as $director) {
+			if($director['csr']=='C' || $director['csr']=='M') {
+				$directors[]=$director;
+			}
+		}
 
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `csr_committee_meetings_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1893,10 +1881,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `csr_committee_meetings_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':att_year',$year['att_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
@@ -1914,21 +1902,18 @@ class Database {
 		$dbobject = null;
 		return $string_headers.$string_rows;
 	}
-	function getCompanyRiskManagementCosmmitteeAttendance($company_id,$financial_year) {
+	function getCompanyRiskManagementCosmmitteeAttendance($company_id,$financial_year,$fil_directors) {
+
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`risk_management_committee`='C' or `director_info`.`risk_management_committee`='M')");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
+		foreach($fil_directors as $director) {
+			if($director['risk_management_committee']=='C' || $director['risk_management_committee']=='M') {
+				$directors[]=$director;
+			}
 		}
-
-		$directors = $this->filteredDirectors($directors);
 
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `risk_management_committee_meetings_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1942,10 +1927,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `risk_management_committee_meetings_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':att_year',$year['att_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
@@ -2129,21 +2114,18 @@ class Database {
 		$comments.="</ul>";
 		return $comments;
 	}
-	function getRemunerationNominationCommitteeAttendance($company_id,$financial_year,$is_rem_nom_same) {
+	function getRemunerationNominationCommitteeAttendance($company_id,$financial_year,$is_rem_nom_same,$fil_directors) {
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 		if($is_rem_nom_same=='yes') {
 
-			$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`nomination_remuneration`='C' or `director_info`.`nomination_remuneration`='M')");
-			$stmt->bindParam(':company_id',$company_id);
-			$stmt->bindParam(':financial_year',$financial_year);
-			$stmt->execute();
-			$directors=array();
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-				$directors[]=$row;
+			foreach($fil_directors as $director) {
+				if($director['nomination_remuneration']=='C' || $director['nomination_remuneration']=='M') {
+					$directors[]=$director;
+				}
 			}
-			$directors = $this->filteredDirectors($directors);
+
 			$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 			$stmt=$dbobject->prepare("select DISTINCT `att_year` from `nomination_remuneration_committee_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 			$stmt->bindParam(':financial_year',$financial_year);
@@ -2156,10 +2138,10 @@ class Database {
 			$string_headers.="</tr></thead>";
 			$string_rows = "<tbody>";
 			foreach($directors as $director) {
-				$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+				$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 				foreach($years as $year) {
 					$stmt=$dbobject->prepare("select * from `nomination_remuneration_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-					$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+					$stmt->bindParam(':dir_din_no',$director['din_no']);
 					$stmt->bindParam(':att_year',$year['att_year']);
 					$stmt->bindParam(':company_id',$company_id);
 					$stmt->execute();
@@ -2179,15 +2161,12 @@ class Database {
 		}
 		else {
 
-			$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`nomination`='C' or `director_info`.`nomination`='M')");
-			$stmt->bindParam(':company_id',$company_id);
-			$stmt->bindParam(':financial_year',$financial_year);
-			$stmt->execute();
-			$directors=array();
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-				$directors[]=$row;
+			foreach($fil_directors as $director) {
+				if($director['nomination']=='C' || $director['nomination']=='M') {
+					$directors[]=$director;
+				}
 			}
-			$directors = $this->filteredDirectors($directors);
+
 			$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
 			$stmt=$dbobject->prepare("select DISTINCT `att_year` from `nomination_committee_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
 			$stmt->bindParam(':financial_year',$financial_year);
@@ -2200,10 +2179,10 @@ class Database {
 			$string_headers.="</tr></thead>";
 			$string_rows = "<tbody>";
 			foreach($directors as $director) {
-				$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+				$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 				foreach($years as $year) {
 					$stmt=$dbobject->prepare("select * from `nomination_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-					$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+					$stmt->bindParam(':dir_din_no',$director['din_no']);
 					$stmt->bindParam(':att_year',$year['att_year']);
 					$stmt->bindParam(':company_id',$company_id);
 					$stmt->execute();
@@ -2221,14 +2200,10 @@ class Database {
 			$nomination_details = $string_headers.$string_rows;
 			$generic_array['nomination_details'] = $nomination_details;
 
-
-			$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year and (`director_info`.`remuneration`='C' or `director_info`.`remuneration`='M')");
-			$stmt->bindParam(':company_id',$company_id);
-			$stmt->bindParam(':financial_year',$financial_year);
-			$stmt->execute();
-			$directors=array();
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-				$directors[]=$row;
+			foreach($fil_directors as $director) {
+				if($director['remuneration']=='C' || $director['remuneration']=='M') {
+					$directors[]=$director;
+				}
 			}
 
 			$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
@@ -2244,10 +2219,10 @@ class Database {
 			$string_headers.="</tr></thead>";
 			$string_rows = "<tbody>";
 			foreach($directors as $director) {
-				$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+				$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 				foreach($years_rem as $year) {
 					$stmt=$dbobject->prepare("select * from `remuneration_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-					$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+					$stmt->bindParam(':dir_din_no',$director['din_no']);
 					$stmt->bindParam(':att_year',$year['att_year']);
 					$stmt->bindParam(':company_id',$company_id);
 					$stmt->execute();
@@ -2654,6 +2629,202 @@ class Database {
 			}
 			foreach ($directors as $director) {
 				if($director['company_classification']=='ED') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+		return $filtered_directors;
+	}
+	function filteredDirectorsForSheet($directors) {
+
+		$is_chairman_id = false;
+		$is_chairman_ed = false;
+		$is_chairman_edp = false;
+		$is_chairman_nedp = false;
+		$is_chairman_ned = false;
+
+		foreach ($directors as $director) {
+			if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_id = true;
+			}
+			if($director['company_classification']=='ED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_ed = true;
+			}
+			if($director['company_classification']=='EDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_edp = true;
+			}
+			if($director['company_classification']=='NEDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_nedp = true;
+			}
+			if($director['company_classification']=='NED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+				$is_chairman_ned = true;
+			}
+		}
+		if($is_chairman_id) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_ed) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_edp) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_nedp) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+		}
+
+		if($is_chairman_ned) {
+
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && ($director['additional_classification']=='CMD' || $director['additional_classification']=='C')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NED' && ($director['additional_classification']!='CMD' && $director['additional_classification']!='C' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)')) {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='NEDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ID' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='EDP' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
+					$filtered_directors[]=$director;
+				}
+			}
+			foreach ($directors as $director) {
+				if($director['company_classification']=='ED' && $director['additional_classification']!='C(Resign)' && $director['additional_classification']!='M(Resign)') {
 					$filtered_directors[]=$director;
 				}
 			}
