@@ -644,7 +644,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         <div class="col-md-12">
                                             <input type="hidden" name="resolution_section[]" value="Appointment/Reappointment of Non-Executive Directors">
                                             <input type="hidden" name="used_in[]" value="DIRECTOR'S REMUNERATION">
-                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="[]'s remuneration is aligned with the remuneration paid to the other non-executive directors."><b>Discussion on Director's Remuneration</b></textarea>
+                                            <textarea rows="4" name="used_in_text[]" class="form-control inline-editor" placeholder="[]'s remuneration is aligned with the remuneration paid to the other non-executive directors."><b>Discussion on Director's Remuneration: </b></textarea>
                                         </div>
                                     </div>
                                     <p><strong>General Recommendation Guidelines</strong></p>
