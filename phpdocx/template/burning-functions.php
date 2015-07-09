@@ -1361,24 +1361,27 @@ function adoptionOfAccounts($docx,$report_id) {
                 <td style='text-align: center;  width:10%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080; border-right: 1px solid #FFF;'>Shift</td>
                 <td style='text-align: center; width:45%; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;'>Company's Discussion</td>
             </tr>";
-        for($i=0;$i<count($financial_indicators);$i++) {
-            if($i%2==0) {
-                $text.="<tr>
+        for($i=0,$j=0;$i<count($financial_indicators);$i++,$j++) {
+
+            if($financial_indicators[$i]['fi_current']!="") {
+                if($j%2==0) {
+                    $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['fi_current']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['fi_previous']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>".$financial_indicators[$i]['shift']."%</td>
                             <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #F2F2F2;'>".$financial_indicators[$i]['company_discussion']."</td>
                            </tr>";
-            }
-            else {
-                $text.="<tr>
+                }
+                else {
+                    $text.="<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['field_name']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['fi_current']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['fi_previous']."</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>".$financial_indicators[$i]['shift']."%</td>
                             <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>".$financial_indicators[$i]['company_discussion']."</td>
                            </tr>";
+                }
             }
         }
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>

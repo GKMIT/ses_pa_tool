@@ -307,18 +307,20 @@ CustomJS.prototype = {
         delete_row();
         function delete_row() {
             $(".financial_button").click(function(){
-                var value1= $(this).parent().parent().find("input").eq(0).val();
-                var id=$(this).parent().parent().attr('id');
-                var newOption = "<option value="+id+">"+ value1+"</option>";
-                console.log(newOption);
-                $("#label_select").append(newOption);
                 var par = $(this).closest('.financial-indicator');
-                par.find(".fy15").val("");
-                par.find(".fy14").val("");
-                par.find(".shift").val("");
-                par.find("textarea").val("");
-                par.addClass('hidden');
-                $("#show").removeClass('hidden');
+                if(!par.hasClass('hidden')) {
+                    var value1= $(this).parent().parent().find("input").eq(0).val();
+                    var id=$(this).parent().parent().attr('id');
+                    var newOption = "<option value="+id+">"+ value1+"</option>";
+                    $("#label_select").append(newOption);
+                    par.find(".fy15").val("");
+                    par.find(".fy14").val("");
+                    par.find(".shift").val("");
+                    par.find("textarea").val("");
+                    par.addClass('hidden');
+                    $("#show").removeClass('hidden');
+                    console.log("Delete Called");
+                }
             });
         }
 
@@ -338,7 +340,7 @@ CustomJS.prototype = {
         var i=8;
         $("#addbtn").click(function() {
             $('#financial_indicators tbody').append("<tr class='table-description financial-indicator' id='tr"+i+"'>" +
-            "<th><input class='add_label form-control label-name' name='label_name[]' /><input type='hidden' class='add_label label-name' name='label_name[]' value='' /></th>" +
+            "<th><input class='add_label form-control label-name' /><input type='hidden' class='add_label label-name' name='label_name[]' value='' /></th>" +
             "<th><input class='form-control fy15' name='fi_current[]' /></th>" +
             "<th><input class='form-control fy14' name='fi_previous[]'  /></th>" +
             "<th><input class='form-control shift' name='shift[]'/></th>" +
