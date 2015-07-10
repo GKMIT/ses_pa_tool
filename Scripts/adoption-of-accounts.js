@@ -82,7 +82,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#have_the_auditors_continuously_raised_concerns_analysis_text textarea").html("");
+                $("#have_the_auditors_continuously_raised_concerns_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#have_the_auditors_continuously_raised_concerns_analysis_text").addClass('hidden');
             }
         });
@@ -104,7 +104,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_material_unaudited_statements_analysis_text textarea").html("");
+                $("#are_material_unaudited_statements_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_material_unaudited_statements_analysis_text").addClass('hidden');
             }
         });
@@ -126,7 +126,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#have_principal_auditors_audited_less_than_50_analysis_text textarea").html("");
+                $("#have_principal_auditors_audited_less_than_50_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#have_principal_auditors_audited_less_than_50_analysis_text").addClass('hidden');
             }
         });
@@ -148,7 +148,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#have_short_term_funds_used_for_long_term_investment_analysis_text textarea").html("");
+                $("#have_short_term_funds_used_for_long_term_investment_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#have_short_term_funds_used_for_long_term_investment_analysis_text").addClass('hidden');
             }
         });
@@ -170,7 +170,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_related_party_transactions_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_related_party_transactions_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_related_party_transactions_analysis_text").addClass('hidden');
             }
         });
@@ -203,7 +203,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_adoption_of_accounts").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_adoption_of_accounts").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
 

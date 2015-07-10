@@ -98,13 +98,13 @@ CustomJS.prototype = {
             if(self.val()=='no')
             {
                 $("#question1_part_b").removeClass('hidden');
-                $("#has_the_company_provided_adequate_justification_analysis_text textarea").html("");
+                $("#has_the_company_provided_adequate_justification_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_provided_adequate_justification_analysis_text").addClass('hidden');
                 $("#is_the_directors_excessive_compared").val("");
 
             }
             else {
-                $("#has_the_company_provided_adequate_justification_analysis_text textarea").html("");
+                $("#has_the_company_provided_adequate_justification_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_provided_adequate_justification_analysis_text").addClass('hidden');
                 $("#question1_part_b").addClass('hidden');
                 $("#is_the_directors_excessive_compared").val("");
@@ -145,7 +145,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_directors_excessive_compared_analysis_text textarea").html("");
+                $("#is_the_directors_excessive_compared_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_directors_excessive_compared_analysis_text").addClass('hidden');
             }
         });
@@ -167,7 +167,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_increase_in_renumeration_more_than_50_analysis_text textarea").html("");
+                $("#is_the_increase_in_renumeration_more_than_50_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_increase_in_renumeration_more_than_50_analysis_text").addClass('hidden');
             }
         });
@@ -189,7 +189,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_renumeration_paid_to_the_executive_analysis_text textarea").html("");
+                $("#is_the_renumeration_paid_to_the_executive_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_renumeration_paid_to_the_executive_analysis_text").addClass('hidden');
             }
         });
@@ -215,11 +215,11 @@ CustomJS.prototype = {
             }
             if(self.val()=="yes"){
                 $("#question4_part_a").removeClass('hidden');
-                $("#does_the_company_have_a_nomination_analysis_text textarea").html("");
+                $("#does_the_company_have_a_nomination_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_have_a_nomination_analysis_text").addClass('hidden');
             }
             else {
-                $("#does_the_company_have_a_nomination_analysis_text textarea").html("");
+                $("#does_the_company_have_a_nomination_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_have_a_nomination_analysis_text").addClass('hidden');
                 $("#question4_part_a").addClass('hidden');
                 $("#is_the_nomination_and_remuneration_committee_analysis_text").addClass('hidden');
@@ -244,7 +244,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_nomination_and_remuneration_committee_analysis_text textarea").html("");
+                $("#is_the_nomination_and_remuneration_committee_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_nomination_and_remuneration_committee_analysis_text").addClass('hidden');
             }
         });
@@ -266,7 +266,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_concerned_executive_director_a_member_analysis_text textarea").html("");
+                $("#is_the_concerned_executive_director_a_member_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_concerned_executive_director_a_member_analysis_text").addClass('hidden');
             }
         });
@@ -288,7 +288,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_resolution_grants_the_board_discretion_analysis_text textarea").html("");
+                $("#is_the_resolution_grants_the_board_discretion_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_resolution_grants_the_board_discretion_analysis_text").addClass('hidden');
             }
         });
@@ -310,7 +310,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_remuneration_package_have_any_performance_analysis_text textarea").html("");
+                $("#does_the_remuneration_package_have_any_performance_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_remuneration_package_have_any_performance_analysis_text").addClass('hidden');
             }
         });
@@ -332,7 +332,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_average_attendance_of_director_at_board_analysis_text textarea").html("");
+                $("#is_the_average_attendance_of_director_at_board_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_average_attendance_of_director_at_board_analysis_text").addClass('hidden');
             }
         });
@@ -382,7 +382,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_there_an_overall_cap_on_the_remuneration_package_analysis_text textarea").html("");
+                $("#is_there_an_overall_cap_on_the_remuneration_package_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_there_an_overall_cap_on_the_remuneration_package_analysis_text").addClass('hidden');
             }
         });
@@ -404,7 +404,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_remuneration_components_payable_to_the_director_disclosed_analysis_text textarea").html("");
+                $("#are_the_remuneration_components_payable_to_the_director_disclosed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_remuneration_components_payable_to_the_director_disclosed_analysis_text").addClass('hidden');
             }
         });
@@ -426,7 +426,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_company_made_incremental_losses_analysis_text textarea").html("");
+                $("#does_the_company_made_incremental_losses_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_made_incremental_losses_analysis_text").addClass('hidden');
             }
         });
@@ -448,7 +448,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_defaulted_on_any_of_its_debt_analysis_text textarea").html("");
+                $("#has_the_company_defaulted_on_any_of_its_debt_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_defaulted_on_any_of_its_debt_analysis_text").addClass('hidden');
             }
         });
@@ -496,7 +496,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_whether_the_minimum_remuneration_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_whether_the_minimum_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_whether_the_minimum_remuneration_analysis_text").addClass('hidden');
             }
         });
@@ -518,7 +518,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#will_the_director_receive_guaranteed_bonus_analysis_text textarea").html("");
+                $("#will_the_director_receive_guaranteed_bonus_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#will_the_director_receive_guaranteed_bonus_analysis_text").addClass('hidden');
             }
         });
@@ -559,7 +559,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_revision_in_executive").parent().find(".cke_textarea_inline").html("");;
+                $("#recommendation_text_revision_in_executive").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");;
             }
         });
         $('#btn_add_row').click(function(){
@@ -595,7 +595,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_objective_remuneration_analysis_text").addClass('hidden');
             }
         });
@@ -617,7 +617,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").html("");
+                $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text").addClass('hidden');
             }
         });
@@ -639,7 +639,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_commission_plus_sitting_fee_analysis_text textarea").html("");
+                $("#does_the_commission_plus_sitting_fee_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_commission_plus_sitting_fee_analysis_text").addClass('hidden');
             }
         });
@@ -661,7 +661,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_commission_paid_in_excess_analysis_text textarea").html("");
+                $("#is_the_commission_paid_in_excess_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_commission_paid_in_excess_analysis_text").addClass('hidden');
             }
         });
@@ -683,7 +683,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_commission_paid_to_individual_directors_analysis_text textarea").html("");
+                $("#is_the_commission_paid_to_individual_directors_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_commission_paid_to_individual_directors_analysis_text").addClass('hidden');
             }
         });
@@ -705,7 +705,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_commission_paid_to_select_directors_analysis_text textarea").html("");
+                $("#is_the_commission_paid_to_select_directors_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_commission_paid_to_select_directors_analysis_text").addClass('hidden');
             }
         });
@@ -727,7 +727,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_nomination_and_remuneration_analysis_text textarea").html("");
+                $("#is_the_nomination_and_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_nomination_and_remuneration_analysis_text").addClass('hidden');
             }
         });
@@ -749,7 +749,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_distribution_of_commission_analysis_text textarea").html("");
+                $("#is_the_distribution_of_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_distribution_of_commission_analysis_text").addClass('hidden');
             }
         });
@@ -772,7 +772,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_seeking_shareholders_analysis_text textarea").html("");
+                $("#is_the_company_seeking_shareholders_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_seeking_shareholders_analysis_text").addClass('hidden');
             }
         });
@@ -811,9 +811,9 @@ CustomJS.prototype = {
                         $("#has_the_company_paid_disproportionate_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
                         $("#has_the_company_paid_disproportionate_commission_analysis_text").removeClass('hidden');
                         $('#table_id').attr("data-recommendation-table-id","119");
-                        $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").html("");
+                        $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         $("#has_the_company_disclosed_the_objective_remuneration_analysis_text").addClass('hidden');
-                        $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").html("");
+                        $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text").addClass('hidden');
                         $("#has_the_company_placed_an_absolute_cap_on_commission").find("option").eq(2).removeAttr("data-recommendation-table-id");
                         $("#has_the_company_disclosed_the_objective_remuneration").find("option").eq(2).removeAttr("data-recommendation-table-id");
@@ -833,7 +833,7 @@ CustomJS.prototype = {
                         $("#has_the_company_paid_disproportionate_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
                         $("#has_the_company_paid_disproportionate_commission_analysis_text").removeClass('hidden');
                         $('#table_id').attr("data-recommendation-table-id","120");
-                        $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").html("");
+                        $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text").addClass('hidden');
                         $("#has_the_company_placed_an_absolute_cap_on_commission").find("option").eq(2).removeAttr("data-recommendation-table-id");
                     }
@@ -852,7 +852,7 @@ CustomJS.prototype = {
                         $("#has_the_company_paid_disproportionate_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
                         $("#has_the_company_paid_disproportionate_commission_analysis_text").removeClass('hidden');
                         $('#table_id').attr("data-recommendation-table-id","121");
-                        $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").html("");
+                        $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         $("#has_the_company_disclosed_the_objective_remuneration_analysis_text").addClass('hidden');
                         $("#has_the_company_disclosed_the_objective_remuneration").find("option").eq(2).removeAttr("data-recommendation-table-id");
                         //$("#has_the_company_disclosed_the_objective_remuneration_analysis_text").find("option").eq(1).removeAttr("data-recommendation-table-id");
@@ -873,9 +873,9 @@ CustomJS.prototype = {
                         $("#has_the_company_paid_disproportionate_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
                         $("#has_the_company_paid_disproportionate_commission_analysis_text").removeClass('hidden');
                         $('#table_id_yes').attr("data-recommendation-table-id","122");
-                        $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").html("");
+                        $("#has_the_company_disclosed_the_objective_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         $("#has_the_company_disclosed_the_objective_remuneration_analysis_text").addClass('hidden');
-                        $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").html("");
+                        $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         $("#has_the_company_placed_an_absolute_cap_on_commission_analysis_text").addClass('hidden');
                         $("#has_the_company_placed_an_absolute_cap_on_commission").find("option").eq(2).removeAttr("data-recommendation-table-id");
                         $("#has_the_company_disclosed_the_objective_remuneration").find("option").eq(2).removeAttr("data-recommendation-table-id");
@@ -883,7 +883,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_paid_disproportionate_commission_analysis_text textarea").html("");
+                $("#has_the_company_paid_disproportionate_commission_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_paid_disproportionate_commission_analysis_text").addClass('hidden');
 
             }
@@ -918,7 +918,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
 

@@ -126,7 +126,7 @@ CustomJS.prototype = {
             else {
                 question_block.find(".quest_hidden_block").addClass('hidden');
                 question_block.find(".quest_analysis_text").addClass('hidden');
-                question_block.find(".quest_analysis_text textarea").html("");
+                question_block.find(".quest_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $(".question-block .quest_analysis_fire").change(function() {
@@ -164,7 +164,7 @@ CustomJS.prototype = {
             }
             else {
                 question_block.find(".quest_analysis_text").addClass('hidden');
-                question_block.find(".quest_analysis_text textarea").html("");
+                question_block.find(".quest_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_have_stated_dividend_pay_out_policy").change(function () {
@@ -218,7 +218,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#company_have_stated_dividend_pay_out_policy_hidden_b").removeClass('hidden');
-                $("#dividend_paid_consistent_stated_policy_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
+                $("#dividend_paid_consistent_stated_policy_analysis_text textarea").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
                 $("#dividend_paid_consistent_stated_policy_analysis_text").addClass('hidden');
             }
         });
@@ -243,7 +243,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#dividend_pay_out_been_consistent_last_3_years_analysis_text").addClass('hidden');
-                $("#dividend_pay_out_been_consistent_last_3_years_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
+                $("#dividend_pay_out_been_consistent_last_3_years_analysis_text textarea").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
                 $("#company_have_stated_dividend_pay_out_policy_hidden_d").removeClass('hidden');
             }
         });
@@ -283,7 +283,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#company_explained_deviation_to_shareholders_analysis_text").addClass('hidden');
-                $("#company_explained_deviation_to_shareholders_analysis_text textarea").html("");
+                $("#company_explained_deviation_to_shareholders_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_making_losses_but_paying_increasing_dividend").change(function () {
@@ -306,7 +306,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_making_losses_but_paying_increasing_dividend_analysis_text").addClass('hidden');
-                $("#company_making_losses_but_paying_increasing_dividend_analysis_text textarea").html("");
+                $("#company_making_losses_but_paying_increasing_dividend_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_have_high_debt_equity_debt_coverage_ratio").change(function () {
@@ -329,7 +329,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_have_high_debt_equity_debt_coverage_ratio_analysis_text").addClass('hidden');
-                $("#company_have_high_debt_equity_debt_coverage_ratio_analysis_text textarea").html("");
+                $("#company_have_high_debt_equity_debt_coverage_ratio_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_have_sufficient_cash_flow_from_operations").change(function () {
@@ -352,7 +352,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_have_sufficient_cash_flow_from_operations_analysis_text").addClass('hidden');
-                $("#company_have_sufficient_cash_flow_from_operations_analysis_text textarea").html("");
+                $("#company_have_sufficient_cash_flow_from_operations_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_defaulted_on_any_of_its_debt_obligations").change(function () {
@@ -375,7 +375,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_defaulted_on_any_of_its_debt_obligations_analysis_text").addClass('hidden');
-                $("#company_defaulted_on_any_of_its_debt_obligations_analysis_text textarea").html("");
+                $("#company_defaulted_on_any_of_its_debt_obligations_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_required_to_conserve_resources_to_fund").change(function () {
@@ -398,7 +398,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_required_to_conserve_resources_to_fund_analysis_text").addClass('hidden');
-                $("#company_required_to_conserve_resources_to_fund_analysis_text textarea").html("");
+                $("#company_required_to_conserve_resources_to_fund_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_consistently_making_large_profits").change(function () {
@@ -421,7 +421,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_consistently_making_large_profits_analysis_text").addClass('hidden');
-                $("#company_consistently_making_large_profits_analysis_text textarea").html("");
+                $("#company_consistently_making_large_profits_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_decreased_the_dividend_pay_out").change(function () {
@@ -444,7 +444,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_decreased_the_dividend_pay_out_analysis_text").addClass('hidden');
-                $("#company_decreased_the_dividend_pay_out_analysis_text textarea").html("");
+                $("#company_decreased_the_dividend_pay_out_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#has_the_growth_in_dividend_been_consistent").change(function () {
@@ -467,7 +467,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#has_the_growth_in_dividend_been_consistent_analysis_text").addClass('hidden');
-                $("#has_the_growth_in_dividend_been_consistent_analysis_text textarea").html("");
+                $("#has_the_growth_in_dividend_been_consistent_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#dividend_payout_ratio_consistently_lower").change(function () {
@@ -490,7 +490,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#dividend_payout_ratio_consistently_lower_analysis_text").addClass('hidden');
-                $("#dividend_payout_ratio_consistently_lower_analysis_text textarea").html("");
+                $("#dividend_payout_ratio_consistently_lower_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#dividend_pay_outs_consistently_high_relative_to_peers").change(function () {
@@ -520,7 +520,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#is_the_promoter_shareholding_in_the_company_higher_analysis_text").addClass('hidden');
-                $("#is_the_promoter_shareholding_in_the_company_higher_analysis_text textarea").html("");
+                $("#is_the_promoter_shareholding_in_the_company_higher_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#promoters_pledged_any_of_their_shareholdings").change(function () {
@@ -543,7 +543,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#promoters_pledged_any_of_their_shareholdings_analysis_text").addClass('hidden');
-                $("#promoters_pledged_any_of_their_shareholdings_analysis_text textarea").html("");
+                $("#promoters_pledged_any_of_their_shareholdings_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_consistently_paying_dividend_out").change(function () {
@@ -566,7 +566,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_consistently_paying_dividend_out_analysis_text").addClass('hidden');
-                $("#company_consistently_paying_dividend_out_analysis_text textarea").html("");
+                $("#company_consistently_paying_dividend_out_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#is_the_Company_making_losses").change(function () {
@@ -589,7 +589,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#is_the_Company_making_losses_analysis_text").addClass('hidden');
-                $("#is_the_Company_making_losses_analysis_text textarea").html("");
+                $("#is_the_Company_making_losses_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_disclosed_the_reason_for_paying_excess_dividend").change(function () {
@@ -628,7 +628,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#company_disclosed_the_reason_for_paying_excess_dividend_analysis_text").addClass('hidden');
-                $("#company_disclosed_the_reason_for_paying_excess_dividend_analysis_text textarea").html("");
+                $("#company_disclosed_the_reason_for_paying_excess_dividend_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#company_proposed_to_pay_dividend_on_preference_shares").change(function () {
@@ -651,7 +651,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#company_proposed_to_pay_dividend_on_preference_shares_analysis_text").addClass('hidden');
-                $("#company_proposed_to_pay_dividend_on_preference_shares_analysis_text textarea").html("");
+                $("#company_proposed_to_pay_dividend_on_preference_shares_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#is_the_increase_in_dividend").change(function () {
@@ -674,7 +674,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#is_the_increase_in_dividend_analysis_text").addClass('hidden');
-                $("#is_the_increase_in_dividend_analysis_text textarea").html("");
+                $("#is_the_increase_in_dividend_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#has_the_Company_explained_the_deviation").change(function () {
@@ -713,7 +713,7 @@ CustomJS.prototype = {
             }
             else  {
                 $("#has_the_Company_explained_the_deviation_analysis_text").addClass('hidden');
-                $("#has_the_Company_explained_the_deviation_analysis_text textarea").html("");
+                $("#has_the_Company_explained_the_deviation_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
             }
         });
         $("#btn_recommendation_text").click(function(){
@@ -745,7 +745,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
     },

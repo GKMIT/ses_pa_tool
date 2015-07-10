@@ -84,7 +84,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_company_have_an_audit_committee_analysis_text textarea").html("");
+                $("#does_the_company_have_an_audit_committee_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_have_an_audit_committee_analysis_text").addClass('hidden');
             }
         });
@@ -106,7 +106,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_audit_committee_compliant_as_per_all_relevant_provisions_analysis_text textarea").html("");
+                $("#is_the_audit_committee_compliant_as_per_all_relevant_provisions_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_audit_committee_compliant_as_per_all_relevant_provisions_analysis_text").addClass('hidden');
             }
         });
@@ -128,7 +128,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#have_the_auditors_made_adverse_comments_analysis_text textarea").html("");
+                $("#have_the_auditors_made_adverse_comments_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#have_the_auditors_made_adverse_comments_analysis_text").addClass('hidden');
             }
         });
@@ -150,7 +150,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_provided_a_reference_of_the_said_rpt_analysis_text textarea").html("");
+                $("#has_the_company_provided_a_reference_of_the_said_rpt_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_provided_a_reference_of_the_said_rpt_analysis_text").addClass('hidden');
             }
         });
@@ -172,7 +172,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_audited_financial_statement_analysis_text textarea").html("");
+                $("#are_the_audited_financial_statement_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_audited_financial_statement_analysis_text").addClass('hidden');
             }
         });
@@ -194,7 +194,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#have_the_auditors_of_the_entity_raised_analysis_text textarea").html("");
+                $("#have_the_auditors_of_the_entity_raised_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#have_the_auditors_of_the_entity_raised_analysis_text").addClass('hidden');
             }
         });
@@ -216,7 +216,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_seeking_related_party_analysis_text textarea").html("");
+                $("#is_the_company_seeking_related_party_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_seeking_related_party_analysis_text").addClass('hidden');
             }
         });
@@ -238,7 +238,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_made_all_the_disclosures_analysis_text textarea").html("");
+                $("#has_the_company_made_all_the_disclosures_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_made_all_the_disclosures_analysis_text").addClass('hidden');
             }
         });
@@ -260,7 +260,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_consideration_received_given_upfront_or_not_analysis_text textarea").html("");
+                $("#is_the_consideration_received_given_upfront_or_not_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_consideration_received_given_upfront_or_not_analysis_text").addClass('hidden');
             }
         });
@@ -282,7 +282,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_valuation_report_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_valuation_report_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_valuation_report_analysis_text").addClass('hidden');
             }
         });
@@ -315,7 +315,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_rpt").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_rpt").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
 

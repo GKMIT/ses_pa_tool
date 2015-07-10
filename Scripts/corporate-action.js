@@ -80,7 +80,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_percentage_of_free_float_analysis_text textarea").html("");
+                $("#is_the_percentage_of_free_float_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_percentage_of_free_float_analysis_text").addClass('hidden');
             }
         });
@@ -102,7 +102,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_issued_any_securitie_analysis_text textarea").html("");
+                $("#has_the_company_issued_any_securitie_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_issued_any_securitie_analysis_text").addClass('hidden');
             }
         });
@@ -124,7 +124,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_made_another_buy_back_analysis_text textarea").html("");
+                $("#has_the_company_made_another_buy_back_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_made_another_buy_back_analysis_text").addClass('hidden');
             }
         });
@@ -146,7 +146,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_ratio_of_the_aggregate_of_secured_analysis_text textarea").html("");
+                $("#is_the_ratio_of_the_aggregate_of_secured_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_ratio_of_the_aggregate_of_secured_analysis_text").addClass('hidden');
             }
         });
@@ -168,7 +168,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_size_of_the_buy_back_15_analysis_text textarea").html("");
+                $("#is_the_size_of_the_buy_back_15_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_size_of_the_buy_back_15_analysis_text").addClass('hidden');
             }
         });
@@ -190,7 +190,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_this_resolution_an_enabling_resolution_analysis_text textarea").html("");
+                $("#is_this_resolution_an_enabling_resolution_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_this_resolution_an_enabling_resolution_analysis_text").addClass('hidden');
             }
         });
@@ -212,7 +212,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_detail_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_detail_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_detail_analysis_text").addClass('hidden');
             }
         });
@@ -235,7 +235,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_detail_of_borrowing_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_detail_of_borrowing_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_detail_of_borrowing_analysis_text").addClass('hidden');
             }
         });
@@ -257,7 +257,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_assets_being_used_to_secure_analysis_text textarea").html("");
+                $("#are_the_assets_being_used_to_secure_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_assets_being_used_to_secure_analysis_text").addClass('hidden');
             }
         });
@@ -279,7 +279,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_assets_being_used_to_secure_borrowings_analysis_text textarea").html("");
+                $("#are_the_assets_being_used_to_secure_borrowings_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_assets_being_used_to_secure_borrowings_analysis_text").addClass('hidden');
             }
         });
@@ -301,7 +301,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_creation_of_charge_analysis_text textarea").html("");
+                $("#is_the_creation_of_charge_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_creation_of_charge_analysis_text").addClass('hidden');
             }
         });
@@ -323,7 +323,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_independent_fairness_analysis_text textarea").html("");
+                $("#is_the_independent_fairness_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_independent_fairness_analysis_text").addClass('hidden');
             }
         });
@@ -345,7 +345,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_a_rationale_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_a_rationale_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_a_rationale_analysis_text").addClass('hidden');
             }
         });
@@ -367,7 +367,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_fully_disclosed_the_assets_analysis_text textarea").html("");
+                $("#has_the_company_fully_disclosed_the_assets_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_fully_disclosed_the_assets_analysis_text").addClass('hidden');
             }
         });
@@ -389,7 +389,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_price_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_price_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_price_analysis_text").addClass('hidden');
             }
         });
@@ -411,7 +411,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_details_of_the_buyer_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_details_of_the_buyer_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_details_of_the_buyer_analysis_text").addClass('hidden');
             }
         });
@@ -433,7 +433,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_impact_of_sale_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_impact_of_sale_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_impact_of_sale_analysis_text").addClass('hidden');
             }
         });
@@ -455,7 +455,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_assets_undertaking_analysis_text textarea").html("");
+                $("#are_the_assets_undertaking_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_assets_undertaking_analysis_text").addClass('hidden');
             }
         });
@@ -477,7 +477,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_analysis_text").addClass('hidden');
             }
         });
@@ -499,7 +499,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_company_has_high_cash_balance_analysis_text textarea").html("");
+                $("#does_the_company_has_high_cash_balance_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_has_high_cash_balance_analysis_text").addClass('hidden');
             }
         });
@@ -521,7 +521,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_amount_of_borrowing_not_consistent_analysis_text textarea").html("");
+                $("#is_the_amount_of_borrowing_not_consistent_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_amount_of_borrowing_not_consistent_analysis_text").addClass('hidden');
             }
         });
@@ -543,7 +543,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_defaulted_on_any_of_its_existing_debt_obligation_analysis_text textarea").html("");
+                $("#has_the_company_defaulted_on_any_of_its_existing_debt_obligation_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_defaulted_on_any_of_its_existing_debt_obligation_analysis_text").addClass('hidden');
             }
         });
@@ -565,7 +565,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_undergone_a_debt_restructuring_analysis_text textarea").html("");
+                $("#has_the_company_undergone_a_debt_restructuring_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_undergone_a_debt_restructuring_analysis_text").addClass('hidden');
             }
         });
@@ -587,7 +587,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_a_sick_company_analysis_text textarea").html("");
+                $("#is_the_company_a_sick_company_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_a_sick_company_analysis_text").addClass('hidden');
             }
         });
@@ -609,7 +609,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_undergone_a_debt_restructuring_analysis_text textarea").html("");
+                $("#has_the_company_undergone_a_debt_restructuring_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_undergone_a_debt_restructuring_analysis_text").addClass('hidden');
             }
         });
@@ -631,7 +631,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_more_than_50_analysis_text textarea").html("");
+                $("#is_the_company_more_than_50_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_more_than_50_analysis_text").addClass('hidden');
             }
         });
@@ -653,7 +653,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_loans_given_to_related_parties_analysis_text textarea").html("");
+                $("#are_the_loans_given_to_related_parties_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_loans_given_to_related_parties_analysis_text").addClass('hidden');
             }
         });
@@ -675,7 +675,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_borrowing_limit_proposed_analysis_text textarea").html("");
+                $("#is_the_borrowing_limit_proposed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_borrowing_limit_proposed_analysis_text").addClass('hidden');
             }
         });
@@ -708,7 +708,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
         $('#btn_recommendation_text_sale_of_assets').click(function(){
@@ -740,7 +740,7 @@ CustomJS.prototype = {
                });
            }
             else {
-               $("#recommendation_text_sale_of_assets").parent().find(".cke_textarea_inline").html("");
+               $("#recommendation_text_sale_of_assets").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
            }
        });
         $("#btn_recommendation_text_increase_in_borrowing_limits").click(function(){
@@ -773,7 +773,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_increase_in_borrowing_limits").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_increase_in_borrowing_limits").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
 

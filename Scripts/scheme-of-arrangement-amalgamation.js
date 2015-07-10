@@ -155,7 +155,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_a_certificate_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_a_certificate_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_a_certificate_analysis_text").addClass('hidden');
             }
         });
@@ -177,7 +177,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_impact_the_scheme_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_impact_the_scheme_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_impact_the_scheme_analysis_text").addClass('hidden');
             }
         });
@@ -199,7 +199,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_any_class_of_shareholders_benefitted_analysis_text textarea").html("");
+                $("#is_any_class_of_shareholders_benefitted_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_any_class_of_shareholders_benefitted_analysis_text").addClass('hidden');
             }
         });
@@ -221,7 +221,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_there_any_potential_conflict_analysis_text textarea").html("");
+                $("#are_there_any_potential_conflict_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_there_any_potential_conflict_analysis_text").addClass('hidden');
             }
         });
@@ -243,7 +243,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_scheme_fair_to_minority_shareholder_analysis_text textarea").html("");
+                $("#is_the_scheme_fair_to_minority_shareholder_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_scheme_fair_to_minority_shareholder_analysis_text").addClass('hidden');
             }
         });
@@ -265,7 +265,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_there_any_governance_fairness_analysis_text textarea").html("");
+                $("#are_there_any_governance_fairness_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_there_any_governance_fairness_analysis_text").addClass('hidden');
             }
         });
@@ -287,7 +287,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_key_financial_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_key_financial_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_key_financial_analysis_text").addClass('hidden');
             }
         });
@@ -309,7 +309,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_proposed_demerger_a_measure_aimed_at_risk_isolation_analysis_text textarea").html("");
+                $("#is_the_proposed_demerger_a_measure_aimed_at_risk_isolation_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_proposed_demerger_a_measure_aimed_at_risk_isolation_analysis_text").addClass('hidden');
             }
         });
@@ -331,7 +331,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_proposed_demerger_a_measure_aimed_analysis_text textarea").html("");
+                $("#is_the_proposed_demerger_a_measure_aimed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_proposed_demerger_a_measure_aimed_analysis_text").addClass('hidden');
             }
         });
@@ -353,7 +353,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_demerger_resulting_in_formation_analysis_text textarea").html("");
+                $("#is_the_demerger_resulting_in_formation_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_demerger_resulting_in_formation_analysis_text").addClass('hidden');
             }
         });
@@ -375,7 +375,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_exit_options_given_to_shareholder_analysis_text textarea").html("");
+                $("#are_exit_options_given_to_shareholder_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_exit_options_given_to_shareholder_analysis_text").addClass('hidden');
             }
         });

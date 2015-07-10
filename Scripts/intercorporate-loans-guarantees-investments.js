@@ -142,7 +142,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_loan_being_made_to_a_material_analysis_text textarea").html("");
+                $("#is_the_loan_being_made_to_a_material_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_loan_being_made_to_a_material_analysis_text").addClass('hidden');
             }
         });
@@ -164,7 +164,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_loan_being_made_to_a_material_operating_analysis_text textarea").html("");
+                $("#is_the_loan_being_made_to_a_material_operating_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_loan_being_made_to_a_material_operating_analysis_text").addClass('hidden');
             }
         });
@@ -186,7 +186,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_loan_being_made_analysis_text textarea").html("");
+                $("#is_the_loan_being_made_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_loan_being_made_analysis_text").addClass('hidden');
             }
         });
@@ -208,7 +208,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_identified_recipients_analysis_text textarea").html("");
+                $("#has_the_company_identified_recipients_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_identified_recipients_analysis_text").addClass('hidden');
             }
         });
@@ -230,7 +230,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_specific_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_specific_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_specific_analysis_text").addClass('hidden');
             }
         });
@@ -252,7 +252,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_whether_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_whether_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_whether_analysis_text").addClass('hidden');
             }
         });
@@ -274,7 +274,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_other_shareholders_of_the_recipients_analysis_text textarea").html("");
+                $("#are_the_other_shareholders_of_the_recipients_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_other_shareholders_of_the_recipients_analysis_text").addClass('hidden');
             }
         });
@@ -296,7 +296,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_audit_committee_recommended_analysis_text textarea").html("");
+                $("#has_the_audit_committee_recommended_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_audit_committee_recommended_analysis_text").addClass('hidden');
             }
         });
@@ -318,7 +318,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_entity_to_which_the_company_intends_analysis_text textarea").html("");
+                $("#does_the_entity_to_which_the_company_intends_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_entity_to_which_the_company_intends_analysis_text").addClass('hidden');
             }
         });
@@ -340,7 +340,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_rate_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_rate_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_rate_analysis_text").addClass('hidden');
             }
         });
@@ -362,7 +362,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_rate_of_interest_charged_less_than_analysis_text textarea").html("");
+                $("#is_the_rate_of_interest_charged_less_than_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_rate_of_interest_charged_less_than_analysis_text").addClass('hidden');
             }
         });
@@ -384,7 +384,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_company_seeks_approval_analysis_text textarea").html("");
+                $("#does_the_company_seeks_approval_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_seeks_approval_analysis_text").addClass('hidden');
             }
         });
@@ -406,7 +406,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_made_disclosures_required_analysis_text textarea").html("");
+                $("#has_the_company_made_disclosures_required_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_made_disclosures_required_analysis_text").addClass('hidden');
             }
         });
@@ -428,7 +428,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_information_related_to_particulars_of_loans_analysis_text textarea").html("");
+                $("#is_the_information_related_to_particulars_of_loans_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_information_related_to_particulars_of_loans_analysis_text").addClass('hidden');
             }
         });
@@ -461,7 +461,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_intercorporate_loans").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_intercorporate_loans").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
 

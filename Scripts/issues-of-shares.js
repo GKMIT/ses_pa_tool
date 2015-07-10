@@ -244,7 +244,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_dilution_to_public_shareholders_exceed_analysis_text textarea").html("");
+                $("#is_the_dilution_to_public_shareholders_exceed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_dilution_to_public_shareholders_exceed_analysis_text").addClass('hidden');
             }
         });
@@ -266,7 +266,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_warrants_issued_on_preferential_basis_analysis_text textarea").html("");
+                $("#are_warrants_issued_on_preferential_basis_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_warrants_issued_on_preferential_basis_analysis_text").addClass('hidden');
             }
         });
@@ -288,7 +288,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_securities_being_issued_to_a_strategic_investor_analysis_text textarea").html("");
+                $("#are_the_securities_being_issued_to_a_strategic_investor_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_securities_being_issued_to_a_strategic_investor_analysis_text").addClass('hidden');
             }
         });
@@ -310,7 +310,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_securities_being_issued_to_a_strategic_analysis_text textarea").html("");
+                $("#are_the_securities_being_issued_to_a_strategic_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_securities_being_issued_to_a_strategic_analysis_text").addClass('hidden');
             }
         });
@@ -332,7 +332,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_an_urgent_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_an_urgent_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_an_urgent_analysis_text").addClass('hidden');
             }
         });
@@ -354,7 +354,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_preferential_issue_of_equity_share_analysis_text textarea").html("");
+                $("#is_the_preferential_issue_of_equity_share_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_preferential_issue_of_equity_share_analysis_text").addClass('hidden');
             }
         });
@@ -376,7 +376,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_preferential_issue_of_equity_analysis_text textarea").html("");
+                $("#is_the_preferential_issue_of_equity_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_preferential_issue_of_equity_analysis_text").addClass('hidden');
             }
         });
@@ -398,7 +398,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_dilution_to_public_shareholder_analysis_text textarea").html("");
+                $("#is_the_dilution_to_public_shareholder_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_dilution_to_public_shareholder_analysis_text").addClass('hidden');
             }
         });
@@ -420,7 +420,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_preferential_issue_made_analysis_text textarea").html("");
+                $("#is_preferential_issue_made_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_preferential_issue_made_analysis_text").addClass('hidden');
             }
         });
@@ -453,7 +453,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_preferential_issue").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_preferential_issue").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
 
         });
@@ -475,7 +475,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_company_has_sufficient_free_reserves_analysis_text textarea").html("");
+                $("#does_the_company_has_sufficient_free_reserves_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_has_sufficient_free_reserves_analysis_text").addClass('hidden');
             }
         });
@@ -497,7 +497,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_issuing_shares_by_capitalizing_analysis_text textarea").html("");
+                $("#is_the_company_issuing_shares_by_capitalizing_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_issuing_shares_by_capitalizing_analysis_text").addClass('hidden');
             }
         });
@@ -519,7 +519,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_defaulted_in_payment_of_interest_analysis_text textarea").html("");
+                $("#has_the_company_defaulted_in_payment_of_interest_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_defaulted_in_payment_of_interest_analysis_text").addClass('hidden');
             }
         });
@@ -541,7 +541,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_undergone_debt_restructuring_analysis_text textarea").html("");
+                $("#has_the_company_undergone_debt_restructuring_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_undergone_debt_restructuring_analysis_text").addClass('hidden');
             }
         });
@@ -563,7 +563,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_defaulted_in_respect_analysis_text textarea").html("");
+                $("#has_the_company_defaulted_in_respect_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_defaulted_in_respect_analysis_text").addClass('hidden');
             }
         });
@@ -585,7 +585,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_not_paid_dividend_analysis_text textarea").html("");
+                $("#has_the_company_not_paid_dividend_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_not_paid_dividend_analysis_text").addClass('hidden');
             }
         });
@@ -639,7 +639,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_size_of_the_issue_disclosed_analysis_text textarea").html("");
+                $("#is_the_size_of_the_issue_disclosed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_size_of_the_issue_disclosed_analysis_text").addClass('hidden');
             }
         });
@@ -661,7 +661,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_dilution_to_public_shareholders_exceeds_analysis_text textarea").html("");
+                $("#is_dilution_to_public_shareholders_exceeds_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_dilution_to_public_shareholders_exceeds_analysis_text").addClass('hidden');
             }
         });
@@ -683,7 +683,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_seeking_blanket_approval_for_issuance_analysis_text textarea").html("");
+                $("#is_the_company_seeking_blanket_approval_for_issuance_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_seeking_blanket_approval_for_issuance_analysis_text").addClass('hidden');
             }
         });
@@ -705,7 +705,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_proposing_to_issue_shares_though_analysis_text textarea").html("");
+                $("#is_the_company_proposing_to_issue_shares_though_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_proposing_to_issue_shares_though_analysis_text").addClass('hidden');
             }
         });
@@ -727,7 +727,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_company_has_provided_an_inadequate_analysis_text textarea").html("");
+                $("#does_the_company_has_provided_an_inadequate_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_company_has_provided_an_inadequate_analysis_text").addClass('hidden');
             }
         });
@@ -749,7 +749,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_company_seeking_blanket_approval_for_issuance_of_shares_analysis_text textarea").html("");
+                $("#is_the_company_seeking_blanket_approval_for_issuance_of_shares_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_company_seeking_blanket_approval_for_issuance_of_shares_analysis_text").addClass('hidden');
             }
         });
@@ -803,7 +803,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_preference_shares_redeemable_analysis_text textarea").html("");
+                $("#are_preference_shares_redeemable_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_preference_shares_redeemable_analysis_text").addClass('hidden');
             }
         });
@@ -825,7 +825,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_redemption_period_exceeds_analysis_text textarea").html("");
+                $("#is_redemption_period_exceeds_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_redemption_period_exceeds_analysis_text").addClass('hidden');
             }
         });
@@ -847,7 +847,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_defaulted_analysis_text textarea").html("");
+                $("#has_the_company_defaulted_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_defaulted_analysis_text").addClass('hidden');
             }
         });
@@ -869,7 +869,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_undergone_analysis_text textarea").html("");
+                $("#has_the_company_undergone_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_undergone_analysis_text").addClass('hidden');
             }
         });
@@ -891,7 +891,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_made_losses_analysis_text textarea").html("");
+                $("#has_the_company_made_losses_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_made_losses_analysis_text").addClass('hidden');
             }
         });
@@ -913,7 +913,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_there_an_option_to_convert_preferential_analysis_text textarea").html("");
+                $("#is_there_an_option_to_convert_preferential_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_there_an_option_to_convert_preferential_analysis_text").addClass('hidden');
             }
         });

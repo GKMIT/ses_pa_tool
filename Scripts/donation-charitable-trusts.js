@@ -50,7 +50,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_making_CSR_contributions_despite_analysis_text textarea").html("");
+                $("#company_making_CSR_contributions_despite_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_making_CSR_contributions_despite_analysis_text").addClass('hidden');
             }
         });
@@ -72,7 +72,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_making_CSR_contributions_despite_decline_analysis_text textarea").html("");
+                $("#company_making_CSR_contributions_despite_decline_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_making_CSR_contributions_despite_decline_analysis_text").addClass('hidden');
             }
         });
@@ -94,7 +94,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_spent_more_than_2_the_average_net_profits_analysis_text textarea").html("");
+                $("#company_spent_more_than_2_the_average_net_profits_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_spent_more_than_2_the_average_net_profits_analysis_text").addClass('hidden');
             }
         });
@@ -116,7 +116,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_spent_more_than_2_of_the_average_net_profits_on_CSR_but_not_paid_analysis_text textarea").html("");
+                $("#company_spent_more_than_2_of_the_average_net_profits_on_CSR_but_not_paid_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_spent_more_than_2_of_the_average_net_profits_on_CSR_but_not_paid_analysis_text").addClass('hidden');
             }
         });
@@ -153,7 +153,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_disclosed_the_exact_amount_of_contributions_analysis_text textarea").html("");
+                $("#company_disclosed_the_exact_amount_of_contributions_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_disclosed_the_exact_amount_of_contributions_analysis_text").addClass('hidden');
             }
         });
@@ -175,7 +175,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_any_director_KMP_interested_in_the_recipients_analysis_text textarea").html("");
+                $("#is_any_director_KMP_interested_in_the_recipients_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_any_director_KMP_interested_in_the_recipients_analysis_text").addClass('hidden');
             }
         });
@@ -197,7 +197,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_recipient_entity_part_of_the_promoter_analysis_text textarea").html("");
+                $("#is_the_recipient_entity_part_of_the_promoter_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_recipient_entity_part_of_the_promoter_analysis_text").addClass('hidden');
             }
         });

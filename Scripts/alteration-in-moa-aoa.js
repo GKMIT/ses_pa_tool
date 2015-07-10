@@ -63,7 +63,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_proposed_name_consistent_with_the_company_analysis_text textarea").html("");
+                $("#is_the_proposed_name_consistent_with_the_company_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_proposed_name_consistent_with_the_company_analysis_text").addClass('hidden');
             }
         });
@@ -85,7 +85,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_making_CSR_contributions_despite_decline_analysis_text textarea").html("");
+                $("#company_making_CSR_contributions_despite_decline_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_making_CSR_contributions_despite_decline_analysis_text").addClass('hidden');
             }
         });
@@ -107,7 +107,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_spent_more_than_2_the_average_net_profits_analysis_text textarea").html("");
+                $("#company_spent_more_than_2_the_average_net_profits_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_spent_more_than_2_the_average_net_profits_analysis_text").addClass('hidden');
             }
         });
@@ -129,7 +129,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_spent_more_than_2_of_the_average_net_profits_on_CSR_but_not_paid_analysis_text textarea").html("");
+                $("#company_spent_more_than_2_of_the_average_net_profits_on_CSR_but_not_paid_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_spent_more_than_2_of_the_average_net_profits_on_CSR_but_not_paid_analysis_text").addClass('hidden');
             }
         });
@@ -166,7 +166,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_disclosed_the_exact_amount_of_contributions_analysis_text textarea").html("");
+                $("#company_disclosed_the_exact_amount_of_contributions_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_disclosed_the_exact_amount_of_contributions_analysis_text").addClass('hidden');
             }
         });
@@ -188,7 +188,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_any_director_KMP_interested_in_the_recipients_analysis_text textarea").html("");
+                $("#is_any_director_KMP_interested_in_the_recipients_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_any_director_KMP_interested_in_the_recipients_analysis_text").addClass('hidden');
             }
         });
@@ -210,7 +210,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_recipient_entity_part_of_the_promoter_analysis_text textarea").html("");
+                $("#is_the_recipient_entity_part_of_the_promoter_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_recipient_entity_part_of_the_promoter_analysis_text").addClass('hidden');
             }
         });
@@ -232,7 +232,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#would_the_change_in_name_result_in_loss_analysis_text textarea").html("");
+                $("#would_the_change_in_name_result_in_loss_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#would_the_change_in_name_result_in_loss_analysis_text").addClass('hidden');
             }
         });
@@ -254,7 +254,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_names_sounding_similar_to_other_successful_companie_analysis_text textarea").html("");
+                $("#does_the_names_sounding_similar_to_other_successful_companie_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_names_sounding_similar_to_other_successful_companie_analysis_text").addClass('hidden');
             }
         });
@@ -276,7 +276,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_names_sounding_similar_to_other_successful_companie_analysis_text textarea").html("");
+                $("#does_the_names_sounding_similar_to_other_successful_companie_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_name_aligned_with_the_objects_of_the_company_analysis_text").addClass('hidden');
             }
         });
@@ -298,7 +298,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_taken_a_certification_from_the_registrar_of_companie_analysis_text textarea").html("");
+                $("#has_the_company_taken_a_certification_from_the_registrar_of_companie_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_taken_a_certification_from_the_registrar_of_companie_analysis_text").addClass('hidden');
             }
         });
@@ -320,7 +320,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_changed_its_name_in_last_one_year_analysis_text textarea").html("");
+                $("#has_the_company_changed_its_name_in_last_one_year_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_changed_its_name_in_last_one_year_analysis_text").addClass('hidden');
             }
         });
@@ -342,7 +342,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_suggested_name_in_compliance_with_SEBI_guidelines_on_the_same_analysis_text textarea").html("");
+                $("#is_the_suggested_name_in_compliance_with_SEBI_guidelines_on_the_same_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_suggested_name_in_compliance_with_SEBI_guidelines_on_the_same_analysis_text").addClass('hidden');
             }
         });
@@ -364,7 +364,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_specific_objective_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_specific_objective_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_specific_objective_analysis_text").addClass('hidden');
             }
         });
@@ -386,7 +386,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_utilized_the_existing_authorized_capital_analysis_text textarea").html("");
+                $("#has_the_company_utilized_the_existing_authorized_capital_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_utilized_the_existing_authorized_capital_analysis_text").addClass('hidden');
             }
         });

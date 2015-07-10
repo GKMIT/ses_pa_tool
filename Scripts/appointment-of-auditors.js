@@ -68,7 +68,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#disclosed_in_notice_and_annual_report_analysis_text textarea").html("");
+                $("#disclosed_in_notice_and_annual_report_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#disclosed_in_notice_and_annual_report_analysis_text").addClass('hidden');
             }
         });
@@ -90,7 +90,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#disclosed_in_notice_and_annual_report_analysis_text textarea").html("");
+                $("#disclosed_in_notice_and_annual_report_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#disclosed_in_notice_and_annual_report_analysis_text").addClass('hidden');
             }
         });
@@ -112,7 +112,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#disclosed_in_notice_and_annual_report_analysis_text textarea").html("");
+                $("#disclosed_in_notice_and_annual_report_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#disclosed_in_notice_and_annual_report_analysis_text").addClass('hidden');
             }
         });
@@ -120,36 +120,36 @@ CustomJS.prototype = {
 
             var self = $(this);
             if(self.val()=='not disclosed') {
-                $("#auditors_eligibility_for_appointment_analysis_text1 textarea").html("");
+                $("#auditors_eligibility_for_appointment_analysis_text1 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_eligibility_for_appointment_analysis_text1").removeClass('hidden');
 
             }
             else {
-                $("#auditors_eligibility_for_appointment_analysis_text1 textarea").html("");
+                $("#auditors_eligibility_for_appointment_analysis_text1 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_eligibility_for_appointment_analysis_text1").addClass('hidden');
             }
         });
         $("#auditors_eligibility_for_appointment2").change(function () {
             var self = $(this);
             if(self.val()=='not disclosed') {
-                $("#auditors_eligibility_for_appointment_analysis_text2 textarea").html("");
+                $("#auditors_eligibility_for_appointment_analysis_text2 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_eligibility_for_appointment_analysis_text2").removeClass('hidden');
 
             }
             else {
-                $("#auditors_eligibility_for_appointment_analysis_text2 textarea").html("");
+                $("#auditors_eligibility_for_appointment_analysis_text2 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_eligibility_for_appointment_analysis_text2").addClass('hidden');
             }
         });
         $("#auditors_eligibility_for_appointment3").change(function () {
             var self = $(this);
             if(self.val()=='not disclosed') {
-                $("#auditors_eligibility_for_appointment_analysis_text3 textarea").html("");
+                $("#auditors_eligibility_for_appointment_analysis_text3 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_eligibility_for_appointment_analysis_text3").removeClass('hidden');
 
             }
             else {
-                $("#auditors_eligibility_for_appointment_analysis_text3 textarea").html("");
+                $("#auditors_eligibility_for_appointment_analysis_text3 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_eligibility_for_appointment_analysis_text3").addClass('hidden');
             }
         });
@@ -157,12 +157,12 @@ CustomJS.prototype = {
             var self = $(this);
             if(self.val()=='not disclosed') {
 
-                $("#auditors_independence_certificate_analysis_text1 textarea").html("");
+                $("#auditors_independence_certificate_analysis_text1 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_independence_certificate_analysis_text1").removeClass('hidden');
 
             }
             else {
-                $("#auditors_independence_certificate_analysis_text1 textarea").html("");
+                $("#auditors_independence_certificate_analysis_text1 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_independence_certificate_analysis_text1").addClass('hidden');
             }
         });
@@ -170,12 +170,12 @@ CustomJS.prototype = {
             var self = $(this);
             if(self.val()=='not disclosed') {
 
-                $("#auditors_independence_certificate_analysis_text2 textarea").html("");
+                $("#auditors_independence_certificate_analysis_text2 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_independence_certificate_analysis_text2").removeClass('hidden');
 
             }
             else {
-                $("#auditors_independence_certificate_analysis_text2 textarea").html("");
+                $("#auditors_independence_certificate_analysis_text2 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_independence_certificate_analysis_text2").addClass('hidden');
             }
         });
@@ -183,12 +183,12 @@ CustomJS.prototype = {
             var self = $(this);
             if(self.val()=='not disclosed') {
 
-                $("#auditors_independence_certificate_analysis_text3 textarea").html("");
+                $("#auditors_independence_certificate_analysis_text3 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_independence_certificate_analysis_text3").removeClass('hidden');
 
             }
             else {
-                $("#auditors_independence_certificate_analysis_text3 textarea").html("");
+                $("#auditors_independence_certificate_analysis_text3 textarea").parent().find(".cke_textarea_inline").html("");
                 $("#auditors_independence_certificate_analysis_text3").addClass('hidden');
             }
         });
@@ -223,7 +223,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_appointment_of_branch_auditors").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_appointment_of_branch_auditors").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
         //appointment of auditors
@@ -246,7 +246,7 @@ CustomJS.prototype = {
                             $("#calculate_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
                         }
                         else {
-                            $("#calculate_tenure_analysis_text textarea").html("");
+                            $("#calculate_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                             $("#calculate_tenure_analysis_text").addClass('hidden');
                         }
                     },2000);
@@ -279,7 +279,7 @@ CustomJS.prototype = {
                         }
                         else {
                             $(".calculate_tenure_audit_partner_value_analysis_text").addClass('hidden');
-                            $(".calculate_tenure_audit_partner_value_analysis_text textarea").html("");
+                            $(".calculate_tenure_audit_partner_value_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         }
                     },2000);
 
@@ -329,7 +329,7 @@ CustomJS.prototype = {
                         }
                         else {
                             $("#group_firm_audit_tenure_analysis_text").addClass('hidden');
-                            $("#group_firm_audit_tenure_analysis_text textarea").html("");
+                            $("#group_firm_audit_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                         }
                     },2000);
 
@@ -464,7 +464,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").html("");
+                $('.calculate_tenure_and_term_value_value').parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
                 $('.calculate_tenure_and_term_value_analysis_text').addClass('hidden');
             }
         }
@@ -504,7 +504,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text").addClass('hidden');
-                $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text textarea").html("");
+                $("#are_the_auditors_appointed_for_requisite_number_of_years_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
 
             }
         });
@@ -526,7 +526,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#financial_interests_in_or_association_with_the_company_analysis_text textarea").html("");
+                $("#financial_interests_in_or_association_with_the_company_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#financial_interests_in_or_association_with_the_company_analysis_text").addClass('hidden');
             }
         });
@@ -548,7 +548,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#business_relationship_with_the_company_analysis_text textarea").html("");
+                $("#business_relationship_with_the_company_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#business_relationship_with_the_company_analysis_text").addClass('hidden');
             }
         });
@@ -570,7 +570,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_restated_material_financial_analysis_text textarea").html("");
+                $("#has_the_company_restated_material_financial_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_restated_material_financial_analysis_text").addClass('hidden');
             }
         });
@@ -592,7 +592,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#have_material_unaudited_financial_analysis_text textarea").html("");
+                $("#have_material_unaudited_financial_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#have_material_unaudited_financial_analysis_text").addClass('hidden');
             }
         });
@@ -614,7 +614,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#were_the_auditors_analysis_text textarea").html("");
+                $("#were_the_auditors_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#were_the_auditors_analysis_text").addClass('hidden');
             }
         });
@@ -636,7 +636,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_audit_committee_compliant_analysis_text textarea").html("");
+                $("#is_the_audit_committee_compliant_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_audit_committee_compliant_analysis_text").addClass('hidden');
             }
         });
@@ -658,7 +658,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_made_adequate_analysis_text textarea").html("");
+                $("#has_the_company_made_adequate_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_made_adequate_analysis_text").addClass('hidden');
             }
         });
@@ -680,7 +680,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#was_non_audit_fee_analysis_text textarea").html("");
+                $("#was_non_audit_fee_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#was_non_audit_fee_analysis_text").addClass('hidden');
             }
         });
@@ -702,7 +702,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#was_non_audit_fee_50_analysis_text textarea").html("");
+                $("#was_non_audit_fee_50_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#was_non_audit_fee_50_analysis_text").addClass('hidden');
             }
         });
@@ -767,7 +767,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_appointment_of_auditors").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_appointment_of_auditors").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
 

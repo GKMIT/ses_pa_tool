@@ -62,7 +62,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_board_given_absolute_discretion_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
+                $("#has_the_board_given_absolute_discretion_analysis_text textarea").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_board_given_absolute_discretion_analysis_text").addClass('hidden');
             }
         });
@@ -85,7 +85,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#do_the_cumulative_number_of_shares_analysis_text textarea").html("");
+                $("#do_the_cumulative_number_of_shares_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#do_the_cumulative_number_of_shares_analysis_text").addClass('hidden');
             }
         });
@@ -107,7 +107,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_scheme_has_provisions_to_provide_analysis_text textarea").html("");
+                $("#does_the_scheme_has_provisions_to_provide_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_scheme_has_provisions_to_provide_analysis_text").addClass('hidden');
             }
         });
@@ -129,7 +129,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#are_the_disclosures_made_by_the_company_analysis_text textarea").html("");
+                $("#are_the_disclosures_made_by_the_company_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#are_the_disclosures_made_by_the_company_analysis_text").addClass('hidden');
             }
         });
@@ -151,7 +151,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_disclosed_the_composition_of_the_compensation_analysis_text textarea").html("");
+                $("#has_the_company_disclosed_the_composition_of_the_compensation_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_disclosed_the_composition_of_the_compensation_analysis_text").addClass('hidden');
             }
         });
@@ -173,7 +173,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_nomination_remuneration_analysis_text textarea").html("");
+                $("#is_the_nomination_remuneration_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_nomination_remuneration_analysis_text").addClass('hidden');
             }
         });
@@ -195,7 +195,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_scheme_explicitly_restrict_analysis_text textarea").html("");
+                $("#does_the_scheme_explicitly_restrict_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_scheme_explicitly_restrict_analysis_text").addClass('hidden');
             }
         });
@@ -217,7 +217,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_company_granted_option_under_analysis_text textarea").html("");
+                $("#has_the_company_granted_option_under_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_company_granted_option_under_analysis_text").addClass('hidden');
             }
         });
@@ -239,7 +239,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#does_the_scheme_provides_the_option_analysis_text textarea").html("");
+                $("#does_the_scheme_provides_the_option_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#does_the_scheme_provides_the_option_analysis_text").addClass('hidden');
             }
         });
@@ -262,7 +262,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_exercise_price_been_disclosed_analysis_text textarea").html("");
+                $("#has_the_exercise_price_been_disclosed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_exercise_price_been_disclosed_analysis_text").addClass('hidden');
             }
         });
@@ -296,7 +296,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#recommendation_text_approval_of_esop_scheme").parent().find(".cke_textarea_inline").html("");
+                $("#recommendation_text_approval_of_esop_scheme").parent().find(".cke_textarea_inline").parent().find(".cke_textarea_inline").html("");
             }
         });
         $(function(){

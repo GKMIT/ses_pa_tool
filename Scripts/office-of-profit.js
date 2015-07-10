@@ -48,7 +48,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#has_the_remuneration_payable_been_disclosed_analysis_text textarea").html("");
+                $("#has_the_remuneration_payable_been_disclosed_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#has_the_remuneration_payable_been_disclosed_analysis_text").addClass('hidden');
             }
         });
@@ -70,7 +70,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#interested_director_part_of_the_selection_process_analysis_text textarea").html("");
+                $("#interested_director_part_of_the_selection_process_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#interested_director_part_of_the_selection_process_analysis_text").addClass('hidden');
             }
         });
@@ -92,7 +92,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#company_have_an_independent_selection_committee_analysis_text textarea").html("");
+                $("#company_have_an_independent_selection_committee_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_have_an_independent_selection_committee_analysis_text").addClass('hidden');
             }
         });
@@ -114,7 +114,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_remuneration_payable_to_the_person_analysis_text textarea").html("");
+                $("#is_the_remuneration_payable_to_the_person_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_remuneration_payable_to_the_person_analysis_text").addClass('hidden');
             }
         });
@@ -136,7 +136,7 @@ CustomJS.prototype = {
                 });
             }
             else {
-                $("#is_the_process_followed_by_the_company_analysis_text textarea").html("");
+                $("#is_the_process_followed_by_the_company_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#is_the_process_followed_by_the_company_analysis_text").addClass('hidden');
             }
         });
