@@ -1350,7 +1350,9 @@ elseif(isset($_GET['get_dividend_info_last_year'])) {
 	$financial_year = intval($_GET['financial_year'])-1;
 	$dividend_info = $db->getDividendInfo($_GET['company_id'],$financial_year);
 	$dividend_info_this_year = $db->getDividendInfo($_GET['company_id'],$_GET['financial_year']);
+	$dividend_info_next_year = $db->getDividendInfo($_GET['company_id'],$financial_year+2);
 	$dividend_info['this_year_count']= $dividend_info_this_year['count'];
+	$dividend_info['dividend_info_next_year']= $dividend_info_next_year;
 	echo json_encode($dividend_info);
 }
 elseif(isset($_GET['get_dividend_info'])) {

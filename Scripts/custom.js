@@ -1911,7 +1911,7 @@ CustomJS.prototype = {
                                 text: "Please go to edit page for making changes."
                             },
                             function(){
-                                window.location.reload();
+                                window.location = document.URL;
                             });
                     }
                 }
@@ -2319,13 +2319,14 @@ CustomJS.prototype = {
                     financial_year:$("#financial_year").val()
                 },
                 success: function(data) {
+                    console.log(data);
                     if(data.this_year_count==1) {
                         swal({
                                 title:"Current year data exists!",
                                 text: "Please go to edit page for making changes."
                             },
                             function(){
-                                window.location.reload();
+                                window.location = document.URL;
                             });
                     }
                     if(data.count==1) {
@@ -2334,6 +2335,13 @@ CustomJS.prototype = {
                     }
                     else {
                         $("#market_price_start").focus();
+                    }
+
+                    if(data.dividend_info_next_year.count==1) {
+                        $("#market_price_end").val(data.dividend_info_next_year.market_price_start);
+                    }
+                    else {
+                        $("#market_price_end").val("");
                     }
                 }
             });
@@ -2676,7 +2684,7 @@ CustomJS.prototype = {
                                 text: "Please go to edit page for making changes."
                             },
                             function(){
-                                window.location.reload();
+                                window.location = document.URL;
                             });
                     }
                 }

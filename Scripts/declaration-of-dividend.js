@@ -218,7 +218,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#company_have_stated_dividend_pay_out_policy_hidden_b").removeClass('hidden');
-                $("#dividend_paid_consistent_stated_policy_analysis_text textarea").html("");
+                $("#dividend_paid_consistent_stated_policy_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#dividend_paid_consistent_stated_policy_analysis_text").addClass('hidden');
             }
         });
@@ -243,7 +243,7 @@ CustomJS.prototype = {
             }
             else {
                 $("#dividend_pay_out_been_consistent_last_3_years_analysis_text").addClass('hidden');
-                $("#dividend_pay_out_been_consistent_last_3_years_analysis_text textarea").html("");
+                $("#dividend_pay_out_been_consistent_last_3_years_analysis_text textarea").parent().find(".cke_textarea_inline").html("");
                 $("#company_have_stated_dividend_pay_out_policy_hidden_d").removeClass('hidden');
             }
         });

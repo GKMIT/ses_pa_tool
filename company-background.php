@@ -673,14 +673,14 @@ if(isset($_SESSION['report_id'])) {
 												<tr>
 													<td>OPM (%)</td>
 													<td><input type='text' name='financial_indicators_opm[]' class='form-control' value='<?php echo $financial_indicators[0]['opm']; ?>'/></td>
-													<td><input type='text' name='financial_indicators_opm[]' class='form-control' value='<?php echo $financial_indicators[0]['opm']; ?>'/></td>
-													<td><input type='text' name='financial_indicators_opm[]' class='form-control' value='<?php echo $financial_indicators[0]['opm']; ?>'/></td>
+													<td><input type='text' name='financial_indicators_opm[]' class='form-control' value='<?php echo $financial_indicators[1]['opm']; ?>'/></td>
+													<td><input type='text' name='financial_indicators_opm[]' class='form-control' value='<?php echo $financial_indicators[2]['opm']; ?>'/></td>
 												</tr>
 												<tr>
 													<td>NPM (%)</td>
 													<td><input type='text' name='financial_indicators_npm[]' class='form-control' value='<?php echo $financial_indicators[0]['npm']; ?>'/></td>
-													<td><input type='text' name='financial_indicators_npm[]' class='form-control' value='<?php echo $financial_indicators[0]['npm']; ?>'/></td>
-													<td><input type='text' name='financial_indicators_npm[]' class='form-control' value='<?php echo $financial_indicators[0]['npm']; ?>'/>
+													<td><input type='text' name='financial_indicators_npm[]' class='form-control' value='<?php echo $financial_indicators[1]['npm']; ?>'/></td>
+													<td><input type='text' name='financial_indicators_npm[]' class='form-control' value='<?php echo $financial_indicators[2]['npm']; ?>'/>
 													</td>
 												</tr>
 												</tbody>

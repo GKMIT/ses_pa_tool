@@ -308,18 +308,22 @@ CustomJS.prototype = {
         function delete_row() {
             $(".financial_button").click(function(){
                 var par = $(this).closest('.financial-indicator');
-                if(!par.hasClass('hidden')) {
-                    var value1= $(this).parent().parent().find("input").eq(0).val();
-                    var id=$(this).parent().parent().attr('id');
-                    var newOption = "<option value="+id+">"+ value1+"</option>";
-                    $("#label_select").append(newOption);
-                    par.find(".fy15").val("");
-                    par.find(".fy14").val("");
-                    par.find(".shift").val("");
-                    par.find("textarea").val("");
-                    par.addClass('hidden');
-                    $("#show").removeClass('hidden');
-                    console.log("Delete Called");
+                if(par.find('th').eq(0).find("input").val()=="") {
+                    par.remove();
+                }
+                else {
+                    if(!par.hasClass('hidden')) {
+                        var value1= $(this).parent().parent().find("input").eq(0).val();
+                        var id=$(this).parent().parent().attr('id');
+                        var newOption = "<option value="+id+">"+ value1+"</option>";
+                        $("#label_select").append(newOption);
+                        par.find(".fy15").val("");
+                        par.find(".fy14").val("");
+                        par.find(".shift").val("");
+                        par.find("textarea").val("");
+                        par.addClass('hidden');
+                        $("#show").removeClass('hidden');
+                    }
                 }
             });
         }

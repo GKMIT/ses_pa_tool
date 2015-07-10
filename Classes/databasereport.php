@@ -2020,7 +2020,7 @@ class DatabaseReports {
             $cpc[]="A($row[audit_committee])";
         }
         if($row['investor_grievance']=='C' || $row['investor_grievance']=='M') {
-            $cpc[]="SH($row[investor_grievance])";
+            $cpc[]="SR($row[investor_grievance])";
         }
         if($row['nomination_remuneration']=='C' || $row['nomination_remuneration']=='M') {
             $cpc[]="NR($row[nomination_remuneration])";
@@ -2043,7 +2043,8 @@ class DatabaseReports {
         $years = range($financial_year-3,$financial_year-1);
         $total_attended = 0;
         $total_agms = 0;
-        foreach($years as $year) {
+        $agm_years = range($financial_year-3,$financial_year-1);
+        foreach($agm_years as $year) {
             $stmt = $dbobject->prepare(" select * from `director_agm_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":dir_din_no",$dir_din_no);
@@ -2251,7 +2252,7 @@ class DatabaseReports {
             $cpc[]="A($row[audit_committee])";
         }
         if($row['investor_grievance']=='C' || $row['investor_grievance']=='M') {
-            $cpc[]="SH($row[investor_grievance])";
+            $cpc[]="SR($row[investor_grievance])";
         }
         if($row['nomination_remuneration']=='C' || $row['nomination_remuneration']=='M') {
             $cpc[]="NR($row[nomination_remuneration])";
@@ -2281,12 +2282,13 @@ class DatabaseReports {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $generic_details['remuneration'] = number_format(($row['variable_pay']+$row['fixed_pay'])*100,2);
 
-
-
         $years = range($financial_year-2,$financial_year);
         $total_attended = 0;
         $total_agms = 0;
-        foreach($years as $year) {
+
+        $agm_years = range($financial_year-3,$financial_year-1);
+
+        foreach($agm_years as $year) {
             $stmt = $dbobject->prepare(" select * from `director_agm_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":dir_din_no",$dir_din_no);
@@ -2767,7 +2769,7 @@ class DatabaseReports {
             $cpc[]="A($row[audit_committee])";
         }
         if($row['investor_grievance']=='C' || $row['investor_grievance']=='M') {
-            $cpc[]="SH($row[investor_grievance])";
+            $cpc[]="SR($row[investor_grievance])";
         }
         if($row['nomination_remuneration']=='C' || $row['nomination_remuneration']=='M') {
             $cpc[]="NR($row[nomination_remuneration])";
@@ -2790,7 +2792,10 @@ class DatabaseReports {
         $years = range($financial_year-2,$financial_year);
         $total_attended = 0;
         $total_agms = 0;
-        foreach($years as $year) {
+
+        $agm_years = range($financial_year-3,$financial_year-1);
+
+        foreach($agm_years as $year) {
             $stmt = $dbobject->prepare(" select * from `director_agm_attendance` where `company_id`=:company_id and `dir_din_no`=:dir_din_no and `att_year`=:financial_year");
             $stmt->bindParam(":company_id",$company_id);
             $stmt->bindParam(":dir_din_no",$dir_din_no);
