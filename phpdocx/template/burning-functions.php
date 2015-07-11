@@ -630,8 +630,8 @@ function companyBackground($docx, $report_id)
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[1]['total_income'] . "</td>
                                         <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[2]['total_income'] . "</td>
                                         <td>&nbsp;&nbsp;</td>
-                                        <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['other_income'] . "</td>
-                                        <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['other_income'] . "</td>
+                                        <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['total_income'] . "</td>
+                                        <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['total_income'] . "</td>
                                    </tr>";
     $table_financial_indicators .= "<tr>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>PBDT</td>
@@ -1837,7 +1837,7 @@ function appointmentOfAuditors($docx, $report_id)
         // Graph Ends 
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         resBlackStrip($docx, "TERM OF APPOINTMENT");
-        $docx->embedHtml(htmlParser($other_text[10]['text']));
+        $docx->embedHtml(htmlParser($other_text[21]['text']));
 
         $analysis_txt = "";
         for ($i = 0; $i < count($analysis_text); $i++) {
@@ -2273,15 +2273,11 @@ function appointmentOfDirectors($docx, $report_id)
         }
         $docx->embedHTML(htmlParser($resolution_text));
 
-
         $analysis_txt = "";
-        for ($i = 0; $i < count($analysis_text) - 1; $i++) {
+        for ($i = 0; $i < count($analysis_text); $i++) {
             if ($analysis_text[$i]['analysis_text'] != "" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
                 $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
-        }
-        if ($analysis_txt == "") {
-            $analysis_txt = $analysis_text[count($analysis_text) - 1]['analysis_text'];
         }
         $docx->embedHTML(htmlParser($analysis_txt));
     }

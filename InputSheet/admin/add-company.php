@@ -3,7 +3,7 @@ session_start();
 include_once("../../Classes/database.php");
 include_once("../../config.php");
 if(!isset($_SESSION['logged_in'])) {
-    header("location:$_config[base_url]");
+//    header("location:$_config[base_url]");
 }
 $flag= false;
 $msg ="";

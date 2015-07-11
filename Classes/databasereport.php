@@ -2164,7 +2164,12 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0) {
+                $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['csr_meeting_last_year'] = 0;
+            }
         }
         else {
             $generic_details['csr_meeting_last_year']="na";
@@ -2177,7 +2182,13 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0) {
+                $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['stack_meeting_last_year'] = 0;
+            }
+
         }
         else {
             $generic_details['stack_meeting_last_year']="na";
@@ -2314,7 +2325,12 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['board_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0) {
+                $generic_details['board_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['board_meeting_last_year'] = 0;
+            }
         }
         else {
             $generic_details['board_meeting_last_year']="na";
@@ -2345,7 +2361,12 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['audit_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0) {
+                $generic_details['audit_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            }
+            else {
+                $generic_details['audit_meeting_last_year'] = 0;
+            }
         }
         else {
             $generic_details['audit_meeting_last_year']="na";
@@ -2370,7 +2391,12 @@ class DatabaseReports {
             $stmt->execute();
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $generic_details['nomination_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                if($row['held']!=0) {
+                    $generic_details['nomination_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                }
+                else {
+                    $generic_details['nomination_meeting_last_year'] = 0;
+                }
             }
             else {
                 $generic_details['nomination_meeting_last_year']="na";
@@ -2382,7 +2408,10 @@ class DatabaseReports {
             $stmt->execute();
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $generic_details['remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                if($row['held']!=0)
+                    $generic_details['remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                else
+                    $generic_details['remuneration_meeting_last_year'] =0;
             }
             else {
                 $generic_details['remuneration_meeting_last_year']="na";
@@ -2396,7 +2425,10 @@ class DatabaseReports {
             $stmt->execute();
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                if($row['held']!=0)
+                    $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                else
+                    $generic_details['nomination_remuneration_meeting_last_year'] = 0;
             }
             else {
                 $generic_details['nomination_remuneration_meeting_last_year']="na";
@@ -2410,7 +2442,10 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0)
+                $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            else
+                $generic_details['csr_meeting_last_year'] = 0;
         }
         else {
             $generic_details['csr_meeting_last_year']="na";
@@ -2423,7 +2458,10 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0)
+                $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            else
+                $generic_details['stack_meeting_last_year'] = 0;
         }
         else {
             $generic_details['stack_meeting_last_year']="na";
@@ -2785,7 +2823,7 @@ class DatabaseReports {
         }
         $generic_details['committee_positions']=implode(",",$cpc);
         $generic_details['retiring_non_retiring']=$row['retiring_non_retiring'];
-        $generic_details['part_promoter_group'] = ($row['company_classification']=="EDP") ? 'no' : 'yes' ;
+        $generic_details['part_promoter_group'] = ($row['company_classification']=="EDP") ? 'Yes' : 'No' ;
         $generic_details['total_directorship'] = $row['no_total_directorship'];
         $generic_details['committee_memberships'] = $row['committee_memberships'];
         $generic_details['committee_chairmanships'] = $row['committee_chairmanships'];
@@ -2821,7 +2859,10 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['board_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0)
+                $generic_details['board_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            else
+                $generic_details['board_meeting_last_year'] = 0;
         }
         else {
             $generic_details['board_meeting_last_year']="na";
@@ -2850,7 +2891,10 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['audit_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0)
+                $generic_details['audit_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            else
+                $generic_details['audit_meeting_last_year'] = 0;
         }
         else {
             $generic_details['audit_meeting_last_year']="na";
@@ -2875,7 +2919,10 @@ class DatabaseReports {
             $stmt->execute();
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $generic_details['nomination_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                if($row['held']!=0)
+                    $generic_details['nomination_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                else
+                    $generic_details['nomination_meeting_last_year'] = 0;
             }
             else {
                 $generic_details['nomination_meeting_last_year']="na";
@@ -2887,7 +2934,10 @@ class DatabaseReports {
             $stmt->execute();
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $generic_details['remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                if($row['held']!=0)
+                    $generic_details['remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                else
+                    $generic_details['remuneration_meeting_last_year'] = 0;
             }
             else {
                 $generic_details['remuneration_meeting_last_year']="na";
@@ -2901,7 +2951,10 @@ class DatabaseReports {
             $stmt->execute();
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                if($row['held']!=0)
+                    $generic_details['nomination_remuneration_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+                else
+                    $generic_details['nomination_remuneration_meeting_last_year'] = 0;
             }
             else {
                 $generic_details['nomination_remuneration_meeting_last_year']="na";
@@ -2915,7 +2968,10 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0)
+                $generic_details['csr_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            else
+                $generic_details['csr_meeting_last_year'] = 0;
         }
         else {
             $generic_details['csr_meeting_last_year']="na";
@@ -2928,7 +2984,10 @@ class DatabaseReports {
         $stmt->execute();
         if($stmt->rowCount()>0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            if($row['held']!=0)
+                $generic_details['stack_meeting_last_year'] = ceil(($row['attended']/$row['held'])*100);
+            else
+                $generic_details['stack_meeting_last_year'] = 0;
         }
         else {
             $generic_details['stack_meeting_last_year']="na";

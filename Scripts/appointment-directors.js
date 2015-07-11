@@ -614,36 +614,38 @@ CustomJS.prototype = {
                     dir_din_no:$director.val()
                 },
                 error: function (data) {
+                    console.log(data);
                 },
                 success: function (data) {
-                    $(".ned-functional-area").html(data.functional_area);
-                    $(".ned-education").html(data.education);
-                    $(".ned-past-ex").html(data.past_ex);
-                    $(".ned-committee-positions").html(data.committee_positions);
-                    $(".ned-retiring-non-retiring").html(data.retiring_non_retiring);
-                    $(".ned-part-promoter-group").html(data.part_promoter_group);
-                    $(".ned-total-directorship").html(data.total_directorship);
-                    $(".ned-committee-memberships").html(data.committee_memberships);
-                    $(".ned-committee-chairmanship").html(data.committee_chairmanships);
-                    $(".ned-last-3-agms").html(data.last_3_agms);
-                    $(".ned-board-meeting-last-year").html(data.board_meeting_last_year+"%");
-                    $(".ned-board-meeting-last-years-avg").html(data.board_meeting_last_years_avg+"%");
-                    $(".ned-audit-meeting-last-year").html(data.audit_meeting_last_year+"%");
+                    console.log(data);
+                    $(".ned-functional-area").val(data.functional_area);
+                    $(".ned-education").val(data.education);
+                    $(".ned-past-ex").val(data.past_ex);
+                    $(".ned-committee-positions").val(data.committee_positions);
+                    $(".ned-retiring-non-retiring").val(data.retiring_non_retiring);
+                    $(".ned-part-promoter-group").val(data.part_promoter_group);
+                    $(".ned-total-directorship").val(data.total_directorship);
+                    $(".ned-committee-memberships").val(data.committee_memberships);
+                    $(".ned-committee-chairmanship").val(data.committee_chairmanships);
+                    $(".ned-last-3-agms").val(data.last_3_agms);
+                    $(".ned-board-meeting-last-year").val(data.board_meeting_last_year+"%");
+                    $(".ned-board-meeting-last-years-avg").val(data.board_meeting_last_years_avg+"%");
+                    $(".ned-audit-meeting-last-year").val(data.audit_meeting_last_year+"%");
                     if(data.are_committees_seperate=='yes') {
                         $(".ned-nomination-row").removeClass('hidden');
                         $(".ned-remuneration-row").removeClass('hidden');
                         $(".ned-nomination-remuneration-row").addClass('hidden');
-                        $(".ned-nomination-meeting-last-year").html(data.nomination_meeting_last_year+"%");
-                        $(".ned-remuneration-meeting-last-year").html(data.remuneration_meeting_last_year+"%");
+                        $(".ned-nomination-meeting-last-year").val(data.nomination_meeting_last_year+"%");
+                        $(".ned-remuneration-meeting-last-year").val(data.remuneration_meeting_last_year+"%");
                     }
                     else {
                         $(".ned-nomination-row").addClass('hidden');
                         $(".ned-remuneration-row").addClass('hidden');
                         $(".ned-nomination-remuneration-row").removeClass('hidden');
-                        $(".ned-nomination-remuneration-meeting-last-year").html(data.nomination_remuneration_meeting_last_year+"%");
+                        $(".ned-nomination-remuneration-meeting-last-year").val(data.nomination_remuneration_meeting_last_year+"%");
                     }
-                    $(".ned-csr-meeting-last-year").html(data.csr_meeting_last_year+"%");
-                    $(".ned-stack-meeting-last-year").html(data.stack_meeting_last_year+"%");
+                    $(".ned-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
+                    $(".ned-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
                     var analysis_values = data.analysis_values;
                     $(".ned-analysis-values").each(function(i,d) {
                         $(this).html("["+analysis_values[i]+"]");

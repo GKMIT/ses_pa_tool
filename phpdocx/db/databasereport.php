@@ -2531,7 +2531,6 @@ class ReportBurning {
                 $analysis_text[] = $row;
             }
             $generic_array['analysis_text'] = $analysis_text;
-
         }
         else{
             $generic_array['appointment_of_executive_directors_exists'] = false;
