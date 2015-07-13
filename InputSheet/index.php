@@ -1,8 +1,8 @@
 <?php
     session_start();
     include_once("../config.php");
-    if(!isset($_SESSION['logged_in'])) {
-        //header("location:$_config[base_url]");
+    if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
+        header("location:$_config[base_url]");
     }
 ?>
 <!DOCTYPE html>

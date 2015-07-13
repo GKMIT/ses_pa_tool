@@ -1,13 +1,16 @@
 <?php
-	session_start();
-	include_once("Classes/databasereport.php");
-	include_once("assets/database/Connect.php");
-	include_once("assets/config/config.php");
-	include_once("Classes/database.php");
-	if(isset($_POST['donations'])) {
-    $db=new DatabaseReports();
-    $info=$_POST;
-    $response=$db->addDonationToCharitableTrust($info);
+session_start();
+include_once("Classes/databasereport.php");
+include_once("assets/config/config.php");
+include_once("Classes/database.php");
+include_once("config.php");
+if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
+	header("location:$_config[base_url]");
+}
+if(isset($_POST['donations'])) {
+	$db=new DatabaseReports();
+	$info=$_POST;
+	$response=$db->addDonationToCharitableTrust($info);
 }
 ?>
 <!DOCTYPE html>

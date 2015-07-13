@@ -21,7 +21,7 @@ if($company_details['exists']) {
     echo "Company Id - " . $company_id = $company_details['id']."<br/>";
     if(!$db->inputSheetDuplicateCheck($company_id,$financial_year)) {
         for($i=3;$i<=22;$i++) {
-            $din_no = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getValue();
+            $din_no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$i)->getValue());
             $dir_name = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getValue();
             $expertise = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getValue()=="" ? "" : $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getValue();
             $education = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getValue()=="" ? "" : $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getValue();
@@ -62,7 +62,7 @@ if($company_details['exists']) {
             </tr>
             <?php
             for($i=3;$i<=22;$i++) {
-                $din_no = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getValue();
+                $din_no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$i)->getValue());
                 echo "<tr>";
                 if($din_no!="") {
                     for($k=C;$k<=U;$k++) {
@@ -138,7 +138,7 @@ if($company_details['exists']) {
             $ren_years = range($financial_year,2009);
             for($i=24;$i<=43;$i++) {
                 $dir_cell = intval($i)-21;
-                $dir_din_no = $objPHPExcel->getActiveSheet()->getCell('A'.$dir_cell)->getValue();
+                $dir_din_no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$dir_cell)->getValue());
                 $info = array();
                 if($dir_din_no!="") {
                     echo "<tr>";
@@ -177,7 +177,7 @@ if($company_details['exists']) {
             $ren_years = range($financial_year,2011);
             for($i=45;$i<=64;$i++) {
                 $dir_cell = intval($i)-42;
-                $dir_din_no = $objPHPExcel->getActiveSheet()->getCell('A'.$dir_cell)->getValue();
+                $dir_din_no = trim($objPHPExcel->getActiveSheet()->getCell('A'.$dir_cell)->getValue());
                 $info = array();
                 if($dir_din_no!="") {
                     echo "<tr>";

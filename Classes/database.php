@@ -245,32 +245,87 @@ class Database {
 	function editDirector($info) {
 		$status=array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
-		$stmt=$dbobject->prepare(" update `directors` set `din_no`=:din_no, `salutation`=:salutation, `dir_name`=:dir_name,`gender`=:gender,`dob`=:dob,`expertise`=:expertise,`education`=:education,`past_ex`=:past_ex,`committee_memberships`=:committee_memberships,`committee_chairmanships`=:committee_chairmanships,`no_directorship_public`=:no_directorship_public,`no_directorship_private`=:no_directorship_private,`no_directorship_listed_companies`=:no_directorship_listed_companies,`no_total_directorship`=:no_total_directorship,`no_full_time_positions`=:no_full_time_positions where `id`=:id");
+		$stmt=$dbobject->prepare(" select * from `directors` where `din_no`=:din_no and `id`<>:id");
 		$stmt->bindParam(':din_no', $info['din_no']);
-		$stmt->bindParam(':salutation', $info['salutation']);
-		$stmt->bindParam(':dir_name', $info['dir_name']);
-		$stmt->bindParam(':gender', $info['gender']);
-		$stmt->bindParam(':dob', $info['dob']);
-		$stmt->bindParam(':expertise', $info['expertise']);
-		$stmt->bindParam(':education', $info['education']);
-		$stmt->bindParam(':past_ex', $info['past_ex']);
-		$stmt->bindParam(':committee_memberships', $info['committee_memberships']);
-		$stmt->bindParam(':committee_chairmanships', $info['committee_chairmanships']);
-		$stmt->bindParam(':no_directorship_public', $info['no_directorship_public']);
-		$stmt->bindParam(':no_directorship_private', $info['no_directorship_private']);
-		$stmt->bindParam(':no_directorship_listed_companies', $info['no_directorship_listed_companies']);
-		$stmt->bindParam(':no_total_directorship', $info['no_total_directorship']);
-		$stmt->bindParam(':no_full_time_positions', $info['no_full_time_positions']);
 		$stmt->bindParam(':id', $info['director_id']);
-		if($stmt->execute()) {
-			$status['title']="Success";
-			$status['msg']="Director Registered Successfully";
-			$status['image']=$this->success_image;
-		}
-		else {
+		$stmt->execute();
+		if($stmt->rowCount()>0) {
 			$status['title']="Error";
 			$status['msg']="Director Exists";
 			$status['image']=$this->error_image;
+		}
+		else {
+
+			$stmt = $dbobject->prepare(" update `directors` set `din_no`=:din_no, `salutation`=:salutation, `dir_name`=:dir_name,`gender`=:gender,`dob`=:dob,`expertise`=:expertise,`education`=:education,`past_ex`=:past_ex,`committee_memberships`=:committee_memberships,`committee_chairmanships`=:committee_chairmanships,`no_directorship_public`=:no_directorship_public,`no_directorship_private`=:no_directorship_private,`no_directorship_listed_companies`=:no_directorship_listed_companies,`no_total_directorship`=:no_total_directorship,`no_full_time_positions`=:no_full_time_positions where `id`=:id");
+			$stmt->bindParam(':din_no', $info['din_no']);
+			$stmt->bindParam(':salutation', $info['salutation']);
+			$stmt->bindParam(':dir_name', $info['dir_name']);
+			$stmt->bindParam(':gender', $info['gender']);
+			$stmt->bindParam(':dob', $info['dob']);
+			$stmt->bindParam(':expertise', $info['expertise']);
+			$stmt->bindParam(':education', $info['education']);
+			$stmt->bindParam(':past_ex', $info['past_ex']);
+			$stmt->bindParam(':committee_memberships', $info['committee_memberships']);
+			$stmt->bindParam(':committee_chairmanships', $info['committee_chairmanships']);
+			$stmt->bindParam(':no_directorship_public', $info['no_directorship_public']);
+			$stmt->bindParam(':no_directorship_private', $info['no_directorship_private']);
+			$stmt->bindParam(':no_directorship_listed_companies', $info['no_directorship_listed_companies']);
+			$stmt->bindParam(':no_total_directorship', $info['no_total_directorship']);
+			$stmt->bindParam(':no_full_time_positions', $info['no_full_time_positions']);
+			$stmt->bindParam(':id', $info['director_id']);
+			if ($stmt->execute()) {
+				$stmt = $dbobject->prepare(" update `audit_committee_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `csr_committee_meetings_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `director_agm_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `director_board_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `director_info` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `director_remuneration` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `investors_grievance_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `input_sheet_comments` set `din_no`=:new_din_no where `din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `nomination_committee_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `nomination_remuneration_committee_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `remuneration_committee_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$stmt = $dbobject->prepare(" update `risk_management_committee_meetings_attendance` set `dir_din_no`=:new_din_no where `dir_din_no`=:old_din_no");
+				$stmt->bindParam(':new_din_no', $info['din_no']);
+				$stmt->bindParam(':old_din_no', $info['previous_din']);
+				$stmt->execute();
+				$status['title'] = "Success";
+				$status['msg'] = "Director Registered Successfully";
+				$status['image'] = $this->success_image;
+			}
 		}
 		$dbobject = null;
 		return $status;

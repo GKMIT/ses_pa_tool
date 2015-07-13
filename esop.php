@@ -1,6 +1,10 @@
 <?php
 include_once("assets/database/Connect.php");
 include_once("assets/config/config.php");
+include_once("config.php");
+if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
+    header("location:$_config[base_url]");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" class="ie8 no-js">

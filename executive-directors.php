@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once("Classes/databasereport3.php");
-include_once("assets/database/Connect.php");
 include_once("assets/config/config.php");
 ?>
 <!DOCTYPE html>

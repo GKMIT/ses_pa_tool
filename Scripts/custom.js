@@ -1669,6 +1669,7 @@ CustomJS.prototype = {
                         $(".ajax-waiting").addClass('hidden');
                         $("#salutation").val(data.salutation);
                         $("#din_number").val(data.din_no);
+                        $("#previous_din").val(data.din_no);
                         $("#dir_name").val(data.dir_name);
                         $("#gender").val(data.gender);
                         $("#dob").val(data.dob);

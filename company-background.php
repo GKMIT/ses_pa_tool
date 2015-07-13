@@ -3,6 +3,10 @@ session_start();
 include_once("assets/config/config.php");
 include_once("Classes/databasereport.php");
 include_once("assets/functions.php");
+include_once("config.php");
+if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
+	header("location:$_config[base_url]");
+}
 $flag = false;
 $response = array();
 if(isset($_POST['page_3_details'])) {

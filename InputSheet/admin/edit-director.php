@@ -2,8 +2,8 @@
 session_start();
 include_once("../../Classes/database.php");
 include_once("../../config.php");
-if(!isset($_SESSION['logged_in'])) {
-//    header("location:$_config[base_url]");
+if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
+    header("location:$_config[base_url]");
 }
 $flag= false;
 $msg ="";
@@ -415,6 +415,7 @@ if(isset($_POST['btn_save_director_details'])) {
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">DIN</label>
+                                        <input type="hidden" name="previous_din" id="previous_din" />
                                         <div class="col-md-5">
                                             <input type="text" name="din_number" id="din_number" placeholder="Enter DIN" autocomplete="off"  class="form-control"/>
                                         </div>

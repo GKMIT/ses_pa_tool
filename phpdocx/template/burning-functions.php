@@ -4,6 +4,11 @@ include_once("../db/databasereport.php");
 date_default_timezone_set('Asia/Kolkata');
 require_once '../excellib/Classes/PHPExcel/IOFactory.php';
 
+include_once("../../config.php");
+if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
+    header("location:$_config[base_url]");
+}
+
 $resolution_text_box = true;
 function burnExcel($report_id)
 {
@@ -1763,6 +1768,7 @@ function appointmentOfAuditors($docx, $report_id)
 
     $generic_array = $db->appointmentOfAppointmentAppointmentOfAuditors($report_id);
     if ($generic_array['appointment_of_auditors_exists']) {
+
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
         $analysis_text = $generic_array['analysis_text'];
@@ -1817,7 +1823,7 @@ function appointmentOfAuditors($docx, $report_id)
         }
         $inner .= "<tr>
                         <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>Auditor's Network</td>
-                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $other_text[$i + 4]['text'] . "</td>
+                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $other_text[5]['text'] . "</td>
                       </tr>";
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px; '>
                         <tbody>$inner</tbody>
