@@ -375,6 +375,17 @@ class ReportBurning {
         }
         $generic_details['csr_contributors']=$csr_contributors;
 
+        // 19th graph
+        $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_executive_remuneration_table_2` where `pa_reports_id`=:report_id and `director_no`=director_no");
+        $stmt->bindParam(":report_id",$report_id);
+        $director_no = 1;
+        $stmt->bindParam(":director_no",$director_no);
+        $stmt->execute();
+        $executive_remuneration=array();
+        while( $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $executive_remuneration[]=$row;
+        }
+        $generic_details['executive_remuneration']=$executive_remuneration;
 
         $dbobject = null;
         return $generic_details;
