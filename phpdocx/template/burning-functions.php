@@ -26,6 +26,8 @@ function burnExcel($report_id)
     $promoter_shareholding = $generic['promoter_shareholding'];
     $csr_contributors = $generic['csr_contributors'];
 
+    $executive_remuneration = $generic['executive_remuneration'];
+
 
     $objReader = PHPExcel_IOFactory::createReader('Excel2007');
     $objPHPExcel = $objReader->load("burning.xlsx");
@@ -135,7 +137,7 @@ function burnExcel($report_id)
     $objPHPExcel->getActiveSheet()->SetCellValue('E99', $appointment_auditors_table_1[0]['non_audit_fee']);
 
 
-    //    12th graph
+    //    10th graph
     $row = 110;
     for ($i = 0; $i <= 5; $i++) {
         $years = "FY " . (intval(substr($executive_compensation[$i]['ex_rem_years'], 2, 2)) - 1) . "/" . substr($executive_compensation[$i]['ex_rem_years'], 2, 2);
@@ -228,6 +230,16 @@ function burnExcel($report_id)
     $objPHPExcel->getActiveSheet()->SetCellValue('E517', $csr_contributors[1]['csr_np']);
     $objPHPExcel->getActiveSheet()->SetCellValue('E518', $csr_contributors[0]['csr_np']);
 
+    // 19th graph
+    $row = 532;
+    for ($i = 0; $i <= 5; $i++) {
+        $years = "FY " . (intval(substr($executive_remuneration[$i]['financial_year'], 2, 2)) - 1) . "/" . substr($executive_remuneration[$i]['financial_year'], 2, 2);
+        $objPHPExcel->getActiveSheet()->SetCellValue('B' . $row, $years);
+        $objPHPExcel->getActiveSheet()->SetCellValue('C' . $row, $executive_remuneration[$i]['ed_remuneration']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('D' . $row, $executive_remuneration[$i]['indexed_tsr']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('E' . $row, $executive_remuneration[$i]['net_profit']);
+        $row++;
+    }
 
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     $objWriter->save("graph_excel.xlsx");
@@ -1250,7 +1262,7 @@ function disclosures($docx, $report_id)
     );
     $docx->addTable($valuesTable, $paramsTable, $row_array);
     $docx->embedHTML("<p style='margin: 0; padding: 0; text-align: justify; font-size: 9;'><i>* Not applicable</i></p>");
-    $docx->embedHTML("<p style='margin: 0; padding-top: 8px; padding-bottom: 8px; text-align: justify; line-height: 135%; font-size: 10;'>" . $analysis_text['analysis_text'] . "</p>");
+    $docx->embedHTML(htmlParser($analysis_text['analysis_text']));
 }
 function adoptionOfAccounts($docx, $report_id)
 {
@@ -2043,7 +2055,7 @@ function appointmentOfDirectors($docx, $report_id)
         $dividend_and_earning = new WordFragment($docx, "aslk");
         $dividend_and_earning->embedHTML($html);
         $dividend_payout_ratio = new WordFragment($docx, "aslk");
-        $dividend_payout_ratio->addExternalFile(array('src' => 'ExecutiveRemuneration.docx'));
+        $dividend_payout_ratio->addExternalFile(array('src' => 'EDRemuneration.docx'));
         $valuesTable = array(
             array(
                 array('value' => $dividend_and_earning, 'vAlign' => 'top', 'textAlign' => 'center'),
@@ -2242,6 +2254,7 @@ function appointmentOfDirectors($docx, $report_id)
             $remuneration_package .= "<tr>
                                     <td style='font-size: 10; background-color: #F2F2F2; text-align: left; '>Includes variable pay: " . $rem_package[$i * 15 + 14]['field_value'] . "</td>
                                 </tr>";
+
             resBlackStrip($docx, "REMUNERATION PACKAGE OF " . strtoupper($db->getDirectorName($other_text[29 * $i + 1]['text'])));
             $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
             $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
@@ -2249,29 +2262,19 @@ function appointmentOfDirectors($docx, $report_id)
                     $remuneration_package
                 </tbody>
               </table>";
-            $docx->embedHtml($html . "<p style='font-size: 4;'>&nbsp;</p>");
-        }
-
-        $resolution_text = "";
-        for ($i = 0; $i < $no_of_executive; $i++) {
+            $docx->embedHtml($html);
+            $resolution_text = "";
             if ($other_text[29 * $i + 26]['text'] != "" && $other_text[29 * $i + 26]['text'] != "&nbsp;")
-                $resolution_text .= $other_text[29 * $i + 26]['text'];
-        }
-        $docx->embedHTML(htmlParser($resolution_text));
-
-        $resolution_text = "";
-        for ($i = 0; $i < $no_of_executive; $i++) {
+                $resolution_text = $other_text[29 * $i + 26]['text'];
             if ($other_text[29 * $i + 27]['text'] != "" && $other_text[29 * $i + 27]['text'] != "&nbsp;")
                 $resolution_text .= $other_text[29 * $i + 27]['text'];
-        }
-        $docx->embedHTML(htmlParser($resolution_text));
-
-        $resolution_text = "";
-        for ($i = 0; $i < $no_of_executive; $i++) {
             if ($other_text[29 * $i + 28]['text'] != "" && $other_text[29 * $i + 28]['text'] != "&nbsp;")
                 $resolution_text .= $other_text[29 * $i + 28]['text'];
+            $docx->embedHTML(htmlParser($resolution_text));
+            if($resolution_text=="") {
+                $docx->embedHTML("<p style='font-size: 4;'>&nbsp;</p>");
+            }
         }
-        $docx->embedHTML(htmlParser($resolution_text));
 
         $analysis_txt = "";
         for ($i = 0; $i < count($analysis_text); $i++) {
@@ -2509,19 +2512,25 @@ function appointmentOfDirectors($docx, $report_id)
         }
         $docx->embedHTML(htmlParser($resolution_text));
 
-        $total_analysis_rows = count($analysis_text);
-        for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $resolution_text = "";
-            for ($j = 0; $j < $total_analysis_rows - 1; $j++) {
-                if ($analysis_text[51 * $i + $j]['analysis_text'] != "" && $analysis_text[51 * $i + $j]['analysis_text'] != "&nbsp;")
-                    $resolution_text .= $analysis_text[51 * $i + $j]['analysis_text'];
+//        $total_analysis_rows = count($analysis_text);
+//        for ($i = 0; $i < $no_of_non_executive; $i++) {
+//            $resolution_text = "";
+//            for ($j = 0; $j < $total_analysis_rows; $j++) {
+//                if ($analysis_text[51 * $i + $j]['analysis_text'] != "" && $analysis_text[51 * $i + $j]['analysis_text'] != "&nbsp;")
+//                    $resolution_text .= $analysis_text[51 * $i + $j]['analysis_text'];
+//            }
+//            $docx->embedHTML(htmlParser($resolution_text));
+//        }
+
+        $analysis_txt = "";
+        for ($i = 0; $i < count($analysis_text); $i++) {
+            if ($analysis_text[$i]['analysis_text'] != "" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
-            if ($resolution_text == "") {
-                $resolution_text .= $analysis_text[51 * $i + $total_analysis_rows - 1]['analysis_text'];
-            }
-            $docx->embedHTML(htmlParser($resolution_text));
         }
+        $docx->embedHTML(htmlParser($analysis_txt));
     }
+
     $generic_array = $db->appointmentOfDirectorsID($report_id);
     if ($generic_array['appointment_of_independent_directors_exists']) {
 
@@ -2912,18 +2921,13 @@ function appointmentOfDirectors($docx, $report_id)
             $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         }
 
-        $total_analysis_rows = count($analysis_text);
-        for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $resolution_text = "";
-            for ($j = 0; $j < $total_analysis_rows - 1; $j++) {
-                if ($analysis_text[51 * $i + $j]['analysis_text'] != "" && $analysis_text[51 * $i + $j]['analysis_text'] != "&nbsp;")
-                    $resolution_text .= $analysis_text[51 * $i + $j]['analysis_text'];
+        $analysis_txt = "";
+        for ($i = 0; $i < count($analysis_text); $i++) {
+            if ($analysis_text[$i]['analysis_text'] != "" && $analysis_text[$i]['analysis_text'] != "&nbsp;") {
+                $analysis_txt .= $analysis_text[$i]['analysis_text'];
             }
-            if ($resolution_text == "") {
-                $resolution_text .= $analysis_text[51 * $i + $total_analysis_rows - 1]['analysis_text'];
-            }
-            $docx->embedHTML(htmlParser($resolution_text));
         }
+        $docx->embedHTML(htmlParser($analysis_txt));
     }
     $generic_array = $db->appointmentOfDirectorsCessationDirectorship($report_id);
     if ($generic_array['cessation_directorship']) {

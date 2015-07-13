@@ -69,6 +69,7 @@ try {
 		'CSRContribution.docx',
 		'DividendAndEarning.docx',
 		'DividendPayoutRatio.docx',
+		'EDRemuneration.docx',
 		'ExecutiveCompensation.docx',
 		'ExecutiveRemuneration.docx',
 		'MasterExcelFile.xlsx',

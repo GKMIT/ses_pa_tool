@@ -258,6 +258,7 @@ CustomJS.prototype = {
             calculate_tanure_and_audit_partner();
             group_firm_audit_tanure();
         });
+
         calculate_tanure();
         function calculate_tanure_audit_partner() {
             $.ajax({
