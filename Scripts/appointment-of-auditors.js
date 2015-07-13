@@ -322,7 +322,7 @@ CustomJS.prototype = {
                             group_firm_audit_tenure_value=0;
                         }
                         var group_tanure=tanure_value1+tanure_value2+tanure_value3+group_firm_audit_tenure_value;
-                        console.log(group_tanure);
+                        //console.log(group_tanure);
                         if((group_tanure)>10) {
                             $("#group_firm_audit_tenure_analysis_text").removeClass('hidden');
                             $("#group_firm_audit_tenure_analysis_text textarea").parent().find(".cke_textarea_inline").html(data.analysis_text);
@@ -844,10 +844,19 @@ CustomJS.prototype = {
                                         var text_area = $(this);
                                         if(text_area.hasClass('inline-editor')) {
                                             text_area.parent().find(".cke_textarea_inline").html(other_text[i]['text']);
+                                            var tanure1=$('#tanure_value1').val();
+                                            var tanure2=$('#tanure_value2').val();
+                                            var tanure3=$('#tanure_value3').val();
+                                            var total_tanure=tanure1+tanure2+tanure3;
+                                            if(total_tanure>10)
+                                            {
+                                                $('.calculate_tenure_analysis_text').removeClass('hidden');
+                                            }
+
                                         }
                                         else if(text_area.is("input")) {
                                             text_area.val(other_text[i]['text']);
-                                            text_area.trigger("keyup");
+                                            //text_area.trigger("keyup");
                                         }
                                         else {
                                             text_area.html(other_text[i]['text']);
