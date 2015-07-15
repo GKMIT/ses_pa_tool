@@ -28,7 +28,7 @@
 		if($db->isReportDataExists($report_id,$table_name)) {
 			$report_data_exists = true;
 			$meeting_details = $db->getCompanyAndMeetingDetails($report_id);
-
+			//return $meeting_details;
 		}
 	}
 ?>

@@ -39,6 +39,7 @@ CustomJS.prototype = {
                         report_id:self.attr('data-report-id')
                     },
                     success: function(data) {
+                        console.log(data);
                         loadTables();
                     }
                 });
@@ -53,6 +54,22 @@ CustomJS.prototype = {
                     dataType: "JSON",
                     data:{
                         mark_completed:true,
+                        report_id:self.attr('data-report-id')
+                    },
+                    success: function(data) {
+                        loadTables();
+                    }
+                });
+            });
+            $("#stop_report").click(function() {
+                var self= $(this);
+                self.html("Processing....");
+                $.ajax({
+                    url:"jquery-data.php",
+                    type:"GET",
+                    dataType: "JSON",
+                    data:{
+                        stop_report:true,
                         report_id:self.attr('data-report-id')
                     },
                     success: function(data) {

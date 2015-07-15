@@ -73,7 +73,7 @@ if(isset($_SESSION['report_id'])) {
                         </div>
                     </form>
                 </li>
-                <li class="start">
+                <li class="start active ">
                     <a href="dashboard.php">
                         <i class="fa fa-home"></i>
                         <span class="title">Dashboard</span>
@@ -206,7 +206,7 @@ if(isset($_SESSION['report_id'])) {
                         <span class="title">Company Background</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="<?php echo $_config['base_url']."board-of-directors.php"; ?>">
                         <span class="title">Board Profile</span>
                     </a>

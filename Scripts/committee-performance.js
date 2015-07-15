@@ -93,8 +93,11 @@ CustomJS.prototype = {
                                 },3000);
 
                                 var commitee_performance = data.commitee_performance;
+                                console.log(commitee_performance);
                                 $(".commitee-performance").each(function(i,d) {
                                     var row = $(this);
+                                    //var overall_com_independence=Math.(commitee_performance[i].overall_com_independence);
+                                    //var overall_ses_independence=Math.(commitee_performance[i].overall_ses_independence);
                                     row.find("td").eq(1).find('input').val(commitee_performance[i].total);
                                     row.find("td").eq(2).find('input').val(commitee_performance[i].chairman_com_classification);
                                     row.find("td").eq(3).find('input').val(commitee_performance[i].chairman_ses_classification);

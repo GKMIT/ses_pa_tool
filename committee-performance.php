@@ -400,8 +400,8 @@ if(isset($_POST['committee_performance'])) {
                                             <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $audit_committee_info['total_members']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $audit_committee_info['audit_committee_chairman_company_class']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $audit_committee_info['audit_committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $audit_committee_info['audit_company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $audit_committee_info['audit_ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($audit_committee_info['audit_company_independence']).'%'; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($audit_committee_info['audit_ses_independence']).'%'; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $audit_committee_info['audit_committee_meetings_held']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $audit_committee_info['total_directors']; ?>"/></td>
                                         </tr>
@@ -410,8 +410,8 @@ if(isset($_POST['committee_performance'])) {
                                             <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $investor_committee_info['total_members']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $investor_committee_info['committee_chairman_company_class']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $investor_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $investor_committee_info['company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $investor_committee_info['ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($investor_committee_info['company_independence']).'%'; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($investor_committee_info['ses_independence']).'%'; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $investor_committee_info['committee_meetings_held']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $investor_committee_info['total_directors']; ?>"/></td>
                                         </tr>
@@ -424,8 +424,8 @@ if(isset($_POST['committee_performance'])) {
                                                 <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $nomination_remuneration_committee['total_members']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $nomination_remuneration_committee['committee_chairman_company_class']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $nomination_remuneration_committee['committee_chairman_ses_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $nomination_remuneration_committee['company_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $nomination_remuneration_committee['ses_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($nomination_remuneration_committee['company_independence']).'%'; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($nomination_remuneration_committee['ses_independence']).'%'; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $nomination_remuneration_committee['committee_meetings_held']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $nomination_remuneration_committee['total_directors']; ?>"/></td>
                                             </tr>
@@ -440,8 +440,8 @@ if(isset($_POST['committee_performance'])) {
                                                 <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $remuneration_committee_info['total_members']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $remuneration_committee_info['committee_chairman_company_class']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $remuneration_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $remuneration_committee_info['company_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $remuneration_committee_info['ses_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($remuneration_committee_info['company_independence']).'%'; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($remuneration_committee_info['ses_independence']).'%'; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $remuneration_committee_info['committee_meetings_held']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $remuneration_committee_info['total_directors']; ?>"/></td>
                                             </tr>
@@ -450,8 +450,8 @@ if(isset($_POST['committee_performance'])) {
                                                 <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $nomination_committee_info['total_members']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $nomination_committee_info['committee_chairman_company_class']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $nomination_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $nomination_committee_info['company_independence']; ?>"/></td>
-                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $nomination_committee_info['ses_independence']; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($nomination_committee_info['company_independence']).'%'; ?>"/></td>
+                                                <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($nomination_committee_info['ses_independence']).'%'; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $nomination_committee_info['committee_meetings_held']; ?>"/></td>
                                                 <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $nomination_committee_info['total_directors']; ?>"/></td>
                                             </tr>
@@ -465,8 +465,8 @@ if(isset($_POST['committee_performance'])) {
                                             <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $csr_committee_info['total_members']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $csr_committee_info['committee_chairman_company_class']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $csr_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $csr_committee_info['company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $csr_committee_info['ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($csr_committee_info['company_independence']).'%'; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($csr_committee_info['ses_independence']).'%'; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $csr_committee_info['committee_meetings_held']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $csr_committee_info['total_directors']; ?>"/></td>
                                         </tr>
@@ -475,8 +475,8 @@ if(isset($_POST['committee_performance'])) {
                                             <td class="text-center"><input class="form-control" name="total[]"  value="<?php echo $risk_committee_info['total_members']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_com_classification[]"  value="<?php echo $risk_committee_info['committee_chairman_company_class']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="chairman_ses_classification[]"  value="<?php echo $risk_committee_info['committee_chairman_ses_class']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo $risk_committee_info['company_independence']; ?>"/></td>
-                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo $risk_committee_info['ses_independence']; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_com_independence[]"  value="<?php echo round($risk_committee_info['company_independence']).'%'; ?>"/></td>
+                                            <td class="text-center"><input class="form-control" name="overall_ses_independence[]"  value="<?php echo round($risk_committee_info['ses_independence']).'%'; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="no_meetings[]"  value="<?php echo $risk_committee_info['committee_meetings_held']; ?>"/></td>
                                             <td class="text-center"><input class="form-control" name="attendance_less_75[]"  value="<?php echo $risk_committee_info['total_directors']; ?>"/></td>
                                         </tr>

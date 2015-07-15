@@ -40,7 +40,7 @@ CustomJS.prototype = {
                     if(data.count==1) {
                         $self.closest(".company-dividend-info").find(".dividend").val(data.dividend);
                         $self.closest(".company-dividend-info").find(".eps").val(data.eps);
-                        var payout = ((data.dividend*1.1623)/data.eps)*100;
+                        var payout = ((data.dividend*1.1623)/data.eps);
                         $self.closest(".company-dividend-info").find(".payout").val(payout.toFixed(2));
                     }
                     else {
@@ -61,7 +61,7 @@ CustomJS.prototype = {
                         $(".company-dividend-info-2").find(".year").val(year-1);
                         $(".company-dividend-info-2").find(".dividend").val(data.dividend);
                         $(".company-dividend-info-2").find(".eps").val(data.eps);
-                        var payout = ((data.dividend*1.1623)/data.eps)*100;
+                        var payout = ((data.dividend*1.1623)/data.eps);
                         $(".company-dividend-info-2").find(".payout").val(payout.toFixed(2));
                     }
                     else {
@@ -82,7 +82,7 @@ CustomJS.prototype = {
                         $(".company-dividend-info-3").find(".year").val(year-2);
                         $(".company-dividend-info-3").find(".dividend").val(data.dividend);
                         $(".company-dividend-info-3").find(".eps").val(data.eps);
-                        var payout = ((data.dividend*1.1623)/data.eps)*100;
+                        var payout = ((data.dividend*1.1623)/data.eps);
                         $(".company-dividend-info-3").find(".payout").val(payout.toFixed(2));
                     }
                     else {
@@ -108,7 +108,7 @@ CustomJS.prototype = {
                     if(data.count==1) {
                         $self.closest(".company-dividend-row").find(".dividend").val(data.dividend);
                         $self.closest(".company-dividend-row").find(".eps").val(data.eps);
-                        var payout = ((data.dividend*1.1623)/data.eps)*100;
+                        var payout = ((data.dividend*1.1623)/data.eps);
                         $self.closest(".company-dividend-row").find(".payout").val(payout.toFixed(2));
                     }
                     else {

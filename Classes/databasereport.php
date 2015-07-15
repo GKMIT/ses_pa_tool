@@ -35,18 +35,21 @@ class DatabaseReports {
     function reportDetails() {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $response = array();
-        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status");
+        $user_id=$_SESSION['user_id'];
+        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status AND `pa_reports`.`user_id`=:user_id");
         $status=0;
         $stmt->bindParam(":status",$status);
+        $stmt->bindParam(":user_id",$user_id);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $incomplete_reports[] = $row;
         }
         $response['incomplete_reports'] = $incomplete_reports;
 
-        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status");
+        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status AND `pa_reports`.`user_id`=:user_id");
         $status=1;
         $stmt->bindParam(":status",$status);
+        $stmt->bindParam(":user_id",$user_id);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $completed_reports[] = $row;
@@ -57,6 +60,7 @@ class DatabaseReports {
     }
     function markCompleted($report_id) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
+        //$user_id=$_SESSION['user_id'];
         $stmt = $dbobject->prepare(" update `pa_reports` set `status`=:status  where `report_id`=:report_id");
         $status=1;
         $stmt->bindParam(":status",$status);
@@ -73,12 +77,22 @@ class DatabaseReports {
     function getReportDetails($report_id) {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $response = array();
+        $user_id=$_SESSION['user_id'];
         $stmt = $dbobject->prepare(" select * from `pa_reports` where `report_id`=:report_id");
         $stmt->bindParam(":report_id",$report_id);
+        //$stmt->bindParam(":user_id",$user_id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $response['report_details'] = $row;
         $dbobject = null;
+        return $response;
+    }
+    function stopReport(){
+        session_start();
+        $_SESSION['report_id']="";
+        $_SESSION['company_id']="";
+        $_SESSION['report_year']="";
+        $response="unset session";
         return $response;
     }
     function savePage1Details($info) {
@@ -114,9 +128,11 @@ class DatabaseReports {
             }
         }
         else {
-            $stmt = $dbobject->prepare("insert into `pa_reports` (`company_id`,`report_year`) values (:company_id,:report_year)");
+            $user_id=$_SESSION['user_id'];
+            $stmt = $dbobject->prepare("insert into `pa_reports` (`company_id`,`user_id`,`report_year`) values (:company_id,:user_id,:report_year)");
             $stmt->bindParam(":company_id",$info['company_id']);
             $stmt->bindParam(":report_year",$info['report_year']);
+            $stmt->bindParam(":user_id",$user_id);
             $report_creation = $stmt->execute();
             if($report_creation) {
                 $pa_report_id = $dbobject->lastInsertId();
@@ -576,7 +592,7 @@ class DatabaseReports {
             if($held!=0) {
                 $per = round($attended / $held * 100, 2);
                 if ($per < 75) {
-                    $directors[] = $row['dir_name'] . "(" . $per . ")";
+                    $directors[] = $row['dir_name'] . "(" . $per . "%)";
                 }
             }
         }
@@ -653,7 +669,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
-                            $directors[] = $row['dir_name'] . "(" . $per . ")";
+                            $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
                 }
@@ -729,7 +745,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
-                            $directors[] = $row['dir_name'] . "(" . $per . ")";
+                            $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
                 }
@@ -805,7 +821,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
-                            $directors[] = $row['dir_name'] . "(" . $per . ")";
+                            $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
                 }
@@ -881,7 +897,7 @@ class DatabaseReports {
                 if($held!=0) {
                     $per = round($attended / $held * 100, 2);
                     if ($per < 75) {
-                        $directors[] = $row['dir_name'] . "(" . $per . ")";
+                        $directors[] = $row['dir_name'] . "(" . $per . "%)";
                     }
                 }
             }
@@ -955,7 +971,7 @@ class DatabaseReports {
                 if($held!=0) {
                     $per = round($attended / $held * 100, 2);
                     if ($per < 75) {
-                        $directors[] = $row['dir_name'] . "(" . $per . ")";
+                        $directors[] = $row['dir_name'] . "(" . $per . "%)";
                     }
                 }
             }
@@ -4840,6 +4856,7 @@ class DatabaseReports {
         $stmt->execute();
         while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
             $commitee_performance[]=$row;
+            //$commitee_performance['attendance_less_75']=$row['attendance_less_75'];
         }
         $dbobject= null;
         return $commitee_performance;

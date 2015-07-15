@@ -1430,6 +1430,11 @@ elseif(isset($_POST['set_start_report'])) {
 		echo json_encode(array('status'=>500));
 	}
 }
+elseif(isset($_GET['stop_report'])) {
+	$db=new DatabaseReports();
+	$response=$db->stopReport();
+	echo json_encode($response);
+}
 elseif(isset($_GET['load_dashboard'])) {
 	session_start();
 	$db = new DatabaseReports();
@@ -1445,7 +1450,8 @@ elseif(isset($_GET['load_dashboard'])) {
 									<td class='text-center''>";
 		if(isset($_SESSION['report_id'])) {
 			if($_SESSION['report_id']==$report['report_id']) {
-				$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report disabled' data-report-id=''$report[report_id]'>Running Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+				$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report disabled' data-report-id=''$report[report_id]'>Running Report</button>&nbsp;&nbsp;
+				<button type='button' class='btn btn-primary continue-with-report' id='stop_report' data-report-id=''$report[report_id]'>Stop Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			else {
 				$incomplete_report_str.="<button type='button' class='btn btn-primary continue-with-report' data-report-id='$report[report_id]'>Continue with Report</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -1464,7 +1470,7 @@ elseif(isset($_GET['load_dashboard'])) {
 									<td class='text-center'>$report[report_id]</td>
 									<td class='text-center'>$report[name]</td>
 									<td class='text-center'>$report[report_year]</td>
-									<td class='text-center''><button type='button' class='btn btn-success'>Download Report</button></td>
+									<td class='text-center''><a href='http://www.sesgovernance.com/patool/phpdocx/template/burn-docx.php?report_id=$report[report_id]' class='btn btn-success'>Download Report</a></td>
 								</tr>";
 	}
 	echo json_encode(array(

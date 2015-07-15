@@ -628,7 +628,6 @@ CustomJS.prototype = {
                     company_id:$("#companies_id").val()
                 },
                 success: function(data) {
-                    console.log(data);
                     $("#company_name_keywords").val(data.name);
                     $("#nse_code").val(data.nse_code);
                     $("#company_bse_code").val(data.bse_code);

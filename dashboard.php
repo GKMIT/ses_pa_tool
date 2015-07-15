@@ -412,7 +412,6 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
 											</tr>
 											</thead>
 											<tbody id="incomplete_reports_table">
-
 											</tbody>
 										</table>
 									</div>

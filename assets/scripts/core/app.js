@@ -3,6 +3,17 @@ Core script to handle the entire theme and core functions
 **/
 var App = function () {
 
+    // Block Enter Key
+    function breakEnterKey() {
+        $(document).keydown(function(event){
+            if ( event.keyCode == 13 ){
+                event.preventDefault();
+                return false;
+            }
+        });
+    }
+    breakEnterKey();
+
     // IE mode
     var isRTL = false;
     var isIE8 = false;
