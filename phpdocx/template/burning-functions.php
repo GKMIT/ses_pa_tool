@@ -588,7 +588,7 @@ function agendaItemsAndRecommendations($docx, $report_id)
         $i++;
     }
     $html = "<p style=''></p>";
-    $html .= "<table style='border-collapse: collapse; width:100%; margin-top: 5;'>
+    $html .= "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='8' style='font-size: 12; font-weight: bold; padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #000000;'>T</span>ABLE <span style='font-size: 13;'>1</span> - <span style='font-size: 13;'>A</span>GENDA <span style='font-size: 13;'>I</span>TEMS <span style='font-size: 13;'>A</span>ND <span style='font-size: 13;'>R</span>ECOMMENDATIONS</td></tr>
                     <tr><td colspan='8' style='font-size: 5; padding-top: 2px; padding-bottom: 2px; border-top: 1px solid #000000;border-bottom: 2px solid #000000;'>&nbsp;</td></tr>
@@ -615,7 +615,7 @@ function companyBackground($docx, $report_id)
     $public_share_holders = $generic_array['public_share_holders'];
     $major_promoters = $generic_array['major_promoters'];
     $table_financial_indicators = "<tr>
-                                    <td style='width: 25%;border-bottom: 2px solid #000000; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>(In <span style='font-family: Rupee Foradian;'>`</span> Crores)</td>
+                                    <td style='width: 25.5%;border-bottom: 2px solid #000000; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>(In <span style='font-family: Rupee Foradian;'>`</span> Crores)</td>
                                     <td style='text-align:center; width:10%; border-bottom: 2px solid #000000;color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>" . $financial_indicators[0]['financial_year'] . "</td>
                                     <td style='text-align:center; width:10%;border-bottom: 2px solid #000000;color: #FFFFFF;font-weight: bold; font-size: 10; background-color: #464646;'>" . $financial_indicators[1]['financial_year'] . "</td>
                                     <td style='text-align:center;width:10%; color: #FFFFFF;border-bottom: 2px solid #000000; font-weight: bold; font-size: 10; background-color: #464646;'>" . $financial_indicators[2]['financial_year'] . "</td>
@@ -628,7 +628,7 @@ function companyBackground($docx, $report_id)
                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[0]['revenue'] . "</td>
                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[1]['revenue'] . "</td>
                                     <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[2]['revenue'] . "</td>
-                                    <td style='width:3%;'>&nbsp;&nbsp;</td>
+                                    <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                     <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['revenue'] . "</td>
                                     <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['revenue'] . "</td>
                                    </tr>";
@@ -637,7 +637,7 @@ function companyBackground($docx, $report_id)
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[0]['other_income'] . "</td>
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[1]['other_income'] . "</td>
                                         <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[2]['other_income'] . "</td>
-                                        <td>&nbsp;&nbsp;</td>
+                                        <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[0]['other_income'] . "</td>
                                         <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[1]['other_income'] . "</td>
                                    </tr>";
@@ -646,7 +646,7 @@ function companyBackground($docx, $report_id)
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[0]['total_income'] . "</td>
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[1]['total_income'] . "</td>
                                         <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[2]['total_income'] . "</td>
-                                        <td>&nbsp;&nbsp;</td>
+                                        <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['total_income'] . "</td>
                                         <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['total_income'] . "</td>
                                    </tr>";
@@ -655,7 +655,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[0]['pbdt'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[1]['pbdt'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[2]['pbdt'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[0]['pbdt'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[1]['pbdt'] . "</td>
                                            </tr>";
@@ -664,7 +664,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[0]['net_profit'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[1]['net_profit'] . "</td>
                                             <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[2]['net_profit'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['net_profit'] . "</td>
                                             <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['net_profit'] . "</td>
                                            </tr>";
@@ -673,7 +673,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[0]['eps'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[1]['eps'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[2]['eps'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[0]['eps'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[1]['eps'] . "</td>
                                            </tr>";
@@ -682,7 +682,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[0]['dividend_per_share'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[1]['dividend_per_share'] . "</td>
                                             <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[2]['dividend_per_share'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['dividend_per_share'] . "</td>
                                             <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['dividend_per_share'] . "</td>
                                            </tr>";
@@ -691,7 +691,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[0]['dividend_pay_out'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[1]['dividend_pay_out'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[2]['dividend_pay_out'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[0]['dividend_pay_out'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[1]['dividend_pay_out'] . "</td>
                                            </tr>";
@@ -700,7 +700,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[0]['opm'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[1]['opm'] . "</td>
                                             <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $financial_indicators[2]['opm'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[0]['opm'] . "</td>
                                             <td style='font-size: 10; background-color: #F2F2F2;text-align:right;'>" . $peer_comparision[1]['opm'] . "</td>
                                            </tr>";
@@ -709,7 +709,7 @@ function companyBackground($docx, $report_id)
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[0]['npm'] . "</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[1]['npm'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $financial_indicators[2]['npm'] . "</td>
-                                            <td>&nbsp;&nbsp;</td>
+                                            <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                             <td style='border-right: 1px solid #FFFFFF;font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[0]['npm'] . "</td>
                                             <td style='font-size: 10; background-color: #D9D9D9;text-align:right;'>" . $peer_comparision[1]['npm'] . "</td>
                                            </tr>";
@@ -718,7 +718,7 @@ function companyBackground($docx, $report_id)
         if ($i % 2 == 0) {
             $table_public_share_holders_major_promoters .= "<tr>
                                                                 <td style=' width: 45%; font-size: 10; background-color: #F2F2F2; border-right: 1px solid #FFFFFF;'>" . substr($public_share_holders[$i]['share_holder_name'], 0, 35) . "</td>
-                                                                <td style='width:10%; font-size: 10; background-color: #F2F2F2;'>" . $public_share_holders[$i]['share_holding'] . "</td>
+                                                                <td style='width:10%; font-size: 10; background-color: #F2F2F2; text-align:right; '>" . $public_share_holders[$i]['share_holding'] . "</td>
                                                                 <td style='width:0.5%;'>&nbsp;&nbsp;</td>
                                                                 <td style='font-size: 10; background-color: #F2F2F2;border-right: 1px solid #FFFFFF;'>" . substr($major_promoters[$i]['major_promoter_name'], 0, 35) . "</td>
                                                                 <td style='font-size: 10; background-color: #F2F2F2; text-align: right;'>" . $major_promoters[$i]['share_holding'] . "</td>
@@ -726,7 +726,7 @@ function companyBackground($docx, $report_id)
         } else {
             $table_public_share_holders_major_promoters .= "<tr>
                                                                 <td style='font-size: 10; background-color: #D9D9D9;border-right: 1px solid #FFFFFF;'>" . substr($public_share_holders[$i]['share_holder_name'], 0, 35) . "</td>
-                                                                <td style='font-size: 10; background-color: #D9D9D9;'>" . $public_share_holders[$i]['share_holding'] . "</td>
+                                                                <td style='font-size: 10; background-color: #D9D9D9; text-align:right;'>" . $public_share_holders[$i]['share_holding'] . "</td>
                                                                 <td style='width:3%;'>&nbsp;&nbsp;</td>
                                                                 <td style='font-size: 10; background-color: #D9D9D9;border-right: 1px solid #FFFFFF;'>" . substr($major_promoters[$i]['major_promoter_name'], 0, 35) . "</td>
                                                                 <td style='font-size: 10; background-color: #D9D9D9; text-align: right;'>" . $major_promoters[$i]['share_holding'] . "</td>
@@ -734,7 +734,7 @@ function companyBackground($docx, $report_id)
         }
     }
     $html = "<p style=''></p>";
-    $html .= "<table style='width:100%; border-collapse: collapse; margin:0; display: block;'>
+    $html .= "<table style='width:100%; border-collapse: collapse; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='8' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-top: 2px solid #000000; border-bottom: 2px solid #000000; '>TABLE 2 - MARKET DATA (<span style='font-size: 9;'><i>As on []</i></span>)</td></tr>
                     <tr><td style='text-align: right; font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF; border-right: 1px solid #FFFFFF;'>Price (<span style='font-family:Rupee Foradian; '>`</span>)</td><td style='text-align: left; font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>$market_data[price]</td><td style='text-align:right; font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>M Cap (<span style='font-family:Rupee Foradian; '>`</span> Cr.)</td><td style='text-align:left; font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>$market_data[market_capitalization]</td><td style='text-align:right;font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>Shares*</td><td style='text-align: left; font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>$market_data[shares]</td><td style='text-align: right; font-size: 10; background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>PE Ratio\"</td><td style='text-align: left; font-size: 10;background-color: #D9D9D9; border-bottom: 2px solid #000000; border-right: 1px solid #FFFFFF;'>$market_data[pe_ratio]</td></tr>
@@ -743,7 +743,7 @@ function companyBackground($docx, $report_id)
     $docx->embedHTML($html);
 
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-    $html = "<table style='border-collapse: collapse; width:100%; margin-bottom: 0; display: block;'>
+    $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='4' style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'><i>Standalone Data ; Source: Capitaline</i></td><td>&nbsp;&nbsp;</td><td style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>* As on [date]</td><td colspan='2' style='font-size: 8; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>\"Based on EPS for FY []</td></tr>
                     <tr><td colspan='4' style='font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 3: FINANCIAL INDICATORS (STANDALONE)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 4: PEER COMPARISON (" . $peer_comparision[0]['financial_year'] . ")</td></tr>
@@ -753,7 +753,7 @@ function companyBackground($docx, $report_id)
     $docx->embedHTML($html);
 
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-    $html = "<table style='border-collapse: collapse; width:100%; margin: 0;'>
+    $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tr><td colspan='2' style='font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 5: MAJOR PUBLIC SHAREOLDERS (MAR'15)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 6: MAJOR PROMOTERS (MAR'15)</td></tr>
                 $table_public_share_holders_major_promoters
                 <tr><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td><td>&nbsp;</td><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td></tr>
@@ -783,8 +783,7 @@ function companyBackground($docx, $report_id)
     );
     $paramsTable = array(
         'border' => 'nil',
-        'columnWidths' => $widthTableCols,
-        'indent' => 108
+        'columnWidths' => $widthTableCols
     );
     $docx->addTable($valuesTable, $paramsTable);
 }
@@ -849,7 +848,7 @@ function boardOfDirectorInfo($docx, $report_id)
         $table_financial_indicators .= "<tr><td colspan='9' style='font-size: 9;'>" . htmlParserForTable($standard_text, 9) . "</td></tr>";
     }
     $html = "<p style=''></p>";
-    $html .= "<table style='border-collapse: collapse; width:100%;'>
+    $html .= "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 2px solid #000000; '>TABLE 7 - BOARD PROFILE </td></tr>
                     $table_financial_indicators
@@ -890,7 +889,6 @@ function boardOfDirectorInfo($docx, $report_id)
     );
     $paramsTable = array(
         'border' => 'nil',
-        'indent' => 108,
         'columnWidths' => $widthTableCols
     );
     $docx->addTable($valuesTable, $paramsTable);
@@ -927,8 +925,8 @@ function boardOfDirectorInfo($docx, $report_id)
                                                <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['total'] . "</td>
                                                <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['chairman_com_classification'] . "</td>
                                                <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['chairman_ses_classification'] . "</td>
-                                               <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_com_independence'] . "%</td>
-                                               <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_ses_independence'] . "%</td>
+                                               <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_com_independence'] . "</td>
+                                               <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_ses_independence'] . "</td>
                                                <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['no_meetings'] . "</td>
                                                <td style='font-size: 9; background-color: #F2F2F2;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['attendance_less_75'] . "</td>
                                            </tr>";
@@ -938,14 +936,14 @@ function boardOfDirectorInfo($docx, $report_id)
                                             <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['total'] . "</td>
                                             <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['chairman_com_classification'] . "</td>
                                             <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['chairman_ses_classification'] . "</td>
-                                            <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_com_independence'] . "%</td>
-                                            <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_ses_independence'] . "%</td>
+                                            <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_com_independence'] . "</td>
+                                            <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['overall_ses_independence'] . "</td>
                                             <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['no_meetings'] . "</td>
                                             <td style='font-size: 9; background-color: #D9D9D9;  text-align: center; border-right: 1px solid #FFF;'>" . $committee_performance[$i]['attendance_less_75'] . "</td>
                                           </tr>";
         }
     }
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+    $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 2px solid #000000; '>TABLE 8 - BOARD COMMITTEE PERFORMANCE</td></tr>
                     $board_committee_performance
@@ -1000,7 +998,7 @@ function boardOfDirectorInfo($docx, $report_id)
     }
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
     //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+    $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 1px solid #000000; '>TABLE 9 - BOARD GOVERNANCE SCORE</td></tr>
                     $board_governance_score
@@ -1062,7 +1060,7 @@ function remunerationAnalysis($docx, $report_id)
         }
     }
     $html = "<p style=''></p>";
-    $html .= "<table style='border-collapse: collapse; width:100%;'>
+    $html .= "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='9' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 2px solid #000000; '>TABLE 10 - EXECUTIVE DIRECTORS' REMUNERATION</td></tr>
                     $remuneration_analysis
@@ -1151,7 +1149,7 @@ function remunerationAnalysis($docx, $report_id)
                                </tr>";
 
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
-    $html = "<table style='border-collapse: collapse; width:100%;'>
+    $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 2px solid #000000; '>TABLE 11- EXECUTIVE REMUNERATION - PEER COMPARISON</td></tr>
                     $executive_remuneration
@@ -1185,7 +1183,7 @@ function disclosures($docx, $report_id)
         "Comments on qualifications made by Statutory Auditors/ CS"
     );
     $html = "<p style='font-size: 10'></p>";
-    $html .= "<table style='border-collapse: collapse; width:100%;'>
+    $html .= "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
                     <tr><td colspan='5' style='font-weight: bold; font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; '>DISCLOSURE REQUIRED IN DIRECTOR'S REPORT</td></tr>
                     <tr><td colspan='5' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; text-align: justify;'>The Companies Act, 2013 requires the listed companies to make certain disclosures in Board's Report. The table below shows the status of compliance of such some important requirements, by the Company</td></tr>
@@ -1252,7 +1250,7 @@ function disclosures($docx, $report_id)
                     array('value' => $temp_fragment4, 'fontSize' => 10, 'vAlign' => 'center', 'textAlign' => 'center', 'borderBottom' => 'single', 'borderBottomWidth' => 13, 'borderBottomColor' => '000000', 'borderTop' => 'single', 'borderTopWidth' => 13, 'borderTopColor' => 'D9D9D9')
                 );
         }
-        $row_array[] = array('minHeight' => 800);
+        $row_array[] = array('minHeight' => 455);
     }
 
     $widthTableCols = array(
@@ -1260,7 +1258,6 @@ function disclosures($docx, $report_id)
     );
     $paramsTable = array(
         'border' => 'nil',
-        'indent' => 108,
         'fontSize' => 10,
         'borderColor' => 'cccccc',
         'columnWidths' => $widthTableCols
