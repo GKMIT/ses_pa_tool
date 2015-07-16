@@ -3632,7 +3632,7 @@ class DatabaseReports {
             "Net Profits(Rs Cr) (B)",
             "Ratio (A/B)"
         );
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i <6; $i++) {
             $stmt = $dbobject->prepare("INSERT INTO `pa_report_appointment_directors_executive_remuneration_p_c` (`pa_reports_id`,`director_no`,`field_name`,`col_1`,`col_2`) VALUES(:report_id,:director_no,:field_name,:col_1,:col_2)");
             $stmt->bindParam(":report_id", $_SESSION['report_id']);
             $stmt->bindParam(":director_no", $info['slot_no']);

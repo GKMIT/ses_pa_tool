@@ -1020,7 +1020,7 @@ if(isset($_POST['alteration_moa_aoa'])) {
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="alteration_moa_aoa" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                        <button type="submit" name="alteration_moa_aoa" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

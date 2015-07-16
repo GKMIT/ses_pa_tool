@@ -1605,7 +1605,7 @@ if(isset($_POST['issues_of_shares'])) {
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="issues_of_shares" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                        <button type="submit" name="issues_of_shares" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

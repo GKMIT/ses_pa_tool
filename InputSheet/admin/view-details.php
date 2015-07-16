@@ -643,63 +643,72 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                 $("#com_bse_code").val($(this).html());
                 $(".auto-fill").html("");
                 $(".auto-fill").addClass('hidden');
+                if(($("#financial_year").val() !="")){
+                    view_sheet();
+                }
+
             });
         }
-        $("#financial_year").change(function() {
-            $('.fixedCol').remove();
-            $.ajax({
-                url:"jquery-data.php",
-                type:"GET",
-                dataType: "JSON",
-                data:{
-                    inputSheetReading:true,
-                    company_id:$("#companies_id").val(),
-                    financial_year:$("#financial_year").val()
-                },
-                error: function(data) {
-                    console.log(data);
-                },
-                beforeSend: function() {
-                    $(".ajax-waiting").removeClass('hidden');
-                },
-                success: function(data) {
-                    console.log(data);
-                    $("#anchor_excel_export").attr("href","../sheet-writer.php?company_id="+$("#companies_id").val()+"&financial_year="+$("#financial_year").val());
-                    $(".ajax-waiting").addClass('hidden');
-                    $("#director_info").html(data.director_details);
-                    $("#director_remuneration_info").html(data.director_remuneration_info);
-                    $("#director_board_attendance_info").html(data.director_board_attendance_info);
-                    $("#audit_committee_attendance_info").html(data.audit_committee_attendance_info);
-                    $("#stackholders_committee_attendance_info").html(data.stackholders_committee_attendance_info);
-                    $("#csr_committee_attendance_info").html(data.csr_committee_attendance_info);
-                    $("#risk_management_committee_attendance_info").html(data.risk_management_committee_attendance_info);
-                    $("#director_agm_info").html(data.director_agm_info);
-                    $("#audit_fee_details").html(data.audit_fee_details);
-                    $("#auditors_detail").html(data.auditors_detail);
-                    $("#dividend_info").html(data.dividend_info);
-                    $("#fiscal_year").html(data.fiscal_year);
-                    $("#comments").html(data.comments);
-                    if(data.is_rem_nom_same) {
-                        $("#nomination_remuneration_committee_attendance_info").html(data.nomination_remuneration_committee_attendance_info);
-                        $(".committee_seperate").addClass('hidden');
-                        $(".committee_same").removeClass('hidden');
-                    }
-                    else {
-                        $("#remuneration_committee_attendance_info").html(data.remuneration_committee_attendance_info);
-                        $("#nomination_committee_attendance_info").html(data.nomination_committee_attendance_info);
-                        $(".committee_seperate").removeClass('hidden');
-                        $(".committee_same").addClass('hidden');
-                    }
-                    freez();
-                    <?php
-                    if($_SESSION['user_type']=='report_checker') {
-                    ?>
+        function view_sheet(){
+                $('.fixedCol').remove();
+                $.ajax({
+                    url:"jquery-data.php",
+                    type:"GET",
+                    dataType: "JSON",
+                    data:{
+                        inputSheetReading:true,
+                        company_id:$("#companies_id").val(),
+                        financial_year:$("#financial_year").val()
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    },
+                    beforeSend: function() {
+                        $(".ajax-waiting").removeClass('hidden');
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $("#anchor_excel_export").attr("href","../sheet-writer.php?company_id="+$("#companies_id").val()+"&financial_year="+$("#financial_year").val());
+                        $(".ajax-waiting").addClass('hidden');
+                        $("#director_info").html(data.director_details);
+                        $("#director_remuneration_info").html(data.director_remuneration_info);
+                        $("#director_board_attendance_info").html(data.director_board_attendance_info);
+                        $("#audit_committee_attendance_info").html(data.audit_committee_attendance_info);
+                        $("#stackholders_committee_attendance_info").html(data.stackholders_committee_attendance_info);
+                        $("#csr_committee_attendance_info").html(data.csr_committee_attendance_info);
+                        $("#risk_management_committee_attendance_info").html(data.risk_management_committee_attendance_info);
+                        $("#director_agm_info").html(data.director_agm_info);
+                        $("#audit_fee_details").html(data.audit_fee_details);
+                        $("#auditors_detail").html(data.auditors_detail);
+                        $("#dividend_info").html(data.dividend_info);
+                        $("#fiscal_year").html(data.fiscal_year);
+                        $("#comments").html(data.comments);
+                        if(data.is_rem_nom_same) {
+                            $("#nomination_remuneration_committee_attendance_info").html(data.nomination_remuneration_committee_attendance_info);
+                            $(".committee_seperate").addClass('hidden');
+                            $(".committee_same").removeClass('hidden');
+                        }
+                        else {
+                            $("#remuneration_committee_attendance_info").html(data.remuneration_committee_attendance_info);
+                            $("#nomination_committee_attendance_info").html(data.nomination_committee_attendance_info);
+                            $(".committee_seperate").removeClass('hidden');
+                            $(".committee_same").addClass('hidden');
+                        }
+                        freez();
+                        <?php
+                        if($_SESSION['user_type']=='report_checker') {
+                        ?>
                         editTableInitialize();
-                    <?php
+                        <?php
+                        }
+                        ?>
                     }
-                    ?>
-                }
-            });
+                });
+
+        }
+        $("#financial_year").change(function() {
+            view_sheet();
         });
+
     });
 </script>

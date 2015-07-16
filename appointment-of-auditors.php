@@ -1310,7 +1310,7 @@ $table1=$db->getTable1Data();
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="appointment_of_auditors" class="btn green">Save &amp; Continue</button>
+                                        <button type="submit" name="appointment_of_auditors" class="btn blue directors">Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

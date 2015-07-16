@@ -877,6 +877,7 @@ CustomJS.prototype = {
                                     $("#total_pay_year3").val(past_remuneration[0].total_pay_year3);
 
                                     var peer_comparsion = data.peer_comparsion;
+                                    console.log(peer_comparsion);
                                     $('.director1').val(peer_comparsion[0].col_1);
                                     $('.director2').val(peer_comparsion[0].col_2);
                                     $('.company1').val(peer_comparsion[1].col_1);

@@ -878,7 +878,7 @@ if(isset($_POST['scheme_of_arrangement'])) {
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="scheme_of_arrangement" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                        <button type="submit" name="scheme_of_arrangement" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

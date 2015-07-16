@@ -1706,7 +1706,7 @@ if(isset($_POST['adoption_of_accounts'])) {
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn green" name="adoption_of_accounts">Submit</button>
+                                        <button type="submit" id="directors" class="btn blue" name="adoption_of_accounts"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

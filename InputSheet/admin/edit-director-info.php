@@ -697,7 +697,7 @@ if(isset($_POST['btn_edit_director_info'])) {
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-offset-4 col-md-4">
-                                        <button name="btn_edit_director_info" type="submit" class="btn green"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Update Director Info</button>
+                                        <button id="directors" name="btn_edit_director_info" type="submit" class="btn blue"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Update Director Info</button>
                                     </div>
                                 </div>
                             </form>

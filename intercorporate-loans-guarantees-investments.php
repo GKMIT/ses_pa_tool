@@ -879,7 +879,7 @@ if(isset($_POST['intercorporate_loans'])){
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="intercorporate_loans" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                        <button type="submit" name="intercorporate_loans" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

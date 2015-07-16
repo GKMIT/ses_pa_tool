@@ -42,6 +42,17 @@ body {
   direction: ltr;
 }
 
+#directors{
+  position: fixed;
+  bottom:7%;
+  float: right;
+}
+.directors{
+  position: fixed;
+  bottom:7%;
+  float: right;
+}
+
 /*
 Internet Explorer 10 doesn't differentiate device width from viewport width, and thus doesn't 
 properly apply the media queries in Bootstrap's CSS. To address this, 

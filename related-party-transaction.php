@@ -789,7 +789,7 @@ if(isset($_POST['related_party_transaction'])) {
 
                                     <div class="form-actions fluid">
                                         <div class="col-md-12">
-                                            <button type="submit" name="related_party_transaction" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                            <button type="submit" name="related_party_transaction" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                         </div>
                                     </div>
                                 </div>

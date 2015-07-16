@@ -532,7 +532,7 @@ if(isset($_POST['office_of_profit'])) {
 								</div>
 								<div class="form-actions fluid">
 									<div class="col-md-12">
-										<button type="submit" name="office_of_profit" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+										<button type="submit" name="office_of_profit" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
 									</div>
 								</div>
 							</form>

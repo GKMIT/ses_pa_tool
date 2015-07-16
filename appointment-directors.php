@@ -5068,9 +5068,14 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-actions fluid">
+<!--                                <div class="form-actions fluid">-->
+<!--                                    <div class="col-md-12">-->
+<!--                                        <button type="submit" name="aoopintment_directors" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="form-action fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="aoopintment_directors" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                        <button type="submit" id="directors" class="btn blue" name="aoopintment_directors" ><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

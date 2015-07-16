@@ -1523,7 +1523,7 @@ if(isset($_POST['directors_remuneration'])) {
                                 </div>
                                 <div class="form-actions fluid">
                                     <div class="col-md-12">
-                                        <button type="submit" name="directors_remuneration" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+                                        <button type="submit" id="directors" name="directors_remuneration" class="btn blue"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
                                     </div>
                                 </div>
                             </form>

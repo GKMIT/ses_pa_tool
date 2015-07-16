@@ -1114,7 +1114,7 @@ if(isset($_SESSION['report_id'])) {
 								</div>
 								<div class="form-actions fluid">
 									<div class="col-md-12">
-										<button type="submit" name="page_3_details" class="btn green"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
+										<button type="submit" name="page_3_details" class="btn blue directors"><i class="fa fa-floppy-o"></i> Save &amp; Continue</button>
 									</div>
 								</div>
 							</form>
