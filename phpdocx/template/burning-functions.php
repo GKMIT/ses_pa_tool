@@ -1818,10 +1818,13 @@ function appointmentOfAuditors($docx, $report_id)
                         <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $other_text[$i * 2 + 16]['text'] . " years</td>
                     </tr>";
         }
-        $total_network="($other_text[4]['text'])"."&nbsp;&nbsp;($other_text[5]['text'])"."&nbsp;&nbsp;($other_text[6]['text']");
+        $network1=$other_text[4]['text'];
+        $network2=$other_text[5]['text'];
+        $network3=$other_text[6]['text'];
+        $total_network="$network1"."$network2"."$network3";
         $inner .= "<tr>
-                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>Auditor's Network</td>
-                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $total_network . "</td>
+                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #D9D9D9;'>Auditor's Network</td>
+                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #D9D9D9;'>" . $total_network . "</td>
                       </tr>";
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px; '>
                         <tbody>$inner</tbody>
