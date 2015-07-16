@@ -441,51 +441,53 @@ if(isset($_SESSION['report_id'])) {
 									@$dom->loadHTML(file_get_contents($link));
 									$dom->preserveWhiteSpace = false;
 									$tables = $dom->getElementById('acr');
-									$years_row = $tables->getElementsByTagName('tr')->item(1);
-									$array_years = array(
-										$years_row->getElementsByTagName('td')->item(1)->nodeValue,
-										$years_row->getElementsByTagName('td')->item(2)->nodeValue,
-										$years_row->getElementsByTagName('td')->item(3)->nodeValue,
-									);
-									$rev = $tables->getElementsByTagName('tr')->item(3);
-									$revenue = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$revenue[] = $rev->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$other = $tables->getElementsByTagName('tr')->item(4);
-									$other_income = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$other_income[] = $other->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$total = $tables->getElementsByTagName('tr')->item(5);
-									$total_income = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$total_income[] = $total->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$pb = $tables->getElementsByTagName('tr')->item(8);
-									$pbdt = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$pbdt[] = $pb->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$net = $tables->getElementsByTagName('tr')->item(12);
-									$net_profit = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$net_profit[] = $net->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$ep = $tables->getElementsByTagName('tr')->item(14);
-									$eps = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$eps[] = $ep->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$op = $tables->getElementsByTagName('tr')->item(16);
-									$opm = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$opm[] = $op->getElementsByTagName('td')->item($i)->nodeValue;
-									}
-									$np = $tables->getElementsByTagName('tr')->item(17);
-									$npm = array();
-									for ($i = 1; $i <= 3; $i++) {
-										$npm[] = $np->getElementsByTagName('td')->item($i)->nodeValue;
+									if(is_object($tables)) {
+										$years_row = $tables->getElementsByTagName('tr')->item(1);
+										$array_years = array(
+											$years_row->getElementsByTagName('td')->item(1)->nodeValue,
+											$years_row->getElementsByTagName('td')->item(2)->nodeValue,
+											$years_row->getElementsByTagName('td')->item(3)->nodeValue,
+										);
+										$rev = $tables->getElementsByTagName('tr')->item(3);
+										$revenue = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$revenue[] = $rev->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$other = $tables->getElementsByTagName('tr')->item(4);
+										$other_income = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$other_income[] = $other->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$total = $tables->getElementsByTagName('tr')->item(5);
+										$total_income = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$total_income[] = $total->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$pb = $tables->getElementsByTagName('tr')->item(8);
+										$pbdt = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$pbdt[] = $pb->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$net = $tables->getElementsByTagName('tr')->item(12);
+										$net_profit = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$net_profit[] = $net->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$ep = $tables->getElementsByTagName('tr')->item(14);
+										$eps = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$eps[] = $ep->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$op = $tables->getElementsByTagName('tr')->item(16);
+										$opm = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$opm[] = $op->getElementsByTagName('td')->item($i)->nodeValue;
+										}
+										$np = $tables->getElementsByTagName('tr')->item(17);
+										$npm = array();
+										for ($i = 1; $i <= 3; $i++) {
+											$npm[] = $np->getElementsByTagName('td')->item($i)->nodeValue;
+										}
 									}
 									?>
 									<div class="form-body">
@@ -696,83 +698,71 @@ if(isset($_SESSION['report_id'])) {
 								?>
 								<?php
 								if(!$report_data_exists) {
-									$dom1 = new domDocument;
-									$dom2 = new domDocument;
-									$link1 = "http://www.bseindia.com/stock-share-price/stockreach_financials.aspx?scripcode=$peer_1_bse_code&expandable=0";
-									$link2 = "http://www.bseindia.com/stock-share-price/stockreach_financials.aspx?scripcode=$peer_2_bse_code&expandable=0";
-									@$dom1->loadHTML(file_get_contents($link1));
-									@$dom2->loadHTML(file_get_contents($link2));
-									$dom1->preserveWhiteSpace = false;
-									$dom2->preserveWhiteSpace = false;
-
-									$tables1 = $dom1->getElementById('acr');
-									$years_row = $tables1->getElementsByTagName('tr')->item(1);
-									$year1 = $years_row->getElementsByTagName('td')->item(1)->nodeValue;
-
-
-									$rev1 = $tables1->getElementsByTagName('tr')->item(3);
-									$revenue1 = $rev1->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$tables2 = $dom2->getElementById('acr');
-
-									$years_row = $tables2->getElementsByTagName('tr')->item(1);
-									$year2 = $years_row->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$rev2 = $tables2->getElementsByTagName('tr')->item(3);
-									$revenue2 = $rev2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$other1 = $tables1->getElementsByTagName('tr')->item(4);
-									$other_income1 = $other1->getElementsByTagName('td')->item(1)->nodeValue;
-									$other2 = $tables2->getElementsByTagName('tr')->item(4);
-									$other_income2 = $other2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$total1 = $tables1->getElementsByTagName('tr')->item(5);
-									$total_income1 = $total1->getElementsByTagName('td')->item(1)->nodeValue;
-									$total2 = $tables2->getElementsByTagName('tr')->item(5);
-									$total_income2 = $total2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$pb1 = $tables1->getElementsByTagName('tr')->item(8);
-									$pbdt1 = $pb1->getElementsByTagName('td')->item(1)->nodeValue;
-									$pb2 = $tables2->getElementsByTagName('tr')->item(8);
-									$pbdt2 = $pb2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$net1 = $tables1->getElementsByTagName('tr')->item(12);
-									$net_profit1 = $net1->getElementsByTagName('td')->item(1)->nodeValue;
-									$net2 = $tables2->getElementsByTagName('tr')->item(12);
-									$net_profit2 = $net2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$ep1 = $tables1->getElementsByTagName('tr')->item(14);
-									$eps1 = $ep1->getElementsByTagName('td')->item(1)->nodeValue;
-									$ep2 = $tables2->getElementsByTagName('tr')->item(14);
-									$eps2 = $ep2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$pay_out1 = ($peer1_dividend * 1.1623) / $eps1;
-									$pay_out2 = ($peer2_dividend * 1.1623) / $eps2;
-
-									$op1 = $tables1->getElementsByTagName('tr')->item(16);
-									$opm1 = $op1->getElementsByTagName('td')->item(1)->nodeValue;
-									$op2 = $tables2->getElementsByTagName('tr')->item(16);
-									$opm2 = $op2->getElementsByTagName('td')->item(1)->nodeValue;
-
-									$np1 = $tables1->getElementsByTagName('tr')->item(17);
-									$npm1 = $np1->getElementsByTagName('td')->item(1)->nodeValue;
-									$np2 = $tables2->getElementsByTagName('tr')->item(17);
-									$npm2 = $np2->getElementsByTagName('td')->item(1)->nodeValue;
-
+									if($peer_1_bse_code!=0) {
+										$dom1 = new domDocument;
+										$link1 = "http://www.bseindia.com/stock-share-price/stockreach_financials.aspx?scripcode=$peer_1_bse_code&expandable=0";
+										@$dom1->loadHTML(file_get_contents($link1));
+										$dom1->preserveWhiteSpace = false;
+										$tables1 = $dom1->getElementById('acr');
+										$years_row = $tables1->getElementsByTagName('tr')->item(1);
+										$year1 = $years_row->getElementsByTagName('td')->item(1)->nodeValue;
+										$rev1 = $tables1->getElementsByTagName('tr')->item(3);
+										$revenue1 = $rev1->getElementsByTagName('td')->item(1)->nodeValue;
+										$other1 = $tables1->getElementsByTagName('tr')->item(4);
+										$other_income1 = $other1->getElementsByTagName('td')->item(1)->nodeValue;
+										$total1 = $tables1->getElementsByTagName('tr')->item(5);
+										$total_income1 = $total1->getElementsByTagName('td')->item(1)->nodeValue;
+										$pb1 = $tables1->getElementsByTagName('tr')->item(8);
+										$pbdt1 = $pb1->getElementsByTagName('td')->item(1)->nodeValue;
+										$net1 = $tables1->getElementsByTagName('tr')->item(12);
+										$net_profit1 = $net1->getElementsByTagName('td')->item(1)->nodeValue;
+										$ep1 = $tables1->getElementsByTagName('tr')->item(14);
+										$eps1 = $ep1->getElementsByTagName('td')->item(1)->nodeValue;
+										$pay_out1 = ($peer1_dividend * 1.1623) / $eps1;
+										$op1 = $tables1->getElementsByTagName('tr')->item(16);
+										$opm1 = $op1->getElementsByTagName('td')->item(1)->nodeValue;
+										$np1 = $tables1->getElementsByTagName('tr')->item(17);
+										$npm1 = $np1->getElementsByTagName('td')->item(1)->nodeValue;
+									}
+									if($peer_2_bse_code!=0) {
+										$dom2 = new domDocument;
+										$link2 = "http://www.bseindia.com/stock-share-price/stockreach_financials.aspx?scripcode=$peer_2_bse_code&expandable=0";
+										@$dom2->loadHTML(file_get_contents($link2));
+										$dom2->preserveWhiteSpace = false;
+										$tables2 = $dom2->getElementById('acr');
+										$years_row = $tables2->getElementsByTagName('tr')->item(1);
+										$year2 = $years_row->getElementsByTagName('td')->item(1)->nodeValue;
+										$rev2 = $tables2->getElementsByTagName('tr')->item(3);
+										$revenue2 = $rev2->getElementsByTagName('td')->item(1)->nodeValue;
+										$other2 = $tables2->getElementsByTagName('tr')->item(4);
+										$other_income2 = $other2->getElementsByTagName('td')->item(1)->nodeValue;
+										$total2 = $tables2->getElementsByTagName('tr')->item(5);
+										$total_income2 = $total2->getElementsByTagName('td')->item(1)->nodeValue;
+										$pb2 = $tables2->getElementsByTagName('tr')->item(8);
+										$pbdt2 = $pb2->getElementsByTagName('td')->item(1)->nodeValue;
+										$net2 = $tables2->getElementsByTagName('tr')->item(12);
+										$net_profit2 = $net2->getElementsByTagName('td')->item(1)->nodeValue;
+										$ep2 = $tables2->getElementsByTagName('tr')->item(14);
+										$eps2 = $ep2->getElementsByTagName('td')->item(1)->nodeValue;
+										$pay_out2 = ($peer2_dividend * 1.1623) / $eps2;
+										$op2 = $tables2->getElementsByTagName('tr')->item(16);
+										$opm2 = $op2->getElementsByTagName('td')->item(1)->nodeValue;
+										$np2 = $tables2->getElementsByTagName('tr')->item(17);
+										$npm2 = $np2->getElementsByTagName('td')->item(1)->nodeValue;
+									}
 									?>
 									<div class="form-body">
 										<h4 class="form-section">TABLE 4: PEER COMPARISION</h4>
-
 										<div class="table-responsive">
 											<table class="table table-striped table-hover">
 												<thead>
 												<tr>
 													<td>&nbsp;</td>
 													<td><input class="form-control financial_years" name="peer_comparision_year[]"
-															   placeholder="Enter year" readonly
+															   placeholder="Enter year"
 															   value="<?php echo $year1; ?>"/></td>
 													<td><input class="form-control financial_years" name="peer_comparision_year[]"
-															   placeholder="Enter year" readonly
+															   placeholder="Enter year"
 															   value="<?php echo $year2; ?>"/></td>
 												</tr>
 												</thead>
@@ -782,14 +772,14 @@ if(isset($_SESSION['report_id'])) {
 														In <i class="fa fa-rupee"></i> Crores
 													</th>
 													<th>
-														<input type='text' readonly class='form-control'
+														<input type='text' class='form-control'
 															   value="<?php echo $response['peer_1_company_name']; ?>">
 														<input type='hidden' name="peer_comparision_company_id[]"
 															   class='form-control'
 															   value="<?php echo $response['peer_1_company_id']; ?>">
 													</th>
 													<th>
-														<input type='text' readonly class='form-control'
+														<input type='text' class='form-control'
 															   value="<?php echo $response['peer_2_company_name']; ?>">
 														<input type='hidden' name="peer_comparision_company_id[]"
 															   class='form-control'
@@ -900,7 +890,6 @@ if(isset($_SESSION['report_id'])) {
 								<?php
 								}
 								else {
-                                    echo "comming into saved";
 								?>
 									<div class="form-body">
 										<h4 class="form-section">TABLE 4: PEER COMPARISION</h4>

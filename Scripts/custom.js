@@ -737,6 +737,7 @@ CustomJS.prototype = {
                     initializeKeyUp();
                 },
                 error: function (data) {
+                    console.log(data);
                     button.html("Get Data");
                 }
             });

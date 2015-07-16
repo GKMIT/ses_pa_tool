@@ -929,55 +929,77 @@ elseif(isset($_GET['page3bsedata'])) {
 		$dom->preserveWhiteSpace = false;
 		$shareholders=array();
 		$tables = $dom->getElementById('tdData');
-		for ($i=7; $i <=457845 ; $i++) {
-			$share1= $tables->getElementsByTagName('tr')->item($i);
-			$val=strcmp($share1->getElementsByTagName('td')->item(1)->nodeValue,"Total");
-			if($val==0) {
-				goto s1;
+		$share1= $tables->getElementsByTagName('tr')->item(7);
+		if(is_object($tables) && is_object($share1)) {
+			for ($i=7; $i <=457845 ; $i++) {
+				$share1= $tables->getElementsByTagName('tr')->item($i);
+				$val=strcmp($share1->getElementsByTagName('td')->item(1)->nodeValue,"Total");
+				if($val==0) {
+					goto s1;
+				}
+				else {
+					$share_value = $share1->getElementsByTagName('td')->item(3)->nodeValue;
+					$shareholders[]= array($share1->getElementsByTagName('td')->item(1)->nodeValue,$share_value);
+				}
 			}
-			else {
-				$share_value = $share1->getElementsByTagName('td')->item(3)->nodeValue;
-				$shareholders[]= array($share1->getElementsByTagName('td')->item(1)->nodeValue,$share_value);
-			}
-		}
-		s1:
-		$shareholders=page3SortAdd($shareholders);
-		$str="";
-		$x=1;
-		foreach ($shareholders as $shareholder_name=>$share) {
-			$str.="<tr>
+			s1:
+			$shareholders=page3SortAdd($shareholders);
+			$str="";
+			$x=1;
+			foreach ($shareholders as $shareholder_name=>$share) {
+				$str.="<tr>
 			   	<td><input type='text' name='share_holder_name[]' class='form-control' value='$shareholder_name'/></td>
 				<td><input type='text' name='share_holding[]' class='form-control' value='$share'/></td>
 			   </tr>";
-			if($x++==7) break;
+				if($x++==7) break;
+			}
+		}
+		else {
+			for($i=1;$i<=7;$i++) {
+				$str.="<tr>
+			   			<td><input type='text' name='share_holder_name[]' class='form-control' /></td>
+						<td><input type='text' name='share_holding[]' class='form-control' /></td>
+			   		  </tr>";
+			}
 		}
 		$dom = new domDocument;
 		$link = "http://www.bseindia.com/corporates/shpPromoters_60.aspx?scripcd=$company_bse_code&qtrid=$qtr_id_final&CompName=BOMBAY+DYEING+MFG+CO+LTD+&QtrName=$_GET[month]+$_GET[year]";
 		@$dom->loadHTML(file_get_contents($link));
 		$dom->preserveWhiteSpace = false;
 		$tables = $dom->getElementById('tdData');
-		$major_promoters=array();
-		for ($i=6; $i <=1929812 ; $i++) {
-			$share1= $tables->getElementsByTagName('tr')->item($i);
-			$val=strcmp($share1->getElementsByTagName('td')->item(1)->nodeValue,"Total");
-			if($val==0)
-				goto s2;
-			else {
-				$share_value = $share1->getElementsByTagName('td')->item(3)->nodeValue;
-				$major_promoters[]= array($share1->getElementsByTagName('td')->item(1)->nodeValue,$share_value);
+		$share1= $tables->getElementsByTagName('tr')->item(6);
+		if(is_object($tables) && is_object($share1)) {
+			$major_promoters=array();
+			for ($i=6; $i <=1929812 ; $i++) {
+				$share1= $tables->getElementsByTagName('tr')->item($i);
+				$val=strcmp($share1->getElementsByTagName('td')->item(1)->nodeValue,"Total");
+				if($val==0)
+					goto s2;
+				else {
+					$share_value = $share1->getElementsByTagName('td')->item(3)->nodeValue;
+					$major_promoters[]= array($share1->getElementsByTagName('td')->item(1)->nodeValue,$share_value);
+				}
 			}
-		}
-		s2:
-		$major_promoters = page3SortAdd($major_promoters);
-		$counter = 1;
-		$str2="";
-		foreach ($major_promoters as $promoter_name=>$grand_total) {
-			$str2.="<tr>
+			s2:
+			$major_promoters = page3SortAdd($major_promoters);
+			$counter = 1;
+			$str2="";
+			foreach ($major_promoters as $promoter_name=>$grand_total) {
+				$str2.="<tr>
 					<td><input type='text' name='major_promoter_name[]' class='form-control' value='$promoter_name'/></td>
 					<td><input type='text' name='major_promoter_share_holding[]' class='form-control' value='".number_format($grand_total,2,'.','')."'/></td>
 				</tr>";
-			if($counter++==7) {
-				break;
+				if($counter++==7) {
+					break;
+				}
+			}
+		}
+		else {
+			for($i=1;$i<=7;$i++) {
+				$str2.="<tr>
+							<td><input type='text' name='major_promoter_name[]' class='form-control' /></td>
+							<td><input type='text' name='major_promoter_share_holding[]' class='form-control' /></td>
+						</tr>";
 			}
 		}
 
@@ -996,16 +1018,24 @@ elseif(isset($_GET['page3bsedata'])) {
 		$dom->preserveWhiteSpace = false;
 		$tables = $dom->getElementById('tdData');
 		$share1= $tables->getElementsByTagName('tr')->item(26);
-		$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_1' data-col-id='1'/></td>";
-		$share2= $tables->getElementsByTagName('tr')->item(31);
-		$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_1' data-col-id='1'/></td>";
-		$share3= $tables->getElementsByTagName('tr')->item(32);
-		$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
-		$dii = $sub_total-$fii;
-		$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_1' data-col-id='1'/></td>";
-		$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_1'  data-col-id='1' value='".(100-($fii+$promoter+$dii))."' /></td>";
+		if(is_object($tables) && is_object($share1)) {
+			$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_1' data-col-id='1'/></td>";
+			$share2= $tables->getElementsByTagName('tr')->item(31);
+			$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_1' data-col-id='1'/></td>";
+			$share3= $tables->getElementsByTagName('tr')->item(32);
+			$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
+			$dii = $sub_total-$fii;
+			$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_1' data-col-id='1'/></td>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_1'  data-col-id='1' value='".(100-($fii+$promoter+$dii))."' /></td>";
+		}
+		else {
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' class='form-control promoter' id='promoter_1' data-col-id='1'/></td>";
+			$share_holding_pattern_fii.="<td><input name='fii[]' class='form-control fii' id='fii_1' data-col-id='1'/></td>";
+			$share_holding_pattern_dii.="<td><input name='dii[]' class='form-control dii' id='dii_1' data-col-id='1'/></td>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_1'  data-col-id='1' /></td>";
+		}
 
 		$qtr_id_final=$qtr_id_final-4;
 		$share_holding_pattern.= "<tr><td>FII</td>";
@@ -1015,17 +1045,24 @@ elseif(isset($_GET['page3bsedata'])) {
 		$dom->preserveWhiteSpace = false;
 		$tables = $dom->getElementById('tdData');
 		$share1= $tables->getElementsByTagName('tr')->item(26);
-		$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_2' data-col-id='2'/></td>";
-		$share2= $tables->getElementsByTagName('tr')->item(31);
-		$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_2' data-col-id='2'/></td>";
-		$share3= $tables->getElementsByTagName('tr')->item(32);
-		$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
-		$dii = $sub_total-$fii;
-		$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_2' data-col-id='2'/></td>";
-		$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_2'  data-col-id='2' value='".(100-($fii+$promoter+$dii))."' /></td>";
-
+		if(is_object($tables) && is_object($share1)) {
+			$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_2' data-col-id='2'/></td>";
+			$share2= $tables->getElementsByTagName('tr')->item(31);
+			$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_2' data-col-id='2'/></td>";
+			$share3= $tables->getElementsByTagName('tr')->item(32);
+			$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
+			$dii = $sub_total-$fii;
+			$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_2' data-col-id='2'/></td>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_2'  data-col-id='2' value='".(100-($fii+$promoter+$dii))."' /></td>";
+		}
+		else {
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' class='form-control promoter' id='promoter_2' data-col-id='2'/></td>";
+			$share_holding_pattern_fii.="<td><input name='fii[]' class='form-control fii' id='fii_2' data-col-id='2'/></td>";
+			$share_holding_pattern_dii.="<td><input name='dii[]' class='form-control dii' id='dii_2' data-col-id='2'/></td>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_2'  data-col-id='2' /></td>";
+		}
 		$qtr_id_final=$qtr_id_final-4;
 		$share_holding_pattern.= "<tr><td>DII</td>";
 		$dom = new domDocument;
@@ -1034,17 +1071,24 @@ elseif(isset($_GET['page3bsedata'])) {
 		$dom->preserveWhiteSpace = false;
 		$tables = $dom->getElementById('tdData');
 		$share1= $tables->getElementsByTagName('tr')->item(26);
-		$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_3' data-col-id='3'/></td>";
-		$share2= $tables->getElementsByTagName('tr')->item(31);
-		$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_3' data-col-id='3'/></td>";
-		$share3= $tables->getElementsByTagName('tr')->item(32);
-		$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
-		$dii = $sub_total-$fii;
-		$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_3' data-col-id='3'/></td>";
-		$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_3'  data-col-id='3' value='".(100-($fii+$promoter+$dii))."' /></td>";
-
+		if(is_object($tables) && is_object($share1)) {
+			$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_3' data-col-id='3'/></td>";
+			$share2= $tables->getElementsByTagName('tr')->item(31);
+			$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_3' data-col-id='3'/></td>";
+			$share3= $tables->getElementsByTagName('tr')->item(32);
+			$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
+			$dii = $sub_total-$fii;
+			$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_3' data-col-id='3'/></td>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_3'  data-col-id='3' value='".(100-($fii+$promoter+$dii))."' /></td>";
+		}
+		else {
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' class='form-control promoter' id='promoter_3' data-col-id='3'/></td>";
+			$share_holding_pattern_fii.="<td><input name='fii[]' class='form-control fii' id='fii_3' data-col-id='3'/></td>";
+			$share_holding_pattern_dii.="<td><input name='dii[]' class='form-control dii' id='dii_3' data-col-id='3'/></td>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_3'  data-col-id='3' /></td>";
+		}
 		$qtr_id_final=$qtr_id_final-4;
 		$share_holding_pattern.= "<tr><td>Others</td>";
 		$dom = new domDocument;
@@ -1053,19 +1097,25 @@ elseif(isset($_GET['page3bsedata'])) {
 		$dom->preserveWhiteSpace = false;
 		$tables = $dom->getElementById('tdData');
 		$share1= $tables->getElementsByTagName('tr')->item(26);
-		$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_4' data-col-id='4'/></td></tr>";
-		$share2= $tables->getElementsByTagName('tr')->item(31);
-		$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
-		$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_4' data-col-id='4'/></td></tr>";
-		$share3= $tables->getElementsByTagName('tr')->item(32);
-		$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
-		$dii = $sub_total-$fii;
-		$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_4' data-col-id='4'/></td></tr>";
-		$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_4' data-col-id='4' value='".(100-($fii+$promoter+$dii))."' /></td></tr>";
-
+		if(is_object($tables) && is_object($share1)) {
+			$promoter= $share1->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' value='$promoter' class='form-control promoter' id='promoter_4' data-col-id='4'/></td></tr>";
+			$share2= $tables->getElementsByTagName('tr')->item(31);
+			$fii = $share2->getElementsByTagName('td')->item(5)->nodeValue;
+			$share_holding_pattern_fii.="<td><input name='fii[]' value='$fii' class='form-control fii' id='fii_4' data-col-id='4'/></td></tr>";
+			$share3= $tables->getElementsByTagName('tr')->item(32);
+			$sub_total = $share3->getElementsByTagName('td')->item(5)->nodeValue;
+			$dii = $sub_total-$fii;
+			$share_holding_pattern_dii.="<td><input name='dii[]' value='$dii' class='form-control dii' id='dii_4' data-col-id='4'/></td></tr>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_4' data-col-id='4' value='".(100-($fii+$promoter+$dii))."' /></td></tr>";
+		}
+		else {
+			$share_holding_pattern_promoters.="<td><input name='promoter[]' class='form-control promoter' id='promoter_4' data-col-id='4'/></td></tr>";
+			$share_holding_pattern_fii.="<td><input name='fii[]' class='form-control fii' id='fii_4' data-col-id='4'/></td></tr>";
+			$share_holding_pattern_dii.="<td><input name='dii[]' class='form-control dii' id='dii_4' data-col-id='4'/></td></tr>";
+			$share_holding_pattern_others.="<td><input name='others[]' class='form-control others' id='others_4' data-col-id='4' /></td></tr>";
+		}
 		$share_holding_pattern = $share_holding_years.$share_holding_pattern_promoters.$share_holding_pattern_fii.$share_holding_pattern_dii.$share_holding_pattern_others;
-
 
 	}
 	catch(Exception $e) {

@@ -560,8 +560,6 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                });
 
                $(this).parent().append(fixedCol);
-
-
            });
        }
 

@@ -225,7 +225,7 @@ if($company_details['exists']) {
                         echo "<td>".$objPHPExcel->getActiveSheet()->getCell($k.$i)->getValue()."</td>";
                         $info['company_id'] = $company_id;
                         $dir_cell = intval($i)-63;
-                        $info['dir_din_no'] = $objPHPExcel->getActiveSheet()->getCell('A'.$dir_cell)->getValue();
+                        $info['dir_din_no'] = trim($objPHPExcel->getActiveSheet()->getCell('A'.$dir_cell)->getValue());
                         $info['att_year']=$ren_years[$year_counter++];
                         $info['attended']=$objPHPExcel->getActiveSheet()->getCell($k.$i)->getValue() == "" ? 0 : $objPHPExcel->getActiveSheet()->getCell($k.$i)->getValue();
                         $k++;
