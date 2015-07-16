@@ -110,11 +110,11 @@ function burnExcel($report_id)
 
     $objPHPExcel->getActiveSheet()->SetCellValue('C82', $appointment_auditors_table_1[0]['financial_year']);
     $objPHPExcel->getActiveSheet()->SetCellValue('D82', $appointment_auditors_table_1[1]['financial_year']);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C83', $appointment_auditors_table_1[1]['audit_fee']);
+    $objPHPExcel->getActiveSheet()->SetCellValue('C83', $appointment_auditors_table_1[0]['audit_fee']);
     $objPHPExcel->getActiveSheet()->SetCellValue('D83', $appointment_auditors_table_1[1]['audit_fee']);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C84', $appointment_auditors_table_1[1]['audit_related_fee']);
+    $objPHPExcel->getActiveSheet()->SetCellValue('C84', $appointment_auditors_table_1[0]['audit_related_fee']);
     $objPHPExcel->getActiveSheet()->SetCellValue('D84', $appointment_auditors_table_1[1]['audit_related_fee']);
-    $objPHPExcel->getActiveSheet()->SetCellValue('C85', $appointment_auditors_table_1[1]['non_audit_fee']);
+    $objPHPExcel->getActiveSheet()->SetCellValue('C85', $appointment_auditors_table_1[0]['non_audit_fee']);
     $objPHPExcel->getActiveSheet()->SetCellValue('D85', $appointment_auditors_table_1[1]['non_audit_fee']);
 
 
@@ -717,19 +717,19 @@ function companyBackground($docx, $report_id)
     for ($i = 0; $i <= 6; $i++) {
         if ($i % 2 == 0) {
             $table_public_share_holders_major_promoters .= "<tr>
-                                                                <td style=' width: 45%; font-size: 10; background-color: #F2F2F2; border-right: 1px solid #FFFFFF;'>" . substr($public_share_holders[$i]['share_holder_name'], 0, 35) . "</td>
+                                                                <td style='width:45.5%; font-size: 10; background-color: #F2F2F2; border-right: 1px solid #FFFFFF;'>" . substr($public_share_holders[$i]['share_holder_name'], 0, 35) . "</td>
                                                                 <td style='width:10%; font-size: 10; background-color: #F2F2F2; text-align:right; '>" . $public_share_holders[$i]['share_holding'] . "</td>
                                                                 <td style='width:0.5%;'>&nbsp;&nbsp;</td>
-                                                                <td style='font-size: 10; background-color: #F2F2F2;border-right: 1px solid #FFFFFF;'>" . substr($major_promoters[$i]['major_promoter_name'], 0, 35) . "</td>
-                                                                <td style='font-size: 10; background-color: #F2F2F2; text-align: right;'>" . $major_promoters[$i]['share_holding'] . "</td>
+                                                                <td style='width:34%; font-size: 10; background-color: #F2F2F2;border-right: 1px solid #FFFFFF;'>" . substr($major_promoters[$i]['major_promoter_name'], 0, 35) . "</td>
+                                                                <td style='width:10%; font-size: 10; background-color: #F2F2F2; text-align: right;'>" . $major_promoters[$i]['share_holding'] . "</td>
                                                            </tr>";
         } else {
             $table_public_share_holders_major_promoters .= "<tr>
-                                                                <td style='font-size: 10; background-color: #D9D9D9;border-right: 1px solid #FFFFFF;'>" . substr($public_share_holders[$i]['share_holder_name'], 0, 35) . "</td>
-                                                                <td style='font-size: 10; background-color: #D9D9D9; text-align:right;'>" . $public_share_holders[$i]['share_holding'] . "</td>
-                                                                <td style='width:3%;'>&nbsp;&nbsp;</td>
-                                                                <td style='font-size: 10; background-color: #D9D9D9;border-right: 1px solid #FFFFFF;'>" . substr($major_promoters[$i]['major_promoter_name'], 0, 35) . "</td>
-                                                                <td style='font-size: 10; background-color: #D9D9D9; text-align: right;'>" . $major_promoters[$i]['share_holding'] . "</td>
+                                                                <td style='width:45%; font-size: 10; background-color: #D9D9D9;border-right: 1px solid #FFFFFF;'>" . substr($public_share_holders[$i]['share_holder_name'], 0, 35) . "</td>
+                                                                <td style='width:10%; font-size: 10; background-color: #D9D9D9; text-align:right;'>" . $public_share_holders[$i]['share_holding'] . "</td>
+                                                                <td style='width:0.5%;'>&nbsp;&nbsp;</td>
+                                                                <td style='width:34%; font-size: 10; background-color: #D9D9D9;border-right: 1px solid #FFFFFF;'>" . substr($major_promoters[$i]['major_promoter_name'], 0, 35) . "</td>
+                                                                <td style='width:10%; font-size: 10; background-color: #D9D9D9; text-align: right;'>" . $major_promoters[$i]['share_holding'] . "</td>
                                                            </tr>";
         }
     }
@@ -754,7 +754,7 @@ function companyBackground($docx, $report_id)
 
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
     $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
-                <tr><td colspan='2' style='font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 5: MAJOR PUBLIC SHAREOLDERS (MAR'15)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 6: MAJOR PROMOTERS (MAR'15)</td></tr>
+                <tr><td colspan='2' style='width:55.5% ; font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 5: MAJOR PUBLIC SHAREHOLDERS (MAR'15)</td><td style='width:0.5%;'>&nbsp;&nbsp;</td><td colspan='2' style='width:44%; font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 6: MAJOR PROMOTERS (MAR'15)</td></tr>
                 $table_public_share_holders_major_promoters
                 <tr><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td><td>&nbsp;</td><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td></tr>
                 <tr><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>SHAREHOLDING PATTERN (%) (MARCH)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom:2px solid #000000;'>DISCUSSION</td></tr>
@@ -779,7 +779,7 @@ function companyBackground($docx, $report_id)
         )
     );
     $widthTableCols = array(
-        5555, 323, 4240
+        5500, 323, 4295
     );
     $paramsTable = array(
         'border' => 'nil',
