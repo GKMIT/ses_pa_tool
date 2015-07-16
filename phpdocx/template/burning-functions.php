@@ -1818,9 +1818,10 @@ function appointmentOfAuditors($docx, $report_id)
                         <td style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $other_text[$i * 2 + 16]['text'] . " years</td>
                     </tr>";
         }
+        $total_network="($other_text[4]['text'])"."&nbsp;&nbsp;($other_text[5]['text'])"."&nbsp;&nbsp;($other_text[6]['text']");
         $inner .= "<tr>
                         <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>Auditor's Network</td>
-                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $other_text[5]['text'] . "</td>
+                        <td colspan='2' style='text-align: left; color: #000000; border-bottom: 1px solid #FFF;border-right: 1px solid #FFF; font-size: 10; background-color: #f2f2f2;'>" . $total_network . "</td>
                       </tr>";
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px; '>
                         <tbody>$inner</tbody>
@@ -1852,7 +1853,7 @@ function appointmentOfAuditors($docx, $report_id)
         // Graph Ends 
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         resBlackStrip($docx, "TERM OF APPOINTMENT");
-        $docx->embedHtml(htmlParser($other_text[21]['text']));
+        $docx->embedHtml(htmlParser($other_text[14]['text']));
 
         $analysis_txt = "";
         for ($i = 0; $i < count($analysis_text); $i++) {

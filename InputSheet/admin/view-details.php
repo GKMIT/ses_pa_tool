@@ -394,7 +394,7 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                                             </div>
                                         </div>
                                         <div class="col-md-1 col-md-offset-5">
-                                            <a href="#" target="_blank" id="anchor_excel_export"><img src="../../assets/img/excel-icon.png" class="excel-export"/></a>
+                                            <a href="#" target="_blank" id="anchor_excel_export"><img src="../../assets/img/excel.png" class="excel-export"/></a>
                                         </div>
                                     </div>
                                     <div class="form-group">
