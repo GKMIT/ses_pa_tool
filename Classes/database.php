@@ -1581,15 +1581,21 @@ class Database {
 		$dbobject = null;
 		return $response;
 	}
-	function getCompanyDirectors($company_id,$financial_year="") {
+	function getCompanyDirectors($company_id,$financial_year="",$view_sheet="") {
 		$generic_array = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
-		if($financial_year!="") {
-			$stmt=$dbobject->prepare("select `directors`.`id` as `director_table_id`,`director_info`.`id` as `director_info_table_id`,`director_info`.`nomination_remuneration`,`director_info`.`ratio_to_mre` ,`director_info`.`retiring_non_retiring`,`directors`.`din_no`, `directors`.`dir_name`,`directors`.`no_directorship_public`,`directors`.`no_total_directorship`,`directors`.`no_directorship_listed_companies`,`directors`.`committee_chairmanships`,`directors`.`committee_memberships`,`directors`.`expertise`,`directors`.`education`,`director_info`.`appointment_date`,`director_info`.`resignation_date`,`director_info`.`current_tenure`,`director_info`.`total_association`,`director_info`.`company_classification`,`director_info`.`ses_classification`,`director_info`.`additional_classification`,`director_info`.`audit_committee`,`director_info`.`investor_grievance`,`director_info`.`nomination`,`director_info`.`remuneration`,`director_info`.`csr`,`director_info`.`risk_management_committee`,`director_info`.`shares_held`,`director_info`.`esops`,`director_info`.`other_pecuniary_relationship`,`director_info`.`last_updated_on`,`director_info`.`updated_by` from `directors` INNER JOIN `director_info` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `financial_year`=:financial_year");
+		if($view_sheet!="") {
+			$stmt=$dbobject->prepare("select `directors`.`id` as `director_table_id`,`director_info`.`id` as `director_info_table_id`,`director_info`.`nomination_remuneration`,`director_info`.`ratio_to_mre` ,`director_info`.`retiring_non_retiring`,`directors`.`din_no`, `directors`.`dir_name`,`directors`.`no_directorship_public`,`directors`.`no_total_directorship`,`directors`.`no_directorship_listed_companies`,`directors`.`committee_chairmanships`,`directors`.`committee_memberships`,`directors`.`expertise`,`directors`.`education`,`director_info`.`appointment_date`,`director_info`.`resignation_date`,`director_info`.`current_tenure`,`director_info`.`total_association`,`director_info`.`company_classification`,`director_info`.`ses_classification`,`director_info`.`additional_classification`,`director_info`.`audit_committee`,`director_info`.`investor_grievance`,`director_info`.`nomination`,`director_info`.`remuneration`,`director_info`.`csr`,`director_info`.`risk_management_committee`,`director_info`.`shares_held`,`director_info`.`esops`,`director_info`.`other_pecuniary_relationship`,`director_info`.`last_updated_on`,`director_info`.`updated_by` from `directors` INNER JOIN `director_info` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `financial_year`=:financial_year order by `director_info`.`total_association` DESC");
 			$stmt->bindParam(':financial_year',$financial_year);
 		}
 		else {
-			$stmt=$dbobject->prepare("select `directors`.`id` as `director_table_id`,`director_info`.`id` as `director_info_table_id`,`director_info`.`ratio_to_mre` , `directors`.`din_no`,`director_info`.`nomination_remuneration`,`director_info`.`retiring_non_retiring`,`directors`.`dir_name`,`directors`.`no_directorship_public`,`directors`.`no_total_directorship`,`directors`.`no_directorship_listed_companies`,`directors`.`committee_chairmanships`,`directors`.`committee_memberships`,`directors`.`expertise`,`directors`.`education`,`director_info`.`appointment_date`,`director_info`.`resignation_date`,`director_info`.`current_tenure`,`director_info`.`total_association`,`director_info`.`company_classification`,`director_info`.`ses_classification`,`director_info`.`additional_classification`,`director_info`.`audit_committee`,`director_info`.`investor_grievance`,`director_info`.`nomination`,`director_info`.`remuneration`,`director_info`.`csr`,`director_info`.`risk_management_committee`,`director_info`.`shares_held`,`director_info`.`esops`,`director_info`.`other_pecuniary_relationship`,`director_info`.`last_updated_on`,`director_info`.`updated_by` from `directors` INNER JOIN `director_info` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id");
+			if($financial_year!="") {
+				$stmt=$dbobject->prepare("select `directors`.`id` as `director_table_id`,`director_info`.`id` as `director_info_table_id`,`director_info`.`nomination_remuneration`,`director_info`.`ratio_to_mre` ,`director_info`.`retiring_non_retiring`,`directors`.`din_no`, `directors`.`dir_name`,`directors`.`no_directorship_public`,`directors`.`no_total_directorship`,`directors`.`no_directorship_listed_companies`,`directors`.`committee_chairmanships`,`directors`.`committee_memberships`,`directors`.`expertise`,`directors`.`education`,`director_info`.`appointment_date`,`director_info`.`resignation_date`,`director_info`.`current_tenure`,`director_info`.`total_association`,`director_info`.`company_classification`,`director_info`.`ses_classification`,`director_info`.`additional_classification`,`director_info`.`audit_committee`,`director_info`.`investor_grievance`,`director_info`.`nomination`,`director_info`.`remuneration`,`director_info`.`csr`,`director_info`.`risk_management_committee`,`director_info`.`shares_held`,`director_info`.`esops`,`director_info`.`other_pecuniary_relationship`,`director_info`.`last_updated_on`,`director_info`.`updated_by` from `directors` INNER JOIN `director_info` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `financial_year`=:financial_year");
+				$stmt->bindParam(':financial_year',$financial_year);
+			}
+			else {
+				$stmt=$dbobject->prepare("select `directors`.`id` as `director_table_id`,`director_info`.`id` as `director_info_table_id`,`director_info`.`ratio_to_mre` , `directors`.`din_no`,`director_info`.`nomination_remuneration`,`director_info`.`retiring_non_retiring`,`directors`.`dir_name`,`directors`.`no_directorship_public`,`directors`.`no_total_directorship`,`directors`.`no_directorship_listed_companies`,`directors`.`committee_chairmanships`,`directors`.`committee_memberships`,`directors`.`expertise`,`directors`.`education`,`director_info`.`appointment_date`,`director_info`.`resignation_date`,`director_info`.`current_tenure`,`director_info`.`total_association`,`director_info`.`company_classification`,`director_info`.`ses_classification`,`director_info`.`additional_classification`,`director_info`.`audit_committee`,`director_info`.`investor_grievance`,`director_info`.`nomination`,`director_info`.`remuneration`,`director_info`.`csr`,`director_info`.`risk_management_committee`,`director_info`.`shares_held`,`director_info`.`esops`,`director_info`.`other_pecuniary_relationship`,`director_info`.`last_updated_on`,`director_info`.`updated_by` from `directors` INNER JOIN `director_info` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id");
+			}
 		}
 		$stmt->bindParam(':company_id',$company_id);
 		$stmt->execute();
@@ -1672,7 +1678,7 @@ class Database {
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 //			 Getting Director List
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year");
+		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
 		$stmt->bindParam(':company_id',$company_id);
 		$stmt->bindParam(':financial_year',$financial_year);
 		$stmt->execute();
@@ -1723,7 +1729,7 @@ class Database {
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 //			 Getting Director List
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year");
+		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
 		$stmt->bindParam(':company_id',$company_id);
 		$stmt->bindParam(':financial_year',$financial_year);
 		$stmt->execute();
@@ -1776,7 +1782,7 @@ class Database {
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 //			 Getting Director List
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year");
+		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
 		$stmt->bindParam(':company_id',$company_id);
 		$stmt->bindParam(':financial_year',$financial_year);
 		$stmt->execute();

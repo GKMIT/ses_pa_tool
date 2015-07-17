@@ -592,6 +592,7 @@ class DatabaseReports {
             if($held!=0) {
                 $per = round($attended / $held * 100, 2);
                 if ($per < 75) {
+                    $per = round($per);
                     $directors[] = $row['dir_name'] . "(" . $per . "%)";
                 }
             }
@@ -669,6 +670,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
+                            $per = round($per);
                             $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
@@ -745,6 +747,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
+                            $per = round($per);
                             $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
@@ -804,12 +807,6 @@ class DatabaseReports {
             $stmt->execute();
             $directors = array();
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//                $held = $row['held'];
-//                $attended = $row['attended'];
-//                $per = round($attended/$held*100,2);
-//                if($per<75) {
-//                    $directors[]=$row['dir_name']."(".$per.")";
-//                }
 
                 $held = $row['held'];
                 $attended = $row['attended'];
@@ -821,6 +818,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
+                            $per = round($per);
                             $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
@@ -897,6 +895,7 @@ class DatabaseReports {
                 if($held!=0) {
                     $per = round($attended / $held * 100, 2);
                     if ($per < 75) {
+                        $per = round($per);
                         $directors[] = $row['dir_name'] . "(" . $per . "%)";
                     }
                 }
@@ -971,6 +970,7 @@ class DatabaseReports {
                 if($held!=0) {
                     $per = round($attended / $held * 100, 2);
                     if ($per < 75) {
+                        $per = round($per);
                         $directors[] = $row['dir_name'] . "(" . $per . "%)";
                     }
                 }

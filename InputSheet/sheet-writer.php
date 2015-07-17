@@ -12,7 +12,7 @@ $db = new Database();
 $company_id = $_GET['company_id'];
 $financial_year = $_GET['financial_year'];
 
-$generic=$db->getCompanyDirectors($company_id,$financial_year);
+$generic=$db->getCompanyDirectors($company_id,$financial_year,"View Sheet");
 $directors= $generic['directors'];
 $directors = $db->filteredDirectorsForSheet($directors);
 $rem_nom_same = $generic['rem_nom_assigned'];
@@ -95,7 +95,7 @@ for ($i=0; $i < count($directors) ; $i++) {
 
 //Second Table Remuneration Details
 $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
-$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year");
+$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
 $stmt->bindParam(':company_id',$company_id);
 $stmt->bindParam(':financial_year',$financial_year);
 $stmt->execute();
@@ -727,6 +727,6 @@ for($counter=0;$counter<=4;$counter++) {
 }
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save("Input Sheet-PA tool2.xlsx");
-echo "<br/><a href='Input Sheet-PA tool2.xlsx'>Download File</a>";
+$objWriter->save("Input Sheet-PA tool-burned.xlsx");
+echo "<br/><a href='Input Sheet-PA tool-burned.xlsx'>Download File</a>";
 ?>
