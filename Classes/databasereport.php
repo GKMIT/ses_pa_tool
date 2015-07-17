@@ -3829,7 +3829,7 @@ class DatabaseReports {
     }
     function getTable1Data() {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
-        $stmt=$dbobject->prepare("SELECT * FROM `company_auditors_info` WHERE `company_id`=:company_id");
+        $stmt=$dbobject->prepare("SELECT * FROM  `company_auditors_info` WHERE  `company_id` = :company_id GROUP BY financial_year ORDER BY financial_year DESC LIMIT 5");
         $stmt->bindParam(":company_id",$_SESSION['company_id']);
         $stmt->execute();
         while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -3837,7 +3837,6 @@ class DatabaseReports {
         }
         $dbobject= null;
         return $table_info;
-
     }
     function saveAppointmentOfAuditors($info){
         $report_id=$_SESSION['report_id'];
