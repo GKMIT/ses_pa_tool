@@ -14,6 +14,7 @@ $financial_year = $_GET['financial_year'];
 
 $generic=$db->getCompanyDirectors($company_id,$financial_year);
 $directors= $generic['directors'];
+$directors = $db->filteredDirectorsForSheet($directors);
 $rem_nom_same = $generic['rem_nom_assigned'];
 $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 $stmt=$dbobject->prepare("select * from `companies` where `id`=:company_id");
@@ -102,6 +103,8 @@ $company_directors = array();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $company_directors[]=$row;
 }
+$company_directors = $db->filteredDirectorsForSheet($company_directors);
+
 $array_director_remuneration = array('Director Remuneration','Director Name');
 
 $stmt=$dbobject->prepare("select DISTINCT `rem_year` from `director_remuneration` where `rem_year`<=:financial_year ORDER BY `rem_year` DESC");
@@ -340,10 +343,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 $counter = 0;
 for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_csr_committee_attendance)]; $cell++) {
-    $objPHPExcel->getActiveSheet()->SetCellValue($cell."130", $array_csr_committee_attendance[$counter]);
+    $objPHPExcel->getActiveSheet()->SetCellValue($cell."128", $array_csr_committee_attendance[$counter]);
     $counter++;
 }
-$csr_committee_attendance_counter = 131;
+$csr_committee_attendance_counter = 129;
 $column_counter = 2;
 foreach($company_directors as $director) {
     if($director['csr']=='C' or $director['csr']=='M') {
@@ -384,10 +387,10 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 $counter = 0;
 for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_risk_management_committee_attendance)]; $cell++) {
-    $objPHPExcel->getActiveSheet()->SetCellValue($cell."147", $array_risk_management_committee_attendance[$counter]);
+    $objPHPExcel->getActiveSheet()->SetCellValue($cell."149", $array_risk_management_committee_attendance[$counter]);
     $counter++;
 }
-$risk_management_committee_attendance_counter = 148;
+$risk_management_committee_attendance_counter = 150;
 $column_counter = 2;
 foreach($company_directors as $director) {
     if($director['risk_management_committee']=='C' or $director['risk_management_committee']=='M') {
@@ -431,11 +434,11 @@ if($rem_nom_same=='yes') {
     $counter = 0;
 
     for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_nomination_remuneration_committee_attendance)]; $cell++) {
-        $objPHPExcel->getActiveSheet()->SetCellValue($cell."169", $array_nomination_remuneration_committee_attendance[$counter]);
+        $objPHPExcel->getActiveSheet()->SetCellValue($cell."170", $array_nomination_remuneration_committee_attendance[$counter]);
         $counter++;
     }
 
-    $remuneration_nomination_committee_attendance_counter = 170;
+    $remuneration_nomination_committee_attendance_counter = 171;
     $column_counter = 2;
     foreach($company_directors as $director) {
         // echo $director['dir_name'];
@@ -477,11 +480,11 @@ else {
     }
     $counter = 0;
     for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_nomination_remuneration_committee_attendance)]; $cell++) {
-        $objPHPExcel->getActiveSheet()->SetCellValue($cell."169", $array_nomination_remuneration_committee_attendance[$counter]);
+        $objPHPExcel->getActiveSheet()->SetCellValue($cell."170", $array_nomination_remuneration_committee_attendance[$counter]);
         $counter++;
     }
 
-    $remuneration_nomination_committee_attendance_counter = 170;
+    $remuneration_nomination_committee_attendance_counter = 171;
     $column_counter = 2;
     foreach($company_directors as $director) {
         if($director['nomination']=='C' or $director['nomination']=='M') {
@@ -521,11 +524,11 @@ else {
     }
     $counter = 0;
     for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_nomination_remuneration_committee_attendance)]; $cell++) {
-        $objPHPExcel->getActiveSheet()->SetCellValue($cell."187", $array_nomination_remuneration_committee_attendance[$counter]);
+        $objPHPExcel->getActiveSheet()->SetCellValue($cell."191", $array_nomination_remuneration_committee_attendance[$counter]);
         $counter++;
     }
 
-    $remuneration_nomination_committee_attendance_counter = 188;
+    $remuneration_nomination_committee_attendance_counter = 192;
     $column_counter = 2;
     foreach($company_directors as $director) {
         if($director['remuneration']=='C' or $director['remuneration']=='M') {
@@ -573,7 +576,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 $counter = 0;
 
 for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_auditor_fee_details)]; $cell++) {
-    $objPHPExcel->getActiveSheet()->SetCellValue($cell."206", $array_auditor_fee_details[$counter]);
+    $objPHPExcel->getActiveSheet()->SetCellValue($cell."214", $array_auditor_fee_details[$counter]);
     $counter++;
 }
 
@@ -586,7 +589,7 @@ $array_cols = array(
     "Total Auditors Fee (In Rs. Crore)"
 );
 
-$auditor_fee_details_counter = 207;
+$auditor_fee_details_counter = 215;
 $column_counter = 2;
 
 $array_column_names = array('net_profit','audit_fee','audit_related_fee','non_audit_fee','total_auditors_fee');
@@ -686,7 +689,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 $counter = 0;
 
 for($cell = $array_col_names[1]; $cell<=$array_col_names[count($array_dividend_info)]; $cell++) {
-    $objPHPExcel->getActiveSheet()->SetCellValue($cell."240", $array_dividend_info[$counter]);
+    $objPHPExcel->getActiveSheet()->SetCellValue($cell."232", $array_dividend_info[$counter]);
     $counter++;
 }
 
@@ -698,7 +701,7 @@ $array_cols = array(
     "EPS"
 );
 
-$dividend_info_counter = 241;
+$dividend_info_counter = 233;
 $column_counter = 2;
 
 $array_column_names = array('dividend','market_price_start','market_price_end','eps');
