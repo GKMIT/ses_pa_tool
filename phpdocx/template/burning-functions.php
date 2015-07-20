@@ -1391,7 +1391,7 @@ function adoptionOfAccounts($docx, $report_id)
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $financial_indicators[$i]['field_name'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $financial_indicators[$i]['fi_current'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $financial_indicators[$i]['fi_previous'] . "</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $financial_indicators[$i]['shift'] ."</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $financial_indicators[$i]['shift'] . "%</td>
                             <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #F2F2F2;'>" . $financial_indicators[$i]['company_discussion'] . "</td>
                            </tr>";
                 } else {
@@ -1399,7 +1399,7 @@ function adoptionOfAccounts($docx, $report_id)
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $financial_indicators[$i]['field_name'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $financial_indicators[$i]['fi_current'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $financial_indicators[$i]['fi_previous'] . "</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $financial_indicators[$i]['shift'] . "</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $financial_indicators[$i]['shift'] . "%</td>
                             <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>" . $financial_indicators[$i]['company_discussion'] . "</td>
                            </tr>";
                 }
@@ -1432,8 +1432,8 @@ function adoptionOfAccounts($docx, $report_id)
                 if($i==2) {
                     $text .= "<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $array_contingent_liabilities_cols[$i] . "</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_current_year'] . "%</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "%</td>
                            </tr>";
                 }
                 else {
@@ -1448,15 +1448,15 @@ function adoptionOfAccounts($docx, $report_id)
                 if($i==2) {
                     $text .= "<tr>
                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $array_contingent_liabilities_cols[$i] . "</td>
-                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
-                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "</td>
+                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_current_year'] . "%</td>
+                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "%</td>
                        </tr>";
                 }
                 else {
                     $text .= "<tr>
                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $array_contingent_liabilities_cols[$i] . "</td>
                         <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
-                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_previous_year']." </td>
+                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "</td>
                        </tr>";
                 }
             }
