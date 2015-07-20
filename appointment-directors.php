@@ -380,7 +380,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-body">
+                                <div class="form-body" id="slot_existing_or_not" class="hidden">
                                     <div class="form-group">
                                         <div class="col-md-6">
                                             <input type="checkbox" class="check-trigger checkbox" name="checkbox[]" value="Appointment/Reappointment of Non-Executive Directors" hidden-id="check_1"/> Appointment/Reappointment of Non-Executive Directors

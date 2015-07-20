@@ -67,6 +67,19 @@ CustomJS.prototype = {
                 }
             });
         });
+        function check_slot_no(){
+            var slot_no=$('#slot_no').val();
+            if(slot_no !=""){
+                $('#slot_existing_or_not').removeClass('hidden');
+            }
+            else {
+                $('#slot_existing_or_not').addClass('hidden');
+            }
+        }
+        check_slot_no();
+        $('#slot_no').change(function(){
+            check_slot_no();
+        });
         $("#does_the_company_have_a_nomination_and_remuneration_committee").change(function () {
             var self = $(this);
             if (self.val() == 'no') {

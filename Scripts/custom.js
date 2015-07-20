@@ -788,6 +788,9 @@ CustomJS.prototype = {
                 value = value.toFixed(2);
                 $(".dividend-pay-"+no).val(value);
             }
+            if($(".eps-"+no).val() ==0 && $(this).val() ==0){
+                $(".dividend-pay-"+no).val(0);
+            }
             if($(this).val() =="") {
                 $(".dividend-pay-"+no).val("");
             }
