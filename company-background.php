@@ -546,14 +546,11 @@ if(isset($_SESSION['report_id'])) {
 												<tr>
 													<td>EPS&nbsp;(<i class="fa fa-rupee"></i>)</td>
 													<td><input type='text' name='financial_indicators_eps[]'
-															   class='form-control eps-1'
-															   value='<?php echo $eps[0]; ?>'/></td>
+															   class='form-control eps-1 company-eps' /></td>
 													<td><input type='text' name='financial_indicators_eps[]'
-															   class='form-control eps-2'
-															   value='<?php echo $eps[1]; ?>'/></td>
+															   class='form-control eps-2 company-eps' /></td>
 													<td><input type='text' name='financial_indicators_eps[]'
-															   class='form-control eps-3'
-															   value='<?php echo $eps[2]; ?>'/></td>
+															   class='form-control eps-3 company-eps' /></td>
 												</tr>
 												<tr>
 													<td>Dividend / Share&nbsp;(<i class="fa fa-rupee"></i>)</td>
@@ -837,11 +834,9 @@ if(isset($_SESSION['report_id'])) {
 												<tr>
 													<td>EPS&nbsp;(<i class="fa fa-rupee"></i>)</td>
 													<td><input type='text' name="peer_comparision_eps[]"
-															   class='form-control eps-4'
-															   value='<?php echo $eps1; ?>'/></td>
+															   class='form-control eps-4 company-eps' /></td>
 													<td><input type='text' name="peer_comparision_eps[]"
-															   class='form-control eps-5'
-															   value='<?php echo $eps2; ?>'/></td>
+															   class='form-control eps-5 company-eps'/></td>
 												</tr>
 												<tr>
 													<td>Dividend / Share&nbsp;(<i class="fa fa-rupee"></i>)</td>

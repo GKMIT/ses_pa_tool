@@ -172,7 +172,7 @@ class Database {
 		$stmt->bindParam(':din_no', $info['din_no']);
 		$stmt->execute();
 		if(!($stmt->rowCount()>0)) {
-			$stmt=$dbobject->prepare(" insert into `directors` (`din_no`,`dir_name`,`expertise`,`education`) values(:din_no,:dir_name,:expertise,:education)");
+			$stmt=$dbobject->prepare("insert into `directors` (`din_no`,`dir_name`,`expertise`,`education`) values(:din_no,:dir_name,:expertise,:education)");
 			$stmt->bindParam(':din_no', $info['din_no']);
 			$stmt->bindParam(':dir_name', $info['dir_name']);
 			$stmt->bindParam(':expertise', $info['expertise']);

@@ -763,7 +763,11 @@ CustomJS.prototype = {
                 success:function(data) {
                     console.log(data);
                     var dividend=data.dividend;
+                    var companies_eps=data.companies_eps;
                     $('#market_data_eps').val(data.eps);
+                    $(".company-eps").each(function(i,d) {
+                        $(this).val(companies_eps[i]);
+                    });
                     $(".dividend-per-share").each(function(i,d) {
                         $(this).val(dividend[i]);
                         $(this).trigger('keyup');

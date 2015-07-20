@@ -5466,12 +5466,15 @@ class DatabaseReports {
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 $dividend[]= $row['dividend'];
+                $eps[]= $row['eps'];
             }
             else {
                 $dividend[]= 0;
+                $eps[]= 0;
             }
         }
         $response['dividend'] = $dividend;
+        $response['companies_eps'] = $eps;
         $dbobject=null;
         return $response;
     }
