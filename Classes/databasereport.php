@@ -2050,6 +2050,9 @@ class DatabaseReports {
         if($row['csr']=='C' || $row['csr']=='M') {
             $cpc[]="CSR($row[csr])";
         }
+        if($row['risk_management_committee']=='C' || $row['risk_management_committee']=='M') {
+            $cpc[]="RM($row[risk_management_committee])";
+        }
         $generic_details['committee_positions']=implode(",",$cpc);
         $generic_details['retiring_non_retiring']=$row['retiring_non_retiring'];
         $generic_details['part_promoter_group'] = ($row['company_classification']=="NED") ? 'no' : 'yes' ;
@@ -2292,6 +2295,9 @@ class DatabaseReports {
         }
         if($row['csr']=='C' || $row['csr']=='M') {
             $cpc[]="CSR($row[csr])";
+        }
+        if($row['risk_management_committee']=='C' || $row['risk_management_committee']=='M') {
+            $cpc[]="RM($row[risk_management_committee])";
         }
         $generic_details['committee_positions']=implode(",",$cpc);
         $generic_details['total_association'] = $row['total_association'];
@@ -2836,6 +2842,9 @@ class DatabaseReports {
         }
         if($row['csr']=='C' || $row['csr']=='M') {
             $cpc[]="CSR($row[csr])";
+        }
+        if($row['risk_management_committee']=='C' || $row['risk_management_committee']=='M') {
+            $cpc[]="RM($row[risk_management_committee])";
         }
         $generic_details['committee_positions']=implode(",",$cpc);
         $generic_details['retiring_non_retiring']=$row['retiring_non_retiring'];
@@ -3632,7 +3641,7 @@ class DatabaseReports {
             "Net Profits(Rs Cr) (B)",
             "Ratio (A/B)"
         );
-        for ($i = 0; $i <6; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             $stmt = $dbobject->prepare("INSERT INTO `pa_report_appointment_directors_executive_remuneration_p_c` (`pa_reports_id`,`director_no`,`field_name`,`col_1`,`col_2`) VALUES(:report_id,:director_no,:field_name,:col_1,:col_2)");
             $stmt->bindParam(":report_id", $_SESSION['report_id']);
             $stmt->bindParam(":director_no", $info['slot_no']);

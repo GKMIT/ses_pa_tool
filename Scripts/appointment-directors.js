@@ -707,6 +707,20 @@ CustomJS.prototype = {
             });
         });
 
+        $.ajax({
+            url:'jquery-data.php',
+            type:'GET',
+            dataType:'JSON',
+            data:{DirectorsPeerInfo:1},
+            success:function(data) {
+                console.log(data);
+                $(".company2").append("<option value=''>Select Peer</option>");
+                $(".company2").append("<option value='"+data.peer_1_company_name+"'>"+data.peer_1_company_name+"</option>");
+                $(".company2").append("<option value='"+data.peer_2_company_name+"'>"+data.peer_2_company_name+"</option>");
+                $('.company1').val(data.company_name);
+            }
+        });
+
         $(".ed-ids").change(function() {
             var $director = $(this);
 
@@ -731,19 +745,6 @@ CustomJS.prototype = {
                     $(".remuneration1").val(data.remuneration);
                     $(".netprofit1").val(data.company_net_profit);
                     $(".ratio1").val(data.company_rem_per.toFixed(2));
-                }
-            });
-
-            $.ajax({
-                url:'jquery-data.php',
-                type:'GET',
-                dataType:'JSON',
-                data:{DirectorsPeerInfo:1},
-                success:function(data) {
-                    $(".company2").append("<option value=''>Select Peer</option>");
-                    $(".company2").append("<option value='"+data.peer_1_company_name+"'>"+data.peer_1_company_name+"</option>");
-                    $(".company2").append("<option value='"+data.peer_2_company_name+"'>"+data.peer_2_company_name+"</option>");
-                    $('.company1').val(data.company_name);
                 }
             });
 
@@ -797,7 +798,7 @@ CustomJS.prototype = {
             });
         });
 
-        $("#slot_no").change(function(){
+        $("#slot_no").change(function() {
             var main_section=$('#main_section').val();
             var slot_no = $('#slot_no').find('option:selected').text();
             $.ajax({
@@ -819,6 +820,7 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofAppointmentOfDirectors:1,ResolutionName:resolution_name,MainSection:main_section,Slot_no:slot_no},
                             success:function(data){
+                                console.log(data);
                                 var triggers = data.triggers;
                                 $("select[name='triggers[]']").each(function(i,d) {
                                     var select = $(this);
@@ -827,7 +829,6 @@ CustomJS.prototype = {
                                 });
                                 setTimeout(function() {
                                     var other_text = data.other_text;
-
                                     $(".other-text").each(function(i,d) {
                                         var text_area = $(this);
                                         if(text_area.hasClass('inline-editor')) {
@@ -850,71 +851,77 @@ CustomJS.prototype = {
 
                                     var checkbox = data.checkbox;
                                     var j=0;
-                                    $(".checkbox").each(function(i,d) {
-                                        if(j!=checkbox.length) {
-                                            var $checkboxobj = $(this);
-                                            var checked=$(this).val();
-                                            var saveCheck = checkbox[j]['checkbox'];
-                                            if(checked==saveCheck) {
-                                                $checkboxobj.attr('checked',true);
-                                                $checkboxobj.parent().addClass('checked');
-                                                $("#"+$checkboxobj.attr("hidden-id")).removeClass('hidden');
-                                                j++;
+                                    if(checkbox!=null) {
+                                        $(".checkbox").each(function(i,d) {
+                                            if(j!=checkbox.length) {
+                                                var $checkboxobj = $(this);
+                                                var checked=$(this).val();
+                                                var saveCheck = checkbox[j]['checkbox'];
+                                                if(checked==saveCheck) {
+                                                    $checkboxobj.attr('checked',true);
+                                                    $checkboxobj.parent().addClass('checked');
+                                                    $("#"+$checkboxobj.attr("hidden-id")).removeClass('hidden');
+                                                    j++;
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                    }
                                     var past_remuneration = data.past_remuneration;
-                                    // console.log(past_remuneration[0].year1);
-                                    $('#remuneration_years').val(past_remuneration[0].year1);
-                                    $('#rem_second_year').val(past_remuneration[0].year2);
-                                    $('#rem_third_year').val(past_remuneration[0].year3);
-                                    $("#past_rem_dir_name").val(past_remuneration[0].dir_name);
-                                    $("#fixed_pay_year1").val(past_remuneration[0].fixed_pay_year1);
-                                    $("#total_pay_year1").val(past_remuneration[0].total_pay_year1);
-                                    $("#fixed_pay_year2").val(past_remuneration[0].fixed_pay_year2);
-                                    $("#total_pay_year2").val(past_remuneration[0].total_pay_year2);
-                                    $("#fixed_pay_year3").val(past_remuneration[0].fixed_pay_year3);
-                                    $("#total_pay_year3").val(past_remuneration[0].total_pay_year3);
-
+                                    if(past_remuneration!=null) {
+                                        $('#remuneration_years').val(past_remuneration[0].year1);
+                                        $('#rem_second_year').val(past_remuneration[0].year2);
+                                        $('#rem_third_year').val(past_remuneration[0].year3);
+                                        $("#past_rem_dir_name").val(past_remuneration[0].dir_name);
+                                        $("#fixed_pay_year1").val(past_remuneration[0].fixed_pay_year1);
+                                        $("#total_pay_year1").val(past_remuneration[0].total_pay_year1);
+                                        $("#fixed_pay_year2").val(past_remuneration[0].fixed_pay_year2);
+                                        $("#total_pay_year2").val(past_remuneration[0].total_pay_year2);
+                                        $("#fixed_pay_year3").val(past_remuneration[0].fixed_pay_year3);
+                                        $("#total_pay_year3").val(past_remuneration[0].total_pay_year3);
+                                    }
                                     var peer_comparsion = data.peer_comparsion;
-                                    console.log(peer_comparsion);
-                                    $('.director1').val(peer_comparsion[0].col_1);
-                                    $('.director2').val(peer_comparsion[0].col_2);
-                                    $('.company1').val(peer_comparsion[1].col_1);
-                                    $('.company2').val(peer_comparsion[1].col_2);
-                                    $('.promotor1').val(peer_comparsion[2].col_1);
-                                    $('.promotor2').val(peer_comparsion[2].col_2);
-                                    $('.remuneration1').val(peer_comparsion[3].col_1);
-                                    $('.remuneration2').val(peer_comparsion[3].col_2);
-                                    $('.netprofit1').val(peer_comparsion[4].col_1);
-                                    $('.netprofit2').val(peer_comparsion[4].col_2);
-                                    $('.ratio1').val(peer_comparsion[5].col_1);
-                                    $('.ratio2').val(peer_comparsion[5].col_2);
-
+                                    if(peer_comparsion!=null) {
+                                        $('.director1').val(peer_comparsion[0].col_1);
+                                        $('.director2').val(peer_comparsion[0].col_2);
+                                        $('.company1').val(peer_comparsion[1].col_1);
+                                        $('.company2').val(peer_comparsion[1].col_2);
+                                        $('.promotor1').val(peer_comparsion[2].col_1);
+                                        $('.promotor2').val(peer_comparsion[2].col_2);
+                                        $('.remuneration1').val(peer_comparsion[3].col_1);
+                                        $('.remuneration2').val(peer_comparsion[3].col_2);
+                                        $('.netprofit1').val(peer_comparsion[4].col_1);
+                                        $('.netprofit2').val(peer_comparsion[4].col_2);
+                                        $('.ratio1').val(peer_comparsion[5].col_1);
+                                        $('.ratio2').val(peer_comparsion[5].col_2);
+                                    }
                                     var table_2 = data.table_2;
-                                    $(".find_tr").each(function(i,d) {
-                                        var row = $(this);
-                                        row.find('td').eq(0).find('.year_table2').val(table_2[i].financial_year);
-                                        row.find('td').eq(1).find('.edr').val(table_2[i].ed_remuneration);
-                                        row.find('td').eq(2).find('.index').val(table_2[i].indexed_tsr);
-                                        row.find('td').eq(3).find('.np').val(table_2[i].net_profit);
-                                    });
+                                    if(table_2!=null) {
+                                        $(".find_tr").each(function(i,d) {
+                                            var row = $(this);
+                                            row.find('td').eq(0).find('.year_table2').val(table_2[i].financial_year);
+                                            row.find('td').eq(1).find('.edr').val(table_2[i].ed_remuneration);
+                                            row.find('td').eq(2).find('.index').val(table_2[i].indexed_tsr);
+                                            row.find('td').eq(3).find('.np').val(table_2[i].net_profit);
+                                        });
+                                    }
                                     var remuneration_package=data.remuneration_package;
-                                    $('.proposed_salary').val(remuneration_package[0].field_value);
-                                    $('.basic_pay_comment').val(remuneration_package[1].field_value);
-                                    $('.annual_increment').val(remuneration_package[2].field_value);
-                                    $('.all_perquisites').val(remuneration_package[3].field_value);
-                                    $('.can_placed_perquisites').val(remuneration_package[4].field_value);
-                                    $('.total_allowance').val(remuneration_package[5].field_value);
-                                    $('.variable_pay').val(remuneration_package[6].field_value);
-                                    $('.performance_criteria').val(remuneration_package[7].field_value);
-                                    $('.can_placed_on_variable').val(remuneration_package[8].field_value);
-                                    $('.notice_period').val(remuneration_package[9].field_value);
-                                    $('.notice_severance_pay_comments').val(remuneration_package[10].field_value);
-                                    $('.severance_pay').val(remuneration_package[11].field_value);
-                                    $('.minimum_remuneration').val(remuneration_package[12].field_value);
-                                    $('.within_limits').val(remuneration_package[13].field_value);
-                                    $('.includes_variable').val(remuneration_package[14].field_value);
+                                    if(remuneration_package!=null) {
+                                        $('.proposed_salary').val(remuneration_package[0].field_value);
+                                        $('.basic_pay_comment').val(remuneration_package[1].field_value);
+                                        $('.annual_increment').val(remuneration_package[2].field_value);
+                                        $('.all_perquisites').val(remuneration_package[3].field_value);
+                                        $('.can_placed_perquisites').val(remuneration_package[4].field_value);
+                                        $('.total_allowance').val(remuneration_package[5].field_value);
+                                        $('.variable_pay').val(remuneration_package[6].field_value);
+                                        $('.performance_criteria').val(remuneration_package[7].field_value);
+                                        $('.can_placed_on_variable').val(remuneration_package[8].field_value);
+                                        $('.notice_period').val(remuneration_package[9].field_value);
+                                        $('.notice_severance_pay_comments').val(remuneration_package[10].field_value);
+                                        $('.severance_pay').val(remuneration_package[11].field_value);
+                                        $('.minimum_remuneration').val(remuneration_package[12].field_value);
+                                        $('.within_limits').val(remuneration_package[13].field_value);
+                                        $('.includes_variable').val(remuneration_package[14].field_value);
+                                    }
                                     $.loader_remove();
                                 },3000);
                             }
@@ -942,7 +949,6 @@ CustomJS.prototype = {
                         });
                         $("select[name='triggers[]']").each(function(i,d) {
                             var select = $(this);
-                            // select.val(triggers[i]['triggers']);
                             select.val("");
                             select.trigger('change');
                         });
@@ -966,9 +972,8 @@ CustomJS.prototype = {
                         $('.remuneration2').val("");
                         $('.netprofit1').val("");
                         $('.netprofit2').val("");
-                        $('.ratio1').val("");
-                        $('.ratio2').val("");
-
+                        $('.ratio1').val('');
+                        $('.ratio2').val('');
                         $(".find_tr").each(function(i,d) {
                             var row = $(this);
                             row.find('td').eq(0).find('.year_table2').val("");
@@ -976,7 +981,6 @@ CustomJS.prototype = {
                             row.find('td').eq(2).find('.index').val("");
                             row.find('td').eq(3).find('.np').val("");
                         });
-
                         $('.proposed_salary').val("");
                         $('.basic_pay_comment').val("");
                         $('.annual_increment').val("");
