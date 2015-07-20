@@ -51,7 +51,7 @@ class ReportBurning {
         }
         $generic_details['financial_indicators']=$temp;
 
-        $stmt = $dbobject->prepare(" select * from `pa_report_peer_comparision` where `pa_reports_id`=:report_id order by `financial_year` DESC");
+        $stmt = $dbobject->prepare(" select * from `pa_report_peer_comparision` where `pa_reports_id`=:report_id order by `id` ASC");
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
         while( $row = $stmt->fetch(PDO::FETCH_ASSOC)) {

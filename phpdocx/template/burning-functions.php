@@ -599,7 +599,8 @@ function agendaItemsAndRecommendations($docx, $report_id)
               </table>";
     $docx->embedHTML($html);
     $html = "<p style='font-size:5'>&nbsp;</p>";
-    $html .= "<p style='font-size:9;margin-top:5px;margin-bottom: 0; text-align:justify; '><i><span style='font-weight: bold;'>C - Compliance: </span>The Company has not met statutory compliance requirements</i></p>";
+    $html .= "<p style='font-size:9;margin-top:5px;margin-bottom: 0; text-align:left; '><i><span style='font-weight: bold;'>#Focus Terminology</span></i></p>";
+    $html .= "<p style='font-size:9;margin: 0; text-align:justify; '><i><span style='font-weight: bold;'>C - Compliance: </span>The Company has not met statutory compliance requirements</i></p>";
     $html .= "<p style='font-size:9; margin: 0; text-align:justify;'><i><span style='font-weight: bold;'>F - Fairness: </span>The Company has proposed steps which may lead to undue advantage of a particular class of shareholders and can have adverse impact on non-controlling shareholders including minority shareholders</i></p>";
     $html .= "<p style='font-size:9;margin: 0; text-align:justify;'><i><span style='font-weight: bold;'>G - Governance: </span>SES questions the governance practices of the Company. The Company may have complied with the statutory requirements in letter. However, SES finds governance issues as per its standards.</i></p>";
     $html .= "<p style='font-size:9; margin: 0; text-align:justify;'><i><span style='font-weight: bold;'>T - Disclosures &amp; Transparency: </span>The Company has not made adequate disclosures necessary for shareholders to make an informed decision. The Company has intentionally or unintentionally kept the shareholders in dark.</i></p>";
@@ -914,7 +915,7 @@ function boardOfDirectorInfo($docx, $report_id)
 
     $committee_performance = $generic['committee_performance'];
     if ($generic['is_rem_nom_same'] == 'yes') {
-        $array_committees = array("Audit", "Investors' Grievance", "Nomination &amp; Remuneration", "CSR", "Risk Committee");
+        $array_committees = array("Audit", "Stakeholders' Relationship", "Nomination &amp; Remuneration", "CSR", "Risk Management");
     } else {
         $array_committees = array("Audit", "Investors' Grievance", "Remuneration", "Nomination", "CSR", "Risk Committee");
     }
@@ -1428,17 +1429,36 @@ function adoptionOfAccounts($docx, $report_id)
         );
         for ($i = 0; $i < count($contingent_liabilities); $i++) {
             if ($i % 2 == 0) {
-                $text .= "<tr>
+                if($i==2) {
+                    $text .= "<tr>
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $array_contingent_liabilities_cols[$i] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "</td>
                            </tr>";
+                }
+                else {
+                    $text .= "<tr>
+                            <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $array_contingent_liabilities_cols[$i] . "</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "</td>
+                           </tr>";
+                }
+
             } else {
-                $text .= "<tr>
+                if($i==2) {
+                    $text .= "<tr>
+                        <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $array_contingent_liabilities_cols[$i] . "</td>
+                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
+                        <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_previous_year'] . "</td>
+                       </tr>";
+                }
+                else {
+                    $text .= "<tr>
                         <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $array_contingent_liabilities_cols[$i] . "</td>
                         <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_current_year'] . "</td>
                         <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $contingent_liabilities[$i]['cl_previous_year']." </td>
                        </tr>";
+                }
             }
         }
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px;'>
@@ -1466,7 +1486,7 @@ function adoptionOfAccounts($docx, $report_id)
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $adoption_of_accounts_rpt[$i]['field_name'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $adoption_of_accounts_rpt[$i]['rpt_current_year'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $adoption_of_accounts_rpt[$i]['rpt_previous_year'] . "</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $adoption_of_accounts_rpt[$i]['shift'] . "</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2;'>" . $adoption_of_accounts_rpt[$i]['shift'] . "%</td>
                             <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #F2F2F2;'>" . $adoption_of_accounts_rpt[$i]['rpt_comments'] . "</td>
                            </tr>";
             } else {
@@ -1474,7 +1494,7 @@ function adoptionOfAccounts($docx, $report_id)
                             <td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $adoption_of_accounts_rpt[$i]['field_name'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $adoption_of_accounts_rpt[$i]['rpt_current_year'] . "</td>
                             <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9;'>" . $adoption_of_accounts_rpt[$i]['rpt_previous_year'] . "</td>
-                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>" . $adoption_of_accounts_rpt[$i]['shift'] . "</td>
+                            <td style='text-align:right; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>" . $adoption_of_accounts_rpt[$i]['shift'] . "%</td>
                             <td style='text-align:justify; border-right: 1px solid #FFFFFF; font-size: 9; background-color: #D9D9D9;'>" . $adoption_of_accounts_rpt[$i]['rpt_comments'] . "</td>
                            </tr>";
             }

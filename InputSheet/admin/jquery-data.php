@@ -4,7 +4,7 @@ $db = new Database();
 $company_details = $db->getCompanyDetails($_GET['company_id']);
 $months = array('3'=>'March','6'=>'June','9'=>'September','12'=>'December');
 $fiscal_year = $months[$company_details['fiscal_year_end']];
-$generic_array = $db->getCompanyDirectors($_GET['company_id'],$_GET['financial_year']);
+$generic_array = $db->getCompanyDirectors($_GET['company_id'],$_GET['financial_year'],"viewsheet");
 $directors = $generic_array['directors'];
 $directors = $db->filteredDirectorsForSheet($directors);
 $director_details = "";
@@ -58,7 +58,7 @@ else {
     $director_details.="</tbody>";
 }
 $director_remuneration_info = $db->getCompanyDirectorsRemunerationDetails($_GET['company_id'],$_GET['financial_year']);
-$director_agm_info = $db->getCompanyDirectorsAGMDetails($_GET['company_id'],$_GET['financial_year']);
+$director_agm_info = $db->getCompanyDirectorsAGMDetails($_GET['company_id'],$_GET['financial_year'],$directors);
 $director_board_attendance_info = $db->getCompanyDirectorsBoardAttendance($_GET['company_id'],$_GET['financial_year']);
 
 $audit_committee_attendance_info = $db->getCompanyAuditCommitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);

@@ -12,7 +12,6 @@ if(isset($_POST['appointment_of_auditors'])) {
     $db=new DatabaseReports();
     $info=$_POST;
     $response=$db->saveAppointmentOfAuditors($info);
-
 }
 $db=new DatabaseReports();
 $table1=$db->getTable1Data();
@@ -1180,7 +1179,7 @@ $table1=$db->getTable1Data();
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover">
                                             <thead>
-                                            <tr>
+                                            <tr class="table1-financial-years">
                                                 <td>
 
                                                 </td>
@@ -1338,7 +1337,6 @@ $table1=$db->getTable1Data();
         </div>
         <script src="assets/plugins/respond.min.js"></script>
         <script src="assets/plugins/excanvas.min.js"></script>
-        <![endif]-->
         <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
         <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
         <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

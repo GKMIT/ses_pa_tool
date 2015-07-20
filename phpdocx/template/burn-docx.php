@@ -59,7 +59,7 @@ try {
 
 	require_once '../classes/MultiMerge.inc';
 	$merge = new MultiMerge();
-	$merge->mergeDocx('index_page.docx', array('try2.docx'), 'report.docx', array());
+	$merge->mergeDocx('index_page.docx', array('try2.docx','Disclaimers.docx'), 'report.docx', array());
 
 	burnExcel($report_id);
 	$zip_files_array = array(

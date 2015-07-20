@@ -592,6 +592,7 @@ class DatabaseReports {
             if($held!=0) {
                 $per = round($attended / $held * 100, 2);
                 if ($per < 75) {
+                    $per = round($per);
                     $directors[] = $row['dir_name'] . "(" . $per . "%)";
                 }
             }
@@ -669,6 +670,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
+                            $per = round($per);
                             $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
@@ -745,6 +747,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
+                            $per = round($per);
                             $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
@@ -804,12 +807,6 @@ class DatabaseReports {
             $stmt->execute();
             $directors = array();
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//                $held = $row['held'];
-//                $attended = $row['attended'];
-//                $per = round($attended/$held*100,2);
-//                if($per<75) {
-//                    $directors[]=$row['dir_name']."(".$per.")";
-//                }
 
                 $held = $row['held'];
                 $attended = $row['attended'];
@@ -821,6 +818,7 @@ class DatabaseReports {
                     if($held!=0) {
                         $per = round($attended / $held * 100, 2);
                         if ($per < 75) {
+                            $per = round($per);
                             $directors[] = $row['dir_name'] . "(" . $per . "%)";
                         }
                     }
@@ -897,6 +895,7 @@ class DatabaseReports {
                 if($held!=0) {
                     $per = round($attended / $held * 100, 2);
                     if ($per < 75) {
+                        $per = round($per);
                         $directors[] = $row['dir_name'] . "(" . $per . "%)";
                     }
                 }
@@ -971,6 +970,7 @@ class DatabaseReports {
                 if($held!=0) {
                     $per = round($attended / $held * 100, 2);
                     if ($per < 75) {
+                        $per = round($per);
                         $directors[] = $row['dir_name'] . "(" . $per . "%)";
                     }
                 }
@@ -3829,7 +3829,7 @@ class DatabaseReports {
     }
     function getTable1Data() {
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
-        $stmt=$dbobject->prepare("SELECT * FROM `company_auditors_info` WHERE `company_id`=:company_id");
+        $stmt=$dbobject->prepare("SELECT * FROM  `company_auditors_info` WHERE  `company_id` = :company_id GROUP BY financial_year ORDER BY financial_year DESC LIMIT 5");
         $stmt->bindParam(":company_id",$_SESSION['company_id']);
         $stmt->execute();
         while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -3837,7 +3837,6 @@ class DatabaseReports {
         }
         $dbobject= null;
         return $table_info;
-
     }
     function saveAppointmentOfAuditors($info){
         $report_id=$_SESSION['report_id'];
@@ -5467,12 +5466,15 @@ class DatabaseReports {
             if($stmt->rowCount()>0) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 $dividend[]= $row['dividend'];
+                $eps[]= $row['eps'];
             }
             else {
                 $dividend[]= 0;
+                $eps[]= 0;
             }
         }
         $response['dividend'] = $dividend;
+        $response['companies_eps'] = $eps;
         $dbobject=null;
         return $response;
     }

@@ -581,6 +581,7 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofAdoption:1,ResolutionName:resolution_name,MainSection:main_section},
                             success:function(data) {
+                                console.log(data);
                                 var triggers = data.triggers;
                                 $(".triggers").each(function(i,d) {
                                     var select = $(this);
@@ -608,6 +609,7 @@ CustomJS.prototype = {
                                         var text_area = $(this);
                                         text_area.parent().find(".cke_textarea_inline").html(recommendation_text[i]['recommendation_text']);
                                     });
+
                                     var financial_indicators = data.financial_indicators;
                                     $('#current_year').val(financial_indicators[0].year1);
                                     $('#previous_year').val(financial_indicators[0].year2);
@@ -642,58 +644,66 @@ CustomJS.prototype = {
                                         });
                                     }
                                     var unaudited_statements = data.unaudited_statements;
-                                    $(".unaudited-statements").each(function(i,d) {
-                                        var row = $(this);
-                                        if(unaudited_statements[i]['total_assets']!="") {
-                                            row.find("th").eq(1).find('input').val(unaudited_statements[i]['total_assets']);
-                                            row.find("th").eq(2).find('input').val(unaudited_statements[i]['total_revenue']);
-                                            row.find("th").eq(3).find('input').val(unaudited_statements[i]['net_profit']);
-                                            row.find("th").eq(4).find('input').val(unaudited_statements[i]['net_cash_flow']);
-                                        }
-                                        else {
-                                            row.find("th").eq(5).find('button').click();
-                                        }
-                                    });
+                                    if(unaudited_statements!=null) {
+                                        $(".unaudited-statements").each(function(i,d) {
+                                            var row = $(this);
+                                            if(unaudited_statements[i]['total_assets']!="") {
+                                                row.find("th").eq(1).find('input').val(unaudited_statements[i]['total_assets']);
+                                                row.find("th").eq(2).find('input').val(unaudited_statements[i]['total_revenue']);
+                                                row.find("th").eq(3).find('input').val(unaudited_statements[i]['net_profit']);
+                                                row.find("th").eq(4).find('input').val(unaudited_statements[i]['net_cash_flow']);
+                                            }
+                                            else {
+                                                row.find("th").eq(5).find('button').click();
+                                            }
+                                        });
+                                    }
                                     var rpt = data.rpt;
-                                    $('#outstanding_current_year').val(rpt[0].rpt_year1);
-                                    $('#outstanding_previous_year').val(rpt[0].rpt_year2);
-                                    $(".rpt").each(function(i,d) {
-                                        var row = $(this);
-                                        if(rpt[i]['rpt_current_year']!="") {
-                                            row.find("th").eq(1).find('input').val(rpt[i]['rpt_current_year']);
-                                            row.find("th").eq(2).find('input').val(rpt[i]['rpt_previous_year']);
-                                            row.find("th").eq(3).find('input').val(rpt[i]['shift']);
-                                            row.find("th").eq(4).find('textarea').val(rpt[i]['rpt_comments']);
-                                        }
-                                        else {
-                                            row.find("th").eq(4).find('button').click();
-                                        }
-                                    });
+                                    if(rpt!=null) {
+                                        $('#outstanding_current_year').val(rpt[0].rpt_year1);
+                                        $('#outstanding_previous_year').val(rpt[0].rpt_year2);
+                                        $(".rpt").each(function(i,d) {
+                                            var row = $(this);
+                                            if(rpt[i]['rpt_current_year']!="") {
+                                                row.find("th").eq(1).find('input').val(rpt[i]['rpt_current_year']);
+                                                row.find("th").eq(2).find('input').val(rpt[i]['rpt_previous_year']);
+                                                row.find("th").eq(3).find('input').val(rpt[i]['shift']);
+                                                row.find("th").eq(4).find('textarea').val(rpt[i]['rpt_comments']);
+                                            }
+                                            else {
+                                                row.find("th").eq(4).find('button').click();
+                                            }
+                                        });
+                                    }
                                     var contingent_liabilities = data.contingent_liabilities;
-                                    $('#contingent_current_year').val(contingent_liabilities[0].year1);
-                                    $('#contingent_previous_year').val(contingent_liabilities[0].year2);
-                                    $(".contingent_liabilities").each(function(i,d) {
-                                        var row = $(this);
-                                        row.find("th").eq(1).find('input').val(contingent_liabilities[i]['cl_current_year']);
-                                        row.find("th").eq(2).find('input').val(contingent_liabilities[i]['cl_previous_year']);
+                                    if(contingent_liabilities!=null) {
+                                        $('#contingent_current_year').val(contingent_liabilities[0].year1);
+                                        $('#contingent_previous_year').val(contingent_liabilities[0].year2);
+                                        $(".contingent_liabilities").each(function(i,d) {
+                                            var row = $(this);
+                                            row.find("th").eq(1).find('input').val(contingent_liabilities[i]['cl_current_year']);
+                                            row.find("th").eq(2).find('input').val(contingent_liabilities[i]['cl_previous_year']);
 
-                                    });
+                                        });
+                                    }
                                     var standalone_consolidated = data.standalone_consolidated;
-                                    $('#standalone_current_year').val(standalone_consolidated[0].sa_year1);
-                                    $('#standalone_previous_year1').val(standalone_consolidated[0].sa_year2);
-                                    $('#standalone_previous_year2').val(standalone_consolidated[0].sa_year3);
-                                    $('#consolidated_current_year').val(standalone_consolidated[0].ca_year1);
-                                    $('#consolidated_previous_year1').val(standalone_consolidated[0].ca_year2);
-                                    $('#consolidated_previous_year2').val(standalone_consolidated[0].ca_year3);
-                                    $(".standalone_consolidated").each(function(i,d) {
-                                        var row = $(this);
-                                        row.find("th").eq(1).find('input').val(standalone_consolidated[i]['standalone_value1']);
-                                        row.find("th").eq(2).find('input').val(standalone_consolidated[i]['standalone_value2']);
-                                        row.find("th").eq(3).find('input').val(standalone_consolidated[i]['standalone_value3']);
-                                        row.find("th").eq(4).find('input').val(standalone_consolidated[i]['consolidated_value1']);
-                                        row.find("th").eq(5).find('input').val(standalone_consolidated[i]['consolidated_value2']);
-                                        row.find("th").eq(6).find('input').val(standalone_consolidated[i]['consolidated_value3']);
-                                    });
+                                    if(standalone_consolidated!=null) {
+                                        $('#standalone_current_year').val(standalone_consolidated[0].sa_year1);
+                                        $('#standalone_previous_year1').val(standalone_consolidated[0].sa_year2);
+                                        $('#standalone_previous_year2').val(standalone_consolidated[0].sa_year3);
+                                        $('#consolidated_current_year').val(standalone_consolidated[0].ca_year1);
+                                        $('#consolidated_previous_year1').val(standalone_consolidated[0].ca_year2);
+                                        $('#consolidated_previous_year2').val(standalone_consolidated[0].ca_year3);
+                                        $(".standalone_consolidated").each(function(i,d) {
+                                            var row = $(this);
+                                            row.find("th").eq(1).find('input').val(standalone_consolidated[i]['standalone_value1']);
+                                            row.find("th").eq(2).find('input').val(standalone_consolidated[i]['standalone_value2']);
+                                            row.find("th").eq(3).find('input').val(standalone_consolidated[i]['standalone_value3']);
+                                            row.find("th").eq(4).find('input').val(standalone_consolidated[i]['consolidated_value1']);
+                                            row.find("th").eq(5).find('input').val(standalone_consolidated[i]['consolidated_value2']);
+                                            row.find("th").eq(6).find('input').val(standalone_consolidated[i]['consolidated_value3']);
+                                        });
+                                    }
                                     $.loader_remove();
                                 },3000);
                             }
