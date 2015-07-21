@@ -804,7 +804,7 @@ $table1=$db->getTable1Data();
                                                 <input type="hidden" name="used_in[]" value="Auditor's Network">
                                                 <input type="hidden" name="resolution_section[]" value="Appointment of Auditors">
                                                 <div class="col-md-4">
-                                                    <input type="text" name="used_in_text[]" class="form-control other-text" placeholder="Enter text value" />
+                                                    <input type="text" name="used_in_text[]" class="form-control other-text auditors_network" placeholder="Enter text value" />
                                                 </div>
                                             </div>
                                         </div>

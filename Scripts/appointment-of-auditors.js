@@ -914,12 +914,12 @@ CustomJS.prototype = {
 							dataType:'JSON',
 							data:{auditor_info:1},
 							success:function(data){
-								console.log(data);
 								$('#no_of_auditors').val(data.no_of_auditors);
 								$('#no_of_auditors').change();
 								for(var i=0;i<data.no_of_auditors;i++) {
 									$(".auditor-name").eq(i).val(data.auditor_details[i]['auditor_name']);
 									$(".tanure_value").eq(i).val(data.auditor_details[i]['auditor_tenure']);
+									$(".auditors_network").eq(i).val(data.auditor_details[i]['parent_company']);
 									$(".audit-partner-name").eq(i).val(data.auditor_details[i]['partner_name']);
 									$(".tenure_audit_partner_value").eq(i).val(data.auditor_details[i]['partner_tenure']);
 								}
