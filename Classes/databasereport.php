@@ -4189,29 +4189,28 @@ class DatabaseReports {
         $m_resign = "M(Resign)";
         $c_resign = "C(Resign)";
 
-
         $array_years = json_decode(stripslashes($years),true);
         $total_years = count($array_years);
         for ($i=0; $i <$total_years ; $i++) {
             $financial_years[] = $array_years[$i]['year'];
         }
 
-        foreach($financial_years as $year) {
+        $stmt=$dbobject->prepare("SELECT `dir_din_no` FROM `director_info` where `company_id`=:company_id and `company_classification` IN (:ned,:id,:nedp) and `financial_year`=:financial_year and `additional_classification`<>:c_resign and  `additional_classification`<>:m_resign");
+        $stmt->bindParam(":company_id",$_SESSION['company_id']);
+        $stmt->bindParam(":financial_year",$financial_years[0]);
+        $stmt->bindParam(":ned",$ned);
+        $stmt->bindParam(":id",$id);
+        $stmt->bindParam(":nedp",$nedp);
+        $stmt->bindParam(":m_resign",$m_resign);
+        $stmt->bindParam(":c_resign",$c_resign);
+        $stmt->execute();
+        $din_no = array();
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+            $din_no[]=$row;
+        }
+        $total_dirs=count($din_no);
 
-            $stmt=$dbobject->prepare("SELECT `dir_din_no` FROM `director_info` where `company_id`=:company_id and `company_classification` IN (:ned,:id,:nedp) and `financial_year`=:financial_year and `additional_classification`<>:c_resign and  `additional_classification`<>:m_resign");
-            $stmt->bindParam(":company_id",$_SESSION['company_id']);
-            $stmt->bindParam(":financial_year",$year);
-            $stmt->bindParam(":ned",$ned);
-            $stmt->bindParam(":id",$id);
-            $stmt->bindParam(":nedp",$nedp);
-            $stmt->bindParam(":m_resign",$m_resign);
-            $stmt->bindParam(":c_resign",$c_resign);
-            $stmt->execute();
-            $din_no = array();
-            while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-                $din_no[]=$row;
-            }
-            $total_dirs=count($din_no);
+        foreach($financial_years as $year) {
 
             $total_ned_variable = 0;
             for($i=0;$i<$total_dirs;$i++) {
@@ -4228,7 +4227,7 @@ class DatabaseReports {
                 $commission[] = array('year'=>$year,'total'=>0);
             }
             else {
-                $commission[] = array('year'=>$year,'total'=>$total_ned_variable/$total_dirs*100);
+                $commission[] = array('year'=>$year,'total'=>round(floatval($total_ned_variable)*100,2));
             }
         }
         $dbobject= null;

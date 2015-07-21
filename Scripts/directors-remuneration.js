@@ -944,7 +944,7 @@ CustomJS.prototype = {
                     success:function(data) {
                         console.log(data);
                         $(".description-row .total_commission_value").each(function(i,d) {
-                            $(this).val(data[i].total.toFixed(2));
+                            $(this).val(data[i].total);
                         });
                     }
                 });

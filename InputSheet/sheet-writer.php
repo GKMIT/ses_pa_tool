@@ -95,15 +95,19 @@ for ($i=0; $i < count($directors) ; $i++) {
 
 //Second Table Remuneration Details
 $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
-$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
-$stmt->bindParam(':company_id',$company_id);
-$stmt->bindParam(':financial_year',$financial_year);
-$stmt->execute();
-$company_directors = array();
-while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $company_directors[]=$row;
-}
-$company_directors = $db->filteredDirectorsForSheet($company_directors);
+
+
+// $stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
+// $stmt->bindParam(':company_id',$company_id);
+// $stmt->bindParam(':financial_year',$financial_year);
+// $stmt->execute();
+// $company_directors = array();
+// while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//     $company_directors[]=$row;
+// }
+// $company_directors = $db->filteredDirectorsForSheet($company_directors);
+
+$company_directors = $directors;
 
 $array_director_remuneration = array('Director Remuneration','Director Name');
 
@@ -133,7 +137,7 @@ foreach($company_directors as $director) {
     foreach($years as $year) {
         $column_counter += 1;
         $stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:rem_year and `company_id`=:company_id");
-        $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+        $stmt->bindParam(':dir_din_no',$director['din_no']);
         $stmt->bindParam(':rem_year',$year['rem_year']);
         $stmt->bindParam(':company_id',$company_id);
         $stmt->execute();
@@ -179,7 +183,7 @@ foreach($company_directors as $director) {
     foreach($years_agm_attendance as $year_agm_attendance) {
         $column_counter++;
         $stmt=$dbobject->prepare("select * from `director_agm_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-        $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+        $stmt->bindParam(':dir_din_no',$director['din_no']);
         $stmt->bindParam(':att_year',$year_agm_attendance['att_year']);
         $stmt->bindParam(':company_id',$company_id);
         $stmt->execute();
@@ -223,7 +227,7 @@ foreach($company_directors as $director) {
     foreach($years_director_board_attendance as $year_director_board_attendance) {
         $column_counter++;
         $stmt=$dbobject->prepare("select * from `director_board_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-        $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+        $stmt->bindParam(':dir_din_no',$director['din_no']);
         $stmt->bindParam(':att_year',$year_director_board_attendance['att_year']);
         $stmt->bindParam(':company_id',$company_id);
         $stmt->execute();
@@ -266,7 +270,7 @@ foreach($company_directors as $director) {
         foreach($years_audit_committee_attendance as $year_audit_committee_attendance) {
             $column_counter++;
             $stmt=$dbobject->prepare("select * from `audit_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-            $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+            $stmt->bindParam(':dir_din_no',$director['din_no']);
             $stmt->bindParam(':att_year',$year_audit_committee_attendance['att_year']);
             $stmt->bindParam(':company_id',$company_id);
             $stmt->execute();
@@ -310,7 +314,7 @@ foreach($company_directors as $director) {
         foreach($years_investors_grievance_attendance as $year_investors_grievance_attendance) {
             $column_counter++;
             $stmt=$dbobject->prepare("select * from `investors_grievance_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-            $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+            $stmt->bindParam(':dir_din_no',$director['din_no']);
             $stmt->bindParam(':att_year',$year_investors_grievance_attendance['att_year']);
             $stmt->bindParam(':company_id',$company_id);
             $stmt->execute();
@@ -354,7 +358,7 @@ foreach($company_directors as $director) {
         foreach($years_csr_committee_attendance as $year_csr_committee_attendance) {
             $column_counter++;
             $stmt=$dbobject->prepare("select * from `csr_committee_meetings_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-            $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+            $stmt->bindParam(':dir_din_no',$director['din_no']);
             $stmt->bindParam(':att_year',$year_csr_committee_attendance['att_year']);
             $stmt->bindParam(':company_id',$company_id);
             $stmt->execute();
@@ -398,7 +402,7 @@ foreach($company_directors as $director) {
         foreach($years_risk_management_committee_attendance as $year_risk_management_committee_attendance) {
             $column_counter++;
             $stmt=$dbobject->prepare("select * from `risk_management_committee_meetings_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-            $stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+            $stmt->bindParam(':dir_din_no',$director['din_no']);
             $stmt->bindParam(':att_year',$year_risk_management_committee_attendance['att_year']);
             $stmt->bindParam(':company_id',$company_id);
             $stmt->execute();
@@ -448,7 +452,7 @@ if($rem_nom_same=='yes') {
             foreach ($years_nomination_remuneration_committee_attendance as $year_nomination_remuneration_committee_attendance) {
                 $column_counter++;
                 $stmt = $dbobject->prepare("select * from `nomination_remuneration_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-                $stmt->bindParam(':dir_din_no', $director['dir_din_no']);
+                $stmt->bindParam(':dir_din_no', $director['din_no']);
                 $stmt->bindParam(':att_year', $year_nomination_remuneration_committee_attendance['att_year']);
                 $stmt->bindParam(':company_id', $company_id);
                 $stmt->execute();
@@ -492,7 +496,7 @@ else {
             foreach ($years_nomination_remuneration_committee_attendance as $year_nomination_remuneration_committee_attendance) {
                 $column_counter++;
                 $stmt = $dbobject->prepare("select * from `nomination_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-                $stmt->bindParam(':dir_din_no', $director['dir_din_no']);
+                $stmt->bindParam(':dir_din_no', $director['din_no']);
                 $stmt->bindParam(':att_year', $year_nomination_remuneration_committee_attendance['att_year']);
                 $stmt->bindParam(':company_id', $company_id);
                 $stmt->execute();
@@ -536,7 +540,7 @@ else {
             foreach ($years_nomination_remuneration_committee_attendance as $year_nomination_remuneration_committee_attendance) {
                 $column_counter++;
                 $stmt = $dbobject->prepare("select * from `remuneration_committee_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-                $stmt->bindParam(':dir_din_no', $director['dir_din_no']);
+                $stmt->bindParam(':dir_din_no', $director['din_no']);
                 $stmt->bindParam(':att_year', $year_nomination_remuneration_committee_attendance['att_year']);
                 $stmt->bindParam(':company_id', $company_id);
                 $stmt->execute();
