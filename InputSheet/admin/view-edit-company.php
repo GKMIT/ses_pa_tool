@@ -91,7 +91,7 @@ if(isset($_POST['btn_save_company_info'])) {
                     </form>
                 </li>
                 <li class="start">
-                    <a href="dashboard.php">
+                    <a href="<?php echo $_config['base_url']."dashboard.php"; ?>">
                         <i class="fa fa-home"></i>
                         <span class="title">Dashboard</span>
                         <span class="selected"></span>
