@@ -841,7 +841,6 @@ CustomJS.prototype = {
 								setTimeout(function() {
 									var other_text = data.other_text;
 									$(".other-text").each(function(i,d) {
-										console.log(other_text);
 										var text_area = $(this);
 										if(text_area.hasClass('inline-editor')) {
 											text_area.parent().find(".cke_textarea_inline").html(other_text[i]['text']);

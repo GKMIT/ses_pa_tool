@@ -57,9 +57,9 @@ else {
     }
     $director_details.="</tbody>";
 }
-$director_remuneration_info = $db->getCompanyDirectorsRemunerationDetails($_GET['company_id'],$_GET['financial_year']);
+$director_remuneration_info = $db->getCompanyDirectorsRemunerationDetails($_GET['company_id'],$_GET['financial_year'],$directors);
 $director_agm_info = $db->getCompanyDirectorsAGMDetails($_GET['company_id'],$_GET['financial_year'],$directors);
-$director_board_attendance_info = $db->getCompanyDirectorsBoardAttendance($_GET['company_id'],$_GET['financial_year']);
+$director_board_attendance_info = $db->getCompanyDirectorsBoardAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
 
 $audit_committee_attendance_info = $db->getCompanyAuditCommitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
 $stackholders_committee_attendance_info = $db->getCompanyStackholdersCosmmitteeAttendance($_GET['company_id'],$_GET['financial_year'],$directors);
