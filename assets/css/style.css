@@ -52,6 +52,10 @@ body {
   bottom:7%;
   float: right;
 }
+.set-scroll{
+  overflow-y: scroll;
+  max-height: 400px;
+}
 
 /*
 Internet Explorer 10 doesn't differentiate device width from viewport width, and thus doesn't 

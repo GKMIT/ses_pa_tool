@@ -401,8 +401,8 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
 						<div class="portlet-body">
 							<div class="row">
 								<div class="col-md-12">
-									<div class="table-responsive">
-										<table class="table table-bordered table-hover table-striped">
+									<div class="table-responsive set-scroll">
+										<table id="Table1" rules="all" class="table table-bordered table-hover table-striped">
 											<thead>
 											<tr>
 												<th class="text-center" style="vertical-align: middle;">Report ID</th>
@@ -411,7 +411,7 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
 												<th class="text-center">Action</th>
 											</tr>
 											</thead>
-											<tbody id="incomplete_reports_table">
+											<tbody id="incomplete_reports_table" >
 											</tbody>
 										</table>
 									</div>
@@ -428,7 +428,7 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
 						<div class="portlet-body">
 							<div class="row">
 								<div class="col-md-12">
-									<div class="table-responsive">
+									<div class="table-responsive set-scroll">
 										<table class="table table-bordered table-hover table-striped">
 											<thead>
 											<tr>

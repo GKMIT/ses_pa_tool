@@ -36,7 +36,7 @@ class DatabaseReports {
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
         $response = array();
         $user_id=$_SESSION['user_id'];
-        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status AND `pa_reports`.`user_id`=:user_id");
+        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status AND `pa_reports`.`user_id`=:user_id ORDER BY `pa_reports`.`report_id` DESC ");
         $status=0;
         $stmt->bindParam(":status",$status);
         $stmt->bindParam(":user_id",$user_id);
@@ -46,7 +46,7 @@ class DatabaseReports {
         }
         $response['incomplete_reports'] = $incomplete_reports;
 
-        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status AND `pa_reports`.`user_id`=:user_id");
+        $stmt = $dbobject->prepare(" select * from `pa_reports` INNER JOIN `companies` ON `companies`.`id`=`pa_reports`.`company_id` where `pa_reports`.`status`=:status AND `pa_reports`.`user_id`=:user_id ORDER BY `pa_reports`.`report_id` DESC");
         $status=1;
         $stmt->bindParam(":status",$status);
         $stmt->bindParam(":user_id",$user_id);
