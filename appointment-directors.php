@@ -362,7 +362,7 @@ if(isset($_POST['aoopintment_directors'])) {
                 <div class="col-md-12">
                     <div class="portlet box">
                         <div class="portlet-body form">
-                            <form class="form-horizontal" role="form" method="post" action="appointment-directors.php">
+                            <form id='appointment_directors' class="form-horizontal" role="form" method="post" action="appointment-directors.php">
                                 <input type="hidden" id="edit_mode" name="edit_mode" value="">
                                 <input type="hidden" id="main_section" name="main_section" value="Appointment of Directors">
                                 <div class="form-body">

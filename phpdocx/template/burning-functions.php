@@ -753,12 +753,28 @@ function companyBackground($docx, $report_id)
     $html .= "</table>";
     $docx->embedHTML($html);
 
+    $fi_month = "";
+    $fi_year = $public_share_holders[0]['financial_year'];
+    switch ($public_share_holders[0]['holder_month']) {
+        case 0:
+            $fi_month = "MARCH";
+            break;
+        case 1:
+            $fi_month = "JUNE";
+            break;
+        case 2:
+            $fi_month = "SEPTEMBER";
+            break;
+        case 3:
+            $fi_month = "DECEMBER";
+            break;
+    }
     $docx->embedHtml("<p style='font-size: 1;'>&nbsp;</p>");
     $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
-                <tr><td colspan='2' style='width:55.5% ; font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 5: MAJOR PUBLIC SHAREHOLDERS (MAR'15)</td><td style='width:0.5%;'>&nbsp;&nbsp;</td><td colspan='2' style='width:44%; font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 6: MAJOR PROMOTERS (MAR'15)</td></tr>
+                <tr><td colspan='2' style='width:55.5% ; font-size: 10; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 5: MAJOR PUBLIC SHAREHOLDERS (".substr($fi_month,0,3)."' ".substr($fi_year,2,2).")</td><td style='width:0.5%;'>&nbsp;&nbsp;</td><td colspan='2' style='width:44%; font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>TABLE 6: MAJOR PROMOTERS (".substr($fi_month,0,3)."' ".substr($fi_year,2,2).")</td></tr>
                 $table_public_share_holders_major_promoters
                 <tr><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td><td>&nbsp;</td><td colspan='2' style='font-size: 2; padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #000000;'>&nbsp;</td></tr>
-                <tr><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>SHAREHOLDING PATTERN (%) (MARCH)</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom:2px solid #000000;'>DISCUSSION</td></tr>
+                <tr><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom: 2px solid #000000;'>SHAREHOLDING PATTERN (%) (".$fi_month.")</td><td>&nbsp;&nbsp;</td><td colspan='2' style='font-size: 10; padding-top: 2px; padding-bottom: 2px; border-bottom:2px solid #000000;'>DISCUSSION</td></tr>
               </table>";
     $docx->embedHTML($html);
 

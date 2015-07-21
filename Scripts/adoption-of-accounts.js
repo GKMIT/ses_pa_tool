@@ -609,7 +609,6 @@ CustomJS.prototype = {
                                         var text_area = $(this);
                                         text_area.parent().find(".cke_textarea_inline").html(recommendation_text[i]['recommendation_text']);
                                     });
-
                                     var financial_indicators = data.financial_indicators;
                                     $('#current_year').val(financial_indicators[0].year1);
                                     $('#previous_year').val(financial_indicators[0].year2);

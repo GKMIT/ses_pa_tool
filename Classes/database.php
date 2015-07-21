@@ -1671,21 +1671,21 @@ class Database {
 		$dbobject = null;
 		return $directors;
 	}
-	function getCompanyDirectorsRemunerationDetails($company_id,$financial_year) {
+	function getCompanyDirectorsRemunerationDetails($company_id,$financial_year,$directors) {
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
-		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 //			 Getting Director List
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
-		}
-		$directors = $this->filteredDirectorsForSheet($directors);
+		// $stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
+		// $stmt->bindParam(':company_id',$company_id);
+		// $stmt->bindParam(':financial_year',$financial_year);
+		// $stmt->execute();
+		// while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		// 	$directors[]=$row;
+		// }
+
+		// $directors = $this->filteredDirectorsForSheet($directors);
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `rem_year` from `director_remuneration` where `rem_year`<=:financial_year ORDER BY `rem_year` DESC");
 		$stmt->bindParam(':financial_year',$financial_year);
@@ -1701,10 +1701,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `director_remuneration` where `dir_din_no`=:dir_din_no and `rem_year`=:rem_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':rem_year',$year['rem_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
@@ -1722,22 +1722,21 @@ class Database {
 		$dbobject = null;
 		return $string_headers.$string_rows;
 	}
-	function getCompanyDirectorsAGMDetails($company_id,$financial_year) {
+	function getCompanyDirectorsAGMDetails($company_id,$financial_year,$directors) {
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
-		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 //			 Getting Director List
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
-		}
+		// $stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
+		// $stmt->bindParam(':company_id',$company_id);
+		// $stmt->bindParam(':financial_year',$financial_year);
+		// $stmt->execute();
+		// while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		// 	$directors[]=$row;
+		// }
 
-		$directors = $this->filteredDirectorsForSheet($directors);
+		// $directors = $this->filteredDirectorsForSheet($directors);
 
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `director_agm_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
@@ -1753,10 +1752,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `director_agm_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':att_year',$year['att_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
@@ -1774,22 +1773,21 @@ class Database {
 		$dbobject = null;
 		return $string_headers.$string_rows;
 	}
-	function getCompanyDirectorsBoardAttendance($company_id,$financial_year) {
+	function getCompanyDirectorsBoardAttendance($company_id,$financial_year,$directors) {
 
 		$string_headers = "<thead><tr><th>DIN</th><th>Director Name</th>";
-		$directors = array();
 		$years = array();
 		$dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
 
 //			 Getting Director List
-		$stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
-		$stmt->bindParam(':company_id',$company_id);
-		$stmt->bindParam(':financial_year',$financial_year);
-		$stmt->execute();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$directors[]=$row;
-		}
-		$directors = $this->filteredDirectorsForSheet($directors);
+		// $stmt=$dbobject->prepare("select * from `director_info` INNER JOIN `directors` ON `director_info`.`dir_din_no`=`directors`.`din_no` where `director_info`.`company_id`=:company_id and `director_info`.`financial_year`=:financial_year order by `director_info`.`total_association` DESC");
+		// $stmt->bindParam(':company_id',$company_id);
+		// $stmt->bindParam(':financial_year',$financial_year);
+		// $stmt->execute();
+		// while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		// 	$directors[]=$row;
+		// }
+		// $directors = $this->filteredDirectorsForSheet($directors);
 
 		// Getting total distinct years
 		$stmt=$dbobject->prepare("select DISTINCT `att_year` from `director_board_attendance` where `att_year`<=:financial_year ORDER BY `att_year` DESC");
@@ -1806,10 +1804,10 @@ class Database {
 
 		$string_rows = "<tbody>";
 		foreach($directors as $director) {
-			$string_rows.="<tr><td>$director[dir_din_no]</td><td>$director[dir_name]</td>";
+			$string_rows.="<tr><td>$director[din_no]</td><td>$director[dir_name]</td>";
 			foreach($years as $year) {
 				$stmt=$dbobject->prepare("select * from `director_board_attendance` where `dir_din_no`=:dir_din_no and `att_year`=:att_year and `company_id`=:company_id");
-				$stmt->bindParam(':dir_din_no',$director['dir_din_no']);
+				$stmt->bindParam(':dir_din_no',$director['din_no']);
 				$stmt->bindParam(':att_year',$year['att_year']);
 				$stmt->bindParam(':company_id',$company_id);
 				$stmt->execute();
