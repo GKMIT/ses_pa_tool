@@ -59,7 +59,7 @@ class ReportBurning {
         }
         $generic_details['peer_comparision']=$peer;
 
-        $stmt = $dbobject->prepare(" select `share_holder_name`,`share_holding` from `pa_report_top_public_shareholders` where `pa_reports_id`=:report_id order by `financial_year` DESC");
+        $stmt = $dbobject->prepare(" select `share_holder_name`,`share_holding`,`holder_month`,`financial_year` from `pa_report_top_public_shareholders` where `pa_reports_id`=:report_id order by `financial_year` DESC");
         $stmt->bindParam(":report_id",$report_id);
         $stmt->execute();
         $count_shareholders = $stmt->rowCount();
