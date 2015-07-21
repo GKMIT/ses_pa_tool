@@ -419,7 +419,7 @@ if(isset($_POST['btn_edit_auditor_info'])) {
                                                 <option value="">select year</option>
                                                 <?php
                                                 if(isset($_SESSION['input_sheet_financial_year'])) {
-                                                    for ($i = 2011; $i <= 2020; $i++) {
+                                                    for ($i = 2010; $i <= 2020; $i++) {
                                                         if($i==$_SESSION['input_sheet_financial_year']) {
                                                             echo "<option selected value='$i'>$i</option>";
                                                         }
@@ -429,8 +429,7 @@ if(isset($_POST['btn_edit_auditor_info'])) {
                                                     }
                                                 }
                                                 else {
-                                                    echo "aksj";
-                                                    for ($i = 2011; $i <= 2020; $i++) {
+                                                    for ($i = 2010; $i <= 2020; $i++) {
                                                         echo "<option value='$i'>$i</option>";
                                                     }
                                                 }

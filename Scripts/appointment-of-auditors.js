@@ -831,7 +831,7 @@ CustomJS.prototype = {
 							type:'GET',
 							dataType:'JSON',
 							data:{GetExistingDataofAppointmentOfAuditors:1,ResolutionName:resolution_name,MainSection:main_section},
-							success:function(data){
+							success:function(data) {
 								var triggers = data.triggers;
 								$(".triggers").each(function(i,d) {
 									var select = $(this);
@@ -839,6 +839,7 @@ CustomJS.prototype = {
 									select.trigger('change');
 								});
 								setTimeout(function() {
+
 									var other_text = data.other_text;
 									$(".other-text").each(function(i,d) {
 										var text_area = $(this);
@@ -889,17 +890,17 @@ CustomJS.prototype = {
 										}
 									});
 									var table1 = data.table1;
-									$(".table1").each(function(i,d) {
-										var row = $(this);
+									var j=0;
+									for (var i = 0; i<5; i++) {
 										if(table1[i].financial_year!="") {
-											$(".table1-financial-years").find("td").eq(i+1).val(table1[i].financial_year);
-											row.find("td").eq(i+1).find('input').val(table1[i].audit_fee);
-											row.find("td").eq(i+1).find('input').val(table1[i].audit_related_fee);
-											row.find("td").eq(i+1).find('input').val(table1[i].non_audit_fee);
-											row.find("td").eq(i+1).find('input').val(table1[i].total_auditors_remuneration);
-											row.find("td").eq(i+1).find('input').val(table1[i].percentage_non_audit_fee);
+											$(".table1-financial-years").find("td").eq(i+1).find('input').val(table1[i].financial_year);
+											$(".table1").eq(j).find("td").eq(i+1).find('input').val(table1[i].audit_fee);
+											$(".table1").eq(j+1).find("td").eq(i+1).find('input').val(table1[i].audit_related_fee);
+											$(".table1").eq(j+2).find("td").eq(i+1).find('input').val(table1[i].non_audit_fee);
+											$(".table1").eq(j+3).find("td").eq(i+1).find('input').val(table1[i].total_auditors_remuneration);
+											$(".table1").eq(j+4).find("td").eq(i+1).find('input').val(table1[i].percentage_non_audit_fee);
 										}
-									});
+									}
 									$.loader_remove();
 								},3000);
 							}

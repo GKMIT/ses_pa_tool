@@ -15,7 +15,6 @@ if(isset($_POST['page_3_details'])) {
 	$response = $db->saveCompanyBackgroundDetails($info);
 	if($response['status']==200) {
 		$flag = true;
-		echo "Saved";
 	}
 }
 
@@ -888,7 +887,6 @@ if(isset($_SESSION['report_id'])) {
 								?>
 									<div class="form-body">
 										<h4 class="form-section">TABLE 4: PEER COMPARISION</h4>
-
 										<div class="table-responsive">
 											<table class="table table-striped table-hover">
 												<thead>
@@ -902,10 +900,10 @@ if(isset($_SESSION['report_id'])) {
 												<tr>
 													<th>In <i class="fa fa-rupee"></i> Crores</th>
 													<th><input type='text' readonly class='form-control' value="<?php echo $peer_comparision[0]['name']; ?>">
-														<input type='hidden' name="peer_comparision_company_id[]" class='form-control' value="<?php echo $peer_comparision[0]['name']; ?>">
+														<input type='hidden' name="peer_comparision_company_id[]" class='form-control' value="<?php echo $peer_comparision[0]['peer_company_id']; ?>">
 													</th>
 													<th><input type='text' readonly class='form-control' value="<?php echo $peer_comparision[1]['name']; ?>">
-														<input type='hidden' name="peer_comparision_company_id[]" class='form-control' value="<?php echo $peer_comparision[1]['name']; ?>">
+														<input type='hidden' name="peer_comparision_company_id[]" class='form-control' value="<?php echo $peer_comparision[1]['peer_company_id']; ?>">
 													</th>
 												</tr>
 												</thead>
