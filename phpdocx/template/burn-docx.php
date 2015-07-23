@@ -1,9 +1,7 @@
 <?php
-
 require_once '../classes/CreateDocx.inc';
 require_once '../classes/DocxUtilities.inc';
 require_once 'burning-functions.php';
-
 try {
 	$report_id = $_GET['report_id'];
 	$docx_index = new CreateDocxFromTemplate('index_page_template.docx');
@@ -49,18 +47,21 @@ try {
 	delistingOfShares($docx, $report_id);
 	donationToCharitableTrust($docx, $report_id);
 	officeOfProfit($docx, $report_id);
+	$com_name = getName($report_id);
+	$compnay_name=$com_name['company_name'];
+	$meeting_type=$com_name['meeting_type'];
+	$meeting_date=$com_name['meeting_date'];
+	$db_date = $meeting_date;
+	$formated_day = date_format(date_create_from_format('Y-m-d', $db_date), 'd-m-Y');
 	$docx->createDocx('try');
-
 	$docx = new DocxUtilities();
 	$source = 'try.docx';
 	$target = 'try2.docx';
 	$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png', 'height' => 900, 'width' => 780, 'decolorate' => false));
 //$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>900,'width'=>500,'decolorate'=>false));
-
 	require_once '../classes/MultiMerge.inc';
 	$merge = new MultiMerge();
-	$merge->mergeDocx('index_page.docx', array('try2.docx','Disclaimers.docx'), 'report.docx', array());
-
+	$merge->mergeDocx('index_page.docx', array('try2.docx','Disclaimers.docx'), "$compnay_name"."_SES Proxy Advisory Report_"."$meeting_type"."_"."$formated_day".".docx", array());
 	burnExcel($report_id);
 	$zip_files_array = array(
 		'AuditorsRemuneration.docx',
@@ -82,17 +83,17 @@ try {
 		'TotalCommission.docx',
 		'UtilizationBorrowingLimits.docx',
 		'VariationInDirectorsRemuneration.docx',
-		'report.docx',
+		"$compnay_name"."_SES Proxy Advisory Report_"."$meeting_type"."_"."$formated_day".".docx",
 		'graph_excel.xlsx'
 	);
 	$zip = new ZipArchive;
-	if ($zip->open("report.zip", ZipArchive::CREATE)) {
+	if ($zip->open("$compnay_name.zip", ZipArchive::CREATE)) {
 		foreach ($zip_files_array as $zip_file_name) {
 			$zip->addFile($zip_file_name);
 		}
 	}
 	$zip->close();
-	$zip_file = "report.zip";
+	$zip_file = "$compnay_name.zip";
 	header('Content-type: application/zip');
 	header('Content-Disposition: attachment; filename="' . basename($zip_file) . '"');
 	header("Content-length: " . filesize($zip_file));

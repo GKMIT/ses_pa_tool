@@ -35,7 +35,7 @@ if($generic_array['are_committees_seperate']=='yes') {
 }
 else {
     $director_details.="<thead>
-                        <tr><th>DIN</th><th>Name</th><th>Appointment Date</th><th>Resignation Date</th><th>Current Tenure</th><th>Total Association</th><th>Company Classification</th><th>SES Classification</th><th>Additional Classification</th><th>Audit Committee</th><th>Stackholders Relationship</th><th>Nomination and Remuneration</th><th>CSR</th><th>Risk Management</th><th>Shares Held</th><th>ESOPs</th><th>Other Pecuniary Relationship</th><th>No. of Public Directorship</th><th>No. of total Directorship</th><th>No. of Directorship in listed companies</th><th>Committee Memberships</th><th>Committee Chairmanships</th><th>Expertise</th><th>Education</th><th>Ratio to MRE</th><th>Retiring/Non Retiring</th><th>Last Updated</th></tr>
+                        <tr><th>DIN</th><th>Name</th><th>Appointment Date</th><th>Resignation Date</th><th>Current Tenure</th><th>Total Association</th><th>Company Classification</th><th>SES Classification</th><th>Additional Classification</th><th>Audit Committee</th><th>Stakeholders Relationship</th><th>Nomination and Remuneration</th><th>CSR</th><th>Risk Management</th><th>Shares Held</th><th>ESOPs</th><th>Other Pecuniary Relationship</th><th>No. of Public Directorship</th><th>No. of total Directorship</th><th>No. of Directorship in listed companies</th><th>Committee Memberships</th><th>Committee Chairmanships</th><th>Expertise</th><th>Education</th><th>Ratio to MRE</th><th>Retiring/Non Retiring</th><th>Last Updated</th></tr>
                     </thead>
                     <tbody>";
     foreach($directors as $director) {
