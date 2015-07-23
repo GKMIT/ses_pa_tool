@@ -627,10 +627,8 @@ CustomJS.prototype = {
                     dir_din_no:$director.val()
                 },
                 error: function (data) {
-                    console.log(data);
                 },
                 success: function (data) {
-                    console.log(data);
                     $(".ned-functional-area").val(data.functional_area);
                     $(".ned-education").val(data.education);
                     $(".ned-past-ex").val(data.past_ex);
@@ -678,7 +676,6 @@ CustomJS.prototype = {
                     dir_din_no:$director.val()
                 },
                 error: function (data) {
-                    console.log(data);
                 },
                 success: function (data) {
 
@@ -726,11 +723,11 @@ CustomJS.prototype = {
             dataType:'JSON',
             data:{DirectorsPeerInfo:1},
             success:function(data) {
-                console.log(data);
+                $(".company1").val(data.company_name);
                 $(".company2").append("<option value=''>Select Peer</option>");
                 $(".company2").append("<option value='"+data.peer_1_company_name+"'>"+data.peer_1_company_name+"</option>");
                 $(".company2").append("<option value='"+data.peer_2_company_name+"'>"+data.peer_2_company_name+"</option>");
-                $('.company1').val(data.company_name);
+                //$(".company1").val(data.company_name);
             }
         });
 
@@ -803,7 +800,6 @@ CustomJS.prototype = {
                     $(".ed-csr-meeting-last-year").val(data.csr_meeting_last_year+"%");
                     $(".ed-stack-meeting-last-year").val(data.stack_meeting_last_year+"%");
                     var analysis_values = data.analysis_values;
-                    console.log(analysis_values);
                     $(".ed-analysis-values").each(function(i,d) {
                         $(this).html("["+analysis_values[i]+"]");
                     });
@@ -833,7 +829,6 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofAppointmentOfDirectors:1,ResolutionName:resolution_name,MainSection:main_section,Slot_no:slot_no},
                             success:function(data){
-                                console.log(data);
                                 var triggers = data.triggers;
                                 $("select[name='triggers[]']").each(function(i,d) {
                                     var select = $(this);
@@ -977,7 +972,7 @@ CustomJS.prototype = {
                         $("#total_pay_year3").val("");
                         $('.director1').val("");
                         $('.director2').val("");
-                        $('.company1').val("");
+                        //$('.company1').val("");
                         $('.company2').val("");
                         $('.promotor1').val("");
                         $('.promotor2').val("");

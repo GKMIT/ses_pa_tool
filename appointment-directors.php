@@ -3643,7 +3643,7 @@ if(isset($_POST['aoopintment_directors'])) {
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">Company</td>
-                                                    <td><input class="form-control company1" name="ex_rem_col_1[]"/> </td>
+                                                    <td><input class="form-control company1" name="ex_rem_col_1[]"></td>
                                                     <td>
                                                         <select name="ex_rem_col_2[]" class="form-control company2"></select>
                                                     </td>
