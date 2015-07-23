@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include_once("../../Classes/database.php");
 include_once("../../config.php");
 if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
@@ -415,59 +414,81 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                                         <label class="col-md-2" id="fiscal_year"></label>
                                     </div>
                                     <h4 class="form-section">Directors' Information</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="director_info">
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="director_info">
 
-                                        </table>
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">Remuneration Details</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="director_remuneration_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="director_remuneration_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">AGM Attendance</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="director_agm_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="director_agm_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">Board Attendance</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="director_board_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="director_board_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">Audit Committee Attendance</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="audit_committee_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="audit_committee_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">Stakeholders Relationship Committee Attendance</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="stackholders_committee_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="stackholders_committee_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">CSR Committee Attendance</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="csr_committee_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="csr_committee_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">Risk Management Committee Attendance</h4>
-                                    <div class="table-scrollable">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="risk_management_committee_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="risk_management_committee_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section committee_seperate">Remuneration Committee Attendance</h4>
-                                    <div class="table-scrollable committee_seperate">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="remuneration_committee_attendance_info"></table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable committee_seperate">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="remuneration_committee_attendance_info"></table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section committee_seperate">Nomination Committee Attendance</h4>
-                                    <div class="table-scrollable committee_seperate">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="nomination_committee_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable committee_seperate">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="nomination_committee_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section committee_same">Nomination and Remuneration Committee Attendance</h4>
-                                    <div class="table-scrollable committee_same">
-                                        <table class="table table-striped table-bordered table-hover editable-table" id="nomination_remuneration_committee_attendance_info">
-                                        </table>
+                                    <div class="scroller-wrapper">
+                                        <div class="table-scrollable committee_same">
+                                            <table class="table table-striped table-bordered table-hover editable-table" id="nomination_remuneration_committee_attendance_info">
+                                            </table>
+                                        </div>
                                     </div>
                                     <h4 class="form-section">Audit Fee Details</h4>
                                     <div>
@@ -530,7 +551,6 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
 <script type="text/javascript">
     $(document).ready(function() {
 
-
        function freez () {
 
            $(".table-scrollable table").each(function(i,d) {
@@ -550,15 +570,15 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                // Set positioning so that cloned table overlays
                // first column of original table
                fixedCol.addClass('fixedCol');
-               var total_width = firstColWidth+secondColWidth;
+               var total_width = parseFloat(firstColWidth)+parseFloat(secondColWidth)+36;
 
+               // total_width = 400;
                fixedCol.attr('style', "width: "+total_width+"px !important");
                console.log(firstColWidth+","+secondColWidth)
-               fixedCol.css({
-                   left: tablePos.left,
-                   top: tablePos.top
-               });
-
+               // fixedCol.css({
+               //     left: tablePos.left,
+               //     top: tablePos.top
+               // });
                $(this).parent().append(fixedCol);
            });
        }
@@ -572,10 +592,9 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                     self.html("<input value='"+td_value+"' />");
                     initializeInputEnter();
                     self.find("input").focus();
+                    $('.fixedCol').remove();
+                    freez();
                 }
-                $('.fixedCol').remove();
-                freez();
-                console.log("calling Freez");
             });
         }
         function initializeInputEnter() {
@@ -583,13 +602,11 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                 var self = $(this);
                 var parent_td  = self.parent();
                 if(e.which==13) {
-                    $('.fixedCol').remove();
-                    freez();
                     var table_name = parent_td.attr('data-table-name');
                     var table_row_id = parent_td.attr('data-table-row-id');
                     var column_name = parent_td.attr('data-table-col-name');
                     var column_value = self.val();
-                    console.log(table_name+","+table_row_id+","+column_name+","+column_value);
+                
                     $.ajax({
                         url:"jq-edit-view.php",
                         type:"POST",
@@ -603,6 +620,8 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                         success: function(data) {
                             if(data.status==200) {
                                 parent_td.html(column_value);
+                                $('.fixedCol').remove();
+                                freez();
                             }
                         }
                     });
@@ -644,7 +663,6 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                 if(($("#financial_year").val() !="")){
                     view_sheet();
                 }
-
             });
         }
         function view_sheet(){
@@ -702,7 +720,6 @@ if(empty($_SESSION['name']) && empty($_SESSION['logged_in'])) {
                         ?>
                     }
                 });
-
         }
         $("#financial_year").change(function() {
             view_sheet();

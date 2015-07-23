@@ -114,3 +114,12 @@ textarea {
     margin-top: -100px;
     top: 50%;
 }
+
+.scroller-wrapper {
+    position: relative;
+}
+
+.fixedCol {
+    left: 1px;
+    top: 1px;
+}

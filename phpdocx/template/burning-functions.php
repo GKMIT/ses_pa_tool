@@ -235,6 +235,7 @@ function burnExcel($report_id)
     $objPHPExcel->getActiveSheet()->SetCellValue('E517', $csr_contributors[1]['csr_np']);
     $objPHPExcel->getActiveSheet()->SetCellValue('E518', $csr_contributors[0]['csr_np']);
 
+    print_r($executive_remuneration);
     // 19th graph
     $row = 532;
     for ($i = 0; $i <= 5; $i++) {
@@ -573,11 +574,11 @@ function agendaItemsAndRecommendations($docx, $report_id)
     $odd_row_style_string_center_red_bold = "font-weight:bold; color:#F00; font-size: 10; background-color: #F2F2F2;  text-align: left; border-right: 1px solid #FFF; text-align:center;";
     $even_row_style_string_center_red_bold = "font-weight:bold; color:#F00; font-size: 10; background-color: #D9D9D9;  text-align: left; border-right: 1px solid #FFF; text-align:center;";
     $board_governance_score = "<tr>
-                                    <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>S. No.</td>
-                                    <td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Resolution</td>
-                                    <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Type</td>
-                                    <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Recommendation</td>
-                                    <td style='text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Focus</td>
+                                    <td style='width:8%; text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>S. No.</td>
+                                    <td style='width:60%;text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Resolution</td>
+                                    <td style='width:8%;text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Type</td>
+                                    <td style='width:15%;text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Recommendation</td>
+                                    <td style='width:9%;text-align: center; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #464646;'>Focus</td>
                                 </tr>";
     foreach ($agenda_items as $item) {
         if ($i % 2 != 0) {
