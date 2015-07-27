@@ -689,7 +689,6 @@ CustomJS.prototype = {
                 }
             );
         }
-
         function calShareholdingPatters (data_col_id) {
             var promoter = $("#promoter_"+data_col_id);
             var fii = $("#fii_"+data_col_id);
@@ -698,14 +697,11 @@ CustomJS.prototype = {
                 $("#others_"+data_col_id).val((100 - (parseFloat(promoter.val())+parseFloat(fii.val())+parseFloat(dii.val()))).toFixed(2));
             }
         }
-
         function initializeKeyUp() {
             $(".promoter,.fii,.dii").keyup(function() {
                 calShareholdingPatters($(this).attr('data-col-id'));
             });
         }
-
-
         $("#market_data_price").keyup( function () {
             var price = $(this).val();
             var eps = $("#market_data_eps").val();
@@ -713,7 +709,6 @@ CustomJS.prototype = {
                 $("#market_data_pe_ratio").val((parseFloat(price)/eps).toFixed(2));
             }
         }) ;
-
         $("#btn_populate_share_holders").click(function() {
             var button = $(this);
             $.ajax({

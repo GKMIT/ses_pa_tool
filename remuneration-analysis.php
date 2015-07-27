@@ -541,19 +541,19 @@ if(isset($_POST['remuneration_analysis'])) {
                                     $ned_id_no = 0;
                                     $ned_id_sum = 0;
                                     foreach($directors as $director) {
-                                        if($director['company_classification']=="EDP" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
+                                        if($director['ses_classification']=="EDP" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $edp_sum += $director['fixed_pay']+$director['variable_pay'];
                                             $edp_no ++;
                                         }
-                                        if($director['company_classification']=="ED" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
+                                        if($director['ses_classification']=="ED" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $ed_sum += $director['fixed_pay']+$director['variable_pay'];
                                             $ed_no ++;
                                         }
-                                        if($director['company_classification']=="NEDP" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
+                                        if($director['ses_classification']=="NEDP" && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $nedp_sum += $director['fixed_pay']+$director['variable_pay'];
                                             $nedp_no ++;
                                         }
-                                        if(($director['company_classification']=="NED" || $director['company_classification']=="ID") && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
+                                        if(($director['ses_classification']=="NED" || $director['ses_classification']=="ID" || $director['ses_classification']=="NID") && $director['additional_classification']!="M(Resign)" && $director['additional_classification']!="C(Resign)") {
                                             $ned_id_sum += $director['fixed_pay']+$director['variable_pay'];
                                             $ned_id_no ++;
                                         }

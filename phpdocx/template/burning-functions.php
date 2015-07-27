@@ -352,7 +352,8 @@ function addHeader($docx, $report_id)
         'fontSize' => 10,
         'url' => $company_report_details['website'],
         'textAlign' => 'right',
-        'spacingTop' => 140
+        'spacingTop' => 140,
+        'color'=>"#EB641B"
     );
     $textOptions3 = array(
         'fontSize' => 10,
@@ -494,10 +495,10 @@ function createIndexPage($docx_index, $report_id)
     );
     $options = array('parseLineBreaks' => true);
     $docx_index->replaceVariableByText($variables, $options);
-    $docx_index->replaceVariableByHTML("e_voting_plateform", "inline", "<a style='font-size: 10;' href='$company_and_meeting_details[e_voting_platform_website]'>$company_and_meeting_details[e_voting_platform]</a>");
-    $docx_index->replaceVariableByHTML("notice_link", "inline", "<a style='font-size: 10;' href='$company_and_meeting_details[notice_link]'>Click here</a>");
-    $docx_index->replaceVariableByHTML("annual_report", "inline", "<a style='font-size: 10;' href='$company_and_meeting_details[annual_report]'>$company_and_meeting_details[annual_report_name]</a>");
-    $docx_index->replaceVariableByHTML("company_email", "inline", "<a style='font-size: 10;' href='mailto:$company_and_meeting_details[email]'>$company_and_meeting_details[email]</a>");
+    $docx_index->replaceVariableByHTML("e_voting_plateform", "inline", "<a style='font-size: 10; color: #EB641B;' href='$company_and_meeting_details[e_voting_platform_website]'>$company_and_meeting_details[e_voting_platform]</a>");
+    $docx_index->replaceVariableByHTML("notice_link", "inline", "<a style='font-size: 10; color: #EB641B; '  href='$company_and_meeting_details[notice_link]'>Click here</a>");
+    $docx_index->replaceVariableByHTML("annual_report", "inline", "<a style='font-size: 10; color: #EB641B;' href='$company_and_meeting_details[annual_report]'>$company_and_meeting_details[annual_report_name]</a>");
+    $docx_index->replaceVariableByHTML("company_email", "inline", "<a style='font-size: 10; color: #EB641B;' href='mailto:$company_and_meeting_details[email]'>$company_and_meeting_details[email]</a>");
     $date_in_format = getHeaderIndexFormatDate($company_and_meeting_details['e_voting_start_date']);
     $docx_index->replaceVariableByHTML("e_voting_start_date", "inline", $date_in_format);
     $date_in_format = getHeaderIndexFormatDate($company_and_meeting_details['e_voting_end_date']);
@@ -698,16 +699,16 @@ function companyBackground($docx, $report_id)
     $fi_month = "";
     $fi_year = $public_share_holders[0]['financial_year'];
     switch ($public_share_holders[0]['holder_month']) {
-        case 0:
+        case 3:
             $fi_month = "MARCH";
             break;
-        case 1:
+        case 6:
             $fi_month = "JUNE";
             break;
-        case 2:
+        case 9:
             $fi_month = "SEPTEMBER";
             break;
-        case 3:
+        case 12:
             $fi_month = "DECEMBER";
             break;
     }
@@ -1039,6 +1040,7 @@ function remunerationAnalysis($docx, $report_id)
     );
     $docx->addTable($valuesTable, $paramsTable);
     $docx->embedHTML("<p style='margin: 0; text-align: justify; padding: 0; font-size: 8;'><i>Note: Indexed TSR (Total Shareholders Return) represents the value of <span style='font-family: Rupee Foradian;'>`</span> 100 invested in the Company at beginning of a 5-year period starting 1st April, 2011. One period return is calculated as (Final Price - Initial Price + Dividend) / Initial Price.</i></p>");
+    $docx->embedHTML("<p style='margin: 0; text-align: justify; padding: 0; font-size: 9;'>The remuneration paid to [executive/managing director] of the Company is [reasonable] given the size and performance of the Company. It can be inferred from the graph that the growth in total shareholders' return is more/less than the growth in remuneration of [Mr.  (Managing/Executive Director)] as CAGR of his remuneration is []% whereas CAGR - TSR is []%.</p>");
     // Graph end
     $executive_remuneration_data = $generic['executive_remuneration'];
     $executive_remuneration = "<tr>
@@ -2224,11 +2226,11 @@ function appointmentOfDirectors($docx, $report_id)
             $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[28 * $i + 4]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Impact on diversity</td>";
-        for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[28 * $i + 5]['text'] . "</td>";
-        }
-        $directors_profile .= "</tr>";
+        // $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Impact on diversity</td>";
+        // for ($i = 0; $i < $no_of_non_executive; $i++) {
+        //     $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[28 * $i + 5]['text'] . "</td>";
+        // }
+        // $directors_profile .= "</tr>";
         $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
             $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[28 * $i + 6]['text'] . "</td>";
@@ -2383,12 +2385,16 @@ function appointmentOfDirectors($docx, $report_id)
                 </tbody>
               </table>";
         $docx->embedHtml($html);
+
         $resolution_text = "";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
             if ($other_text[28 * $i + 26]['text'] != "" && $other_text[28 * $i + 26]['text'] != "&nbsp;")
                 $resolution_text .= $other_text[28 * $i + 26]['text'];
         }
         $docx->embedHTML(htmlParser($resolution_text));
+        if($resolution_text=="") {
+            $docx->embedHTML("<p style='font-size: 2;'>&nbsp;</p>");
+        }
         resBlackStrip($docx, "DIRECTOR'S REMUNERATION");
         $resolution_text = "";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
@@ -2500,11 +2506,11 @@ function appointmentOfDirectors($docx, $report_id)
             $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 16]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Impact on diversity</td>";
-        for ($i = 0; $i < $no_of_independent; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 17]['text'] . "</td>";
-        }
-        $directors_profile .= "</tr>";
+        // $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Impact on diversity</td>";
+        // for ($i = 0; $i < $no_of_independent; $i++) {
+        //     $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 17]['text'] . "</td>";
+        // }
+        // $directors_profile .= "</tr>";
         $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
         for ($i = 0; $i < $no_of_independent; $i++) {
             $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: justify; '>" . $other_text[65 * $i + 18]['text'] . "</td>";
@@ -2558,11 +2564,11 @@ function appointmentOfDirectors($docx, $report_id)
             $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 24]['text'] . "</td>";
         }
         $directors_independence .= "</tr>";
-        $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Nominee director</td>";
-        for ($i = 0; $i < $no_of_independent; $i++) {
-            $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 25]['text'] . "</td>";
-        }
-        $directors_independence .= "</tr>";
+        // $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Nominee director</td>";
+        // for ($i = 0; $i < $no_of_independent; $i++) {
+        //     $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 25]['text'] . "</td>";
+        // }
+        // $directors_independence .= "</tr>";
         $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Shareholding / ESOPs</td>";
         for ($i = 0; $i < $no_of_independent; $i++) {
             $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 26]['text'] . "</td>";
@@ -2590,6 +2596,9 @@ function appointmentOfDirectors($docx, $report_id)
                 $resolution_text .= $other_text[65 * $i + 29]['text'];
         }
         $docx->embedHTML(htmlParser($resolution_text));
+        if($resolution_text=="") {
+            $docx->embedHTML("<p style='font-size: 2;'>&nbsp;</p>");    
+        }
         resBlackStrip($docx, "DIRECTORS' TIME COMMITMENTS");
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
         $time_commitment_table = "<tr><td style='text-align: left; color: #FFFFFF; font-weight: bold; font-size: 10; background-color: #808080;border-right: 1px solid #FFF;'>Criteria</td>";
@@ -5083,6 +5092,10 @@ function getName($report_id){
         'meeting_type' => $company_and_meeting_details['meeting_type'],
         'meeting_date' => $company_and_meeting_details['meeting_date']);
     return $variables;
+}
+function disclaimerPage($docx) {
+    $docx->addBreak(array('type' => 'page'));
+    $docx->addExternalFile(array('src' => 'Disclaimers.docx'));
 }
 
 ?>

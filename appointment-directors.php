@@ -1931,8 +1931,8 @@ if(isset($_POST['aoopintment_directors'])) {
                                                     <td>
                                                         <select class="form-control" name="used_in_text[]">
                                                             <option value="">Select</option>
-                                                            <option value="INDEPENDENT">INDEPENDENT</option>
-                                                            <option value="NON INDEPENDENT">NON INDEPENDENT</option>
+                                                            <option value="Independent">Independent</option>
+                                                            <option value="Non Independent">Non Independent</option>
                                                         </select>
                                                     </td>
                                                 </tr>
