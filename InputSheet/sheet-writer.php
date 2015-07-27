@@ -24,7 +24,6 @@ $bse_code = array();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $bse_code[]=$row;
 }
-
 $fi_month = "";
 switch ($bse_code[0]['fiscal_year_end']) {
     case 3:
@@ -40,7 +39,6 @@ switch ($bse_code[0]['fiscal_year_end']) {
         $fi_month = "DEC";
         break;
 }
-
 $objPHPExcel->getActiveSheet()->SetCellValue('A1',$bse_code[0]['bse_code']);
 $objPHPExcel->getActiveSheet()->SetCellValue('D1',$fi_month);
 $objPHPExcel->getActiveSheet()->SetCellValue('A2', "DIN");
