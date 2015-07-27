@@ -3,7 +3,7 @@ function bubbleSort(array $arr) {
     $n = count($arr);
     for ($i = 1; $i < $n; $i++) {
         for ($j = $n - 1; $j >= $i; $j--) {
-            if($arr[$j-1][1] < $arr[$j][1]) {
+            if(floatval($arr[$j-1][1]) < floatval($arr[$j][1])) {
                 $tmp = $arr[$j - 1];
                 $arr[$j - 1] = $arr[$j];
                 $arr[$j] = $tmp;

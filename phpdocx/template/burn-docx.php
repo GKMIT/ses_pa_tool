@@ -47,6 +47,7 @@ try {
 	delistingOfShares($docx, $report_id);
 	donationToCharitableTrust($docx, $report_id);
 	officeOfProfit($docx, $report_id);
+	disclaimerPage($docx);
 	$com_name = getName($report_id);
 	$compnay_name=$com_name['company_name'];
 	$meeting_type=$com_name['meeting_type'];
@@ -61,7 +62,7 @@ try {
 //$docx->watermarkDocx($source, $target, $type = 'image', $options = array('image' => 'bg.png','height'=>900,'width'=>500,'decolorate'=>false));
 	require_once '../classes/MultiMerge.inc';
 	$merge = new MultiMerge();
-	$merge->mergeDocx('index_page.docx', array('try2.docx','Disclaimers.docx'), "$compnay_name"."_SES Proxy Advisory Report_"."$meeting_type"."_"."$formated_day".".docx", array());
+	$merge->mergeDocx('index_page.docx', array('try2.docx'), "$compnay_name"."_SES Proxy Advisory Report_"."$meeting_type"."_"."$formated_day".".docx", array());
 	burnExcel($report_id);
 	$zip_files_array = array(
 		'AuditorsRemuneration.docx',

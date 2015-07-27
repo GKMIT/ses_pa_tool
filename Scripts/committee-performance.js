@@ -42,10 +42,24 @@ CustomJS.prototype = {
         });
         $("#independent_directors_ex").keyup(function() {
             if($(this).val()!="") {
-                var total_ids = $("#ses_id_classification").val();
+                var total_ids = $("#company_id_classification").val();
                 var response = $(this).val();
-                var score = ((total_ids-response)/total_ids)*10;
-                score = Math.round(score);
+                var variable = response/total_ids;
+                if(variable>0.8) {
+                    score = 2;    
+                }
+                else if(variable>0.6 && variable<=0.8) {
+                    score = 4;       
+                }
+                else if(variable>0.4 && variable<=0.6) {
+                    score = 6;
+                }
+                else if(variable>0.2 && variable<=0.4) {
+                    score = 8;       
+                }
+                else if(variable>=0 && variable<=0.2) {
+                    score = 10;       
+                }
                 $("#independent_directors_ex_score").val(score);
             }
             else {
@@ -56,8 +70,22 @@ CustomJS.prototype = {
             if($(this).val()!="") {
                 var total_company_ids = $("#company_id_classification").val();
                 var response = $(this).val();
-                var score = ((total_company_ids-response)/total_company_ids)*5;
-                score = Math.round(score);
+                // var score = ((total_company_ids-response)/total_company_ids)*5;
+                if((response/total_company_ids)>0.8) {
+                    score=1;
+                }
+                else if((response/total_company_ids)>0.6 && (response/total_company_ids)<=0.8) {
+                    score=2;
+                }
+                else if((response/total_company_ids)>0.4 && (response/total_company_ids)<=0.6) {
+                    score=3;
+                }
+                else if((response/total_company_ids)>0.2 && (response/total_company_ids)<=0.4) {
+                    score=4;
+                }
+                else if((response/total_company_ids)>=0 && (response/total_company_ids)<=0.2) {
+                    score=5;
+                }
                 $("#independent_directors_have_shareholdings_score").val(score);
             }
             else {

@@ -1003,6 +1003,7 @@ class DatabaseReports {
         $ninth_row_response = 0;
         $company_id_classification=0;
         $total_board_directors = 0;
+        $variable = 0;
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if($row['additional_classification']!="C(Resign)" && $row['additional_classification']!="M(Resign)") {
                 $total_board_directors++;
@@ -1022,22 +1023,78 @@ class DatabaseReports {
                     $fourth_row_score=10;
                 }
             }
-            if($row['company_classification']=='NEDP' || $row['company_classification']=='EDP') {
+            if(($row['ses_classification']=='NEDP' || $row['ses_classification']=='EDP') && $row['additional_classification']!="C(Resign)" && $row['additional_classification']!="M(Resign)") {
                 $ninth_row_response++;
             }
+            if(($row['additional_classification']=="C" || $row['additional_classification']=="CMD") && $row['company_classification']=='ID') {
+                $variable = 33;
+            }
         }
-        $first_row_response = round($ses_id_classification/$total_board_directors*100,2);
-        if($first_row_response<50) {
-            $score = 0;
+        if($variable==0) {
+            $variable = 50;
+        }
+        $first_row_response = round($ses_id_classification/$total_board_directors*100);
+        if($variable==33) {
+            if($first_row_response<33) {
+                $score = 0;
+            }
+            elseif($first_row_response>=33 && $first_row_response<67) {
+                $score=5;
+            }    
+            else {
+                $score=10;
+            }
         }
         else {
-            $score=10;
+            if($first_row_response<50) {
+                $score = 0;
+            }
+            elseif($first_row_response>=50 && $first_row_response<75) {
+                $score=5;
+            }    
+            else {
+                $score=10;
+            }
         }
         $generic_details['first_row_gov_score'] = array(
             "response"=>$first_row_response,
             "score"=>$score
         );
-        $score = (($company_id_classification-$tenure_greater_10)/$company_id_classification)*10;
+
+        $var  = ($tenure_greater_10/$company_id_classification);
+        if($var>0.9) {
+            $score = 0;
+        }
+        elseif($var>0.8 && $var<=0.9)  {
+            $score=1;
+        }
+        elseif($var>0.7 && $var<=0.8)  {
+            $score=2;
+        }
+        elseif($var>0.6 && $var<=0.7)  {
+            $score=3;
+        }
+        elseif($var>0.5 && $var<=0.6)  {
+            $score=4;
+        }
+        elseif($var>0.4 && $var<=0.5)  {
+            $score=5;
+        }
+        elseif($var>0.3 && $var<=0.4)  {
+            $score=6;
+        }
+        elseif($var>0.2 && $var<=0.3)  {
+            $score=7;
+        }
+        elseif($var>0.1 && $var<=0.2)  {
+            $score=8;
+        }
+        elseif($var>0 && $var<=0.1)  {
+            $score=9;
+        }
+        elseif($var==0) {
+            $score=10;
+        }
         $generic_details['second_row_gov_score'] = array(
             "response"=>$tenure_greater_10,
             "score"=>$score
@@ -1046,8 +1103,32 @@ class DatabaseReports {
             "response"=>$fourth_row_response,
             "score"=>$fourth_row_score
         );
-        $ninth_row_score = ($total_board_directors-$ninth_row_response)/$total_board_directors*15;
-        $ninth_row_score = round($ninth_row_score,2);
+        
+        // $ninth_row_score = ($total_board_directors-$ninth_row_response)/$total_board_directors*15;
+        // $ninth_row_score = round($ninth_row_score,2);
+
+        $var = $ninth_row_response/$total_board_directors;
+        if($var>0.5) {
+            $ninth_row_score=0;
+        }
+        elseif($var>0.4 && $var<=0.5) {
+            $ninth_row_score=3;
+        }
+        elseif($var>0.3 && $var<=0.4) {
+            $ninth_row_score=5;
+        }
+        elseif($var>0.2 && $var<=0.3) {
+            $ninth_row_score=8;
+        }
+        elseif($var>0.1 && $var<=0.2) {
+            $ninth_row_score=10;
+        }
+        elseif($var>0 && $var<=0.1) {
+            $ninth_row_score=13;
+        }
+        elseif($var==0) {
+            $ninth_row_score=15;
+        }
         $generic_details['ninth_row_gov_score'] = array(
             "response"=>$ninth_row_response,
             "score"=>$ninth_row_score
