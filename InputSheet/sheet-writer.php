@@ -24,6 +24,7 @@ $bse_code = array();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $bse_code[]=$row;
 }
+$company_name=$bse_code[0]['name'];
 $fi_month = "";
 switch ($bse_code[0]['fiscal_year_end']) {
     case 3:
@@ -744,8 +745,9 @@ for($counter=0;$counter<=4;$counter++) {
     $dividend_info_counter++;
     $column_counter = 2;
 }
-
+$year=$_GET['financial_year'];
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save("Input Sheet-PA tool-burned.xlsx");
-echo "<br/><a href='Input Sheet-PA tool-burned.xlsx'>Download File</a>";
+$objWriter->save($company_name."_".$year.".xlsx");
+$link=$company_name."_".$year.".xlsx";
+echo "<br/><a href='$link'>Download File</a>";
 ?>
