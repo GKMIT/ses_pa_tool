@@ -2784,7 +2784,7 @@ class ReportBurning {
         $stmt = $dbobject->prepare(" select * from `pa_report_checkbox` where `pa_reports_id`=:report_id and `main_section`=:main_section and `checkbox`=:checkbox");
         $stmt->bindParam(":report_id",$report_id);
         $main_section = "Directors' Remuneration";
-        $checkbox = "Non-Executive Directors' Commission";
+        $checkbox = "Revision in Executive Directors' Remuneration";
         $stmt->bindParam(":main_section",$main_section);
         $stmt->bindParam(":checkbox",$checkbox);
         $stmt->execute();

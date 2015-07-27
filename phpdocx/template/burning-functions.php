@@ -947,7 +947,7 @@ function boardOfDirectorInfo($docx, $report_id)
     //$docx->addSection('continuous','A4', array('marginRight' => '1000','marginLeft' => '1000','marginTop'=>0,'marginBottom'=>0,'marginHeader'=>'200','marginFooter'=>'0'));
     $html = "<table style='border-collapse: collapse; width:100%; margin-left: -0.1px;'>
                 <tbody>
-                    <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 1px solid #000000; '>TABLE 9 - BOARD GOVERNANCE SCORE</td></tr>
+                    <tr><td colspan='8' style='font-size: 10; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000;border-bottom: 1px solid #000000; '>TABLE 9 - BOARD GOVERNANCE TABLE (AS PER SES)</td></tr>
                     $board_governance_score
                     <tr><td colspan='2' style='font-size: 9; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 1px solid #000000; font-weight: bold;'>Score</td><td style='font-size: 9; padding-top: 5px; text-align: center; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 1px solid #000000; font-weight: bold;'>$score_value</td><td style='font-size: 9; text-align: center; padding-top: 5px; padding-bottom: 5px; border-top: 2px solid #000000; border-bottom: 1px solid #000000; font-weight: bold;'>100</td></tr>
                 </tbody>
@@ -2862,6 +2862,7 @@ function directorsRemuneration($docx, $report_id)
     $db = new ReportBurning();
     $generic_array = $db->directorsRemunerationREDR($report_id);
     if ($generic_array['non_executive_commision_exists']) {
+
         $docx->addBreak(array('type' => 'page'));
         $other_text = $generic_array['other_text'];
         $recommendation_text = $generic_array['recommendation_text'];
