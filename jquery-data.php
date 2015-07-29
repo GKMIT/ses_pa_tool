@@ -1390,6 +1390,14 @@ elseif(isset($_GET['get_director_info_json'])) {
 	}
 	echo json_encode(array('director_info'=>$director_info,'count'=>$director_info['row_count']));
 }
+elseif(isset($_GET['delete_director'])){
+	$db=new Database();
+	$company_id=$_GET['company_id'];
+	$dir_din_no=$_GET['dir_din_no'];
+	$financial_year=$_GET['financial_year'];
+	$response = $db->deleteDirector($company_id,$dir_din_no,$financial_year);
+	echo json_encode($response);
+}
 elseif(isset($_GET['get_company_auditor_info'])) {
 	$db = new Database();
 	$company_auditors = $db->getCompanyAuditorsInfo($_GET['company_id'],$_GET['financial_year']);

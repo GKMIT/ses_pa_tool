@@ -409,9 +409,9 @@ if(isset($_SESSION['report_id'])) {
 											</thead>
 											<tbody id="recommendations-template-container">
 												<tr class="recommendations-template hidden">
-													<td class="recommendations-srno">1</td>
+													<td class="recommendations-srno"><input type="text" class="form-control" name="sn[]" value="1" /></td>
 													<td>
-														<input typr='text' class='form-control' name="resolution[]"/>
+														<input type='text' class='form-control' name="resolution[]"/>
 													</td>
 													<td>
 														<select class='form-control' name="type[]">
@@ -447,7 +447,7 @@ if(isset($_SESSION['report_id'])) {
 													foreach($recommendations as $row) {
 														?>
 														<tr>
-															<td class="recommendations-srno"><?php echo $i++; ?></td>
+															<td class="recommendations-srno"><input type="text" class="form-control" name="sn[]" value="<?php echo $row['sn']; ?>" /></td>
 															<td>
 																<input typr='text' class='form-control' name="resolution[]" value="<?php echo $row['resolution']; ?>"/>
 															</td>

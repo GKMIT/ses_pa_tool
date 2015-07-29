@@ -519,9 +519,10 @@ if(isset($_POST['btn_save_director_details'])) {
                                     </div>
                                 </div>
                                 <div class="form-actions fluid">
-                                    <div class="col-md-offset-4 col-md-8">
+                                    <div class="col-md-offset-4 col-md-4">
                                         <button name="btn_save_director_details" id="btn_save_director_details" type="submit" class="btn green"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Save Directors Details</button>
                                     </div>
+
                                 </div>
                             </form>
                         </div>

@@ -192,8 +192,9 @@ class DatabaseReports {
             $response['msg'] = "Data saved successfully";
         }
         for($i=1;$i<$total_rows;$i++) {
-            $stmt = $dbobject->prepare("insert into `pa_report_agenda_items` (`pa_reports_id`, `resolution`, `type`, `recommendation`, `focus`) VALUES (:pa_reports_id, :resolution, :type, :recommendation , :focus)");
+            $stmt = $dbobject->prepare("insert into `pa_report_agenda_items` (`pa_reports_id`,`sn`, `resolution`, `type`, `recommendation`, `focus`) VALUES (:pa_reports_id, :sn, :resolution, :type, :recommendation , :focus)");
             $stmt->bindParam(":pa_reports_id",$pa_report_id);
+            $stmt->bindParam(":sn",$info['sn'][$i]);
             $stmt->bindParam(":resolution",$info['resolution'][$i]);
             $stmt->bindParam(":type",$info['type'][$i]);
             $stmt->bindParam(":recommendation",$info['recommendation'][$i]);

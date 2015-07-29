@@ -554,7 +554,7 @@ class ReportBurning {
             $generic_array['analysis_text'] = $analysis_text;
         }
         else {
-            $generic_array['declaration_of_dividend_exists'] = true;
+            $generic_array['declaration_of_dividend_exists'] = false;
         }
         return $generic_array;
     }

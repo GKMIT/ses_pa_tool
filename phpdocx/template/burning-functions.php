@@ -526,9 +526,9 @@ function agendaItemsAndRecommendations($docx, $report_id)
                                 </tr>";
     foreach ($agenda_items as $item) {
         if ($i % 2 != 0) {
-            $board_governance_score .= "<tr><td style='$odd_row_style_string_center'>$i</td><td style='$odd_row_style_string'>$item[resolution]</td><td style='$odd_row_style_string_center'>$item[type]</td><td style='$odd_row_style_string_center'>$item[recommendation]</td><td style='$odd_row_style_string_center_red_bold'>$item[focus]</td></tr>";
+            $board_governance_score .= "<tr><td style='$odd_row_style_string_center'>$item[sn]</td><td style='$odd_row_style_string'>$item[resolution]</td><td style='$odd_row_style_string_center'>$item[type]</td><td style='$odd_row_style_string_center'>$item[recommendation]</td><td style='$odd_row_style_string_center_red_bold'>$item[focus]</td></tr>";
         } else {
-            $board_governance_score .= "<tr><td style='$even_row_style_string_center'>$i</td><td style='$even_row_style_string'>$item[resolution]</td><td style='$even_row_style_string_center'>$item[type]</td><td style='$even_row_style_string_center'>$item[recommendation]</td><td style='$even_row_style_string_center_red_bold'>$item[focus]</td></tr>";
+            $board_governance_score .= "<tr><td style='$even_row_style_string_center'>$item[sn]</td><td style='$even_row_style_string'>$item[resolution]</td><td style='$even_row_style_string_center'>$item[type]</td><td style='$even_row_style_string_center'>$item[recommendation]</td><td style='$even_row_style_string_center_red_bold'>$item[focus]</td></tr>";
         }
         $i++;
     }
@@ -699,16 +699,16 @@ function companyBackground($docx, $report_id)
     $fi_month = "";
     $fi_year = $public_share_holders[0]['financial_year'];
     switch ($public_share_holders[0]['holder_month']) {
-        case 3:
+        case 0:
             $fi_month = "MARCH";
             break;
-        case 6:
+        case 1:
             $fi_month = "JUNE";
             break;
-        case 9:
+        case 2:
             $fi_month = "SEPTEMBER";
             break;
-        case 12:
+        case 3:
             $fi_month = "DECEMBER";
             break;
     }

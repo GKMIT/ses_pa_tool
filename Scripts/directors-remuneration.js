@@ -1243,10 +1243,10 @@ CustomJS.prototype = {
                                     var checkbox = data.checkbox;
                                     var j=0;
                                     $(".checkbox").each(function(i,d) {
+                                        var $checkboxobj = $(this);
+                                        var checked=$(this).val();
                                         if(j!=checkbox.length) {
-                                            var $checkboxobj = $(this);
-                                            var checked=$(this).val();
-                                            var saveCheck = checkbox[j]['checkbox'];
+                                            var saveCheck=checkbox[j]['checkbox'];
                                             if(checked==saveCheck) {
                                                 $checkboxobj.attr('checked',true);
                                                 $checkboxobj.parent().addClass('checked');

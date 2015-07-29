@@ -475,12 +475,19 @@ if(isset($_POST['btn_edit_director_info'])) {
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4 control-label">Director Name</label>
-                                        <div class="col-md-4">
-                                            <select class="form-control select2me" name="dir_din_no" id="dir_din_no" placeholder="Search by Name or DIN">
-                                                <option>Search by name or DIN</option>
-                                            </select>
+
+                                        <div class="col-md-12">
+                                            <label class="col-md-4 control-label">Director Name</label>
+                                            <div class="col-md-4">
+                                                <select class="form-control select2me" name="dir_din_no" id="dir_din_no" placeholder="Search by Name or DIN" value="">
+                                                    <option>Search by name or DIN</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button name="btn_delete_director_details" id="btn_delete_director_details" type="button" class="btn red"><i class="fa fa-times"></i>&nbsp;&nbsp;Delete Directors</button>
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Appointment Date</label>
@@ -699,6 +706,7 @@ if(isset($_POST['btn_edit_director_info'])) {
                                     <div class="col-md-offset-4 col-md-4">
                                         <button id="directors" name="btn_edit_director_info" type="submit" class="btn blue"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Update Director Info</button>
                                     </div>
+
                                 </div>
                             </form>
                         </div>

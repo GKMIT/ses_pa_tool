@@ -656,13 +656,13 @@ CustomJS.prototype = {
             );
         }
         $("#btn_add_recommendations").click(function() {
-            var $template = $(".recommendations-template").clone();
-            $template.removeClass('recommendations-template').removeClass('hidden');
-            $template.find('button').removeClass('hidden');
-            $("#recommendations-template-container").append($template);
+            var template=$('.recommendations-template').clone();
+            template.removeClass('recommendations-template').removeClass('hidden');
+            template.find('button').removeClass('hidden');
+            $("#recommendations-template-container").append(template);
             $( "#recommendations-template-container tr" ).each(function( index ) {
                 if(index!=0) {
-                    $( this ).find('td').eq(0).html(index);
+                    $( this ).find('td').eq(0).find("input").val(index);
                 }
             });
             initializeRecommendationsRow();
@@ -673,11 +673,12 @@ CustomJS.prototype = {
                 $(this).parent().parent().remove();
                 $( "#recommendations-template-container tr" ).each(function( index ) {
                     if(index!=0) {
-                        $( this ).find('td').eq(0).html(index);
+                        $( this ).find('td').eq(0).find("input").val(index);
                     }
                 });
             });
         }
+        initializeRecommendationsRow();
     },
     initializePage3: function(flag) {
         if(flag) {
@@ -2544,6 +2545,36 @@ CustomJS.prototype = {
 
         $("#financial_year").change(function() {
             fillDirectorList();
+        });
+        $('#btn_delete_director_details').click(function(){
+            $.ajax({
+                url:"../../jquery-data.php",
+                type:"GET",
+                dataType: "JSON",
+                data:{
+                    delete_director:true,
+                    company_id:$("#companies_id").val(),
+                    dir_din_no:$("#dir_din_no").val(),
+                    financial_year:$("#financial_year").val()
+                },
+                beforeSend: function() {
+                    $(".ajax-waiting").removeClass('hidden');
+                },
+                success: function(data) {
+                console.log(data);
+                    if(data.status="Success")
+                    $.gritter.add({
+                        title: "Success",
+                        text: "Director Deleted Successfully",
+                        image: "../../assets/img/info-icon.png",
+                        sticky: false,
+                        time: 4000
+                    });
+                    window.location.reload(true);
+
+
+                }
+            });
         });
 
         function fillDirectorList () {
