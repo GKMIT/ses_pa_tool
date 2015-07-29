@@ -2231,24 +2231,24 @@ function appointmentOfDirectors($docx, $report_id)
         //     $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[28 * $i + 5]['text'] . "</td>";
         // }
         // $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
+        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Past Experience</td>";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[28 * $i + 6]['text'] . "</td>";
+            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[28 * $i + 6]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Committee positions in the Company</td>";
+        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Committee positions in the Company</td>";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[28 * $i + 7]['text'] . "</td>";
+            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[28 * $i + 7]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Retirement by rotation</td>";
+        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Retirement by rotation</td>";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[28 * $i + 8]['text'] . "</td>";
+            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[28 * $i + 8]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Part of promoter group?</td>";
+        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Part of promoter group?</td>";
         for ($i = 0; $i < $no_of_non_executive; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . ucfirst($other_text[28 * $i + 9]['text']) . "</td>";
+            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . ucfirst($other_text[28 * $i + 9]['text']) . "</td>";
         }
         $directors_profile .= "</tr>";
         $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; font-size: 10; background-color: #EB641B; color: #FFFFFF; text-align: left; '>SES Recommendation</td>";
@@ -2511,14 +2511,14 @@ function appointmentOfDirectors($docx, $report_id)
         //     $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 17]['text'] . "</td>";
         // }
         // $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Past Experience</td>";
+        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Past Experience</td>";
         for ($i = 0; $i < $no_of_independent; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: justify; '>" . $other_text[65 * $i + 18]['text'] . "</td>";
+            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: justify; '>" . $other_text[65 * $i + 18]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
-        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Committee positions in the Company</td>";
+        $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Committee positions in the Company</td>";
         for ($i = 0; $i < $no_of_independent; $i++) {
-            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 19]['text'] . "</td>";
+            $directors_profile .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 19]['text'] . "</td>";
         }
         $directors_profile .= "</tr>";
         $directors_profile .= "<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; font-size: 10; background-color: #EB641B; color: #FFFFFF; text-align: left; '>SES Recommendation</td>";
@@ -2569,14 +2569,14 @@ function appointmentOfDirectors($docx, $report_id)
         //     $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 25]['text'] . "</td>";
         // }
         // $directors_independence .= "</tr>";
-        $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Shareholding / ESOPs</td>";
+        $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Shareholding / ESOPs</td>";
         for ($i = 0; $i < $no_of_independent; $i++) {
-            $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 26]['text'] . "</td>";
+            $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 26]['text'] . "</td>";
         }
         $directors_independence .= "</tr>";
-        $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: left; '>Remuneration ( <span style='font-family: Rupee Foradian;'>`</span> Lakhs)</td>";
+        $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: left; '>Remuneration ( <span style='font-family: Rupee Foradian;'>`</span> Lakhs)</td>";
         for ($i = 0; $i < $no_of_independent; $i++) {
-            $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #D9D9D9; text-align: center; '>" . $other_text[65 * $i + 27]['text'] . "</td>";
+            $directors_independence .= "<td style='border-right: 1px solid #FFFFFF; font-size: 10; background-color: #F2F2F2; text-align: center; '>" . $other_text[65 * $i + 27]['text'] . "</td>";
         }
         $directors_independence .= "</tr>";
         $directors_independence .= "<tr><td style='border-right: 1px solid #FFFFFF; font-weight: bold; color: #FFFFFF; font-size: 10; background-color: #EB641B; text-align: left; '>SES Classification</td>";

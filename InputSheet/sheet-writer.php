@@ -25,7 +25,6 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $bse_code[]=$row;
 }
 $company_name=$bse_code[0]['name'];
-
 $fi_month = "";
 switch ($bse_code[0]['fiscal_year_end']) {
     case 3:
