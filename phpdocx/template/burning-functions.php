@@ -188,7 +188,7 @@ function burnExcel($report_id)
     $objPHPExcel->getActiveSheet()->SetCellValue('E516', $csr_contributors[2]['csr_np']);
     $objPHPExcel->getActiveSheet()->SetCellValue('E517', $csr_contributors[1]['csr_np']);
     $objPHPExcel->getActiveSheet()->SetCellValue('E518', $csr_contributors[0]['csr_np']);
-    print_r($executive_remuneration);
+    //print_r($executive_remuneration);
     // 19th graph
     $row = 532;
     for ($i = 0; $i <= 5; $i++) {
@@ -1741,6 +1741,8 @@ function appointmentOfAuditors($docx, $report_id)
         $html = "<table style='border-collapse: collapse; width:98%; margin-left: 8px; '>
                         <tbody>$inner</tbody>
                     </table>";
+        $docx->embedHTML($html);
+        $html="<p style='font-size: 10;color:#000000;'>Financial interests in or association with the company: <span style='background-color:#00B0F0;'>[]</span></p>";
         $docx->embedHTML($html);
         $docx->embedHtml(htmlParser($analysis_text[6]['analysis_text']));
         $docx->embedHTML("<p style='font-size: 1;'>&nbsp;</p>");
