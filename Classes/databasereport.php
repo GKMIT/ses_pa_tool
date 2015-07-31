@@ -2475,6 +2475,7 @@ class DatabaseReports {
         else {
             $generic_details['audit_meeting_last_year']="na";
         }
+
         $stmt = $dbobject->prepare(" select * from `nomination_remuneration_committee_info` where `company_id`=:company_id and `financial_year`=:financial_year");
         $stmt->bindParam(":company_id",$company_id);
         $stmt->bindParam(":financial_year",$financial_year);
@@ -3607,7 +3608,6 @@ class DatabaseReports {
     }
     // Appointment of Directors
     function saveAppointmentOfDirectors($info) {
-
         $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
         $report_id = $_SESSION['report_id'];
         $edit_mode=$info['edit_mode'];
@@ -3639,6 +3639,21 @@ class DatabaseReports {
             $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_triggers` WHERE `pa_reports_id`='$report_id' AND `director_no`=:director_no");
             $stmt->bindParam(":director_no", $info['slot_no']);
             $stmt->execute();
+            $stmt=$dbobject->prepare("UPDATE `pa_report_appointed_directors` SET `no_of_ned`=no_ned,`no_of_id`=:no_id,`no_of_ed`=:no_ed WHERE `pa_reports_id`=:report_id");
+            $stmt->bindParam(":report_id", $report_id);
+            $stmt->bindParam(":arned", $info['no_ned']);
+            $stmt->bindParam(":arid", $info['no_id']);
+            $stmt->bindParam(":ared", $info['no_ed']);
+            $stmt->execute();
+            //echo $info['no_ned'];
+//            if($stmt->execute()) {
+//                $stmt = $dbobject->prepare("insert into `pa_report_appointed_directors` (`pa_reports_id`,`no_of_ned`,`no_of_id`,`no_of_ed`) values (:report_id,:arned,:arid,:ared)");
+//                $stmt->bindParam(":report_id", $report_id);
+//                $stmt->bindParam(":arned", $info['no_ned']);
+//                $stmt->bindParam(":arid", $info['no_id']);
+//                $stmt->bindParam(":ared", $info['no_ed']);
+//                $stmt->execute();
+//            }
         }
         else {
             $arned = 0;
@@ -5467,6 +5482,21 @@ class DatabaseReports {
         }
         $dbobject=null;
         return $remuneration_package;
+    }
+    // Appointened Diretors value
+
+    function getAppointmentOfDirectorvalue(){
+        // Calculate total ED,ID And NED
+        $dbobject = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+        $stmt = $dbobject->prepare(" select * from `pa_report_appointed_directors` where `pa_reports_id`=:report_id");
+        $stmt->bindParam(":report_id",$_SESSION['report_id']);
+        $stmt->execute();
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+            $appointed_directors[]=$row;
+        }
+
+        $dbobject=null;
+        return $appointed_directors;
     }
 
     // disclousres

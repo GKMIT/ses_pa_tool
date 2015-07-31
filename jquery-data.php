@@ -1947,6 +1947,7 @@ elseif(isset($_GET['GetExistingDataofAppointmentOfDirectors'])) {
 	$peer_comparsion=$db->getAppointmentOfDirectorPeerComparsion($resolution_section,$main_section,$slot_no);
 	$table_2=$db->getAppointmentOfDirectorTable2($resolution_section,$main_section,$slot_no);
 	$remuneration_package=$db->getAppointmentOfDirectorRemunerationPackage($resolution_section,$main_section,$slot_no);
+	$appointed_directors_value=$db->getAppointmentOfDirectorvalue();
 	echo json_encode(array(
 			'other_text'=>$other_text,
 			'analysis'=>$analysis,
@@ -1956,6 +1957,7 @@ elseif(isset($_GET['GetExistingDataofAppointmentOfDirectors'])) {
 			'past_remuneration'=>$past_remuneration,
 			'peer_comparsion'=>$peer_comparsion,
 			'table_2'=>$table_2,
+			'appointed_directors_value'=>$appointed_directors_value,
 			'remuneration_package'=>$remuneration_package)
 	);
 }

@@ -616,6 +616,19 @@ CustomJS.prototype = {
 
     pageload: function() {
 
+        // Updating Appointment of directors value
+
+        function changeAppointmentDirectorsValue(){
+
+
+        }
+
+
+        $('.checkbox').click(function(){
+            changeAppointmentDirectorsValue();
+        });
+
+
         $(".ned-ids").change(function() {
             var $director = $(this);
             $.ajax({
@@ -661,6 +674,7 @@ CustomJS.prototype = {
                     $(".ned-analysis-values").each(function(i,d) {
                         $(this).html("["+analysis_values[i]+"]");
                     });
+
                 }
             });
         });
@@ -823,12 +837,24 @@ CustomJS.prototype = {
                     if(data.status=="Existing") {
                         $('#edit_mode').val("Edit Mode");
                         $("#edit_button_enable").removeClass('hidden');
+                        //var ed=$('#ed').val();
+                        //var id=$('#id').val();
+                        //var ned=$('#ned').val();
+
                         $.ajax({
                             url:'jquery-data.php',
                             type:'GET',
                             dataType:'JSON',
                             data:{GetExistingDataofAppointmentOfDirectors:1,ResolutionName:resolution_name,MainSection:main_section,Slot_no:slot_no},
                             success:function(data){
+                                var appointed_directors_value=data.appointed_directors_value;
+                                console.log(appointed_directors_value[0].no_of_ned);
+                                if((appointed_directors_value!=null)||(appointed_directors_value==0)){
+                                    $('#no_ned').val(appointed_directors_value[0].no_of_ned);
+                                    $('#no_ed').val(appointed_directors_value[0].no_of_ed);
+                                    $('#no_id').val(appointed_directors_value[0].no_of_id);
+                                }
+
                                 var triggers = data.triggers;
                                 $("select[name='triggers[]']").each(function(i,d) {
                                     var select = $(this);
@@ -930,6 +956,7 @@ CustomJS.prototype = {
                                         $('.within_limits').val(remuneration_package[13].field_value);
                                         $('.includes_variable').val(remuneration_package[14].field_value);
                                     }
+
                                     $.loader_remove();
                                 },3000);
                             }
@@ -1011,6 +1038,7 @@ CustomJS.prototype = {
                             $(this).parent().removeClass('checked');
                             $("#"+$checkboxobj.attr("hidden-id")).addClass('hidden');
                         });
+
                         $.loader_remove();
                     }
                 }
