@@ -384,15 +384,15 @@ if(isset($_POST['aoopintment_directors'])) {
                                     <div class="form-group">
                                         <div class="col-md-6">
                                             <input type="hidden" id="no_ned" name="no_ned" />
-                                            <input type="checkbox" class="check-trigger checkbox" name="checkbox[]" value="Appointment/Reappointment of Non-Executive Directors" hidden-id="check_1"/> Appointment/Reappointment of Non-Executive Directors
+                                            <input type="checkbox" class="check-trigger checkbox" data-checkbox-hidden-value="#no_ned" name="checkbox[]" value="Appointment/Reappointment of Non-Executive Directors" hidden-id="check_1"/> Appointment/Reappointment of Non-Executive Directors
                                         </div>
                                         <div class="col-md-6">
                                             <input type="hidden" id="no_id" name="no_id" />
-                                            <input type="checkbox" class="check-trigger checkbox" name="checkbox[]" value="Appointment/Reappointment of Independent Directors" hidden-id="check_2"/> Appointment/Reappointment of Independent Directors
+                                            <input type="checkbox" class="check-trigger checkbox" data-checkbox-hidden-value="#no_id" name="checkbox[]" value="Appointment/Reappointment of Independent Directors" hidden-id="check_2"/> Appointment/Reappointment of Independent Directors
                                         </div>
                                         <div class="col-md-6">
                                             <input type="hidden" id="no_ed" name="no_ed"/>
-                                            <input type="checkbox" class="check-trigger checkbox" name="checkbox[]" value="Appointment/Reappointment of Executive Directors" hidden-id="check_3"/> Appointment/Reappointment of Executive Directors
+                                            <input type="checkbox" class="check-trigger checkbox" name="checkbox[]" data-checkbox-hidden-value="#no_ed" value="Appointment/Reappointment of Executive Directors" hidden-id="check_3"/> Appointment/Reappointment of Executive Directors
                                         </div>
                                         <div class="col-md-6">
                                             <input type="checkbox" class="check-trigger checkbox" name="checkbox[]" value="Cessation of Directorship" hidden-id="check_4"/> Cessation of Directorship

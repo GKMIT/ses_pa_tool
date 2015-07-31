@@ -618,14 +618,14 @@ CustomJS.prototype = {
 
         // Updating Appointment of directors value
 
-        function changeAppointmentDirectorsValue(){
-
-
-        }
-
-
         $('.checkbox').click(function(){
-            changeAppointmentDirectorsValue();
+            var which = $(this).attr('data-checkbox-hidden-value');
+            if($(this).is(':checked')) {
+                $(which).val(parseInt($(which).val())+1);
+            }
+            else {
+                $(which).val(parseInt($(which).val())-1);
+            }
         });
 
 
