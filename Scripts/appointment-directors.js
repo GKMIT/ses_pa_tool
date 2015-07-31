@@ -624,7 +624,13 @@ CustomJS.prototype = {
                 $(which).val(parseInt($(which).val())+1);
             }
             else {
-                $(which).val(parseInt($(which).val())-1);
+                if($(which).val()==0){
+                    $(which).val(0);
+                }
+                else {
+                    $(which).val(parseInt($(which).val())-1);
+                }
+
             }
         });
 
@@ -847,6 +853,7 @@ CustomJS.prototype = {
                             dataType:'JSON',
                             data:{GetExistingDataofAppointmentOfDirectors:1,ResolutionName:resolution_name,MainSection:main_section,Slot_no:slot_no},
                             success:function(data){
+                                console.log(data);
                                 var appointed_directors_value=data.appointed_directors_value;
                                 console.log(appointed_directors_value[0].no_of_ned);
                                 if((appointed_directors_value!=null)||(appointed_directors_value==0)){
@@ -887,8 +894,10 @@ CustomJS.prototype = {
                                     var j=0;
                                     if(checkbox!=null) {
                                         $(".checkbox").each(function(i,d) {
+                                            var $checkboxobj = $(this);
+                                            $checkboxobj.attr('checked',false);
+                                            $checkboxobj.parent().removeClass('checked');
                                             if(j!=checkbox.length) {
-                                                var $checkboxobj = $(this);
                                                 var checked=$(this).val();
                                                 var saveCheck = checkbox[j]['checkbox'];
                                                 if(checked==saveCheck) {

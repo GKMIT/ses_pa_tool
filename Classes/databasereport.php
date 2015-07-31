@@ -3621,7 +3621,7 @@ class DatabaseReports {
             $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_executive_remuneration_p_c` WHERE `pa_reports_id`='$report_id' AND `director_no`=:director_no");
             $stmt->bindParam(":director_no", $info['slot_no']);
             $stmt->execute();
-            $stmt=$dbobject->prepare("DELETE FROM `a_report_appointment_directors_executive_remuneration_table_2` WHERE `pa_reports_id`='$report_id' AND `director_no`=:director_no");
+            $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_executive_remuneration_table_2` WHERE `pa_reports_id`='$report_id' AND `director_no`=:director_no");
             $stmt->bindParam(":director_no", $info['slot_no']);
             $stmt->execute();
             $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_other_text` WHERE `pa_reports_id`='$report_id' AND `director_no`=:director_no");
@@ -3639,21 +3639,12 @@ class DatabaseReports {
             $stmt=$dbobject->prepare("DELETE FROM `pa_report_appointment_directors_triggers` WHERE `pa_reports_id`='$report_id' AND `director_no`=:director_no");
             $stmt->bindParam(":director_no", $info['slot_no']);
             $stmt->execute();
-            $stmt=$dbobject->prepare("UPDATE `pa_report_appointed_directors` SET `no_of_ned`=no_ned,`no_of_id`=:no_id,`no_of_ed`=:no_ed WHERE `pa_reports_id`=:report_id");
+            $stmt=$dbobject->prepare("UPDATE `pa_report_appointed_directors` SET `no_of_ned`=:arned,`no_of_id`=:arid,`no_of_ed`=:ared WHERE `pa_reports_id`=:report_id");
             $stmt->bindParam(":report_id", $report_id);
             $stmt->bindParam(":arned", $info['no_ned']);
             $stmt->bindParam(":arid", $info['no_id']);
             $stmt->bindParam(":ared", $info['no_ed']);
             $stmt->execute();
-            //echo $info['no_ned'];
-//            if($stmt->execute()) {
-//                $stmt = $dbobject->prepare("insert into `pa_report_appointed_directors` (`pa_reports_id`,`no_of_ned`,`no_of_id`,`no_of_ed`) values (:report_id,:arned,:arid,:ared)");
-//                $stmt->bindParam(":report_id", $report_id);
-//                $stmt->bindParam(":arned", $info['no_ned']);
-//                $stmt->bindParam(":arid", $info['no_id']);
-//                $stmt->bindParam(":ared", $info['no_ed']);
-//                $stmt->execute();
-//            }
         }
         else {
             $arned = 0;

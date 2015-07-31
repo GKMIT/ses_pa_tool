@@ -2480,7 +2480,7 @@ class ReportBurning {
         if($generic_array['no_of_executive'] > 0) {
 
             $generic_array['appointment_of_executive_directors_exists']= true;
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name ORDER BY `director_no` ASC ");
             $stmt->bindParam(":report_id",$report_id);
             $section_name = "Appointment/Reappointment of Executive Directors";
             $stmt->bindParam(":section_name",$section_name);
@@ -2491,7 +2491,7 @@ class ReportBurning {
             }
             $generic_array['other_text'] = $other_text;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id",$report_id);
             $resolution_name = "Appointment Of Directors";
             $resolution_section = "Appointment/Reappointment of Executive Directors";
@@ -2503,7 +2503,7 @@ class ReportBurning {
             }
             $generic_array['recommendation_text'] = $recommendation_text;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_past_remuneration` where `pa_reports_id`=:report_id");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_past_remuneration` where `pa_reports_id`=:report_id ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id",$report_id);
             $stmt->execute();
             $past_remuneration = array();
@@ -2521,7 +2521,7 @@ class ReportBurning {
             }
             $generic_array['peer_comparison'] = $peer_comparison;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_rem_package` where `pa_reports_id`=:report_id");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_rem_package` where `pa_reports_id`=:report_id ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id",$report_id);
             $stmt->execute();
             $rem_package = array();
@@ -2530,7 +2530,7 @@ class ReportBurning {
             }
             $generic_array['rem_package'] = $rem_package;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_analysis_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id", $report_id);
             $resolution_name = "Appointment Of Directors";
             $resolution_section = "Appointment/Reappointment of Executive Directors";
@@ -2557,7 +2557,7 @@ class ReportBurning {
         $generic_array['no_of_independent'] = $row['no_of_id'];
         if($generic_array['no_of_independent'] > 0) {
             $generic_array['appointment_of_independent_directors_exists']= true;
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id",$report_id);
             $section_name = "Appointment/Reappointment of Independent Directors";
             $stmt->bindParam(":section_name",$section_name);
@@ -2569,7 +2569,7 @@ class ReportBurning {
             }
             $generic_array['other_text'] = $other_text;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_recommendations_text` where `pa_reports_id`=:report_id and `resolution_name`=:resolution_name and  `resolution_section`=:resolution_section ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id",$report_id);
             $resolution_name = "Appointment Of Directors";
             $resolution_section = "Appointment/Reappointment of Independent Directors";
@@ -2613,7 +2613,7 @@ class ReportBurning {
         if($generic_array['no_of_non_executive'] > 0) {
             $generic_array['appointment_of_non_executive_directors_exists'] = true;
 
-            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name");
+            $stmt = $dbobject->prepare(" select * from `pa_report_appointment_directors_other_text` where `pa_reports_id`=:report_id and `section_name`=:section_name ORDER BY `director_no` ASC");
             $stmt->bindParam(":report_id", $report_id);
             $section_name = "Appointment/Reappointment of Non-Executive Directors";
             $stmt->bindParam(":section_name", $section_name);
