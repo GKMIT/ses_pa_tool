@@ -2546,7 +2546,7 @@ class ReportBurning {
         else{
             $generic_array['appointment_of_executive_directors_exists'] = false;
         }
-        print_r($generic_array);
+        return($generic_array);
     }
     function appointmentOfDirectorsID($report_id){
         $dbobject = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME,DB_USER,DB_PASSWORD);
